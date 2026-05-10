@@ -1,0 +1,2813 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { assetPath } from "../lib/site";
+import { company } from "../data/company";
+import { strengths } from "../data/strengths";
+import { troubles } from "../data/troubles";
+import { beeTypes } from "../data/bee-types";
+import { rates } from "../data/rates";
+import { promises } from "../data/promises";
+import { compareRows } from "../data/compare";
+import { cases } from "../data/cases";
+import { voices } from "../data/voices";
+import { flowSteps } from "../data/flow";
+import { areas } from "../data/areas";
+import { faqs } from "../data/faq";
+
+const title = `東海の蜂駆除なら最短30分｜基本3,300円〜｜${company.name}`;
+const description = `愛知・岐阜・三重・静岡の蜂駆除なら【${company.name}】。最短30分で出動・基本3,300円〜・事前見積金額厳守・1年再発保証付き。24時間365日受付／見積り無料／キャンセル料0円。スズメバチ・アシナガバチ専門対応で東海4県全域に駆けつけます。`;
+
+const fmtJpy = (n: number) =>
+  new Intl.NumberFormat("ja-JP").format(n);
+
+const heroImage480 = assetPath("images/hero/hero-main-480.webp");
+const heroImage800 = assetPath("images/hero/hero-main-800.webp");
+const heroImage1400 = assetPath("images/hero/hero-main-1400.webp");
+const heroPattern = assetPath("images/hero/pattern.svg");
+---
+
+<Layout title={title} description={description}>
+  <!-- ===== SVG Icon Sprite ===== -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-bee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="13" rx="6" ry="7"/>
+      <path d="M12 6 L12 20 M9 6 L9 20 M15 6 L15 20"/>
+      <ellipse cx="6" cy="9" rx="3" ry="1.5" transform="rotate(-30 6 9)"/>
+      <ellipse cx="18" cy="9" rx="3" ry="1.5" transform="rotate(30 18 9)"/>
+    </symbol>
+    <symbol id="i-lightning" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 L4 14 H10 L9 22 L20 10 H14 Z"/></symbol>
+    <symbol id="i-yen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4 L12 13 L18 4"/><path d="M12 13 L12 21"/><path d="M7 14 L17 14"/><path d="M7 18 L17 18"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L4 6 L4 12 C4 17 7.5 20.5 12 22 C16.5 20.5 20 17 20 12 L20 6 Z"/><path d="M9 12 L11 14 L15 10"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/></symbol>
+    <symbol id="i-line" viewBox="0 0 24 24" fill="currentColor"><path d="M19 5H5a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h2v3.6c0 .3.4.5.7.3l4.3-3.9H19a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 L10 17 L19 7"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12 L11 15 L16 9"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L18 18 M18 6 L6 18"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L22 20 L2 20 Z"/><path d="M12 10 L12 15"/><circle cx="12" cy="17.5" r="0.6" fill="currentColor"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22 C16 16 19 13 19 9 A7 7 0 0 0 5 9 C5 13 8 16 12 22 Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L14.6 8.6 L21.6 9.3 L16.3 14 L17.9 21 L12 17.3 L6.1 21 L7.7 14 L2.4 9.3 L9.4 8.6 Z"/></symbol>
+    <symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor"><path d="M9 7 H6 a3 3 0 0 0-3 3 v3 a3 3 0 0 0 3 3 H7 v0 c0 2.2-1.8 4-4 4 v2 c4.4 0 8-3.6 8-8 V8 a1 1 0 0 0-1-1 z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16.6 7.6 13 12 13 C16.4 13 20 16.6 20 21"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9 L12 15 L18 9"/></symbol>
+    <symbol id="i-headset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14 V12 a8 8 0 0 1 16 0 V14"/><rect x="3" y="14" width="4" height="6" rx="1.2"/><rect x="17" y="14" width="4" height="6" rx="1.2"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 H19 M13 6 L19 12 L13 18"/></symbol>
+  </svg>
+
+  <!-- ===== Sticky Topbar（営業情報） ===== -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span class="topbar-item">
+        <svg class="icon"><use href="#i-headset" /></svg>
+        <span><strong>24時間365日</strong> 受付中</span>
+      </span>
+      <span class="topbar-item">
+        <svg class="icon"><use href="#i-check-circle" /></svg>
+        <span>通話・出張・見積り <strong>すべて無料</strong></span>
+      </span>
+      <span class="topbar-item">
+        <svg class="icon"><use href="#i-lightning" /></svg>
+        <span>最短<strong>30分</strong>で出動</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- ===== Sticky Header ===== -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="brand" aria-label="トップへ">
+        <span class="brand-mark"><svg class="icon"><use href="#i-bee" /></svg></span>
+        <span>{company.name}</span>
+      </a>
+      <a href={company.phoneTelLink} class="header-tel" data-cta="header_tel">
+        <svg class="icon"><use href="#i-phone" /></svg>
+        <span>
+          <small>365日24時間受付</small>
+          {company.phoneDisplay}
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== ① Hero ===== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 480px)" srcset={heroImage480} />
+        <source media="(max-width: 880px)" srcset={heroImage800} />
+        <img
+          src={heroImage1400}
+          alt=""
+          width="1400"
+          height="1400"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </picture>
+    </div>
+    <div class="container hero-inner">
+      <div class="hero-content reveal">
+        <span class="hero-eyebrow">
+          <svg class="icon"><use href="#i-pin" /></svg>
+          愛知・岐阜・三重・静岡 全域対応
+        </span>
+        <h1 id="hero-title" class="headline hero-h1">
+          <span class="hero-h1-line">蜂の巣、</span>
+          <span class="hero-h1-line">今日中に<span class="hl-num">必ず</span>消します。</span>
+        </h1>
+        <p class="hero-sub">
+          東海4県の蜂駆除専門。最短<strong>30分</strong>・基本<strong>3,300円〜</strong>・<strong>事前見積金額厳守</strong>・1年再発保証で、安全に解決します。
+        </p>
+
+        <div class="hero-stats reveal-stagger">
+          <div class="hero-stat">
+            <div class="hero-stat-num font-num"><span data-count="30">0</span><small>分</small></div>
+            <div class="hero-stat-label">最短現地到着</div>
+          </div>
+          <div class="hero-stat is-featured">
+            <div class="hero-stat-num font-num">¥<span data-count="3300" data-format="comma">0</span><small>〜</small></div>
+            <div class="hero-stat-label">基本料金</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num font-num"><span data-count="1">0</span><small>年</small></div>
+            <div class="hero-stat-label">再発保証付き</div>
+          </div>
+        </div>
+
+        <div class="hero-cta">
+          <a href={company.phoneTelLink} class="hero-tel-card" data-cta="hero_tel">
+            <span class="hero-tel-card-icon" aria-hidden="true">
+              <svg class="icon"><use href="#i-phone" /></svg>
+            </span>
+            <span class="hero-tel-card-body">
+              <span class="hero-tel-card-label">通話無料・24時間365日受付</span>
+              <span class="hero-tel-card-num font-num">{company.phoneDisplay}</span>
+              <span class="hero-tel-card-note">※ タップで発信</span>
+            </span>
+            <svg class="hero-tel-card-arrow icon" aria-hidden="true"><use href="#i-arrow-right" /></svg>
+          </a>
+          <div class="hero-cta-row">
+            <a href="#contact" class="btn btn-ghost">フォームで相談</a>
+            <a href={company.lineUrl} class="btn btn-line cta-glow-line" data-cta="hero_line">
+              <svg class="icon"><use href="#i-line" /></svg>
+              写真を送って相談
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ② TrustBar（実績の数字） ===== -->
+  <section class="trust-section">
+    <div class="container">
+      <div class="trust-nums reveal">
+        <div class="trust-num">
+          <div class="trust-num-value font-num">
+            <span data-count={company.totalCases} data-format="comma">0</span>
+            <small>件超</small>
+          </div>
+          <div class="trust-num-label">累計駆除実績</div>
+        </div>
+        <div class="trust-num">
+          <div class="trust-num-value font-num"><span data-count={company.sameDayRate}>0</span><small>%</small></div>
+          <div class="trust-num-label">即日対応率</div>
+        </div>
+        <div class="trust-num">
+          <div class="trust-num-value font-num"><span data-count={company.satisfactionRate}>0</span><small>/5.0</small></div>
+          <div class="trust-num-label">お客様満足度</div>
+        </div>
+        <div class="trust-num">
+          <div class="trust-num-value font-num"><span data-count={company.yearsInBusiness}>0</span><small>年</small></div>
+          <div class="trust-num-label">業界経験</div>
+        </div>
+        <div class="trust-num">
+          <div class="trust-num-value font-num">{company.liabilityCoverage}</div>
+          <div class="trust-num-label">損害賠償保険加入</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ③ Troubles（お悩み訴求） ===== -->
+  <section class="section troubles" id="troubles" aria-labelledby="troubles-title">
+    <div class="container">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">CHECK!</span>
+      </div>
+      <h2 id="troubles-title" class="section-title headline">
+        こんな<span class="hl">お悩み</span>、ありませんか？
+      </h2>
+      <ul class="troubles-grid reveal-stagger">
+        {troubles.map((t) => (
+          <li class="bubble" set:html={t} />
+        ))}
+      </ul>
+      <div class="troubles-arrow reveal" aria-hidden="true"></div>
+      <div class="troubles-resolve reveal">
+        その悩み、<strong>{company.name}</strong>が<br />最短<span class="big">30分</span>で解決します。
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ④ Strengths（強み3点） ===== -->
+  <section class="section" id="strengths" aria-labelledby="strengths-title">
+    <div class="container">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">REASONS</span>
+      </div>
+      <h2 id="strengths-title" class="section-title headline">
+        選ばれる<span class="accent">3つの理由</span>
+      </h2>
+      <p class="section-lead">
+        東海4県の蜂駆除に特化し、<strong>即日対応の駆けつけ・事前見積金額厳守・1年再発保証＋1億円賠償保険</strong>の3軸で他社と比較されています。中間マージンを挟まない自社直接対応で、業界相場より平均20〜30%お得な料金を実現。
+      </p>
+      <div class="strengths reveal-stagger">
+        {strengths.map((s) => (
+          <article class={`strength-card ${s.featured ? "is-featured" : ""}`}>
+            <span class="strength-num font-num">{s.num}</span>
+            <div class="strength-icon">
+              <svg class="icon"><use href={`#i-${s.iconId}`} /></svg>
+            </div>
+            <h3 class="strength-title headline" set:html={s.title.replaceAll("<hl>", '<span class="hl">').replaceAll("</hl>", "</span>")} />
+            <p class="strength-desc">{s.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ⑤ BeeTypes（対応する蜂6種） ===== -->
+  <section class="section section-soft" id="bee-types" aria-labelledby="bee-title">
+    <div class="container">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">BEE TYPES</span>
+      </div>
+      <h2 id="bee-title" class="section-title headline">
+        対応する<span class="accent">蜂の種類</span>
+      </h2>
+      <p class="section-lead">
+        東海地方で営巣が確認されているハチ全般に対応します。攻撃性の高いスズメバチ・オオスズメバチから、軒下やベランダで多いアシナガバチ、屋根裏・壁内に大規模営巣するミツバチまで。種類が分からない初期巣の段階でもそのままご相談ください。
+      </p>
+      <div class="bee-grid reveal-stagger">
+        {beeTypes.map((b) => (
+          <article class="bee-card">
+            <div class="bee-card-img">
+              <img
+                src={assetPath(`images/bee-types/${b.imageBase}.webp`)}
+                alt={`${b.name}の写真`}
+                width="800"
+                height="500"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="bee-card-body">
+              <span class={`bee-card-tag tag-${b.dangerLevel}`}>
+                <svg class="icon"><use href={b.dangerLevel === "low" ? "#i-check" : "#i-warning"} /></svg>
+                {b.dangerLabel}
+              </span>
+              <h3 class="bee-card-title headline">{b.name}</h3>
+              <p class="bee-card-desc">{b.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- 蜂種比較表（AEO強化） -->
+      <div class="bee-compare reveal">
+        <div class="bee-compare-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>種類</th>
+                <th>危険度</th>
+                <th>活動時期</th>
+                <th class="hide-mobile">巣の場所</th>
+                <th class="hide-mobile">巣の見た目</th>
+                <th>料金目安</th>
+              </tr>
+            </thead>
+            <tbody>
+              {beeTypes.map((b) => (
+                <tr>
+                  <th>{b.name}</th>
+                  <td><span class={`danger-bar lv${b.dangerBars}`}></span></td>
+                  <td>{b.activeMonths}</td>
+                  <td class="hide-mobile">{b.nestLocation}</td>
+                  <td class="hide-mobile">{b.nestAppearance}</td>
+                  <td>{b.priceRange}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ⑥ Pricing（料金表） ===== -->
+  <section class="section" id="price" aria-labelledby="price-title">
+    <div class="container">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">PRICING</span>
+      </div>
+      <h2 id="price-title" class="section-title headline">
+        明朗な<span class="accent">料金表</span>
+      </h2>
+      <p class="section-lead">
+        基本料金<strong>3,300円〜</strong>で現地に駆けつけ、現地調査のうえ<strong>その場で確定見積</strong>をご提示。<br />お伝えした金額に1円も追加せず、出張費・調査費・キャンセル料はすべて無料です。
+      </p>
+
+      <!-- フック価格BOX -->
+      <div class="price-hook reveal">
+        <div class="price-hook-row">
+          <div class="price-hook-from">
+            <span class="price-hook-label">基本料金</span>
+            <span class="price-hook-num font-num">¥3,300<small>〜</small></span>
+            <span class="price-hook-sub">最小巣・到達容易な場所の場合</span>
+          </div>
+          <div class="price-hook-arrow" aria-hidden="true"></div>
+          <div class="price-hook-cap">
+            <span class="price-hook-label">最終金額</span>
+            <span class="price-hook-num is-cap">事前見積<br />金額厳守</span>
+            <span class="price-hook-sub">作業後の追加請求は1円もありません</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 料金表テーブル -->
+      <div class="price-wrap reveal">
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th>蜂の種類</th>
+              <th>基本料金</th>
+              <th>想定価格帯</th>
+              <th class="hide-mobile">作業条件の例</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rates.map((r) => (
+              <tr>
+                <th>{r.beeType}</th>
+                <td class="price-strong font-num">{r.basicPrice}</td>
+                <td class="font-num">{r.rangePrice}</td>
+                <td class="hide-mobile">{r.workCondition}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="price-note">
+        ※ 想定価格帯は過去の駆除実績に基づく一般的なレンジです。<strong>正確な金額は現場確認後の確定見積でご提示し、お伝えした金額から1円も上がることはありません。</strong><br />
+        ※ 業界相場（5〜8万円）と比較して、当社は中間業者を挟まない自社直接対応のため<strong>平均20〜30%お得</strong>です（自社調べ）。<br />
+        ※ 出張費・現地調査・見積り・キャンセル料はすべて無料。他社見積より高ければご相談ください。
+      </p>
+
+      <!-- 3つの約束 -->
+      <div class="price-promises reveal">
+        <h3 class="price-promises-title headline">
+          <span class="price-promises-eyebrow">3 PROMISES</span>
+          料金にまつわる<span class="accent">3つの約束</span>
+        </h3>
+        <div class="price-promises-grid">
+          {promises.map((p) => (
+            <article class="promise-card">
+              <span class="promise-num font-num">{p.num}</span>
+              <div class="promise-icon">
+                <svg class="icon"><use href={`#i-${p.iconId}`} /></svg>
+              </div>
+              <h4 class="promise-title headline">{p.title}</h4>
+              <p class="promise-desc" set:html={p.description} />
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ⑦ MidCTA（中盤フルワイドCTA） ===== -->
+  <section class="mid-cta" aria-label="お電話ご相談">
+    <div class="container mid-cta-inner reveal">
+      <span class="mid-cta-eyebrow">JUST CALL US NOW</span>
+      <h2 class="headline mid-cta-h2">
+        蜂を見つけたら、<br />
+        <span class="hl">迷わず今すぐ</span>お電話を。
+      </h2>
+      <p>お電話受付から最短30分で出動。当日中に駆除完了します。</p>
+      <a href={company.phoneTelLink} class="mid-cta-tel cta-glow" data-cta="mid_tel">
+        <span class="mid-cta-tel-icon"><svg class="icon"><use href="#i-phone" /></svg></span>
+        <span>
+          <span class="font-num">{company.phoneDisplay}</span>
+          <small>通話無料・24時間365日受付</small>
+        </span>
+      </a>
+      <div class="mid-cta-row">
+        <a href="#contact" class="btn" style="background:#0f1722;color:#fff;">フォームで相談</a>
+        <a href={company.lineUrl} class="btn btn-line" data-cta="mid_line">
+          <svg class="icon"><use href="#i-line" /></svg>
+          LINEで写真を送る
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ⑧ Compare（他社との違い） ===== -->
+  <section class="section section-soft" id="compare" aria-labelledby="compare-title">
+    <div class="container container-narrow">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">VS COMPETITORS</span>
+      </div>
+      <h2 id="compare-title" class="section-title headline">
+        他社との<span class="accent">違い</span>
+      </h2>
+      <p class="section-lead">
+        仲介サイトや一般的な駆除業者と比べ、当社は<strong>最短30分の即日対応・基本3,300円〜・事前見積金額厳守・1年再発保証＋1億円賠償保険</strong>のすべてで明確な差があります。広告代理店も中間業者も挟まない自社直接運営で、業界相場の青天井請求を排除しています。
+      </p>
+      <div class="compare-wrap reveal">
+        <div class="compare-scroll">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="is-us">{company.name}</th>
+                <th>一般的な駆除業者</th>
+                <th>仲介サイト経由</th>
+              </tr>
+            </thead>
+            <tbody>
+              {compareRows.map((row) => (
+                <tr>
+                  <th>{row.label}</th>
+                  <td class="is-us">
+                    <span class={`compare-cell ${row.us.state}`}>
+                      <svg class="icon"><use href="#i-check-circle" /></svg>
+                      {row.us.text}
+                    </span>
+                  </td>
+                  <td>
+                    <span class={`compare-cell ${row.general.state}`}>{row.general.text}</span>
+                  </td>
+                  <td>
+                    <span class={`compare-cell ${row.intermediary.state}`}>{row.intermediary.text}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="price-note" style="margin-top:1rem;">
+        ※ 比較は業界の一般的な相場・公開情報に基づく当社の独自調査です。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== ⑨ Cases（駆除事例6件） ===== -->
+  <section class="section" id="cases" aria-labelledby="cases-title">
+    <div class="container">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">CASE STUDIES</span>
+      </div>
+      <h2 id="cases-title" class="section-title headline">
+        東海エリアの<span class="accent">駆除事例</span>
+      </h2>
+      <p class="section-lead">愛知・岐阜・三重・静岡で実施した駆除事例をご紹介します。軒下・ベランダ・屋根裏・土中・庭木の営巣など、状況別の作業内容と料金をご確認いただけます（写真はイメージ）。</p>
+      <div class="case-grid reveal-stagger">
+        {cases.map((c) => (
+          <article class="case-card">
+            <div class="case-thumb">
+              <img
+                src={assetPath(`images/cases/${c.imageBase}.webp`)}
+                alt={`${c.beeType}駆除事例`}
+                width="800"
+                height="600"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="case-thumb-tag">{c.beeType}</span>
+            </div>
+            <div class="case-body">
+              <div class="case-meta">
+                <svg class="icon"><use href="#i-pin" /></svg>
+                <span>{c.area}</span>
+                <span>{c.location}</span>
+              </div>
+              <h3 class="case-title headline">{c.title}</h3>
+              <div class="case-price font-num">
+                ¥{fmtJpy(c.priceJpy)}
+                <small>（税込）</small>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ⑩ Voices（お客様の声4件） ===== -->
+  <section class="section section-soft" id="voices" aria-labelledby="voices-title">
+    <div class="container">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">REVIEWS</span>
+      </div>
+      <h2 id="voices-title" class="section-title headline">
+        お客様の<span class="accent">声</span>
+      </h2>
+      <p class="section-lead">東海エリアでご依頼いただいたお客様からの感想を一部ご紹介します。スピード対応・追加請求なし・戻りバチへの再発防止など、リアルな評価をご覧ください。</p>
+      <div class="voices reveal-stagger">
+        {voices.map((v) => (
+          <article class="voice-card">
+            <span class="voice-quote" aria-hidden="true">
+              <svg class="icon"><use href="#i-quote" /></svg>
+            </span>
+            <div class="voice-meta">
+              <div class="voice-avatar">
+                <svg class="icon"><use href="#i-user" /></svg>
+              </div>
+              <div class="voice-meta-body">
+                <strong>{v.initial}様（{v.area}・{v.ageBracket}）</strong>
+                <small>{v.service}</small>
+              </div>
+            </div>
+            <div class="voice-rating" aria-label={`5段階評価のうち${v.rating}`}>
+              {Array.from({ length: v.rating }).map(() => (
+                <svg class="icon"><use href="#i-star" /></svg>
+              ))}
+            </div>
+            <p class="voice-text">{v.comment}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ⑪ Flow（駆除の流れ5ステップ） ===== -->
+  <section class="section" id="flow" aria-labelledby="flow-title">
+    <div class="container">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">FLOW</span>
+      </div>
+      <h2 id="flow-title" class="section-title headline">
+        駆除の<span class="accent">流れ</span>
+      </h2>
+      <p class="section-lead">お電話一本で、最短30分で出動。現地調査→確定見積→駆除作業→完了確認＋忌避剤散布による再発防止、お支払いは作業完了後で安心です。</p>
+      <ol class="flow reveal-stagger">
+        {flowSteps.map((step) => (
+          <li class="flow-step" id={`flow-step-${step.num}`}>
+            <div class="flow-num font-num">{step.num}</div>
+            <h3 class="flow-step-title headline">{step.title}</h3>
+            <p class="flow-step-desc">{step.description}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== ⑫ Areas（対応エリア） ===== -->
+  <section class="section section-soft" id="area" aria-labelledby="area-title">
+    <div class="container">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">SERVICE AREA</span>
+      </div>
+      <h2 id="area-title" class="section-title headline">
+        対応<span class="accent">エリア</span>
+      </h2>
+      <p class="section-lead">
+        愛知・岐阜・三重・静岡の東海4県全域に自社スタッフが常駐し、最短30分で駆けつけます。記載のない市町村でも、近隣エリアからの出動でほぼ全域カバー可能です。お気軽にご相談ください。
+      </p>
+      <div class="area-grid reveal-stagger">
+        {areas.map((a) => (
+          <div class="area-block">
+            <h3 class="headline">
+              <svg class="icon"><use href="#i-pin" /></svg>
+              {a.prefecture}
+            </h3>
+            <div class="area-cities">
+              {a.cities.map((city) => (
+                <span class="area-city">{city}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ⑬ FAQ（10問） ===== -->
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="container container-narrow">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">FAQ</span>
+      </div>
+      <h2 id="faq-title" class="section-title headline">
+        よくある<span class="accent">ご質問</span>
+      </h2>
+      <p class="section-lead">価格・対応時間・補助金・賃貸物件の責任分担・写真見積など、お電話前によくいただくご質問20件にお答えします。</p>
+      <div class="faq-list reveal">
+        {faqs.map((f, i) => (
+          <div class="faq-item" x-data="{ open: false }" :class="{ 'is-open': open }">
+            <button
+              type="button"
+              class="faq-q"
+              @click="open = !open"
+              :aria-expanded="open.toString()"
+              aria-controls={`faq-panel-${i + 1}`}
+            >
+              <span class="faq-q-mark font-num">Q</span>
+              <span class="faq-q-text headline">{f.q}</span>
+              <span class="faq-toggle" aria-hidden="true">
+                <svg class="icon"><use href="#i-chevron-down" /></svg>
+              </span>
+            </button>
+            <div
+              class="faq-a"
+              id={`faq-panel-${i + 1}`}
+              x-show="open"
+              x-collapse
+              x-cloak
+            >
+              <div class="faq-a-inner">
+                <span class="faq-a-mark font-num">A</span>
+                <p>{f.a}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ⑭ Contact（お問い合わせ） ===== -->
+  <section class="section section-tinted" id="contact" aria-labelledby="contact-title">
+    <div class="container">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">CONTACT</span>
+      </div>
+      <h2 id="contact-title" class="section-title headline">
+        お問い合わせ・<span class="accent">無料相談</span>
+      </h2>
+      <p class="section-lead">
+        緊急の場合はお電話が一番早く対応できます。LINEで巣の写真と所在地を送っていただければ、最短15分で概算見積をお返しします。フォーム送信後は1時間以内にご返信します（営業時間外は翌朝）。
+      </p>
+
+      <div class="contact-grid reveal">
+        <div class="contact-call">
+          <h3 class="headline">
+            <svg class="icon"><use href="#i-phone" /></svg>
+            お急ぎの方はお電話で
+          </h3>
+          <a href={company.phoneTelLink} class="contact-tel-big font-num cta-glow" data-cta="contact_tel">
+            {company.phoneDisplay}
+          </a>
+          <p class="contact-tel-note">通話無料・24時間365日受付・出張無料</p>
+          <ul class="contact-perks">
+            <li><svg class="icon"><use href="#i-check-circle" /></svg>最短30分で現地到着・即日駆除</li>
+            <li><svg class="icon"><use href="#i-check-circle" /></svg>基本3,300円〜・事前見積金額厳守</li>
+            <li><svg class="icon"><use href="#i-check-circle" /></svg>1年再発保証＋1億円損害賠償保険加入</li>
+            <li><svg class="icon"><use href="#i-check-circle" /></svg>夜間・深夜・土日祝も追加料金なし</li>
+          </ul>
+          <a href={company.lineUrl} class="btn btn-line btn-block cta-glow-line" data-cta="contact_line">
+            <svg class="icon"><use href="#i-line" /></svg>
+            LINEで写真を送って相談
+          </a>
+          <p class="privacy-note">※ 写真を送っていただくと、より正確な見積金額をお伝えできます。</p>
+        </div>
+
+        <!-- DIFF-POINT: form action を実送信先（Formspree等）に -->
+        <form class="contact-form" action="#" method="POST" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-name">お名前<span class="required">必須</span></label>
+              <input type="text" id="f-name" name="name" class="form-control" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="f-tel">電話番号<span class="required">必須</span></label>
+              <input type="tel" id="f-tel" name="tel" class="form-control" required autocomplete="tel" placeholder="090-0000-0000" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="f-email">メールアドレス</label>
+            <input type="email" id="f-email" name="email" class="form-control" autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="f-area">お住まいエリア<span class="required">必須</span></label>
+            <select id="f-area" name="area" class="form-control" required>
+              <option value="">選択してください</option>
+              <option>愛知県</option>
+              <option>岐阜県</option>
+              <option>三重県</option>
+              <option>静岡県</option>
+              <option>その他</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-msg">ご相談内容<span class="required">必須</span></label>
+            <textarea id="f-msg" name="message" class="form-control" required placeholder="例）2階の軒下に直径15cmほどの巣があります。蜂の種類は分かりません。"></textarea>
+          </div>
+          <p class="privacy-note">※ ご入力いただいた情報は見積りとご連絡のためにのみ使用します。</p>
+          <button type="submit" class="btn btn-primary btn-lg btn-block cta-glow">
+            無料で見積りを依頼する
+            <svg class="icon"><use href="#i-arrow-right" /></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ⑮ Company（会社情報） ===== -->
+  <section class="section section-soft" id="company" aria-labelledby="company-title">
+    <div class="container container-narrow">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">COMPANY</span>
+      </div>
+      <h2 id="company-title" class="section-title headline">
+        会社<span class="accent">情報</span>
+      </h2>
+      <div class="company-card reveal">
+        <table class="company-table">
+          <tbody>
+            <tr><th>屋号</th><td>{company.name}</td></tr>
+            <tr><th>運営会社</th><td>{company.legalName}</td></tr>
+            <tr><th>代表者</th><td>{company.representative}</td></tr>
+            <tr><th>所在地</th><td>〒{company.address.postal} {company.address.region}{company.address.city} {company.address.street}</td></tr>
+            <tr><th>電話番号</th><td>{company.phoneDisplay}（24時間365日受付）</td></tr>
+            <tr><th>事業内容</th><td>{company.businessType}</td></tr>
+            <tr><th>対応エリア</th><td>{company.serviceArea}</td></tr>
+            <tr><th>支払方法</th><td>{company.payment.join("／")}</td></tr>
+            <tr><th>加入保険</th><td>{company.insurance}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="footer-brand">
+          <span class="brand-mark"><svg class="icon"><use href="#i-bee" /></svg></span>
+          <strong>{company.name}</strong>
+        </div>
+        <p class="footer-tagline">
+          愛知・岐阜・三重・静岡の蜂駆除専門。<br />
+          基本3,300円〜・事前見積金額厳守・1年保証で東海エリアの蜂被害を解決します。
+        </p>
+      </div>
+      <div>
+        <h4>サービス</h4>
+        <ul>
+          <li><a href="#bee-types">対応する蜂の種類</a></li>
+          <li><a href="#price">料金表</a></li>
+          <li><a href="#cases">駆除事例</a></li>
+          <li><a href="#flow">駆除の流れ</a></li>
+          <li><a href="#compare">他社との違い</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>サポート</h4>
+        <ul>
+          <li><a href="#faq">よくあるご質問</a></li>
+          <li><a href="#contact">お問い合わせ</a></li>
+          <li><a href="#company">会社情報</a></li>
+          <li><a href="#" rel="nofollow">プライバシーポリシー</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-copyright">
+      <p>© <span id="copyright-year">2026</span> {company.name}. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ===== Floating CTA（モバイル） ===== -->
+  <div
+    class="floating-cta"
+    x-data="{ shown: false }"
+    x-init="window.addEventListener('scroll', () => shown = window.scrollY > 500, { passive: true })"
+    :class="{ 'is-shown': shown }"
+    aria-hidden="true"
+  >
+    <a href={company.phoneTelLink} class="btn btn-primary cta-glow" data-cta="float_tel">
+      <svg class="icon"><use href="#i-phone" /></svg>
+      <span>電話で相談<small>24時間受付</small></span>
+    </a>
+    <a href={company.lineUrl} class="btn btn-line cta-glow-line" data-cta="float_line">
+      <svg class="icon"><use href="#i-line" /></svg>
+      <span>LINEで相談<small>写真OK</small></span>
+    </a>
+  </div>
+</Layout>
+
+<!-- ===== Component-scoped styles ===== -->
+<style is:global>
+  /* ----- アイコン基本 ----- */
+  .icon {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+
+  /* ----- Topbar ----- */
+  .topbar {
+    background: linear-gradient(90deg, #0f1722, #1f2a36);
+    color: #fff;
+    border-bottom: 2px solid var(--color-accent);
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    font-size: 0.8125rem;
+  }
+  .topbar-inner {
+    display: flex;
+    justify-content: center;
+    gap: 1.125rem;
+    flex-wrap: wrap;
+    padding: 0.5625rem 0;
+    text-align: center;
+  }
+  .topbar-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  .topbar-item .icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    color: var(--color-accent);
+  }
+  .topbar strong {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  /* ----- Header ----- */
+  .header {
+    padding: 0.875rem 0;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 36px;
+    z-index: 50;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1.1875rem;
+    color: var(--color-dark);
+    letter-spacing: -0.01em;
+  }
+  .brand-mark {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--color-accent);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 8px 20px rgba(245, 179, 0, 0.35);
+  }
+  .brand-mark .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-dark);
+  }
+  .header-tel {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: 1.25rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .header-tel .icon {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+  .header-tel small {
+    display: block;
+    color: var(--color-muted);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+
+  /* ----- Hero ----- */
+  .hero {
+    position: relative;
+    min-height: 640px;
+    color: #fff;
+    overflow: hidden;
+    padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(4.5rem, 10vw, 7.5rem);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to right,
+        rgba(15, 23, 34, 0.92) 0%,
+        rgba(15, 23, 34, 0.85) 35%,
+        rgba(15, 23, 34, 0.55) 60%,
+        rgba(15, 23, 34, 0.2) 100%
+      );
+    z-index: 1;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 600px) 1fr;
+  }
+  .hero-content {
+    max-width: 560px;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-accent);
+    color: var(--color-dark);
+    padding: 0.4375rem 1rem;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.04em;
+  }
+  .hero-eyebrow .icon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+  .hero-h1 {
+    font-size: clamp(2rem, 5.5vw, 3.5rem);
+    line-height: 1.18;
+    letter-spacing: 0.01em;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+  .hero-h1-line {
+    display: block;
+  }
+  .hero-h1 .hl-num {
+    color: var(--color-accent);
+    font-family: var(--font-num);
+    font-size: 1.15em;
+    font-weight: 900;
+    text-shadow:
+      0 0 12px rgba(245, 179, 0, 0.65),
+      0 4px 0 rgba(0, 0, 0, 0.25);
+  }
+  .hero-sub {
+    font-size: clamp(0.9375rem, 2.2vw, 1.0625rem);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+    opacity: 0.95;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.625rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-stat {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 0.875rem 0.625rem;
+    text-align: center;
+  }
+  .hero-stat.is-featured {
+    background: rgba(245, 179, 0, 0.15);
+    border-color: var(--color-accent);
+  }
+  .hero-stat-num {
+    font-size: clamp(1.5rem, 3.4vw, 2rem);
+    font-weight: 900;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+  .hero-stat-num small {
+    font-size: 0.55em;
+    font-weight: 700;
+  }
+  .hero-stat-label {
+    font-size: 0.75rem;
+    margin-top: 0.375rem;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+  }
+  .hero-cta {
+    display: grid;
+    gap: 0.625rem;
+  }
+  .hero-tel-card {
+    background: #fff;
+    color: var(--color-dark);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+  }
+  .hero-tel-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+  }
+  .hero-tel-card-icon {
+    width: 3rem;
+    height: 3rem;
+    background: var(--color-primary);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .hero-tel-card-icon .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #fff;
+  }
+  .hero-tel-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-tel-card-label {
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    letter-spacing: 0.04em;
+  }
+  .hero-tel-card-num {
+    font-weight: 900;
+    font-size: clamp(1.5rem, 4.4vw, 2.125rem);
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+    white-space: nowrap;
+  }
+  .hero-tel-card-note {
+    font-size: 0.6875rem;
+    color: var(--color-muted);
+    font-weight: 500;
+    margin-top: 0.125rem;
+  }
+  .hero-tel-card-arrow {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-primary);
+  }
+  .hero-cta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .hero-cta-row .btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+  .hero-cta-row .btn-ghost {
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  /* ----- TrustBar ----- */
+  .trust-section {
+    background: var(--color-bg);
+    padding: 0;
+    transform: translateY(-2.5rem);
+    margin-bottom: -1rem;
+    position: relative;
+    z-index: 5;
+  }
+  .trust-nums {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    background: #fff;
+    padding: 2rem 1.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 48px rgba(15, 23, 34, 0.16);
+    border: 1px solid var(--color-border);
+  }
+  .trust-num {
+    text-align: center;
+    position: relative;
+  }
+  .trust-num:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -0.75rem;
+    top: 20%;
+    bottom: 20%;
+    width: 1px;
+    background: var(--color-border);
+  }
+  .trust-num-value {
+    font-size: clamp(1.75rem, 4.6vw, 2.625rem);
+    font-weight: 900;
+    color: var(--color-primary);
+    line-height: 1;
+  }
+  .trust-num-value small {
+    font-size: 0.5em;
+    margin-left: 0.125rem;
+    color: var(--color-muted);
+    font-weight: 700;
+  }
+  .trust-num-label {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    letter-spacing: 0.04em;
+  }
+
+  /* ----- Troubles ----- */
+  .troubles {
+    background:
+      radial-gradient(ellipse at top, var(--color-soft) 0%, transparent 60%),
+      var(--color-bg);
+    padding-bottom: 5rem;
+  }
+  .troubles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .bubble {
+    background: #fff;
+    border: 3px solid var(--color-dark);
+    border-radius: var(--radius-md);
+    padding: 1.125rem 1.25rem 1.125rem 3.75rem;
+    position: relative;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    line-height: 1.6;
+    color: var(--color-dark);
+    box-shadow: 4px 4px 0 var(--color-accent);
+    list-style: none;
+    transition:
+      transform 0.25s,
+      box-shadow 0.25s;
+  }
+  .bubble:hover {
+    transform: translate(-2px, -4px);
+    box-shadow: 6px 8px 0 var(--color-accent);
+  }
+  .bubble::before {
+    content: "！";
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.25rem;
+    height: 2.25rem;
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 1.375rem;
+    border: 2px solid var(--color-dark);
+  }
+  .bubble strong {
+    color: var(--color-primary);
+  }
+  .troubles-arrow {
+    text-align: center;
+    margin: 2.5rem 0;
+  }
+  .troubles-arrow::before {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
+    border-top: 50px solid var(--color-primary);
+  }
+  .troubles-resolve {
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: #fff;
+    padding: 2rem 1.5rem;
+    border-radius: var(--radius-lg);
+    font-size: clamp(1.375rem, 4vw, 2rem);
+    font-weight: 900;
+    line-height: 1.5;
+    box-shadow: 0 24px 48px rgba(15, 23, 34, 0.16);
+  }
+  .troubles-resolve .big {
+    font-family: var(--font-num);
+    font-size: 1.4em;
+    color: var(--color-accent);
+    margin: 0 0.375rem;
+    text-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  /* ----- Strengths ----- */
+  .strengths {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .strength-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 3rem 1.75rem 2rem;
+    text-align: center;
+    position: relative;
+    transition:
+      transform 0.25s,
+      box-shadow 0.25s;
+  }
+  .strength-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 48px rgba(15, 23, 34, 0.16);
+  }
+  .strength-card.is-featured {
+    border: 3px solid var(--color-accent);
+    background: linear-gradient(180deg, var(--color-soft-2) 0%, #fff 30%);
+  }
+  .strength-card.is-featured::before {
+    content: "★ 1番人気";
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: var(--color-primary);
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.6875rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+  }
+  .strength-num {
+    position: absolute;
+    top: -1.125rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-primary);
+    color: #fff;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 1.125rem;
+    box-shadow: 0 12px 32px rgba(200, 30, 30, 0.4);
+  }
+  .strength-icon {
+    width: 5rem;
+    height: 5rem;
+    margin: 0.75rem auto 1.25rem;
+    background:
+      radial-gradient(circle at 30% 30%, #fff 0%, transparent 50%),
+      linear-gradient(135deg, var(--color-soft) 0%, var(--color-accent-light) 100%);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    box-shadow:
+      inset 0 -4px 8px rgba(0, 0, 0, 0.05),
+      0 4px 12px rgba(245, 179, 0, 0.3);
+  }
+  .strength-icon .icon {
+    width: 2.375rem;
+    height: 2.375rem;
+    color: var(--color-primary);
+  }
+  .strength-title {
+    font-size: 1.3125rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-dark);
+    line-height: 1.4;
+  }
+  .strength-title .hl {
+    color: var(--color-primary);
+    font-family: var(--font-num);
+    font-size: 1.2em;
+  }
+  .strength-desc {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.8;
+  }
+
+  /* ----- BeeTypes ----- */
+  .bee-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .bee-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 0.25s,
+      box-shadow 0.25s;
+  }
+  .bee-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(15, 23, 34, 0.1);
+  }
+  .bee-card-img {
+    aspect-ratio: 16 / 10;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+    padding: 0.5rem;
+  }
+  .bee-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .bee-card-body {
+    padding: 1.125rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .bee-card-title {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-dark);
+  }
+  .bee-card-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    padding: 0.1875rem 0.625rem;
+    border-radius: var(--radius-pill);
+    align-self: flex-start;
+    letter-spacing: 0.04em;
+  }
+  .bee-card-tag .icon {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+  .tag-high,
+  .tag-highest {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+  .tag-medium {
+    background: #fef3c7;
+    color: #92400e;
+  }
+  .tag-low {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+  .bee-card-desc {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .bee-compare {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-top: 2.5rem;
+  }
+  .bee-compare-scroll {
+    overflow-x: auto;
+  }
+  .bee-compare table {
+    width: 100%;
+    table-layout: fixed;
+    font-size: 0.8125rem;
+  }
+  .bee-compare th,
+  .bee-compare td {
+    padding: 0.75rem 0.625rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: center;
+  }
+  .bee-compare thead th {
+    background: var(--color-dark);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+  }
+  .bee-compare tbody th {
+    background: var(--color-soft);
+    text-align: left;
+    font-weight: 800;
+    color: var(--color-dark);
+    white-space: nowrap;
+  }
+  .bee-compare tbody tr:last-child td,
+  .bee-compare tbody tr:last-child th {
+    border-bottom: 0;
+  }
+  .danger-bar {
+    display: inline-block;
+    height: 0.375rem;
+    border-radius: 0.1875rem;
+    vertical-align: middle;
+  }
+  .danger-bar.lv1 {
+    width: 1.25rem;
+    background: #cbd5e1;
+  }
+  .danger-bar.lv2 {
+    width: 2.5rem;
+    background: #fbbf24;
+  }
+  .danger-bar.lv3 {
+    width: 3.75rem;
+    background: #f97316;
+  }
+  .danger-bar.lv4 {
+    width: 5rem;
+    background: #dc2626;
+  }
+  .danger-bar.lv5 {
+    width: 6.25rem;
+    background: #7f1d1d;
+  }
+
+  /* ----- Pricing ----- */
+  .price-hook {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.75rem;
+    margin-bottom: 2.5rem;
+    border: 3px solid var(--color-accent);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .price-hook::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent 0 18px,
+      rgba(245, 179, 0, 0.04) 18px 36px
+    );
+    pointer-events: none;
+  }
+  .price-hook-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    position: relative;
+  }
+  .price-hook-from,
+  .price-hook-cap {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .price-hook-label {
+    font-size: 0.8125rem;
+    font-weight: 800;
+    color: var(--color-muted);
+    letter-spacing: 0.08em;
+  }
+  .price-hook-num {
+    font-family: var(--font-num);
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 900;
+    color: var(--color-primary);
+    line-height: 1;
+  }
+  .price-hook-num.is-cap {
+    color: var(--color-dark);
+    font-size: clamp(1.75rem, 5vw, 3.25rem);
+    line-height: 1.1;
+  }
+  .price-hook-num small {
+    font-size: 0.35em;
+    font-weight: 700;
+    color: var(--color-muted);
+    margin-left: 0.25rem;
+  }
+  .price-hook-sub {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    font-weight: 500;
+    margin-top: 0.375rem;
+  }
+  .price-hook-arrow {
+    display: grid;
+    place-items: center;
+  }
+  .price-hook-arrow::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 22px solid transparent;
+    border-bottom: 22px solid transparent;
+    border-left: 28px solid var(--color-accent);
+  }
+
+  .price-wrap {
+    overflow-x: auto;
+  }
+  .price-table {
+    background: #fff;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    table-layout: fixed;
+    width: 100%;
+  }
+  .price-table thead th {
+    background: var(--color-dark);
+    color: #fff;
+    padding: 1rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+  .price-table th,
+  .price-table td {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: center;
+    font-size: 0.875rem;
+  }
+  .price-table tbody tr:last-child td,
+  .price-table tbody tr:last-child th {
+    border-bottom: 0;
+  }
+  .price-table tbody th {
+    text-align: left;
+    background: var(--color-soft);
+    font-weight: 800;
+    white-space: nowrap;
+    color: var(--color-dark);
+  }
+  .price-strong {
+    font-weight: 900;
+    color: var(--color-primary);
+    font-size: 1rem;
+  }
+  .price-note {
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .price-promises {
+    margin-top: 4rem;
+    background: var(--color-dark);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .price-promises::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top right, rgba(245, 179, 0, 0.18), transparent 50%),
+      radial-gradient(ellipse at bottom left, rgba(200, 30, 30, 0.18), transparent 50%);
+    pointer-events: none;
+  }
+  .price-promises-eyebrow {
+    display: inline-block;
+    background: var(--color-accent);
+    color: var(--color-dark);
+    padding: 0.25rem 1rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.875rem;
+  }
+  .price-promises-title {
+    font-size: clamp(1.5rem, 4vw, 2.125rem);
+    text-align: center;
+    margin-bottom: 2.5rem;
+    line-height: 1.3;
+    position: relative;
+    color: #fff;
+  }
+  .price-promises-title .accent {
+    color: var(--color-accent);
+  }
+  .price-promises-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    position: relative;
+  }
+  .promise-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(245, 179, 0, 0.3);
+    border-radius: var(--radius-md);
+    padding: 1.75rem 1.375rem;
+    text-align: center;
+    position: relative;
+    backdrop-filter: blur(8px);
+    transition:
+      transform 0.25s,
+      border-color 0.25s;
+  }
+  .promise-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+  }
+  .promise-num {
+    position: absolute;
+    top: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2.25rem;
+    height: 2.25rem;
+    background: var(--color-accent);
+    color: var(--color-dark);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 1.125rem;
+    border: 3px solid var(--color-dark);
+  }
+  .promise-icon {
+    width: 3.75rem;
+    height: 3.75rem;
+    margin: 0.75rem auto 1rem;
+    background: rgba(245, 179, 0, 0.14);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }
+  .promise-icon .icon {
+    width: 1.875rem;
+    height: 1.875rem;
+    color: var(--color-accent);
+  }
+  .promise-title {
+    font-size: 1.125rem;
+    margin-bottom: 0.625rem;
+    color: #fff;
+  }
+  .promise-desc {
+    font-size: 0.8125rem;
+    color: #cbd5e1;
+    line-height: 1.8;
+  }
+  .promise-desc strong {
+    color: var(--color-accent);
+    font-weight: 800;
+  }
+
+  /* ----- MidCTA ----- */
+  .mid-cta {
+    background:
+      linear-gradient(135deg, rgba(200, 30, 30, 0.95), rgba(245, 179, 0, 0.92)),
+      var(--color-primary);
+    color: #fff;
+    padding: 3.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .mid-cta::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent 0 24px,
+      rgba(255, 255, 255, 0.06) 24px 48px
+    );
+  }
+  .mid-cta-inner {
+    position: relative;
+    text-align: center;
+  }
+  .mid-cta-eyebrow {
+    display: inline-block;
+    background: #0f1722;
+    color: var(--color-accent);
+    padding: 0.375rem 1.25rem;
+    border-radius: var(--radius-pill);
+    font-weight: 900;
+    font-size: 0.8125rem;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.875rem;
+  }
+  .mid-cta-h2 {
+    font-size: clamp(1.625rem, 4.4vw, 2.5rem);
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+    color: #fff;
+  }
+  .mid-cta-h2 .hl {
+    background: var(--color-accent);
+    color: var(--color-dark);
+    padding: 0.125rem 0.75rem;
+    border-radius: 0.25rem;
+    display: inline-block;
+    transform: rotate(-1deg);
+  }
+  .mid-cta p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.95;
+  }
+  .mid-cta-tel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.875rem;
+    background: #fff;
+    color: var(--color-dark);
+    padding: 1.125rem 2rem;
+    border-radius: var(--radius-pill);
+    font-size: clamp(1.75rem, 4.6vw, 2.5rem);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    box-shadow:
+      0 16px 32px rgba(0, 0, 0, 0.25),
+      inset 0 -4px 0 rgba(0, 0, 0, 0.08);
+    border: 4px solid var(--color-dark);
+    transition: transform 0.2s;
+  }
+  .mid-cta-tel:hover {
+    transform: translateY(-3px);
+  }
+  .mid-cta-tel-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    background: var(--color-primary);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }
+  .mid-cta-tel-icon .icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    color: #fff;
+  }
+  .mid-cta-tel small {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-muted);
+    margin-top: 0.125rem;
+    letter-spacing: 0;
+  }
+  .mid-cta-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* ----- Compare ----- */
+  .compare-wrap {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 12px 24px rgba(15, 23, 34, 0.08);
+    border: 1px solid var(--color-border);
+  }
+  .compare-scroll {
+    overflow-x: auto;
+  }
+  .compare-table {
+    width: 100%;
+    table-layout: fixed;
+    font-size: 0.875rem;
+    min-width: 0;
+  }
+  .compare-table thead th {
+    padding: 1.375rem 0.875rem 1.125rem;
+    background: #fafaf9;
+    font-weight: 800;
+    border-bottom: 2px solid var(--color-border);
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    overflow-wrap: anywhere;
+  }
+  .compare-table thead th.is-us {
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 1rem;
+    position: relative;
+  }
+  .compare-table thead th.is-us::before {
+    content: "推奨";
+    position: absolute;
+    top: -0.625rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-accent);
+    color: var(--color-dark);
+    padding: 0.1875rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.6875rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+  }
+  .compare-table thead th:nth-child(1) {
+    width: 28%;
+  }
+  .compare-table thead th.is-us {
+    width: 28%;
+  }
+  .compare-table thead th:nth-child(3),
+  .compare-table thead th:nth-child(4) {
+    width: 22%;
+  }
+  .compare-table tbody tr {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .compare-table tbody tr:last-child {
+    border-bottom: 0;
+  }
+  .compare-table th,
+  .compare-table td {
+    padding: 1rem 0.875rem;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .compare-table tbody th {
+    text-align: left;
+    background: var(--color-soft);
+    font-weight: 700;
+    color: var(--color-dark);
+    white-space: nowrap;
+    font-size: 0.8125rem;
+  }
+  .compare-table td.is-us {
+    background: rgba(200, 30, 30, 0.04);
+    font-weight: 700;
+    color: var(--color-dark);
+  }
+  .compare-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  .compare-cell .icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  .compare-cell.us-ok {
+    color: var(--color-primary);
+    font-weight: 800;
+  }
+  .compare-cell.warn {
+    color: var(--color-accent-dark);
+  }
+  .compare-cell.bad {
+    color: var(--color-muted);
+  }
+
+  /* ----- Cases ----- */
+  .case-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .case-card {
+    background: #fff;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 0.25s,
+      box-shadow 0.25s;
+  }
+  .case-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(15, 23, 34, 0.1);
+  }
+  .case-thumb {
+    aspect-ratio: 4 / 3;
+    background: var(--color-soft-2);
+    position: relative;
+    overflow: hidden;
+  }
+  .case-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+  .case-card:hover .case-thumb img {
+    transform: scale(1.04);
+  }
+  .case-thumb-tag {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: var(--color-primary);
+    color: #fff;
+    padding: 0.3125rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+  .case-body {
+    padding: 1.125rem 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .case-meta {
+    display: flex;
+    gap: 0.625rem;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    margin-bottom: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .case-meta .icon {
+    width: 0.75rem;
+    height: 0.75rem;
+    color: var(--color-primary);
+  }
+  .case-title {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-dark);
+    line-height: 1.5;
+  }
+  .case-price {
+    margin-top: auto;
+    font-weight: 900;
+    color: var(--color-primary);
+    font-size: 1.125rem;
+  }
+  .case-price small {
+    font-size: 0.55em;
+    color: var(--color-muted);
+    margin-left: 0.25rem;
+    font-weight: 600;
+  }
+
+  /* ----- Voices ----- */
+  .voices {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .voice-card {
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 1.75rem 1.75rem 1.5rem;
+    border: 1px solid var(--color-border);
+    position: relative;
+    transition:
+      transform 0.25s,
+      box-shadow 0.25s;
+  }
+  .voice-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(15, 23, 34, 0.1);
+  }
+  .voice-quote {
+    position: absolute;
+    top: -0.5rem;
+    left: 1.25rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: var(--color-accent);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 8px 20px rgba(245, 179, 0, 0.35);
+  }
+  .voice-quote .icon {
+    width: 1.125rem;
+    height: 1.125rem;
+    color: var(--color-dark);
+  }
+  .voice-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.75rem 0 0.875rem;
+  }
+  .voice-avatar {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--color-soft);
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--color-accent-light);
+  }
+  .voice-avatar .icon {
+    width: 1.375rem;
+    height: 1.375rem;
+    color: var(--color-muted);
+  }
+  .voice-meta-body strong {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-dark);
+    font-weight: 800;
+  }
+  .voice-meta-body small {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+  .voice-rating {
+    display: inline-flex;
+    gap: 0.125rem;
+    margin-bottom: 0.625rem;
+  }
+  .voice-rating .icon {
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-accent);
+  }
+  .voice-text {
+    font-size: 0.875rem;
+    line-height: 1.85;
+  }
+
+  /* ----- Flow ----- */
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .flow-step {
+    text-align: center;
+    position: relative;
+    padding: 0 0.5rem;
+  }
+  .flow-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 2rem;
+    right: -0.625rem;
+    width: 1.25rem;
+    height: 2px;
+    background: var(--color-primary);
+  }
+  .flow-num {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 1.625rem;
+    margin: 0 auto 1rem;
+    box-shadow: 0 12px 32px rgba(200, 30, 30, 0.4);
+    position: relative;
+  }
+  .flow-num::before {
+    content: "";
+    position: absolute;
+    inset: -0.5rem;
+    border: 2px solid var(--color-primary-light);
+    border-radius: 50%;
+  }
+  .flow-step-title {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    margin-bottom: 0.375rem;
+    color: var(--color-dark);
+  }
+  .flow-step-desc {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  /* ----- Areas ----- */
+  .area-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .area-block {
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 1.625rem;
+    border-top: 4px solid var(--color-primary);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  .area-block h3 {
+    font-size: 1.1875rem;
+    font-weight: 700;
+    margin-bottom: 0.875rem;
+    color: var(--color-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+  .area-block h3 .icon {
+    width: 1.375rem;
+    height: 1.375rem;
+    color: var(--color-primary);
+  }
+  .area-cities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .area-city {
+    display: inline-block;
+    padding: 0.3125rem 0.75rem;
+    background: var(--color-soft);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--color-dark);
+    font-weight: 600;
+  }
+
+  /* ----- FAQ ----- */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .faq-item {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .faq-item.is-open {
+    border-color: var(--color-primary);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  .faq-q {
+    width: 100%;
+    padding: 1.125rem 1.375rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--color-dark);
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .faq-q-mark {
+    background: var(--color-primary);
+    color: #fff;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 0.8125rem;
+    flex-shrink: 0;
+  }
+  .faq-q-text {
+    flex: 1;
+    padding-top: 0.1875rem;
+    line-height: 1.5;
+  }
+  .faq-toggle {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--color-soft);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition:
+      transform 0.25s,
+      background 0.15s;
+    margin-top: 0.0625rem;
+  }
+  .faq-toggle .icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    color: var(--color-dark);
+    transition: transform 0.25s;
+  }
+  .faq-item.is-open .faq-toggle {
+    background: var(--color-primary);
+  }
+  .faq-item.is-open .faq-toggle .icon {
+    color: #fff;
+    transform: rotate(180deg);
+  }
+  .faq-a {
+    overflow: hidden;
+  }
+  .faq-a-inner {
+    display: flex;
+    gap: 0.875rem;
+    padding: 0 1.375rem 1.375rem 1.375rem;
+    border-top: 1px dashed var(--color-border);
+    margin-top: 0;
+    padding-top: 1rem;
+  }
+  .faq-a-mark {
+    background: var(--color-accent);
+    color: var(--color-dark);
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 0.8125rem;
+    flex-shrink: 0;
+  }
+  .faq-a-inner p {
+    font-size: 0.875rem;
+    line-height: 1.85;
+    margin: 0;
+  }
+  [x-cloak] {
+    display: none !important;
+  }
+
+  /* ----- Contact ----- */
+  .section-tinted {
+    background:
+      radial-gradient(ellipse at top right, rgba(245, 179, 0, 0.08), transparent 50%),
+      radial-gradient(ellipse at bottom left, rgba(200, 30, 30, 0.05), transparent 50%),
+      var(--color-bg);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 2.5rem;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 2.75rem;
+    box-shadow: 0 12px 24px rgba(15, 23, 34, 0.08);
+    border: 1px solid var(--color-border);
+  }
+  .contact-call h3 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+  .contact-call h3 .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-primary);
+  }
+  .contact-tel-big {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 900;
+    color: var(--color-primary);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.25rem;
+    display: block;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  .contact-tel-note {
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+    margin-bottom: 1.125rem;
+  }
+  .contact-perks {
+    list-style: none;
+    margin: 1.125rem 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .contact-perks li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--color-dark);
+    font-weight: 600;
+  }
+  .contact-perks .icon {
+    width: 1.125rem;
+    height: 1.125rem;
+    color: var(--color-success);
+    flex-shrink: 0;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    margin-bottom: 1rem;
+  }
+  .form-group label {
+    font-weight: 800;
+    font-size: 0.8125rem;
+    color: var(--color-dark);
+  }
+  .required {
+    display: inline-block;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.625rem;
+    padding: 0.125rem 0.4375rem;
+    border-radius: 0.1875rem;
+    margin-left: 0.375rem;
+    vertical-align: 0.125rem;
+    letter-spacing: 0.04em;
+    font-weight: 800;
+  }
+  .form-control {
+    padding: 0.8125rem 0.875rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font: inherit;
+    background: #fff;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+  }
+  .form-control:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(200, 30, 30, 0.12);
+  }
+  textarea.form-control {
+    resize: vertical;
+    min-height: 8rem;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .privacy-note {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    margin: 0.75rem 0;
+  }
+
+  /* ----- Company ----- */
+  .company-card {
+    background: #fff;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+  .company-table tr {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .company-table tr:last-child {
+    border-bottom: 0;
+  }
+  .company-table th {
+    background: var(--color-soft);
+    text-align: left;
+    padding: 1rem 1.375rem;
+    font-weight: 800;
+    width: 13.75rem;
+    font-size: 0.875rem;
+    color: var(--color-dark);
+  }
+  .company-table td {
+    padding: 1rem 1.375rem;
+    font-size: 0.875rem;
+  }
+
+  /* ----- Footer ----- */
+  .footer {
+    background: var(--color-dark);
+    color: #cbd5e1;
+    padding: 3.5rem 0 1.75rem;
+    font-size: 0.8125rem;
+  }
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .footer h4 {
+    color: #fff;
+    font-size: 0.9375rem;
+    margin-bottom: 0.875rem;
+    font-weight: 800;
+  }
+  .footer ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer a:hover {
+    color: var(--color-accent);
+  }
+  .footer-copyright {
+    text-align: center;
+    padding-top: 1.25rem;
+    border-top: 1px solid #374151;
+    color: #9ca3af;
+    font-size: 0.75rem;
+  }
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .footer-brand .brand-mark {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  .footer-brand .brand-mark .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .footer-brand strong {
+    font-size: 1.0625rem;
+    color: #fff;
+    font-weight: 900;
+  }
+  .footer-tagline {
+    font-size: 0.75rem;
+    line-height: 1.8;
+  }
+
+  /* ----- Floating CTA ----- */
+  .floating-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: rgba(15, 23, 34, 0.96);
+    backdrop-filter: blur(10px);
+    padding: 0.625rem 0.75rem calc(0.625rem + env(safe-area-inset-bottom));
+    gap: 0.5rem;
+    transform: translateY(110%);
+    transition: transform 0.35s ease;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .floating-cta.is-shown {
+    transform: translateY(0);
+    aria-hidden: false;
+  }
+  .floating-cta .btn {
+    padding: 0.8125rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 900;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .floating-cta .btn small {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-top: 0;
+    letter-spacing: 0.04em;
+  }
+  .floating-cta .btn .icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  /* ----- Helpers ----- */
+  .hl {
+    background: linear-gradient(transparent 65%, var(--color-accent) 65%);
+    padding: 0 0.375rem;
+    color: var(--color-primary);
+  }
+  .hl-num {
+    color: var(--color-accent);
+  }
+
+  /* ----- Responsive ----- */
+  @media (max-width: 980px) {
+    .topbar {
+      display: none;
+    }
+    .header {
+      top: 0;
+    }
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+    .hero-content {
+      max-width: none;
+    }
+    .strengths,
+    .case-grid,
+    .voices,
+    .area-grid {
+      grid-template-columns: 1fr;
+    }
+    .bee-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .flow {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+      font-size: 0.6875rem;
+    }
+    .flow-num {
+      width: 3rem;
+      height: 3rem;
+      font-size: 1.25rem;
+    }
+    .price-promises-grid {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+    .price-hook-row {
+      grid-template-columns: 1fr;
+      gap: 0.875rem;
+    }
+    .price-hook-arrow::before {
+      transform: rotate(90deg);
+    }
+    .contact-grid {
+      grid-template-columns: 1fr;
+      padding: 1.5rem 1.25rem;
+    }
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+    .footer-inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem;
+    }
+    .trust-nums {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      padding: 1.5rem 1rem;
+    }
+    .trust-num:nth-child(4)::after,
+    .trust-num:nth-child(5)::after,
+    .trust-num:last-child::after {
+      display: none;
+    }
+    body {
+      padding-bottom: 4.875rem;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hide-mobile {
+      display: none !important;
+    }
+    .compare-table thead th:nth-child(1) {
+      width: 32%;
+    }
+    .compare-table thead th.is-us {
+      width: 32%;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .bee-grid {
+      grid-template-columns: 1fr;
+    }
+    .troubles-grid {
+      grid-template-columns: 1fr;
+    }
+    .flow {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .flow-step::after {
+      display: none !important;
+    }
+    .footer-inner {
+      grid-template-columns: 1fr;
+    }
+    .hero-stats {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .company-table th {
+      width: 7.5rem;
+      padding: 0.8125rem 0.75rem;
+      font-size: 0.8125rem;
+    }
+    .company-table td {
+      padding: 0.8125rem 0.75rem;
+      font-size: 0.8125rem;
+    }
+    .trust-nums {
+      grid-template-columns: 1fr 1fr;
+    }
+    .trust-num::after {
+      display: none !important;
+    }
+    .header-tel {
+      font-size: 0.8125rem;
+      gap: 0.375rem;
+    }
+    .header-tel small {
+      font-size: 0.5625rem;
+    }
+    .brand {
+      font-size: 0.875rem;
+    }
+    .brand-mark {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+</style>
+
+<!-- ===== カウントアップ・FAQ展開・スクロール検知の inline JS ===== -->
+<script is:inline>
+  (function () {
+    // カウントアップ
+    function animateCount(el) {
+      if (el.dataset.counted === "1") return;
+      el.dataset.counted = "1";
+      var target = parseFloat(el.dataset.count);
+      var isFloat = String(target).indexOf(".") >= 0;
+      var useComma = el.dataset.format === "comma";
+      var duration = 1400;
+      var start = performance.now();
+      function frame(now) {
+        var t = Math.min(1, (now - start) / duration);
+        var eased = 1 - Math.pow(1 - t, 3);
+        var v = target * eased;
+        var display = isFloat ? v.toFixed(1) : Math.floor(v);
+        el.textContent = useComma
+          ? Number(display).toLocaleString("ja-JP")
+          : display;
+        if (t < 1) requestAnimationFrame(frame);
+        else
+          el.textContent = useComma
+            ? Number(target).toLocaleString("ja-JP")
+            : isFloat
+              ? target.toFixed(1)
+              : target;
+      }
+      requestAnimationFrame(frame);
+    }
+
+    // IntersectionObserver で reveal + count
+    if ("IntersectionObserver" in window) {
+      var revealObs = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) {
+              en.target.classList.add("is-shown");
+              en.target.querySelectorAll("[data-count]").forEach(animateCount);
+              revealObs.unobserve(en.target);
+            }
+          });
+        },
+        { rootMargin: "0px 0px -10% 0px", threshold: 0.15 }
+      );
+      document
+        .querySelectorAll(".reveal, .reveal-stagger")
+        .forEach(function (el) {
+          revealObs.observe(el);
+        });
+
+      // ヒーロー内の数字は初回ロード時に即実行
+      setTimeout(function () {
+        document
+          .querySelectorAll(".hero [data-count]")
+          .forEach(animateCount);
+      }, 200);
+
+      // 2.5秒後に未起動の reveal を強制表示（fallback）
+      setTimeout(function () {
+        document
+          .querySelectorAll(".reveal:not(.is-shown), .reveal-stagger:not(.is-shown)")
+          .forEach(function (el) {
+            el.classList.add("is-shown");
+            el.querySelectorAll("[data-count]").forEach(animateCount);
+          });
+      }, 2500);
+    }
+
+    // 年号
+    var yearEl = document.getElementById("copyright-year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    // CTA計測フック
+    document.querySelectorAll("[data-cta]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        var id = el.dataset.cta;
+        if (window.dataLayer) {
+          window.dataLayer.push({ event: "cta_click", cta_id: id });
+        }
+      });
+    });
+
+    // フォーム最低限のクライアントバリデーション
+    var form = document.querySelector(".contact-form");
+    if (form) {
+      form.addEventListener("submit", function (e) {
+        var valid = true;
+        form.querySelectorAll("[required]").forEach(function (field) {
+          if (!field.value.trim()) {
+            valid = false;
+            field.style.borderColor = "var(--color-primary)";
+          } else {
+            field.style.borderColor = "";
+          }
+        });
+        if (!valid) {
+          e.preventDefault();
+          alert("未入力の必須項目があります。");
+        }
+      });
+    }
+
+    // アンカースクロール（topbar/header オフセット考慮）
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        var id = a.getAttribute("href");
+        if (!id || id === "#" || id.length <= 1) return;
+        var target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        var headerH =
+          (document.querySelector(".header")
+            ? document.querySelector(".header").offsetHeight
+            : 0) +
+          (document.querySelector(".topbar")
+            ? document.querySelector(".topbar").offsetHeight
+            : 0);
+        var top =
+          target.getBoundingClientRect().top + window.scrollY - headerH - 8;
+        window.scrollTo({ top: top, behavior: "smooth" });
+      });
+    });
+  })();
+</script>

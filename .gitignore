@@ -1,0 +1,32 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Playwright
+playwright-report/
+test-results/
+.playwright-mcp/
+
+# Misc
+*.tgz
+.cache/
