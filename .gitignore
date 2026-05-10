@@ -30,3 +30,7 @@ test-results/
 # Misc
 *.tgz
 .cache/
+
+# Internal state (Claude Code / harness)
+.claude/
+
