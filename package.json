@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "check": "bash scripts/predeploy_check.sh",
+    "predeploy": "bun run check && bun run build"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",

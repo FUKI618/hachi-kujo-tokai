@@ -4,7 +4,7 @@
  */
 
 export const company = {
-  name: "{{COMPANY_NAME}}",
+  name: "東海ハチ救急隊",
   legalName: "{{LEGAL_ENTITY}}",
   representative: "{{REPRESENTATIVE}}",
   phone: "000-0000-0000",
