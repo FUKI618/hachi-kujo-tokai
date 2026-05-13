@@ -28,7 +28,7 @@ export const beeTypes: BeeType[] = [
     dangerLabel: "攻撃性 大",
     dangerBars: 4,
     description:
-      "7〜10月に活動が活発化。刺傷リスクが最も高く、見つけたら近づかずすぐご連絡を。",
+      "7〜10月に活動活発化、特に9月中旬〜10月中旬は新女王誕生で攻撃性が極大化。日本の蜂刺傷死亡者の主因（年15〜21人）。見つけたら近づかずすぐご連絡を。",
     activeMonths: "4〜11月",
     nestLocation: "軒下・木の枝・屋根裏",
     nestAppearance: "マーブル模様の球状",
@@ -42,7 +42,7 @@ export const beeTypes: BeeType[] = [
     dangerLabel: "最大級の危険",
     dangerBars: 5,
     description:
-      "土中や樹洞に営巣。日本最大のハチで毒性が強く、必ず専門業者の対応が必要です。",
+      "日本最大のハチ（女王40〜50mm）、毒性LD50 4.1mg/kgで通常のスズメバチの約2倍。土中・樹洞に大型巣を作り、自力駆除はほぼ不可能。専門業者の対応が必須です。",
     activeMonths: "4〜11月",
     nestLocation: "土中・樹洞",
     nestAppearance: "地中に隠れる大型巣",

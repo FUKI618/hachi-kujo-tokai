@@ -16,6 +16,13 @@ export function assetPath(rel: string): string {
   return `${homePath}${trimmed}`;
 }
 
+/** 9月15日〜10月15日: スズメバチ攻撃性ピーク期（新女王誕生で防衛本能極大化） */
+export function isHornetPeakSeason(date: Date = new Date()): boolean {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return (month === 9 && day >= 15) || (month === 10 && day <= 15);
+}
+
 export const siteConfig = {
   defaultTitle:
     "東海エリアの蜂駆除なら最短30分｜基本3,300円〜・1年保証｜東海ハチ救急隊",

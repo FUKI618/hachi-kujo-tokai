@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { assetPath } from "../lib/site";
+import { assetPath, isHornetPeakSeason } from "../lib/site";
 import { company } from "../data/company";
 import { strengths } from "../data/strengths";
 import { troubles } from "../data/troubles";
@@ -24,6 +24,8 @@ const heroImage480 = assetPath("images/hero/hero-main-480.webp");
 const heroImage800 = assetPath("images/hero/hero-main-800.webp");
 const heroImage1400 = assetPath("images/hero/hero-main-1400.webp");
 const heroPattern = assetPath("images/hero/pattern.svg");
+
+const showSeasonalAlert = isHornetPeakSeason();
 ---
 
 <Layout title={title} description={description}>
@@ -88,6 +90,15 @@ const heroPattern = assetPath("images/hero/pattern.svg");
     </div>
   </header>
 
+  {showSeasonalAlert && (
+    <div class="seasonal-alert" role="status" aria-live="polite">
+      <div class="container seasonal-alert-inner">
+        <svg class="icon" aria-hidden="true"><use href="#i-warning" /></svg>
+        <span><strong>9月15日〜10月15日はスズメバチ攻撃性ピーク</strong>。新女王誕生で防衛本能が極大化する最危険期です。</span>
+      </div>
+    </div>
+  )}
+
   <!-- ===== ① Hero ===== -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-bg" aria-hidden="true">
@@ -108,14 +119,14 @@ const heroPattern = assetPath("images/hero/pattern.svg");
       <div class="hero-content reveal">
         <span class="hero-eyebrow">
           <svg class="icon"><use href="#i-pin" /></svg>
-          愛知・岐阜・三重・静岡 全域対応
+          愛知・岐阜・三重・静岡 全域対応｜スズメバチ駆除専門
         </span>
         <h1 id="hero-title" class="headline hero-h1">
           <span class="hero-h1-line">蜂の巣、</span>
           <span class="hero-h1-line">今日中に<span class="hl-num">必ず</span>消します。</span>
         </h1>
         <p class="hero-sub">
-          東海4県の蜂駆除<strong>24時間救急対応</strong>。最短<strong>30分</strong>で出動・基本<strong>3,300円〜</strong>・<strong>事前見積金額厳守</strong>・1年再発保証で、安全に解決します。
+          攻撃性最大の<strong>スズメバチ</strong>も、防護装備の専門隊が<strong>24時間救急対応</strong>。最短<strong>30分</strong>で出動・基本<strong>3,300円〜</strong>・<strong>事前見積金額厳守</strong>・1年再発保証。
         </p>
 
         <div class="hero-stats reveal-stagger">
