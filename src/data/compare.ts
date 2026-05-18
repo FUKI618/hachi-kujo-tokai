@@ -20,7 +20,7 @@ export const compareRows: CompareRow[] = [
     intermediary: { state: "bad", text: "翌日以降" },
   },
   {
-    label: "蜂駆除料金（標準）",
+    label: "ハチ駆除料金（標準）",
     us: { state: "us-ok", text: "¥3,300〜・見積厳守" },
     general: { state: "warn", text: "2〜6万円" },
     intermediary: { state: "bad", text: "3〜8万円" },
