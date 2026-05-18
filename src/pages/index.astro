@@ -262,7 +262,9 @@ const showSeasonalAlert = isHornetPeakSeason();
       </ul>
       <div class="troubles-arrow reveal" aria-hidden="true"></div>
       <div class="troubles-resolve reveal">
-        その悩み、<strong>{company.name}</strong>が<br />最短<span class="big">30分</span>で解決します。
+        <span class="troubles-resolve-lead">その悩み、</span>
+        <strong class="troubles-resolve-brand">{company.name}</strong>
+        <span class="troubles-resolve-tail">が最短<span class="big">30分</span>で解決します。</span>
       </div>
     </div>
   </section>
@@ -1476,17 +1478,52 @@ const showSeasonalAlert = isHornetPeakSeason();
     color: #fff;
     padding: 2rem 1.5rem;
     border-radius: var(--radius-lg);
-    font-size: clamp(1.375rem, 4vw, 2rem);
+    font-size: clamp(1.25rem, 3.6vw, 1.875rem);
     font-weight: 900;
-    line-height: 1.5;
+    line-height: 1.45;
     box-shadow: 0 24px 48px rgba(15, 23, 34, 0.16);
+  }
+  /* 美大生レベルの 3行構成: その悩み→屋号(1行確保)→最短30分で解決 */
+  .troubles-resolve-lead {
+    display: block;
+    font-size: 0.85em;
+    opacity: 0.95;
+    margin-bottom: 0.35em;
+    letter-spacing: 0.04em;
+  }
+  .troubles-resolve-brand {
+    display: inline-block;
+    font-family: "Reggae One", "Shippori Mincho B1", "Noto Sans JP", serif;
+    font-weight: 400;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.18);
+    padding: 0.15em 0.7em 0.2em;
+    border-radius: 0.4em;
+    margin: 0 0 0.45em;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    font-size: 1.05em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  }
+  .troubles-resolve-tail {
+    display: block;
+    font-size: 0.92em;
   }
   .troubles-resolve .big {
     font-family: var(--font-num);
-    font-size: 1.4em;
+    font-size: 1.6em;
     color: var(--color-accent);
-    margin: 0 0.375rem;
-    text-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+    margin: 0 0.25rem;
+    text-shadow: 0 3px 0 rgba(0, 0, 0, 0.25);
+    vertical-align: -0.05em;
+  }
+  /* Mobile 狭幅で屋号が 1行に収まるよう font-size 微調整 */
+  @media (max-width: 480px) {
+    .troubles-resolve-brand { font-size: 0.95em; letter-spacing: 0.04em; }
+  }
+  @media (max-width: 360px) {
+    .troubles-resolve-brand { font-size: 0.85em; padding: 0.15em 0.5em 0.2em; }
   }
 
   /* ----- Strengths ----- */
