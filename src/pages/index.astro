@@ -2066,11 +2066,13 @@ const showSeasonalAlert = isHornetPeakSeason();
     line-height: 1.35;
     word-break: keep-all;
     overflow-wrap: anywhere;
+    padding-top: 2.5rem;
   }
+  /* 「推奨」バッジは th の内部に配置（飛び出さない） */
   .compare-table thead th.is-us::before {
     content: "推奨";
     position: absolute;
-    top: -0.5rem;
+    top: 0.5rem;
     left: 50%;
     transform: translateX(-50%);
     background: var(--color-accent);
@@ -2082,20 +2084,18 @@ const showSeasonalAlert = isHornetPeakSeason();
     letter-spacing: 0.08em;
     z-index: 2;
     white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   }
-  .compare-table thead th.is-us {
-    padding-top: 1.625rem;
-  }
-  .compare-table thead th:nth-child(1) {
-    width: 26%;
-  }
-  .compare-table thead th.is-us {
-    width: 30%;
-  }
-  .compare-table thead th:nth-child(3),
-  .compare-table thead th:nth-child(4) {
-    width: 22%;
-  }
+  /* Compare (4列): label/us/general/intermediary */
+  #compare .compare-table thead th:nth-child(1) { width: 24%; }
+  #compare .compare-table thead th.is-us { width: 32%; }
+  #compare .compare-table thead th:nth-child(3),
+  #compare .compare-table thead th:nth-child(4) { width: 22%; }
+  /* VsGovernment (3列): label/government/us → is-us 列を広く */
+  #vs-government .compare-table thead th:nth-child(1) { width: 28%; }
+  #vs-government .compare-table thead th:nth-child(2) { width: 34%; }
+  #vs-government .compare-table thead th.is-us { width: 38%; }
+
   /* Mobile: 屋号が長いため font 縮小 + tbody th も自然改行 */
   @media (max-width: 560px) {
     .compare-table {
@@ -2103,10 +2103,16 @@ const showSeasonalAlert = isHornetPeakSeason();
     }
     .compare-table thead th {
       font-size: 0.6875rem;
-      padding: 1.75rem 0.375rem 0.875rem;
+      padding: 2.5rem 0.375rem 0.75rem;
     }
     .compare-table thead th.is-us {
       font-size: 0.75rem;
+      padding-top: 2.5rem;
+    }
+    .compare-table thead th.is-us::before {
+      font-size: 0.5625rem;
+      padding: 0.125rem 0.5rem;
+      top: 0.45rem;
     }
     .compare-table tbody th {
       white-space: normal;
