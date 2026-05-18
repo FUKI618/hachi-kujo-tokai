@@ -218,33 +218,6 @@ const showSeasonalAlert = isHornetPeakSeason();
     </div>
   </section>
 
-  <!-- ===== ② TrustBar（実績の数字） ===== -->
-  <section class="trust-section">
-    <div class="container">
-      <div class="trust-nums reveal">
-        <div class="trust-num">
-          <div class="trust-num-value font-num">
-            <span data-count={company.totalCases} data-format="comma">0</span>
-            <small>件超</small>
-          </div>
-          <div class="trust-num-label">累計駆除実績</div>
-        </div>
-        <div class="trust-num">
-          <div class="trust-num-value font-num"><span data-count={company.sameDayRate}>0</span><small>%</small></div>
-          <div class="trust-num-label">即日対応率</div>
-        </div>
-        <div class="trust-num">
-          <div class="trust-num-value font-num"><span data-count={company.satisfactionRate}>0</span><small>/5.0</small></div>
-          <div class="trust-num-label">お客様満足度</div>
-        </div>
-        <div class="trust-num">
-          <div class="trust-num-value font-num"><span data-count={company.yearsInBusiness}>0</span><small>年</small></div>
-          <div class="trust-num-label">業界経験</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== ③ Troubles（お悩み訴求） ===== -->
   <section class="section troubles" id="troubles" aria-labelledby="troubles-title">
     <div class="container">
