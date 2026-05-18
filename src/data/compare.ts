@@ -50,12 +50,6 @@ export const compareRows: CompareRow[] = [
     intermediary: { state: "bad", text: "対応不可が多い" },
   },
   {
-    label: "損害賠償保険",
-    us: { state: "us-ok", text: "1億円加入" },
-    general: { state: "warn", text: "未加入の業者も" },
-    intermediary: { state: "bad", text: "仲介先による" },
-  },
-  {
     label: "担当者の固定",
     us: { state: "us-ok", text: "自社スタッフ直行" },
     general: { state: "warn", text: "外注の場合あり" },

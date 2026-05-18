@@ -18,7 +18,7 @@ import { vsGovernmentRows, subsidyNote } from "../data/vs-government";
 import { scamSigns, scamWarningSource } from "../data/scam-warning";
 
 const title = `東海の蜂の巣駆除なら最短30分｜基本3,300円〜｜${company.name}`;
-const description = `蜂の巣駆除を愛知・岐阜・三重・静岡で最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ・アシナガバチに基本3,300円〜で対応。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証・1億円損害賠償保険加入。`;
+const description = `蜂の巣駆除を愛知・岐阜・三重・静岡で最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ・アシナガバチに基本3,300円〜で対応。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証。`;
 
 const fmtJpy = (n: number) =>
   new Intl.NumberFormat("ja-JP").format(n);
@@ -179,10 +179,9 @@ const showSeasonalAlert = isHornetPeakSeason();
             <svg class="hero-tel-card-arrow icon" aria-hidden="true"><use href="#i-arrow-right" /></svg>
           </a>
           <div class="hero-cta-row">
-            <a href="#contact" class="btn btn-ghost">フォームで相談</a>
-            <a href={company.lineUrl} class="btn btn-line cta-glow-line" data-cta="hero_line">
+            <a href={company.lineUrl} class="btn btn-line cta-glow-line hero-line-cta" data-cta="hero_line">
               <svg class="icon"><use href="#i-line" /></svg>
-              写真を送って相談
+              LINEで写真を送って相談
             </a>
           </div>
         </div>
@@ -242,10 +241,6 @@ const showSeasonalAlert = isHornetPeakSeason();
           <div class="trust-num-value font-num"><span data-count={company.yearsInBusiness}>0</span><small>年</small></div>
           <div class="trust-num-label">業界経験</div>
         </div>
-        <div class="trust-num">
-          <div class="trust-num-value font-num">{company.liabilityCoverage}</div>
-          <div class="trust-num-label">損害賠償保険加入</div>
-        </div>
       </div>
     </div>
   </section>
@@ -281,7 +276,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         選ばれる<span class="accent">3つの理由</span>
       </h2>
       <p class="section-lead">
-        東海4県のハチ駆除専門サービスとして、<strong>即日対応の駆けつけ・事前見積金額厳守・1年再発保証＋1億円賠償保険</strong>の3軸で他社と比較されています。中間マージンを挟まないハチ駆除業者の自社直接対応で、業界相場より平均20〜30%お得なハチ駆除料金を実現<small style="font-size:.75em;opacity:.7;">（※自社調べ・2026年5月時点）</small>。
+        東海4県のハチ駆除専門サービスとして、<strong>即日対応の駆けつけ・事前見積金額厳守・1年再発保証</strong>の3軸で他社と比較されています。中間マージンを挟まないハチ駆除業者の自社直接対応で、業界相場より平均20〜30%お得なハチ駆除料金を実現<small style="font-size:.75em;opacity:.7;">（※自社調べ・2026年5月時点）</small>。
       </p>
       <div class="strengths reveal-stagger">
         {strengths.map((s) => (
@@ -583,10 +578,9 @@ const showSeasonalAlert = isHornetPeakSeason();
         </span>
       </a>
       <div class="mid-cta-row">
-        <a href="#contact" class="btn" style="background:#0f1722;color:#fff;">フォームで相談</a>
-        <a href={company.lineUrl} class="btn btn-line" data-cta="mid_line">
+        <a href={company.lineUrl} class="btn btn-line cta-glow-line" data-cta="mid_line" style="min-width:280px;">
           <svg class="icon"><use href="#i-line" /></svg>
-          LINEで写真を送る
+          LINEで写真を送って相談
         </a>
       </div>
     </div>
@@ -602,7 +596,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         他社との<span class="accent">違い</span>
       </h2>
       <p class="section-lead">
-        仲介サイトや一般的な駆除業者と比べ、当社は<strong>最短30分の即日対応・基本3,300円〜・事前見積金額厳守・1年再発保証＋1億円賠償保険</strong>のすべてで明確な差があります。広告代理店も中間業者も挟まない自社直接運営で、業界相場の青天井請求を排除しています。
+        仲介サイトや一般的な駆除業者と比べ、当社は<strong>最短30分の即日対応・基本3,300円〜・事前見積金額厳守・1年再発保証</strong>のすべてで明確な差があります。広告代理店も中間業者も挟まない自社直接運営で、業界相場の青天井請求を排除しています。
       </p>
       <div class="compare-wrap reveal">
         <div class="compare-scroll">
@@ -862,7 +856,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         お問い合わせ・<span class="accent">無料相談</span>
       </h2>
       <p class="section-lead">
-        緊急の場合はお電話が一番早く対応できます。LINEで巣の写真と所在地を送っていただければ、最短15分で概算見積をお返しします。フォーム送信後は1時間以内にご返信します（営業時間外は翌朝）。
+        お急ぎの方は<strong>お電話</strong>が最も早く対応できます。じっくり相談したい方は<strong>LINE</strong>から、巣の写真と所在地を送るだけ。お電話番号やメールアドレスの入力は不要です。
       </p>
 
       <div class="contact-grid reveal">
@@ -878,53 +872,53 @@ const showSeasonalAlert = isHornetPeakSeason();
           <ul class="contact-perks">
             <li><svg class="icon"><use href="#i-check-circle" /></svg>最短30分で現地到着・即日駆除</li>
             <li><svg class="icon"><use href="#i-check-circle" /></svg>基本3,300円〜・事前見積金額厳守</li>
-            <li><svg class="icon"><use href="#i-check-circle" /></svg>1年再発保証＋1億円損害賠償保険加入</li>
+            <li><svg class="icon"><use href="#i-check-circle" /></svg>1年再発保証付きで再営巣も安心</li>
             <li><svg class="icon"><use href="#i-check-circle" /></svg>夜間・深夜・土日祝も追加料金なし</li>
           </ul>
-          <a href={company.lineUrl} class="btn btn-line btn-block cta-glow-line" data-cta="contact_line">
-            <svg class="icon"><use href="#i-line" /></svg>
-            LINEで写真を送って相談
-          </a>
-          <p class="privacy-note">※ 写真を送っていただくと、より正確な見積金額をお伝えできます。</p>
         </div>
 
-        <!-- DIFF-POINT: form action を実送信先（Formspree等）に -->
-        <form class="contact-form" action="#" method="POST" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="f-name">お名前<span class="required">必須</span></label>
-              <input type="text" id="f-name" name="name" class="form-control" required autocomplete="name" />
-            </div>
-            <div class="form-group">
-              <label for="f-tel">電話番号<span class="required">必須</span></label>
-              <input type="tel" id="f-tel" name="tel" class="form-control" required autocomplete="tel" placeholder="090-0000-0000" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="f-email">メールアドレス</label>
-            <input type="email" id="f-email" name="email" class="form-control" autocomplete="email" />
-          </div>
-          <div class="form-group">
-            <label for="f-area">お住まいエリア<span class="required">必須</span></label>
-            <select id="f-area" name="area" class="form-control" required>
-              <option value="">選択してください</option>
-              <option>愛知県</option>
-              <option>岐阜県</option>
-              <option>三重県</option>
-              <option>静岡県</option>
-              <option>その他</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="f-msg">ご相談内容<span class="required">必須</span></label>
-            <textarea id="f-msg" name="message" class="form-control" required placeholder="例）2階の軒下に直径15cmほどの巣があります。蜂の種類は分かりません。"></textarea>
-          </div>
-          <p class="privacy-note">※ ご入力いただいた情報は見積りとご連絡のためにのみ使用します。</p>
-          <button type="submit" class="btn btn-primary btn-lg btn-block cta-glow">
-            無料で見積りを依頼する
-            <svg class="icon"><use href="#i-arrow-right" /></svg>
-          </button>
-        </form>
+        <!-- LINE 4ステップガイド (form 廃止後の置換) -->
+        <div class="contact-line-guide">
+          <h3 class="headline">
+            <svg class="icon" style="color:#06c755;"><use href="#i-line" /></svg>
+            LINEで かんたん4ステップ
+          </h3>
+          <ol class="line-steps">
+            <li class="line-step">
+              <span class="line-step-num">1</span>
+              <div class="line-step-body">
+                <strong>友達追加</strong>
+                <p>下のボタンをタップして、蜂の巣駆除ファクトリー東海の LINE 公式アカウントを友達追加。</p>
+              </div>
+            </li>
+            <li class="line-step">
+              <span class="line-step-num">2</span>
+              <div class="line-step-body">
+                <strong>巣の写真を送る</strong>
+                <p>トーク画面で蜂の巣の写真・お住まいの市町村・連絡可能な時間帯をひと言メッセージで送信。</p>
+              </div>
+            </li>
+            <li class="line-step">
+              <span class="line-step-num">3</span>
+              <div class="line-step-body">
+                <strong>概算見積を受取り</strong>
+                <p>最短15分（営業時間内）で概算金額・出動可能時刻を返信します。納得いかなければそのまま終了で OK。</p>
+              </div>
+            </li>
+            <li class="line-step">
+              <span class="line-step-num">4</span>
+              <div class="line-step-body">
+                <strong>確定→駆除作業</strong>
+                <p>日時を確定し、最短30分で現地到着。現地で確定見積→納得後に作業開始→完了報告まで LINE 上で完結。</p>
+              </div>
+            </li>
+          </ol>
+          <a href={company.lineUrl} class="btn btn-line btn-block btn-lg cta-glow-line" data-cta="contact_line">
+            <svg class="icon"><use href="#i-line" /></svg>
+            LINEで友達追加して写真を送る
+          </a>
+          <p class="privacy-note">※ お電話番号・メールアドレス・住所の入力は一切不要。LINE 上のやり取りだけで完結します。</p>
+        </div>
       </div>
     </div>
   </section>
@@ -949,7 +943,6 @@ const showSeasonalAlert = isHornetPeakSeason();
             <tr><th>事業内容</th><td>{company.businessType}</td></tr>
             <tr><th>対応エリア</th><td>{company.serviceArea}</td></tr>
             <tr><th>支払方法</th><td>{company.payment.join("／")}</td></tr>
-            <tr><th>加入保険</th><td>{company.insurance}</td></tr>
           </tbody>
         </table>
       </div>
@@ -2095,32 +2088,64 @@ const showSeasonalAlert = isHornetPeakSeason();
   .compare-table thead th.is-us {
     background: var(--color-primary);
     color: #fff;
-    font-size: 1rem;
+    font-size: 0.9375rem;
     position: relative;
+    line-height: 1.35;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
   }
   .compare-table thead th.is-us::before {
     content: "推奨";
     position: absolute;
-    top: -0.625rem;
+    top: -0.5rem;
     left: 50%;
     transform: translateX(-50%);
     background: var(--color-accent);
     color: var(--color-dark);
-    padding: 0.1875rem 0.75rem;
+    padding: 0.125rem 0.625rem;
     border-radius: var(--radius-pill);
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     font-weight: 900;
     letter-spacing: 0.08em;
-  }
-  .compare-table thead th:nth-child(1) {
-    width: 28%;
+    z-index: 2;
+    white-space: nowrap;
   }
   .compare-table thead th.is-us {
-    width: 28%;
+    padding-top: 1.625rem;
+  }
+  .compare-table thead th:nth-child(1) {
+    width: 26%;
+  }
+  .compare-table thead th.is-us {
+    width: 30%;
   }
   .compare-table thead th:nth-child(3),
   .compare-table thead th:nth-child(4) {
     width: 22%;
+  }
+  /* Mobile: 屋号が長いため font 縮小 + tbody th も自然改行 */
+  @media (max-width: 560px) {
+    .compare-table {
+      font-size: 0.75rem;
+    }
+    .compare-table thead th {
+      font-size: 0.6875rem;
+      padding: 1.75rem 0.375rem 0.875rem;
+    }
+    .compare-table thead th.is-us {
+      font-size: 0.75rem;
+    }
+    .compare-table tbody th {
+      white-space: normal;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      font-size: 0.6875rem;
+      padding: 0.75rem 0.5rem;
+    }
+    .compare-table th,
+    .compare-table td {
+      padding: 0.75rem 0.375rem;
+    }
   }
   .compare-table tbody tr {
     border-bottom: 1px solid var(--color-border);
@@ -3158,8 +3183,8 @@ const showSeasonalAlert = isHornetPeakSeason();
       max-width: 1280px;
     }
     .hero-inner {
-      grid-template-columns: minmax(0, 560px) minmax(0, 440px);
-      gap: 3rem;
+      grid-template-columns: minmax(0, 580px) minmax(0, 360px);
+      gap: 2.5rem;
       align-items: center;
     }
     /* PCでも動画表示。動画を右側に寄せて hero-right の背景的に */
@@ -3197,20 +3222,20 @@ const showSeasonalAlert = isHornetPeakSeason();
 
   @media (min-width: 1120px) {
     .hero-inner {
-      grid-template-columns: minmax(0, 600px) minmax(0, 460px);
-      gap: 4rem;
+      grid-template-columns: minmax(0, 620px) minmax(0, 380px);
+      gap: 3rem;
     }
   }
 
   /* === 保証バッジ (参考画像1) === */
   .hero-badge-guarantee {
     background: linear-gradient(135deg, #fef9ed 0%, #fdf2d5 50%, #fef9ed 100%);
-    border-radius: 16px;
-    padding: 1.5rem 1.75rem 1.25rem;
+    border-radius: 14px;
+    padding: 1.125rem 1.25rem 1rem;
     text-align: center;
     position: relative;
     box-shadow:
-      0 16px 40px rgba(0, 0, 0, 0.4),
+      0 12px 32px rgba(0, 0, 0, 0.35),
       0 0 0 1px rgba(201, 167, 107, 0.5),
       inset 0 0 0 1px rgba(255, 255, 255, 0.6);
   }
@@ -3231,19 +3256,19 @@ const showSeasonalAlert = isHornetPeakSeason();
     pointer-events: none;
   }
   .hero-badge-eyebrow {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     color: #8b5a2b;
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.35rem;
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
     position: relative;
     z-index: 1;
   }
   .hero-badge-main {
-    font-size: 1.75rem;
+    font-size: 1.4rem;
     font-weight: 900;
     color: #c81e1e;
-    margin: 0 0 0.85rem;
+    margin: 0 0 0.6rem;
     letter-spacing: 0.02em;
     font-family: var(--font-num);
     line-height: 1.2;
@@ -3252,11 +3277,11 @@ const showSeasonalAlert = isHornetPeakSeason();
     z-index: 1;
   }
   .hero-badge-note {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #5a4a3a;
-    line-height: 1.6;
+    line-height: 1.55;
     margin: 0;
-    padding-top: 0.6rem;
+    padding-top: 0.5rem;
     border-top: 1px dashed #c9a76b;
     text-align: left;
     position: relative;
@@ -3269,12 +3294,12 @@ const showSeasonalAlert = isHornetPeakSeason();
     background: #fff;
     border: 2px dashed #c81e1e;
     border-radius: 12px;
-    padding: 1.25rem 3rem 1.25rem 1.25rem;
+    padding: 0.875rem 2.5rem 0.875rem 0.875rem;
     display: grid;
-    grid-template-columns: 52px 1fr;
+    grid-template-columns: 44px 1fr;
     align-items: center;
-    gap: 0.875rem;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    gap: 0.625rem;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
   }
   .hero-coupon::before,
   .hero-coupon::after {
@@ -3297,30 +3322,31 @@ const showSeasonalAlert = isHornetPeakSeason();
     transform: translateY(-50%);
   }
   .hero-coupon-icon {
-    width: 52px;
-    height: 52px;
+    width: 44px;
+    height: 44px;
     background: linear-gradient(135deg, #fef2f2 0%, #fde0e0 100%);
-    border-radius: 10px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #c81e1e;
     flex-shrink: 0;
   }
+  .hero-coupon-icon svg { width: 32px; height: 32px; }
   .hero-coupon-body {
     min-width: 0;
   }
   .hero-coupon-eyebrow {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #4a5568;
-    margin: 0 0 0.2rem;
+    margin: 0 0 0.15rem;
     font-weight: 700;
   }
   .hero-coupon-main {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     font-weight: 900;
     color: #0f1722;
-    margin: 0 0 0.25rem;
+    margin: 0 0 0.2rem;
     line-height: 1.25;
   }
   .hero-coupon-main .hl {
@@ -3328,22 +3354,114 @@ const showSeasonalAlert = isHornetPeakSeason();
     font-size: 1.1em;
   }
   .hero-coupon-list {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #5a6470;
     margin: 0;
-    line-height: 1.5;
+    line-height: 1.45;
   }
   .hero-coupon-label {
     position: absolute;
-    right: 14px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%) rotate(90deg);
     transform-origin: center;
-    font-size: 0.7rem;
-    letter-spacing: 0.4em;
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
     font-weight: 800;
     color: #c81e1e;
     white-space: nowrap;
+  }
+
+  /* ==================================================== */
+  /* === LINE 4ステップガイド (Contact section) === */
+  /* ==================================================== */
+  .contact-line-guide {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.75rem 1.5rem;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    border: 2px solid #06c755;
+  }
+  .contact-line-guide > h3.headline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    margin: 0 0 1.25rem;
+    color: #0f1722;
+  }
+  .contact-line-guide > h3.headline .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .line-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+  .line-step {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 0.875rem;
+    align-items: start;
+    padding: 0.625rem 0;
+    border-bottom: 1px dashed rgba(6, 199, 85, 0.25);
+  }
+  .line-step:last-child {
+    border-bottom: 0;
+  }
+  .line-step-num {
+    width: 32px;
+    height: 32px;
+    background: #06c755;
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 900;
+    font-size: 1.05rem;
+    font-family: var(--font-num);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .line-step-body strong {
+    display: block;
+    font-size: 1rem;
+    color: #0f1722;
+    margin-bottom: 0.2rem;
+    font-weight: 800;
+  }
+  .line-step-body p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #5a6470;
+    line-height: 1.65;
+  }
+
+  /* テキスト切れ防止: 共通 fix */
+  .bee-card-title,
+  .case-card-title,
+  .voice-card-name,
+  .flow-step-title,
+  .area-block h3,
+  .strength-title,
+  .scam-card-title,
+  .diy-col-title,
+  .promise-title {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    line-height: 1.35;
+  }
+  .strength-title { font-size: clamp(1rem, 1.6vw, 1.25rem); }
+
+  /* PC 動画露出: object-position 調整 */
+  @media (min-width: 880px) {
+    .hero-bg-video {
+      object-position: right 25% center !important;
+    }
   }
 </style>
 
@@ -3429,26 +3547,6 @@ const showSeasonalAlert = isHornetPeakSeason();
         }
       });
     });
-
-    // フォーム最低限のクライアントバリデーション
-    var form = document.querySelector(".contact-form");
-    if (form) {
-      form.addEventListener("submit", function (e) {
-        var valid = true;
-        form.querySelectorAll("[required]").forEach(function (field) {
-          if (!field.value.trim()) {
-            valid = false;
-            field.style.borderColor = "var(--color-primary)";
-          } else {
-            field.style.borderColor = "";
-          }
-        });
-        if (!valid) {
-          e.preventDefault();
-          alert("未入力の必須項目があります。");
-        }
-      });
-    }
 
     // アンカースクロール（topbar/header オフセット考慮）
     document.querySelectorAll('a[href^="#"]').forEach(function (a) {
