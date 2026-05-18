@@ -3063,15 +3063,40 @@ const showSeasonalAlert = isHornetPeakSeason();
       padding: 1rem 1.25rem;
       font-weight: 800;
     }
-    /* 動画をもっと見せる: overlay を薄く + content をコンパクト */
+    /* 動画を最大露出: overlay 中段を大胆に透明化 + テキスト要素に強い text-shadow */
+    .hero { padding: 1.25rem 0 3rem !important; }
     .hero::before {
       background: linear-gradient(
         to bottom,
-        rgba(15, 23, 34, 0.85) 0%,
-        rgba(15, 23, 34, 0.55) 35%,
-        rgba(15, 23, 34, 0.45) 60%,
-        rgba(15, 23, 34, 0.78) 100%
+        rgba(15, 23, 34, 0.65) 0%,
+        rgba(15, 23, 34, 0.20) 20%,
+        rgba(15, 23, 34, 0.15) 45%,
+        rgba(15, 23, 34, 0.50) 72%,
+        rgba(15, 23, 34, 0.92) 100%
       ) !important;
+    }
+    /* テキスト読みやすさ確保 (動画透過と両立) */
+    .hero-eyebrow {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+    .hero-h1,
+    .hero-sub,
+    .hero-mascot .speech-bubble {
+      text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.9),
+        0 1px 0 rgba(0, 0, 0, 0.6),
+        0 0 16px rgba(0, 0, 0, 0.55);
+    }
+    /* 統計カードと電話CTAは UI 群として読みやすく */
+    .hero-stat {
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      background: rgba(20, 25, 35, 0.65) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .hero-tel-card {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
   }
 
@@ -3091,7 +3116,7 @@ const showSeasonalAlert = isHornetPeakSeason();
   /* === モバイル特化エフェクト（v2 仕上げ） === */
   /* ============================================ */
 
-  /* Hero BG 動画: モバイル限定で表示 */
+  /* Hero BG 動画: モバイル限定で表示。動画の上部(蜂の巣・作業員)を見せる */
   @media (max-width: 880px) {
     .hero-bg-video {
       display: block;
@@ -3100,7 +3125,7 @@ const showSeasonalAlert = isHornetPeakSeason();
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
+      object-position: center 28%;
       z-index: 1;
     }
     /* 動画あるときは picture を背景フォールバックとして使う */
