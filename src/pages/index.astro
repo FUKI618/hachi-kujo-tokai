@@ -2961,20 +2961,26 @@ const showSeasonalAlert = isHornetPeakSeason();
     .troubles-grid {
       grid-template-columns: 1fr;
     }
-    /* Flow: 縦タイムライン (1列 stack + 番号と説明を横並び + 縦線で繋ぐ) */
+    /* Flow: 縦タイムライン (1列 stack + 番号 rowspan + title/desc 右側に縦並び) */
     .flow {
       grid-template-columns: 1fr;
       gap: 0;
       position: relative;
       max-width: 22rem;
       margin: 0 auto;
+      padding: 0;
     }
     .flow-step {
       display: grid;
-      grid-template-columns: 4rem 1fr;
-      gap: 1rem;
+      grid-template-columns: 3.5rem 1fr;
+      grid-template-rows: auto auto;
+      grid-template-areas:
+        "num title"
+        "num desc";
+      column-gap: 1rem;
+      row-gap: 0.25rem;
       text-align: left;
-      padding: 0.875rem 0.5rem;
+      padding: 1rem 0.5rem 1rem 0.75rem;
       align-items: start;
       position: relative;
     }
@@ -2982,14 +2988,16 @@ const showSeasonalAlert = isHornetPeakSeason();
       content: "" !important;
       display: block !important;
       position: absolute !important;
-      left: 2.875rem !important;
-      top: 4.5rem !important;
+      left: 2.5rem !important;
+      top: 4.25rem !important;
       width: 2px !important;
       height: calc(100% - 3rem) !important;
       background: linear-gradient(to bottom, var(--color-primary) 0%, var(--color-primary-light) 80%, transparent 100%) !important;
       right: auto !important;
     }
     .flow-num {
+      grid-area: num;
+      align-self: start;
       margin: 0;
       width: 3.5rem;
       height: 3.5rem;
@@ -3002,14 +3010,17 @@ const showSeasonalAlert = isHornetPeakSeason();
       border-width: 1.5px;
     }
     .flow-step-title {
-      font-size: 1rem;
-      margin: 0.25rem 0 0.375rem;
+      grid-area: title;
+      font-size: 1.0625rem;
+      margin: 0.375rem 0 0;
       line-height: 1.35;
       text-align: left;
+      font-weight: 800;
     }
     .flow-step-desc {
+      grid-area: desc;
       font-size: 0.8125rem;
-      line-height: 1.65;
+      line-height: 1.7;
       color: var(--color-muted);
       text-align: left;
       margin: 0;
