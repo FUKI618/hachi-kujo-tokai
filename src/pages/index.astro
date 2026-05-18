@@ -13,9 +13,12 @@ import { voices } from "../data/voices";
 import { flowSteps } from "../data/flow";
 import { areas } from "../data/areas";
 import { faqs } from "../data/faq";
+import { diyOkConditions, diyNgConditions } from "../data/diy-guide";
+import { vsGovernmentRows, subsidyNote } from "../data/vs-government";
+import { scamSigns, scamWarningSource } from "../data/scam-warning";
 
-const title = `東海の蜂駆除なら最短30分｜基本3,300円〜｜${company.name}`;
-const description = `愛知・岐阜・三重・静岡の蜂駆除なら【${company.name}】。最短30分で出動・基本3,300円〜・事前見積金額厳守・1年再発保証付き。24時間365日受付／見積り無料／キャンセル料0円。スズメバチ・アシナガバチ専門対応で東海4県全域に駆けつけます。`;
+const title = `東海の蜂の巣駆除なら最短30分｜基本3,300円〜｜${company.name}`;
+const description = `蜂の巣駆除を愛知・岐阜・三重・静岡で最短30分。事前見積金額厳守で1円も上がらないハチ駆除専門【${company.name}】。スズメバチ・アシナガバチに基本3,300円〜で対応。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証・1億円損害賠償保険加入。`;
 
 const fmtJpy = (n: number) =>
   new Intl.NumberFormat("ja-JP").format(n);
@@ -114,16 +117,35 @@ const showSeasonalAlert = isHornetPeakSeason();
           decoding="async"
         />
       </picture>
+      <!-- Veo3 生成 cinematic 動画（モバイル限定、prefers-reduced-motion で自動無効化） -->
+      <video
+        class="hero-bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={heroImage800}
+        aria-hidden="true"
+      >
+        <source src={assetPath("videos/hero-mobile.mp4")} type="video/mp4" />
+      </video>
     </div>
     <div class="container hero-inner">
       <div class="hero-content reveal">
         <span class="hero-eyebrow">
           <svg class="icon"><use href="#i-pin" /></svg>
-          愛知・岐阜・三重・静岡 全域対応｜スズメバチ駆除専門
+          愛知・岐阜・三重・静岡の蜂の巣駆除｜スズメバチ専門
         </span>
+        <div class="hero-mascot-wrap">
+          <div class="hero-mascot" aria-hidden="true">
+            <img src={assetPath("logo.svg")} alt="" width="72" height="72" />
+            <div class="speech-bubble">呼んだ？最短<strong>30分</strong>で出動！</div>
+          </div>
+        </div>
         <h1 id="hero-title" class="headline hero-h1">
-          <span class="hero-h1-line">蜂の巣、</span>
-          <span class="hero-h1-line">今日中に<span class="hl-num">必ず</span>消します。</span>
+          <span class="hero-h1-line"><span class="hl-kw">蜂の巣駆除</span>、</span>
+          <span class="hero-h1-line"><span class="hl-num">今日中</span>に必ず完了。</span>
         </h1>
         <p class="hero-sub">
           攻撃性最大の<strong>スズメバチ</strong>も、防護装備の専門隊が<strong>24時間救急対応</strong>。最短<strong>30分</strong>で出動・基本<strong>3,300円〜</strong>・<strong>事前見積金額厳守</strong>・1年再発保証。
@@ -316,6 +338,71 @@ const showSeasonalAlert = isHornetPeakSeason();
     </div>
   </section>
 
+  <!-- ===== ⑤′ DIY-Guide（自分で駆除する前に） ===== -->
+  <section class="section" id="diy-guide" aria-labelledby="diy-title">
+    <div class="container container-narrow">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">DIY OR PRO</span>
+      </div>
+      <h2 id="diy-title" class="section-title headline">
+        自分で<span class="accent">駆除する前に</span>知っておくこと
+      </h2>
+      <p class="section-lead">
+        蜂の巣の状態によっては自力対応も可能ですが、判断を間違えると刺傷事故につながります。<strong>プロに任せるべきライン</strong>を、症状別に整理しました。
+      </p>
+
+      <div class="reveal-stagger" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:1.25rem;margin-top:2rem;">
+        <article style="border:2px solid #2e7d32;border-radius:14px;padding:1.5rem 1.25rem;background:#fff;">
+          <header style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;color:#2e7d32;">
+            <svg class="icon" style="width:1.5rem;height:1.5rem;"><use href="#i-check-circle" /></svg>
+            <h3 class="headline" style="font-size:1.15rem;margin:0;color:#2e7d32;">自分で駆除を検討できるケース</h3>
+          </header>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:1rem;">
+            {diyOkConditions.map((c) => (
+              <li style="display:flex;gap:.75rem;">
+                <span aria-hidden="true" style="color:#2e7d32;flex-shrink:0;margin-top:.15rem;">
+                  <svg class="icon" style="width:1.1rem;height:1.1rem;"><use href={`#i-${c.iconId}`} /></svg>
+                </span>
+                <div>
+                  <p style="margin:0 0 .25rem;font-weight:700;">{c.label}</p>
+                  <p style="margin:0;font-size:.95rem;color:#4a5568;line-height:1.7;">{c.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </article>
+
+        <article style="border:2px solid #c81e1e;border-radius:14px;padding:1.5rem 1.25rem;background:#fff;">
+          <header style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;color:#c81e1e;">
+            <svg class="icon" style="width:1.5rem;height:1.5rem;"><use href="#i-warning" /></svg>
+            <h3 class="headline" style="font-size:1.15rem;margin:0;color:#c81e1e;">必ず業者に依頼すべきケース</h3>
+          </header>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:1rem;">
+            {diyNgConditions.map((c) => (
+              <li style="display:flex;gap:.75rem;">
+                <span aria-hidden="true" style="color:#c81e1e;flex-shrink:0;margin-top:.15rem;">
+                  <svg class="icon" style="width:1.1rem;height:1.1rem;"><use href={`#i-${c.iconId}`} /></svg>
+                </span>
+                <div>
+                  <p style="margin:0 0 .25rem;font-weight:700;">{c.label}</p>
+                  <p style="margin:0;font-size:.95rem;color:#4a5568;line-height:1.7;">{c.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
+
+      <div class="reveal" style="margin-top:2rem;padding:1.5rem;background:#fff7e6;border-radius:14px;text-align:center;">
+        <p style="margin:0 0 1rem;font-weight:700;">迷ったらまず<span style="color:#c81e1e;">無料相談</span>を。種類・サイズの判断もお電話で受け付けます。</p>
+        <a href={company.phoneTelLink} class="btn cta-glow" data-cta="diy_tel" style="background:#c81e1e;color:#fff;display:inline-flex;align-items:center;gap:.5rem;">
+          <svg class="icon"><use href="#i-phone" /></svg>
+          無料相談する（24時間365日）
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== ⑥ Pricing（料金表） ===== -->
   <section class="section" id="price" aria-labelledby="price-title">
     <div class="container">
@@ -397,6 +484,59 @@ const showSeasonalAlert = isHornetPeakSeason();
     </div>
   </section>
 
+  <!-- ===== ⑥′ VsGovernment（市役所では無料？） ===== -->
+  <section class="section section-soft" id="vs-government" aria-labelledby="vsg-title">
+    <div class="container container-narrow">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">VS CITY HALL</span>
+      </div>
+      <h2 id="vsg-title" class="section-title headline">
+        「市役所で<span class="accent">無料駆除</span>」は本当？
+      </h2>
+      <p class="section-lead">
+        「ハチの巣は市役所が無料で駆除してくれる」と聞いたことがある方も多いはず。<strong>結論から言うと、駆除作業そのものは原則として自治体の業務範囲外</strong>です。東海4県の自治体対応と当社の違いを整理しました。
+      </p>
+      <div class="compare-wrap reveal">
+        <div class="compare-scroll">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>市役所・自治体</th>
+                <th class="is-us">{company.name}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vsGovernmentRows.map((row) => (
+                <tr>
+                  <th>{row.label}</th>
+                  <td>
+                    <span class={`compare-cell ${row.government.state}`}>{row.government.text}</span>
+                  </td>
+                  <td class="is-us">
+                    <span class={`compare-cell ${row.us.state}`}>
+                      <svg class="icon"><use href="#i-check-circle" /></svg>
+                      {row.us.text}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <aside class="reveal" style="margin-top:1.5rem;padding:1.25rem 1.5rem;background:#fff;border-left:4px solid #c81e1e;border-radius:8px;">
+        <p class="headline" style="margin:0 0 .75rem;font-size:1.05rem;font-weight:700;">{subsidyNote.text}</p>
+        <ul style="margin:0;padding-left:1.25rem;line-height:1.85;font-size:.95rem;color:#4a5568;">
+          {subsidyNote.bullets.map((b) => (<li>{b}</li>))}
+        </ul>
+      </aside>
+      <p class="price-note" style="margin-top:1rem;">
+        ※ 自治体対応は2026年5月時点の公開情報に基づく当社調査。最新の補助金制度はお住まいの市町村にご確認ください。
+      </p>
+    </div>
+  </section>
+
   <!-- ===== ⑦ MidCTA（中盤フルワイドCTA） ===== -->
   <section class="mid-cta" aria-label="お電話ご相談">
     <div class="container mid-cta-inner reveal">
@@ -470,6 +610,40 @@ const showSeasonalAlert = isHornetPeakSeason();
       </div>
       <p class="price-note" style="margin-top:1rem;">
         ※ 比較は業界の一般的な相場・公開情報に基づく当社の独自調査です。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== ⑧′ Scam-Warning（悪質業者の見抜き方） ===== -->
+  <section class="section" id="scam-warning" aria-labelledby="scam-title">
+    <div class="container container-narrow">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">RED FLAGS</span>
+      </div>
+      <h2 id="scam-title" class="section-title headline">
+        「ぼったくり」業者の<span class="accent">3つのサイン</span>
+      </h2>
+      <p class="section-lead">
+        国民生活センターには『4,000円見積→11万円請求』のような蜂駆除の高額請求事例が多数寄せられています。<strong>{company.name}が一度も指摘されない理由</strong>を、悪質業者の典型サインと対比して説明します。
+      </p>
+      <div class="reveal-stagger" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:1.25rem;margin-top:2rem;">
+        {scamSigns.map((s) => (
+          <article style="background:#fff;border-radius:14px;padding:1.5rem 1.25rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);position:relative;border-top:4px solid #c81e1e;">
+            <span class="font-num" style="position:absolute;top:-1rem;left:1rem;background:#c81e1e;color:#fff;font-weight:900;font-size:1.1rem;padding:.25rem .75rem;border-radius:6px;">{s.num}</span>
+            <header style="display:flex;align-items:center;gap:.5rem;margin:.5rem 0 1rem;color:#c81e1e;">
+              <svg class="icon" style="width:1.4rem;height:1.4rem;flex-shrink:0;"><use href={`#i-${s.iconId}`} /></svg>
+              <h3 class="headline" style="font-size:1.1rem;margin:0;color:#c81e1e;">{s.redFlag}</h3>
+            </header>
+            <p style="margin:0 0 1rem;font-size:.93rem;line-height:1.75;color:#4a5568;">{s.description}</p>
+            <div style="background:#f0fdf4;border-left:4px solid #2e7d32;padding:.85rem 1rem;border-radius:6px;">
+              <span style="display:block;font-size:.85rem;font-weight:700;color:#2e7d32;margin-bottom:.25rem;">{company.name}は</span>
+              <p style="margin:0;font-size:.95rem;line-height:1.7;">{s.ourCommitment}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p style="margin-top:1.5rem;font-size:.85rem;color:#6b7280;text-align:center;">
+        参考: <a href={scamWarningSource.url} target="_blank" rel="noopener noreferrer" style="color:#0f1722;text-decoration:underline;">{scamWarningSource.text}</a>
       </p>
     </div>
   </section>
@@ -993,6 +1167,43 @@ const showSeasonalAlert = isHornetPeakSeason();
     text-shadow:
       0 0 12px rgba(245, 179, 0, 0.65),
       0 4px 0 rgba(0, 0, 0, 0.25);
+  }
+  /* === Ahrefs King KW「蜂の巣駆除」を視覚強調（vol 9,700） === */
+  .hero-h1 .hl-kw {
+    color: var(--color-accent);
+    font-weight: 900;
+    position: relative;
+    display: inline-block;
+    text-shadow:
+      0 0 18px rgba(245, 179, 0, 0.5),
+      0 2px 6px rgba(0, 0, 0, 0.5);
+  }
+  .hero-h1 .hl-kw::after {
+    content: "";
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    bottom: -0.08em;
+    height: 0.12em;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--color-accent) 25%,
+      var(--color-accent) 75%,
+      transparent 100%
+    );
+    border-radius: 999px;
+    opacity: 0.85;
+    transform-origin: center;
+    animation: hl-kw-pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes hl-kw-pulse {
+    0%, 100% { transform: scaleX(0.78); opacity: 0.55; }
+    50% { transform: scaleX(1); opacity: 0.95; }
+  }
+  /* === Hero BG video（モバイル限定） === */
+  .hero-bg-video {
+    display: none;
   }
   .hero-sub {
     font-size: clamp(0.9375rem, 2.2vw, 1.0625rem);
@@ -2693,6 +2904,151 @@ const showSeasonalAlert = isHornetPeakSeason();
     .brand-mark {
       width: 2rem;
       height: 2rem;
+    }
+  }
+
+  /* ============================================ */
+  /* === モバイル特化エフェクト（v2 仕上げ） === */
+  /* ============================================ */
+
+  /* Hero BG 動画: モバイル限定で表示 */
+  @media (max-width: 880px) {
+    .hero-bg-video {
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 1;
+    }
+    /* 動画あるときは picture を背景フォールバックとして使う */
+    .hero-bg picture img {
+      opacity: 0.85;
+    }
+
+    /* Hero BG: subtle ken-burns（動画/画像どちらにも） */
+    .hero-bg img {
+      animation: ken-burns 24s ease-in-out infinite alternate;
+      transform-origin: center;
+    }
+    @keyframes ken-burns {
+      0% { transform: scale(1.0); }
+      100% { transform: scale(1.07); }
+    }
+
+    /* Hero Tel CTA: パルス + glow */
+    .hero-tel-card {
+      animation: cta-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes cta-pulse {
+      0%, 100% {
+        box-shadow:
+          0 4px 16px rgba(200, 30, 30, 0.28),
+          0 0 0 0 rgba(245, 179, 0, 0);
+      }
+      50% {
+        box-shadow:
+          0 8px 28px rgba(200, 30, 30, 0.48),
+          0 0 0 8px rgba(245, 179, 0, 0.08);
+      }
+    }
+
+    /* Hero 内 ambient particles（蜂が舞うような微細グロー） */
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        radial-gradient(circle 2px at 18% 28%, rgba(245, 179, 0, 0.55), transparent 60%),
+        radial-gradient(circle 1.5px at 72% 48%, rgba(245, 179, 0, 0.4), transparent 60%),
+        radial-gradient(circle 2.2px at 42% 72%, rgba(245, 179, 0, 0.5), transparent 60%),
+        radial-gradient(circle 1.5px at 88% 22%, rgba(245, 179, 0, 0.35), transparent 60%);
+      background-size: 220% 220%;
+      animation: particles-drift 16s linear infinite;
+      pointer-events: none;
+      opacity: 0.7;
+      mix-blend-mode: screen;
+    }
+    @keyframes particles-drift {
+      0% { background-position: 0% 0%; }
+      100% { background-position: -220% -110%; }
+    }
+
+    /* Hero stat tap feedback */
+    .hero-stat {
+      transition:
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.3s ease;
+    }
+    .hero-stat:active {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(245, 179, 0, 0.35);
+    }
+
+    /* Mascot wobble（過度にしない、4秒で ±2度） */
+    .hero-mascot {
+      animation: mascot-wobble 4s ease-in-out infinite;
+      transform-origin: 50% 70%;
+    }
+    @keyframes mascot-wobble {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+
+    /* Seasonal alert: 内側 subtle glow */
+    .seasonal-alert {
+      animation: alert-soft-glow 3.2s ease-in-out infinite;
+    }
+    @keyframes alert-soft-glow {
+      0%, 100% { box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0); }
+      50% { box-shadow: inset 0 0 50px 0 rgba(255, 255, 255, 0.06); }
+    }
+
+    /* Reveal 強化（モバイルは少し大きめの動き）*/
+    .reveal {
+      transition:
+        transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.65s ease;
+    }
+    .js-ready .reveal:not(.is-shown) {
+      opacity: 0;
+      transform: translateY(30px) scale(0.985);
+    }
+
+    /* スクロールリビール stagger 子要素 */
+    .js-ready .reveal-stagger:not(.is-shown) > * {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .reveal-stagger.is-shown > * {
+      transition:
+        opacity 0.6s ease var(--reveal-delay, 0s),
+        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s);
+    }
+    .reveal-stagger.is-shown > *:nth-child(2) { --reveal-delay: 0.08s; }
+    .reveal-stagger.is-shown > *:nth-child(3) { --reveal-delay: 0.16s; }
+    .reveal-stagger.is-shown > *:nth-child(4) { --reveal-delay: 0.24s; }
+    .reveal-stagger.is-shown > *:nth-child(5) { --reveal-delay: 0.32s; }
+    .reveal-stagger.is-shown > *:nth-child(6) { --reveal-delay: 0.40s; }
+  }
+
+  /* prefers-reduced-motion: すべて無効化（アクセシビリティ） */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg-video { display: none !important; }
+    .hero-bg img,
+    .hero-tel-card,
+    .hero::after,
+    .hero-mascot,
+    .seasonal-alert,
+    .hero-h1 .hl-kw::after {
+      animation: none !important;
+    }
+    .reveal,
+    .reveal-stagger > * {
+      transition: none !important;
     }
   }
 </style>

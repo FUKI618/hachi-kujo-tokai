@@ -199,6 +199,76 @@ table {
 }
 
 /* ================================================================
+   Hero Mascot + Speech Bubble (キャラクター演出)
+   ================================================================ */
+
+.hero-mascot-wrap {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.75rem;
+}
+.hero-mascot {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+.hero-mascot img {
+  width: 72px;
+  height: 72px;
+  animation: mascot-float 3.2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(15, 23, 34, 0.18));
+  transform-origin: center;
+}
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-7px) rotate(2deg); }
+}
+.speech-bubble {
+  position: relative;
+  background: #fff;
+  border: 2px solid var(--color-primary);
+  border-radius: 14px;
+  padding: 8px 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(200, 30, 30, 0.12);
+}
+.speech-bubble::before,
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+.speech-bubble::before {
+  border-width: 9px 11px 9px 0;
+  border-color: transparent var(--color-primary) transparent transparent;
+}
+.speech-bubble::after {
+  left: -9px;
+  border-width: 7px 9px 7px 0;
+  border-color: transparent #fff transparent transparent;
+}
+
+.speech-bubble strong {
+  color: var(--color-primary);
+  font-weight: 800;
+  font-size: 1.05em;
+}
+
+@media (max-width: 480px) {
+  .hero-mascot img { width: 56px; height: 56px; }
+  .speech-bubble { font-size: 0.85rem; padding: 6px 11px; }
+}
+
+/* ================================================================
    Seasonal Alert (9月15日〜10月15日: スズメバチ攻撃性ピーク)
    ================================================================ */
 

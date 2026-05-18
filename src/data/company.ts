@@ -4,7 +4,7 @@
  */
 
 export const company = {
-  name: "東海ハチ救急隊",
+  name: "蜂の巣駆除ファクトリー東海",
   legalName: "{{LEGAL_ENTITY}}",
   representative: "{{REPRESENTATIVE}}",
   phone: "000-0000-0000",
