@@ -624,7 +624,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         「ぼったくり」業者の<span class="accent">3つのサイン</span>
       </h2>
       <p class="section-lead">
-        国民生活センターには『4,000円見積→11万円請求』のような蜂駆除の高額請求事例が多数寄せられています。<strong>{company.name}が一度も指摘されない理由</strong>を、悪質業者の典型サインと対比して説明します。
+        「<strong>ぼったくられた</strong>」「<strong>悪徳業者</strong>に当たった」── 国民生活センターには『4,000円見積→11万円請求』のようなハチ駆除の高額請求事例が多数寄せられています。<strong>{company.name}が悪徳業者と指摘されない理由</strong>を、典型サインと対比して説明します。
       </p>
       <div class="reveal-stagger" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:1.25rem;margin-top:2rem;">
         {scamSigns.map((s) => (
@@ -699,7 +699,7 @@ const showSeasonalAlert = isHornetPeakSeason();
       <h2 id="voices-title" class="section-title headline">
         お客様の<span class="accent">声</span>
       </h2>
-      <p class="section-lead">東海エリアでご依頼いただいたお客様からの感想を一部ご紹介します。スピード対応・追加請求なし・戻りバチへの再発防止など、リアルな評価をご覧ください。</p>
+      <p class="section-lead">東海エリアの<strong>ハチ駆除 口コミ・評判</strong>をご紹介。一軒家・マンション・賃貸物件など実際のお客様からの感想を掲載。スピード対応・追加請求なし・戻りバチへの再発防止など、リアルな評価をご覧ください。</p>
       <div class="voices reveal-stagger">
         {voices.map((v) => (
           <article class="voice-card">
@@ -759,7 +759,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         対応<span class="accent">エリア</span>
       </h2>
       <p class="section-lead">
-        愛知・岐阜・三重・静岡の東海4県全域に自社スタッフが常駐し、最短30分で駆けつけます。記載のない市町村でも、近隣エリアからの出動でほぼ全域カバー可能です。お気軽にご相談ください。
+        愛知・岐阜・三重・静岡の東海4県全域に自社スタッフが常駐し、最短30分で駆けつけます。一軒家・マンション・賃貸物件・店舗いずれも対応可。記載のない市町村でも、近隣エリアからの出動でほぼ全域カバー可能です。お気軽にご相談ください。
       </p>
       <div class="area-grid reveal-stagger">
         {areas.map((a) => (
@@ -2904,6 +2904,66 @@ const showSeasonalAlert = isHornetPeakSeason();
     .brand-mark {
       width: 2rem;
       height: 2rem;
+    }
+  }
+
+  /* ============================================ */
+  /* === モバイル横スクロール完全防止（v2 fix） === */
+  /* ============================================ */
+  html, body { overflow-x: hidden; }
+  .hero,
+  .hero-inner,
+  .hero-content,
+  .hero-eyebrow,
+  .hero-h1,
+  .hero-sub,
+  .hero-stats,
+  .hero-cta,
+  .hero-tel-card,
+  .hero-cta-row {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .hero-h1 {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  .hero-eyebrow {
+    white-space: normal;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 480px) {
+    .hero { min-height: 720px; padding: 2.5rem 0 4rem; }
+    .hero-h1 { font-size: clamp(1.6rem, 6.2vw, 2.2rem); line-height: 1.25; }
+    .hero-h1 .hl-num { font-size: 1.05em; }
+    .hero-sub { font-size: 0.9375rem; line-height: 1.65; }
+    .hero-stat-num { font-size: clamp(1.5rem, 7vw, 2rem); }
+    .hero-tel-card { padding: 0.875rem 1rem; flex-wrap: wrap; }
+    .hero-tel-card-num { font-size: clamp(1.25rem, 6vw, 1.75rem); }
+    .hero-cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .hero-cta-row .btn { width: 100%; font-size: 0.8125rem; padding: 0.75rem 0.5rem; }
+    /* 動画をもっと見せる: overlay を薄く + content をコンパクト */
+    .hero::before {
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 34, 0.85) 0%,
+        rgba(15, 23, 34, 0.55) 35%,
+        rgba(15, 23, 34, 0.45) 60%,
+        rgba(15, 23, 34, 0.78) 100%
+      ) !important;
+    }
+  }
+
+  /* セクション内のインライン grid を mobile で 1 列に */
+  @media (max-width: 600px) {
+    #diy-guide .reveal-stagger,
+    #scam-warning .reveal-stagger {
+      grid-template-columns: 1fr !important;
+    }
+    /* table の overflow 内側スクロール bar を細く */
+    .compare-scroll, .bee-compare-scroll {
+      -webkit-overflow-scrolling: touch;
     }
   }
 
