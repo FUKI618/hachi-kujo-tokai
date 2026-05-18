@@ -500,7 +500,7 @@ const showSeasonalAlert = isHornetPeakSeason();
               <tr>
                 <th></th>
                 <th>市役所・自治体</th>
-                <th class="is-us">{company.name}</th>
+                <th class="is-us" set:html={`蜂の巣駆除<wbr/>ファクトリー<wbr/>東海`}></th>
               </tr>
             </thead>
             <tbody>
@@ -577,7 +577,7 @@ const showSeasonalAlert = isHornetPeakSeason();
             <thead>
               <tr>
                 <th></th>
-                <th class="is-us">{company.name}</th>
+                <th class="is-us" set:html={`蜂の巣駆除<wbr/>ファクトリー<wbr/>東海`}></th>
                 <th>一般的な駆除業者</th>
                 <th>仲介サイト経由</th>
               </tr>
@@ -2092,9 +2092,25 @@ const showSeasonalAlert = isHornetPeakSeason();
   #compare .compare-table thead th:nth-child(3),
   #compare .compare-table thead th:nth-child(4) { width: 22%; }
   /* VsGovernment (3列): label/government/us → is-us 列を広く */
-  #vs-government .compare-table thead th:nth-child(1) { width: 28%; }
-  #vs-government .compare-table thead th:nth-child(2) { width: 34%; }
-  #vs-government .compare-table thead th.is-us { width: 38%; }
+  #vs-government .compare-table thead th:nth-child(1) { width: 26%; }
+  #vs-government .compare-table thead th:nth-child(2) { width: 32%; }
+  #vs-government .compare-table thead th.is-us { width: 42%; }
+
+  /* Mobile (560px以下): is-us 列をさらに拡大 + wbr ヒントで自然改行 */
+  @media (max-width: 560px) {
+    #compare .compare-table thead th:nth-child(1) { width: 22%; }
+    #compare .compare-table thead th.is-us { width: 36%; }
+    #compare .compare-table thead th:nth-child(3),
+    #compare .compare-table thead th:nth-child(4) { width: 21%; }
+    #vs-government .compare-table thead th:nth-child(1) { width: 24%; }
+    #vs-government .compare-table thead th:nth-child(2) { width: 28%; }
+    #vs-government .compare-table thead th.is-us { width: 48%; }
+    /* 屋号は wbr 位置で改行、文字単位wrap を抑制 */
+    .compare-table thead th.is-us {
+      overflow-wrap: normal;
+      word-break: keep-all;
+    }
+  }
 
   /* Mobile: 屋号が長いため font 縮小 + tbody th も自然改行 */
   @media (max-width: 560px) {
