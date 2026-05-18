@@ -481,9 +481,15 @@ const description = `${company.name}（運営：${company.legalName}）のプラ
       max-width: calc(100% - 8.5rem);
     }
     .pp-brand strong {
-      word-break: keep-all;
-      overflow-wrap: normal;
+      word-break: normal;
+      overflow-wrap: break-word;
       line-height: 1.25;
+      display: inline-block;
+    }
+    /* wbr 位置で 優先改行 */
+    .pp-brand wbr {
+      display: inline;
+      line-break: anywhere;
     }
     .pp-brand-mark { width: 1.875rem; height: 1.875rem; }
     .pp-brand-mark svg { width: 1rem; height: 1rem; }
