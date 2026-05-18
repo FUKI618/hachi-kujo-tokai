@@ -117,16 +117,17 @@ const showSeasonalAlert = isHornetPeakSeason();
           decoding="async"
         />
       </picture>
-      <!-- Veo3 生成 cinematic 動画（モバイル限定、prefers-reduced-motion で自動無効化） -->
+      <!-- Veo3 cinematic 動画 (defer load: preload=none で初期 fetch せず、autoplay 開始時のみ) -->
       <video
         class="hero-bg-video"
         autoplay
         muted
         loop
         playsinline
-        preload="metadata"
+        preload="none"
         poster={heroImage800}
-        aria-hidden="true"
+        role="presentation"
+        data-src={assetPath("videos/hero-mobile.mp4")}
       >
         <source src={assetPath("videos/hero-mobile.mp4")} type="video/mp4" />
       </video>
@@ -215,7 +216,7 @@ const showSeasonalAlert = isHornetPeakSeason();
             </div>
             <div class="hero-medal-text">
               <p class="hero-medal-eyebrow">蜂の巣駆除ファクトリー東海のお約束</p>
-              <h3 class="hero-medal-title">再発防止<span class="hl-num">1年</span>保証</h3>
+              <p class="hero-medal-title" role="heading" aria-level="2">再発防止<span class="hl-num">1年</span>保証</p>
               <p class="hero-medal-note">作業済み箇所で同種のハチが1年以内に再営巣した場合、<strong>無料で再駆除</strong>いたします。</p>
             </div>
           </div>
@@ -225,7 +226,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         <div class="hero-zero-card">
           <div class="hero-zero-head">
             <span class="hero-zero-eyebrow">東海4県のお住まいの方</span>
-            <h3 class="hero-zero-title">ハチ駆除の<span class="hl">3つの「¥0」</span></h3>
+            <p class="hero-zero-title" role="heading" aria-level="2">ハチ駆除の<span class="hl">3つの「¥0」</span></p>
           </div>
           <div class="hero-zero-grid">
             <div class="hero-zero-chip">
@@ -2005,7 +2006,7 @@ const showSeasonalAlert = isHornetPeakSeason();
   }
   .promise-desc {
     font-size: 0.8125rem;
-    color: #cbd5e1;
+    color: #e5e7eb;
     line-height: 1.8;
   }
   .promise-desc strong {
@@ -2820,7 +2821,7 @@ const showSeasonalAlert = isHornetPeakSeason();
   /* ----- Footer ----- */
   .footer {
     background: var(--color-dark);
-    color: #cbd5e1;
+    color: #e5e7eb;
     padding: 3.5rem 0 1.75rem;
     font-size: 0.8125rem;
   }
@@ -2851,7 +2852,7 @@ const showSeasonalAlert = isHornetPeakSeason();
     text-align: center;
     padding-top: 1.25rem;
     border-top: 1px solid #374151;
-    color: #9ca3af;
+    color: #d1d5db;
     font-size: 0.75rem;
   }
   .footer-brand {
