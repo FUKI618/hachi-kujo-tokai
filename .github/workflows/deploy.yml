@@ -29,8 +29,8 @@ jobs:
         run: bun install --frozen-lockfile
       - name: Build (Astro)
         env:
-          PUBLIC_SITE_ORIGIN: https://fuki618.github.io
-          PUBLIC_SITE_BASE: /hachi-kujo-tokai
+          PUBLIC_SITE_ORIGIN: https://hachi-factory.jp
+          PUBLIC_SITE_BASE: ""
         run: bun run build
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

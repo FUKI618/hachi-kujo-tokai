@@ -9,7 +9,7 @@ export const homePath = RAW_BASE === "" ? "/" : `${RAW_BASE}/`;
 
 /**
  * 静的アセットへのパスを Astro の base を考慮して生成
- * 例: assetPath("images/hero/main.webp") → "/hachi-kujo-tokai/images/hero/main.webp"
+ * 例: assetPath("images/hero/main.webp") → "/images/hero/main.webp"
  */
 export function assetPath(rel: string): string {
   const trimmed = rel.replace(/^\//, "");

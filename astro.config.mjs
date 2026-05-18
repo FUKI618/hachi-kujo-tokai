@@ -2,8 +2,8 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 
-const SITE = process.env.PUBLIC_SITE_ORIGIN ?? "https://fuki618.github.io";
-const BASE = process.env.PUBLIC_SITE_BASE ?? "/hachi-kujo-tokai";
+const SITE = process.env.PUBLIC_SITE_ORIGIN ?? "https://hachi-factory.jp";
+const BASE = process.env.PUBLIC_SITE_BASE ?? "";
 
 export default defineConfig({
   site: SITE,
