@@ -927,32 +927,6 @@ const showSeasonalAlert = isHornetPeakSeason();
     </div>
   </section>
 
-  <!-- ===== ⑮ Company（会社情報） ===== -->
-  <section class="section section-soft" id="company" aria-labelledby="company-title">
-    <div class="container container-narrow">
-      <div class="section-eyebrow-wrap">
-        <span class="section-eyebrow">COMPANY</span>
-      </div>
-      <h2 id="company-title" class="section-title headline">
-        会社<span class="accent">情報</span>
-      </h2>
-      <div class="company-card reveal">
-        <table class="company-table">
-          <tbody>
-            <tr><th>屋号</th><td>{company.name}</td></tr>
-            <tr><th>運営会社</th><td>{company.legalName}</td></tr>
-            <tr><th>代表者</th><td>{company.representative}</td></tr>
-            <tr><th>所在地</th><td>〒{company.address.postal} {company.address.region}{company.address.city} {company.address.street}</td></tr>
-            <tr><th>電話番号</th><td>{company.phoneDisplay}（24時間365日受付）</td></tr>
-            <tr><th>事業内容</th><td>{company.businessType}</td></tr>
-            <tr><th>対応エリア</th><td>{company.serviceArea}</td></tr>
-            <tr><th>支払方法</th><td>{company.payment.join("／")}</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== Footer ===== -->
   <footer class="footer">
     <div class="container footer-inner">
@@ -981,8 +955,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         <ul>
           <li><a href="#faq">よくあるご質問</a></li>
           <li><a href="#contact">お問い合わせ</a></li>
-          <li><a href="#company">会社情報</a></li>
-          <li><a href="#" rel="nofollow">プライバシーポリシー</a></li>
+          <li><a href={assetPath("privacy-policy/")}>プライバシーポリシー・会社情報</a></li>
         </ul>
       </div>
     </div>

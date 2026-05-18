@@ -1,0 +1,321 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { assetPath } from "../lib/site";
+import { company } from "../data/company";
+
+const title = `プライバシーポリシー・会社情報｜${company.name}`;
+const description = `${company.name}（運営：${company.legalName}）のプライバシーポリシー・会社情報。個人情報の取り扱い・運営会社所在地・代表者・事業内容をご案内します。`;
+---
+
+<Layout title={title} description={description}>
+  <!-- ===== Topbar ===== -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span class="topbar-item">
+        <strong>24時間365日</strong> 受付中
+      </span>
+      <span class="topbar-item">
+        通話・出張・見積り <strong>すべて無料</strong>
+      </span>
+      <span class="topbar-item">
+        最短<strong>30分</strong>で出動
+      </span>
+    </div>
+  </div>
+
+  <!-- ===== Header ===== -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href={assetPath("")} class="brand" aria-label="トップへ">
+        <span class="brand-mark">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <ellipse cx="12" cy="13" rx="6" ry="7"/>
+            <path d="M12 6 L12 20 M9 6 L9 20 M15 6 L15 20"/>
+          </svg>
+        </span>
+        <span>{company.name}</span>
+      </a>
+      <a href={company.phoneTelLink} class="header-tel">
+        <span>
+          <small>365日24時間受付</small>
+          {company.phoneDisplay}
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== ぱんくず ===== -->
+  <nav class="breadcrumb-wrap" aria-label="パンくず">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href={assetPath("")}>ホーム</a></li>
+        <li aria-current="page">プライバシーポリシー・会社情報</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ===== ① ページタイトル ===== -->
+  <section class="section section-soft" aria-labelledby="pp-title">
+    <div class="container container-narrow">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">COMPANY &amp; PRIVACY</span>
+      </div>
+      <h1 id="pp-title" class="section-title headline">
+        プライバシー<span class="accent">ポリシー</span><br />・会社情報
+      </h1>
+      <p class="section-lead">
+        {company.name}（運営：<strong>{company.legalName}</strong>）の個人情報の取り扱い方針および運営会社情報をご案内します。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== ② 会社情報 ===== -->
+  <section class="section" id="company-info" aria-labelledby="company-title">
+    <div class="container container-narrow">
+      <h2 id="company-title" class="headline pp-h2">会社情報</h2>
+      <div class="company-card">
+        <table class="company-table">
+          <tbody>
+            <tr><th>屋号</th><td>{company.name}</td></tr>
+            <tr><th>運営会社</th><td>{company.legalName}</td></tr>
+            <tr><th>代表者</th><td>{company.representative}</td></tr>
+            <tr><th>所在地</th><td>〒{company.address.postal} {company.address.region}{company.address.city} {company.address.street}</td></tr>
+            <tr><th>電話番号</th><td>{company.phoneDisplay}（24時間365日受付）</td></tr>
+            <tr><th>事業内容</th><td>{company.businessType}</td></tr>
+            <tr><th>対応エリア</th><td>{company.serviceArea}</td></tr>
+            <tr><th>支払方法</th><td>{company.payment.join("／")}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ③ プライバシーポリシー本文 ===== -->
+  <section class="section section-soft" aria-labelledby="pp-policy-title">
+    <div class="container container-narrow">
+      <h2 id="pp-policy-title" class="headline pp-h2">プライバシーポリシー</h2>
+      <div class="pp-body">
+        <p>
+          {company.legalName}（以下「当社」といいます）は、{company.name}（以下「本サービス」）の運営において、お客様の個人情報を以下の方針に基づき適切に取り扱います。
+        </p>
+
+        <h3>1. 個人情報の収集</h3>
+        <p>
+          当社は、蜂・蜂の巣駆除サービスのお問い合わせ・お見積り・作業実施に必要な範囲で、お客様の氏名・住所・電話番号・メールアドレス・LINE ID・駆除箇所の写真等の個人情報を収集します。お電話または LINE 公式アカウントを通じてご相談いただいた時点で、本ポリシーに同意いただいたものとみなします。
+        </p>
+
+        <h3>2. 利用目的</h3>
+        <p>収集した個人情報は、以下の目的にのみ利用します。</p>
+        <ul>
+          <li>蜂・蜂の巣駆除サービスのお問い合わせ・お見積りへの回答</li>
+          <li>駆除作業の現地調査・実施・完了報告・再発保証対応</li>
+          <li>請求書・領収書の発行および入金管理</li>
+          <li>サービス品質改善のためのアンケート・フィードバック</li>
+          <li>再発予防のためのアフターサービスのご案内</li>
+        </ul>
+
+        <h3>3. 第三者への提供</h3>
+        <p>
+          法令に基づく場合、または人の生命・身体・財産の保護のために必要であってお客様の同意を得ることが困難な場合を除き、お客様の個人情報を第三者に提供することはありません。
+        </p>
+
+        <h3>4. 安全管理措置</h3>
+        <p>
+          当社は、個人情報の漏えい・紛失・改ざん・不正アクセス等を防止するため、適切な技術的・組織的安全管理措置を講じます。お客様の個人情報は、施錠された場所での保管および暗号化通信での送受信を徹底し、業務上必要な担当者のみがアクセスできるよう管理します。
+        </p>
+
+        <h3>5. Cookie および解析ツールの使用</h3>
+        <p>
+          本サイトは、サービス品質改善のため Google Analytics 等の解析ツールを使用してアクセス情報を収集する場合があります。これらの情報は匿名化されており、個人を特定する情報は含まれません。Cookie の使用を拒否される場合はブラウザの設定で無効化することができますが、一部機能が利用できなくなる場合があります。
+        </p>
+
+        <h3>6. 個人情報の開示・訂正・削除</h3>
+        <p>
+          お客様ご本人から個人情報の開示・訂正・削除・利用停止のご請求があった場合、本人確認のうえ、法令に基づき遅滞なく対応いたします。
+        </p>
+
+        <h3>7. お問合せ窓口</h3>
+        <p>個人情報の取り扱いに関するお問い合わせは、以下までご連絡ください。</p>
+        <p class="pp-contact">
+          <strong>{company.legalName}（{company.name}）</strong><br />
+          〒{company.address.postal} {company.address.region}{company.address.city} {company.address.street}<br />
+          電話：{company.phoneDisplay}（24時間365日受付）
+        </p>
+
+        <h3>8. プライバシーポリシーの改定</h3>
+        <p>
+          当社は、法令の改正やサービス内容の変更に応じて本ポリシーを改定する場合があります。改定後の内容は本ページに掲載した時点で効力を生じます。
+        </p>
+
+        <p class="pp-date">制定日：2026年5月19日</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ④ 戻るリンク ===== -->
+  <section class="section" aria-label="戻る">
+    <div class="container container-narrow" style="text-align:center;">
+      <a href={assetPath("")} class="btn" style="background:#0f1722;color:#fff;padding:0.875rem 2rem;display:inline-flex;align-items:center;gap:0.5rem;border-radius:8px;text-decoration:none;font-weight:700;">
+        ← トップページへ戻る
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="footer-brand">
+          <span class="brand-mark">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <ellipse cx="12" cy="13" rx="6" ry="7"/>
+              <path d="M12 6 L12 20 M9 6 L9 20 M15 6 L15 20"/>
+            </svg>
+          </span>
+          <strong>{company.name}</strong>
+        </div>
+        <p class="footer-tagline">
+          {company.serviceArea}のハチ駆除専門。
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-h">サイトマップ</h4>
+        <ul class="footer-list">
+          <li><a href={assetPath("")}>トップページ</a></li>
+          <li><a href={assetPath("") + "#price"}>料金表</a></li>
+          <li><a href={assetPath("") + "#faq"}>よくある質問</a></li>
+          <li><a href={assetPath("privacy-policy")}>プライバシーポリシー・会社情報</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-h">運営</h4>
+        <ul class="footer-list">
+          <li>{company.legalName}</li>
+          <li>代表 {company.representative}</li>
+          <li>〒{company.address.postal}</li>
+          <li>{company.address.region}{company.address.city}{company.address.street}</li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer-copyright">© {new Date().getFullYear()} {company.legalName}. All rights reserved.</p>
+  </footer>
+</Layout>
+
+<style>
+  .breadcrumb-wrap {
+    background: #fafaf9;
+    padding: 1rem 0;
+    font-size: 0.8125rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .breadcrumb {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 0.5rem;
+    color: #6b7280;
+  }
+  .breadcrumb li:not(:last-child)::after {
+    content: "›";
+    margin-left: 0.5rem;
+    color: #9ca3af;
+  }
+  .breadcrumb a {
+    color: #0f1722;
+    text-decoration: none;
+  }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .pp-h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    position: relative;
+    color: #0f1722;
+  }
+  .pp-h2::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, #c81e1e 0%, #f5b300 100%);
+    border-radius: 3px;
+    margin-top: 0.625rem;
+  }
+
+  .pp-body {
+    background: #fff;
+    border-radius: 14px;
+    padding: 2rem 1.75rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    line-height: 1.85;
+    color: #2d3748;
+  }
+  .pp-body h3 {
+    font-size: 1.125rem;
+    color: #0f1722;
+    margin: 1.75rem 0 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 4px solid #c81e1e;
+    font-weight: 800;
+  }
+  .pp-body h3:first-of-type { margin-top: 1rem; }
+  .pp-body p { margin: 0.5rem 0 1rem; font-size: 0.9375rem; }
+  .pp-body ul {
+    padding-left: 1.5rem;
+    margin: 0.5rem 0 1.25rem;
+    font-size: 0.9375rem;
+  }
+  .pp-body ul li { margin-bottom: 0.4rem; }
+  .pp-contact {
+    background: #fef9ed;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    border-left: 4px solid #f5b300;
+    font-size: 0.9375rem;
+  }
+  .pp-date {
+    text-align: right;
+    color: #6b7280;
+    font-size: 0.8125rem;
+    margin-top: 2.5rem !important;
+  }
+
+  .company-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.75rem 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  }
+  .company-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .company-table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .company-table tbody tr:last-child { border-bottom: 0; }
+  .company-table th {
+    text-align: left;
+    width: 9rem;
+    padding: 1rem 0.75rem;
+    background: #fafaf9;
+    color: #0f1722;
+    font-weight: 700;
+    font-size: 0.875rem;
+    vertical-align: top;
+  }
+  .company-table td {
+    padding: 1rem 0.875rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  @media (max-width: 560px) {
+    .company-table th { width: 6.5rem; padding: 0.75rem 0.5rem; font-size: 0.75rem; }
+    .company-table td { padding: 0.75rem 0.5rem; font-size: 0.8125rem; }
+    .pp-body { padding: 1.5rem 1.25rem; }
+    .pp-body h3 { font-size: 1rem; }
+    .pp-body p, .pp-body ul { font-size: 0.875rem; }
+  }
+</style>
