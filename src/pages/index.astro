@@ -1458,6 +1458,15 @@ const showSeasonalAlert = isHornetPeakSeason();
   }
   .bubble strong {
     color: var(--color-primary);
+    /* 蛍光マーカー風 highlight - 芸術家レベル */
+    background: linear-gradient(
+      transparent 60%,
+      rgba(245, 179, 0, 0.45) 60%,
+      rgba(245, 179, 0, 0.45) 95%,
+      transparent 95%
+    );
+    padding: 0 0.15em;
+    font-weight: 900;
   }
   .troubles-arrow {
     text-align: center;
@@ -1550,19 +1559,24 @@ const showSeasonalAlert = isHornetPeakSeason();
   .strength-card.is-featured {
     border: 3px solid var(--color-accent);
     background: linear-gradient(180deg, var(--color-soft-2) 0%, #fff 30%);
+    box-shadow:
+      0 24px 48px -8px rgba(200, 30, 30, 0.18),
+      0 0 0 1px rgba(245, 179, 0, 0.2);
+    transform: translateY(-4px);
   }
   .strength-card.is-featured::before {
     content: "★ 1番人気";
     position: absolute;
     top: 0.75rem;
     right: 0.75rem;
-    background: var(--color-primary);
+    background: linear-gradient(180deg, var(--color-primary) 0%, #9a1414 100%);
     color: #fff;
     padding: 0.25rem 0.75rem;
     border-radius: var(--radius-pill);
     font-size: 0.6875rem;
     font-weight: 900;
     letter-spacing: 0.04em;
+    box-shadow: 0 4px 10px rgba(200, 30, 30, 0.4);
   }
   .strength-num {
     position: absolute;
@@ -3729,6 +3743,91 @@ const showSeasonalAlert = isHornetPeakSeason();
   @media (min-width: 880px) {
     .hero-bg-video {
       object-position: right 25% center !important;
+    }
+  }
+
+  /* =================================================== */
+  /* === 芸術家レベル: 統一 design tokens & 装飾強化 === */
+  /* =================================================== */
+
+  /* Section eyebrow: アクセントライン + グラデ風 */
+  .section-eyebrow {
+    background: linear-gradient(
+      135deg,
+      rgba(245, 179, 0, 0.18),
+      rgba(200, 30, 30, 0.08)
+    );
+    color: var(--color-primary);
+    letter-spacing: 0.18em;
+    position: relative;
+    padding: 0.375rem 1rem;
+    border-radius: 999px;
+    font-weight: 900;
+    font-size: 0.6875rem;
+    box-shadow: inset 0 0 0 1px rgba(245, 179, 0, 0.25);
+  }
+
+  /* Section title 装飾 - 下に小さなアクセントライン */
+  .section-title.headline {
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  .section-title.headline::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      var(--color-primary) 0%,
+      var(--color-accent) 100%
+    );
+    border-radius: 3px;
+    margin: 0.625rem auto 0;
+  }
+
+  /* Bee-types card: softer shadow + hover lift */
+  .bee-card {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.025);
+    border-radius: 14px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    overflow: hidden;
+  }
+  .bee-card:active {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Case card / Voice card 共通 softer */
+  .case-card,
+  .voice-card {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    border-radius: 14px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Mobile 特化: セクション間 余白の呼吸 + 装飾 */
+  @media (max-width: 560px) {
+    .section {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+    .section-eyebrow {
+      font-size: 0.625rem;
+      padding: 0.3rem 0.875rem;
+      letter-spacing: 0.16em;
+    }
+    .section-title.headline {
+      font-size: clamp(1.5rem, 6vw, 1.875rem);
+    }
+    .section-title.headline::after {
+      width: 40px;
+      height: 2.5px;
+    }
+    .section-lead {
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      letter-spacing: 0.01em;
     }
   }
 </style>
