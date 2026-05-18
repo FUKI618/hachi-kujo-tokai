@@ -3500,11 +3500,26 @@ const showSeasonalAlert = isHornetPeakSeason();
     .hero-tel-card-note {
       font-size: 0.75rem;
     }
-    /* LINE CTA 大型化 */
+    /* LINE CTA 大型化 (電話CTAと同サイズに揃える) */
+    .hero-cta-row {
+      display: block;
+      margin-top: 0.75rem;
+    }
     .hero-line-cta {
-      font-size: 1.0625rem;
-      padding: 1.125rem 1.5rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.625rem;
+      font-size: 1.125rem;
+      padding: 1.375rem 1.5rem;
       font-weight: 800;
+      min-height: 64px;
+      border-radius: 14px;
+    }
+    .hero-line-cta .icon {
+      width: 1.5rem;
+      height: 1.5rem;
     }
     /* Mascot サイズUP */
     .hero-mascot img { width: 80px; height: 80px; }
@@ -3572,7 +3587,13 @@ const showSeasonalAlert = isHornetPeakSeason();
     .hero-stat-num { font-size: 2.875rem; }
     .hero-stat { padding: 1.5rem 0.5rem; }
     .hero-tel-card-num { font-size: 2.25rem; }
-    .hero-line-cta { font-size: 1.125rem; padding: 1.25rem 1.75rem; }
+    .hero-line-cta {
+      font-size: 1.25rem;
+      padding: 1.5rem 1.75rem;
+      min-height: 72px;
+      border-radius: 16px;
+    }
+    .hero-line-cta .icon { width: 1.75rem; height: 1.75rem; }
     /* 右BOX 拡大 - 保証メダル */
     .hero-medal {
       padding: 1.875rem 1.875rem 1.625rem;
