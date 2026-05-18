@@ -3128,8 +3128,9 @@ const showSeasonalAlert = isHornetPeakSeason();
       object-fit: cover;
       object-position: center 50%;
       z-index: 1;
-      /* 動画を 18% 上に移動 → 蜂の巣を画面上部に */
-      transform: translateY(-18%);
+      /* 蜂の巣は動画上半分(軒先hanging)にあるので、動画を下に移動して画面上部に表示
+         → 蜂の巣の頂上が hero-eyebrow (画面 ~12%) 直下に来る */
+      transform: translateY(15%);
     }
     /* 動画下部の空白を防ぐため picture image を絶対背景として配置 */
     .hero-bg picture {
