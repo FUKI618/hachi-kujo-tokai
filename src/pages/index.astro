@@ -2961,8 +2961,9 @@ const showSeasonalAlert = isHornetPeakSeason();
     .troubles-grid {
       grid-template-columns: 1fr;
     }
-    /* Flow: 縦タイムライン v2 (CDN cache bust + 番号 rowspan + L字レイアウト) */
+    /* Flow: 縦タイムライン v2.1 - hash bust */
     .flow {
+      isolation: isolate;
       grid-template-columns: 1fr;
       gap: 0;
       position: relative;
