@@ -5,17 +5,17 @@
 
 export const company = {
   name: "蜂の巣駆除ファクトリー東海",
-  legalName: "{{LEGAL_ENTITY}}",
-  representative: "{{REPRESENTATIVE}}",
+  legalName: "株式会社LIV",
+  representative: "水谷虎毅",
   phone: "000-0000-0000",
   phoneDisplay: "000-0000-0000",
   phoneTelLink: "tel:0000000000",
   lineUrl: "https://line.me/R/ti/p/{{LINE_ID}}",
   address: {
-    postal: "000-0000",
+    postal: "460-0002",
     region: "愛知県",
-    city: "{{CITY}}",
-    street: "{{STREET_ADDRESS}}",
+    city: "名古屋市中区",
+    street: "丸の内3丁目6-11",
   },
   hours: "24時間365日 受付",
   businessType: "蜂・蜂の巣駆除／害虫駆除／再発防止施工",
@@ -31,8 +31,8 @@ export const company = {
   fastestArrival: "30分",
   basicPrice: 3300,
   geo: {
-    lat: 35.1815,
-    lng: 136.9066,
+    lat: 35.1798,
+    lng: 136.8979,
   },
   social: {} as Record<string, string>,
 } as const;
