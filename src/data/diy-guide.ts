@@ -15,9 +15,9 @@ export type DiyCondition = {
 export const diyOkConditions: DiyCondition[] = [
   {
     iconId: "check-circle",
-    label: "アシナガバチの初期巣（直径5cm未満）",
+    label: "アシナガバチの小さい初期巣（直径5cm未満）",
     description:
-      "5〜6月の女王蜂が単独で営巣中の段階。働き蜂が誕生する前なら市販の蜂用スプレーで対応できる場合があります。",
+      "5〜6月の女王蜂が単独で営巣中の段階。小さい巣で働き蜂が誕生する前なら市販の蜂用スプレーで対応できる場合があります。",
   },
   {
     iconId: "check-circle",
