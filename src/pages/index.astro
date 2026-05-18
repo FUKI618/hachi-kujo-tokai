@@ -2926,12 +2926,25 @@ const showSeasonalAlert = isHornetPeakSeason();
       font-size: 0.5625rem;
     }
     .brand {
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: calc(100% - 8rem);
+    }
+    .brand > span:last-child {
+      letter-spacing: -0.02em;
     }
     .brand-mark {
-      width: 2rem;
-      height: 2rem;
+      width: 1.75rem;
+      height: 1.75rem;
+      flex-shrink: 0;
     }
+  }
+  /* 320px iPhone SE 等: ブランド名さらに縮小 */
+  @media (max-width: 360px) {
+    .brand { font-size: 0.6875rem; }
+    .brand-mark { width: 1.5rem; height: 1.5rem; }
   }
 
   /* ============================================ */
@@ -2965,11 +2978,20 @@ const showSeasonalAlert = isHornetPeakSeason();
     .hero-h1 { font-size: clamp(1.6rem, 6.2vw, 2.2rem); line-height: 1.25; }
     .hero-h1 .hl-num { font-size: 1.05em; }
     .hero-sub { font-size: 0.9375rem; line-height: 1.65; }
-    .hero-stat-num { font-size: clamp(1.5rem, 7vw, 2rem); }
+    .hero-stat { padding: 0.875rem 0.375rem; min-width: 0; }
+    .hero-stat-num { font-size: clamp(1.25rem, 6.2vw, 1.75rem); white-space: nowrap; }
+    .hero-stat-num small { font-size: 0.55em; }
+    .hero-stat-label { font-size: 0.6875rem; }
     .hero-tel-card { padding: 0.875rem 1rem; flex-wrap: wrap; }
-    .hero-tel-card-num { font-size: clamp(1.25rem, 6vw, 1.75rem); }
-    .hero-cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-    .hero-cta-row .btn { width: 100%; font-size: 0.8125rem; padding: 0.75rem 0.5rem; }
+    .hero-tel-card-num { font-size: clamp(1.25rem, 6vw, 1.75rem); white-space: nowrap; }
+    /* LINE 単独 CTA を full-width & 大きく */
+    .hero-cta-row { display: block; }
+    .hero-line-cta {
+      width: 100%;
+      font-size: 1rem;
+      padding: 1rem 1.25rem;
+      font-weight: 800;
+    }
     /* 動画をもっと見せる: overlay を薄く + content をコンパクト */
     .hero::before {
       background: linear-gradient(
@@ -3156,8 +3178,8 @@ const showSeasonalAlert = isHornetPeakSeason();
       max-width: 1280px;
     }
     .hero-inner {
-      grid-template-columns: minmax(0, 580px) minmax(0, 360px);
-      gap: 2.5rem;
+      grid-template-columns: minmax(0, 560px) minmax(0, 400px);
+      gap: 3rem;
       align-items: center;
     }
     /* PCでも動画表示。動画を右側に寄せて hero-right の背景的に */
@@ -3195,22 +3217,22 @@ const showSeasonalAlert = isHornetPeakSeason();
 
   @media (min-width: 1120px) {
     .hero-inner {
-      grid-template-columns: minmax(0, 620px) minmax(0, 380px);
-      gap: 3rem;
+      grid-template-columns: minmax(0, 600px) minmax(0, 420px);
+      gap: 3.5rem;
     }
   }
 
   /* === 保証バッジ (参考画像1) === */
   .hero-badge-guarantee {
     background: linear-gradient(135deg, #fef9ed 0%, #fdf2d5 50%, #fef9ed 100%);
-    border-radius: 14px;
-    padding: 1.125rem 1.25rem 1rem;
+    border-radius: 16px;
+    padding: 1.5rem 1.625rem 1.25rem;
     text-align: center;
     position: relative;
     box-shadow:
-      0 12px 32px rgba(0, 0, 0, 0.35),
+      0 18px 48px rgba(0, 0, 0, 0.45),
       0 0 0 1px rgba(201, 167, 107, 0.5),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+      inset 0 0 0 1px rgba(255, 255, 255, 0.7);
   }
   .hero-badge-guarantee::before {
     content: "";
@@ -3229,19 +3251,19 @@ const showSeasonalAlert = isHornetPeakSeason();
     pointer-events: none;
   }
   .hero-badge-eyebrow {
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
     color: #8b5a2b;
-    margin: 0 0 0.35rem;
+    margin: 0 0 0.45rem;
     font-weight: 700;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
     position: relative;
     z-index: 1;
   }
   .hero-badge-main {
-    font-size: 1.4rem;
+    font-size: 1.65rem;
     font-weight: 900;
     color: #c81e1e;
-    margin: 0 0 0.6rem;
+    margin: 0 0 0.75rem;
     letter-spacing: 0.02em;
     font-family: var(--font-num);
     line-height: 1.2;
@@ -3250,11 +3272,11 @@ const showSeasonalAlert = isHornetPeakSeason();
     z-index: 1;
   }
   .hero-badge-note {
-    font-size: 0.7rem;
+    font-size: 0.7125rem;
     color: #5a4a3a;
-    line-height: 1.55;
+    line-height: 1.6;
     margin: 0;
-    padding-top: 0.5rem;
+    padding-top: 0.6rem;
     border-top: 1px dashed #c9a76b;
     text-align: left;
     position: relative;
@@ -3265,14 +3287,14 @@ const showSeasonalAlert = isHornetPeakSeason();
   .hero-coupon {
     position: relative;
     background: #fff;
-    border: 2px dashed #c81e1e;
-    border-radius: 12px;
-    padding: 0.875rem 2.5rem 0.875rem 0.875rem;
+    border: 2.5px dashed #c81e1e;
+    border-radius: 14px;
+    padding: 1.125rem 3rem 1.125rem 1.125rem;
     display: grid;
-    grid-template-columns: 44px 1fr;
+    grid-template-columns: 52px 1fr;
     align-items: center;
-    gap: 0.625rem;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    gap: 0.875rem;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
   }
   .hero-coupon::before,
   .hero-coupon::after {
@@ -3295,51 +3317,51 @@ const showSeasonalAlert = isHornetPeakSeason();
     transform: translateY(-50%);
   }
   .hero-coupon-icon {
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     background: linear-gradient(135deg, #fef2f2 0%, #fde0e0 100%);
-    border-radius: 8px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #c81e1e;
     flex-shrink: 0;
   }
-  .hero-coupon-icon svg { width: 32px; height: 32px; }
+  .hero-coupon-icon svg { width: 38px; height: 38px; }
   .hero-coupon-body {
     min-width: 0;
   }
   .hero-coupon-eyebrow {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: #4a5568;
-    margin: 0 0 0.15rem;
+    margin: 0 0 0.2rem;
     font-weight: 700;
   }
   .hero-coupon-main {
-    font-size: 1.05rem;
+    font-size: 1.2rem;
     font-weight: 900;
     color: #0f1722;
-    margin: 0 0 0.2rem;
+    margin: 0 0 0.3rem;
     line-height: 1.25;
   }
   .hero-coupon-main .hl {
     color: #c81e1e;
-    font-size: 1.1em;
+    font-size: 1.12em;
   }
   .hero-coupon-list {
-    font-size: 0.7rem;
+    font-size: 0.7375rem;
     color: #5a6470;
     margin: 0;
-    line-height: 1.45;
+    line-height: 1.5;
   }
   .hero-coupon-label {
     position: absolute;
-    right: 10px;
+    right: 12px;
     top: 50%;
     transform: translateY(-50%) rotate(90deg);
     transform-origin: center;
-    font-size: 0.6rem;
-    letter-spacing: 0.35em;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
     font-weight: 800;
     color: #c81e1e;
     white-space: nowrap;
