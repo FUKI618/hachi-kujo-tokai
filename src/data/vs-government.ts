@@ -17,7 +17,7 @@ export type VsGovRow = {
 
 export const vsGovernmentRows: VsGovRow[] = [
   {
-    label: "駆除作業そのものの費用",
+    label: "駆除費用",
     government: {
       state: "warn",
       text: "原則として自己負担（一部市町村でアシナガ等に補助金あり）",
@@ -25,12 +25,12 @@ export const vsGovernmentRows: VsGovRow[] = [
     us: { state: "us-ok", text: "基本¥3,300〜・事前見積金額厳守" },
   },
   {
-    label: "出動スピード",
+    label: "出動速度",
     government: { state: "bad", text: "平日日中のみ・申請から数日〜数週間" },
     us: { state: "us-ok", text: "最短30分・24時間365日受付" },
   },
   {
-    label: "対応の中身",
+    label: "サービス内容",
     government: {
       state: "bad",
       text: "相談・業者紹介・スプレー貸出が中心、駆除作業は対象外が多い",
@@ -38,25 +38,25 @@ export const vsGovernmentRows: VsGovRow[] = [
     us: { state: "us-ok", text: "自社スタッフが駆除作業まで完遂" },
   },
   {
-    label: "対応する蜂の種類",
+    label: "対応種類",
     government: {
       state: "warn",
       text: "スズメバチに限定する市町村が多い",
     },
     us: {
       state: "us-ok",
-      text: "スズメバチ・アシナガバチ・ミツバチ・クマバチ全種",
+      text: "スズメバチ・アシナガバチ・ミツバチ全種",
     },
   },
   {
-    label: "土日祝・夜間",
+    label: "土日・夜間",
     government: { state: "bad", text: "対応不可" },
     us: { state: "us-ok", text: "追加料金なしで対応" },
   },
   {
-    label: "見積り・キャンセル",
+    label: "見積・キャンセル",
     government: { state: "warn", text: "相談は無料だが日程確保が困難" },
-    us: { state: "us-ok", text: "出張・見積り・キャンセル料すべて無料" },
+    us: { state: "us-ok", text: "出張・見積・キャンセル料すべて無料" },
   },
 ];
 

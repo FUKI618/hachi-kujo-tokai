@@ -249,7 +249,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         選ばれる<span class="accent">3つの理由</span>
       </h2>
       <p class="section-lead">
-        東海4県のハチ駆除専門サービスとして、<strong>即日対応の駆けつけ・事前見積金額厳守・1年再発保証</strong>の3軸で他社と比較されています。中間マージンを挟まないハチ駆除業者の自社直接対応で、業界相場より平均20〜30%お得なハチ駆除料金を実現<small style="font-size:.75em;opacity:.7;">（※自社調べ・2026年5月時点）</small>。
+        東海4県のハチ駆除専門。<strong>即日駆けつけ・事前見積金額厳守・1年再発保証</strong>の3軸で選ばれています。中間マージンなしの自社直接対応で業界相場より20〜30%お得<small style="font-size:.75em;opacity:.7;">（※自社調べ）</small>。
       </p>
       <div class="strengths reveal-stagger">
         {strengths.map((s) => (
@@ -276,7 +276,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         対応する<span class="accent">蜂の種類</span>
       </h2>
       <p class="section-lead">
-        東海地方で営巣が確認されているハチ全般にハチ駆除対応します。攻撃性の高いスズメバチ・オオスズメバチから、軒下やベランダで多いアシナガバチ、屋根裏・壁内に大規模営巣するミツバチまで。種類が分からない初期巣の段階でも、ハチ駆除のプロにそのままご相談ください。
+        東海で営巣する全種のハチに対応。スズメバチ・オオスズメバチ・アシナガ・ミツバチまで、種類不明の初期巣でも<strong>ハチ駆除のプロ</strong>にご相談ください。
       </p>
       <div class="bee-grid reveal-stagger">
         {beeTypes.map((b) => (
@@ -410,7 +410,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         明朗な<span class="accent">料金表</span>
       </h2>
       <p class="section-lead">
-        ハチ駆除の基本料金<strong>3,300円〜</strong>で現地に駆けつけ、現地調査のうえ<strong>その場で確定見積</strong>をご提示。<br />お伝えしたハチ駆除料金から追加請求はせず<small style="font-size:.85em;opacity:.75;">（※当初見積範囲外の作業をご希望の場合のみ、事前にご相談の上で再見積）</small>、出張費・調査費・キャンセル料はすべて無料です。
+        基本<strong>3,300円〜</strong>で駆けつけ、現地で<strong>確定見積</strong>を提示。見積金額の範囲内で作業し追加請求なし<small style="font-size:.85em;opacity:.75;">（範囲変更時は事前相談）</small>。出張・調査・キャンセル料すべて無料。
       </p>
 
       <!-- フック価格BOX -->
@@ -2096,20 +2096,41 @@ const showSeasonalAlert = isHornetPeakSeason();
   #vs-government .compare-table thead th:nth-child(2) { width: 32%; }
   #vs-government .compare-table thead th.is-us { width: 42%; }
 
-  /* Mobile (560px以下): is-us 列をさらに拡大 + wbr ヒントで自然改行 */
+  /* Mobile (560px以下): label列を拡大 + tbody th 自然改行 + 文字縮小 */
   @media (max-width: 560px) {
-    #compare .compare-table thead th:nth-child(1) { width: 22%; }
-    #compare .compare-table thead th.is-us { width: 36%; }
+    #compare .compare-table thead th:nth-child(1) { width: 26%; }
+    #compare .compare-table thead th.is-us { width: 32%; }
     #compare .compare-table thead th:nth-child(3),
     #compare .compare-table thead th:nth-child(4) { width: 21%; }
-    #vs-government .compare-table thead th:nth-child(1) { width: 24%; }
-    #vs-government .compare-table thead th:nth-child(2) { width: 28%; }
-    #vs-government .compare-table thead th.is-us { width: 48%; }
+    #vs-government .compare-table thead th:nth-child(1) { width: 28%; }
+    #vs-government .compare-table thead th:nth-child(2) { width: 30%; }
+    #vs-government .compare-table thead th.is-us { width: 42%; }
     /* 屋号は wbr 位置で改行、文字単位wrap を抑制 */
     .compare-table thead th.is-us {
       overflow-wrap: normal;
       word-break: keep-all;
     }
+    /* tbody th: nowrap を強制解除 + 自然改行 + font 縮小 で cell 内収納 */
+    .compare-table tbody th {
+      white-space: normal !important;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      font-size: 0.6875rem;
+      padding: 0.625rem 0.375rem;
+      line-height: 1.45;
+      text-align: center;
+    }
+    .compare-table tbody td {
+      padding: 0.625rem 0.375rem;
+      font-size: 0.6875rem;
+      line-height: 1.5;
+    }
+    .compare-cell {
+      gap: 0.25rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .compare-cell .icon { width: 0.875rem; height: 0.875rem; }
   }
 
   /* Mobile: 屋号が長いため font 縮小 + tbody th も自然改行 */
