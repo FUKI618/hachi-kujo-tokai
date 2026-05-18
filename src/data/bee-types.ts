@@ -39,7 +39,7 @@ export const beeTypes: BeeType[] = [
     name: "オオスズメバチ",
     imageBase: "oosuzumebachi",
     dangerLevel: "highest",
-    dangerLabel: "最大級の危険",
+    dangerLabel: "極めて高い危険性",
     dangerBars: 5,
     description:
       "日本最大のハチ（女王40〜50mm）、毒性LD50 4.1mg/kgで通常のスズメバチの約2倍。土中・樹洞に大型巣を作り、自力駆除はほぼ不可能。専門業者の対応が必須です。",

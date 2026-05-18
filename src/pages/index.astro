@@ -18,7 +18,7 @@ import { vsGovernmentRows, subsidyNote } from "../data/vs-government";
 import { scamSigns, scamWarningSource } from "../data/scam-warning";
 
 const title = `東海の蜂の巣駆除なら最短30分｜基本3,300円〜｜${company.name}`;
-const description = `蜂の巣駆除を愛知・岐阜・三重・静岡で最短30分。事前見積金額厳守で1円も上がらないハチ駆除専門【${company.name}】。スズメバチ・アシナガバチに基本3,300円〜で対応。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証・1億円損害賠償保険加入。`;
+const description = `蜂の巣駆除を愛知・岐阜・三重・静岡で最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ・アシナガバチに基本3,300円〜で対応。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証・1億円損害賠償保険加入。`;
 
 const fmtJpy = (n: number) =>
   new Intl.NumberFormat("ja-JP").format(n);
@@ -145,10 +145,10 @@ const showSeasonalAlert = isHornetPeakSeason();
         </div>
         <h1 id="hero-title" class="headline hero-h1">
           <span class="hero-h1-line"><span class="hl-kw">蜂の巣駆除</span>、</span>
-          <span class="hero-h1-line"><span class="hl-num">今日中</span>に必ず完了。</span>
+          <span class="hero-h1-line"><span class="hl-num">今日中</span>に完了。</span>
         </h1>
         <p class="hero-sub">
-          攻撃性最大の<strong>スズメバチ</strong>も、防護装備の専門隊が<strong>24時間救急対応</strong>。最短<strong>30分</strong>で出動・基本<strong>3,300円〜</strong>・<strong>事前見積金額厳守</strong>・1年再発保証。
+          攻撃性の高い<strong>スズメバチ</strong>も、防護装備の専門隊が<strong>24時間救急対応</strong>。最短<strong>30分</strong>で出動・基本<strong>3,300円〜</strong>・<strong>事前見積金額厳守</strong>・1年再発保証。
         </p>
 
         <div class="hero-stats reveal-stagger">
@@ -187,6 +187,35 @@ const showSeasonalAlert = isHornetPeakSeason();
           </div>
         </div>
       </div>
+
+      <!-- ===== Hero 右側 (PC専用): 保証バッジ + クーポン要素 ===== -->
+      <aside class="hero-right reveal-stagger" aria-label="保証とキャンペーン">
+        <div class="hero-badge-guarantee">
+          <p class="hero-badge-eyebrow">蜂の巣駆除ファクトリー東海からのお約束</p>
+          <p class="hero-badge-main">1年間 再発防止保証</p>
+          <p class="hero-badge-note">※1年以内に作業済み箇所で同種のハチが再営巣した場合、無料で再駆除いたします。</p>
+        </div>
+
+        <div class="hero-coupon">
+          <div class="hero-coupon-icon" aria-hidden="true">
+            <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+              <!-- 東海4県の簡略マップ -->
+              <path d="M14 16 L24 12 L34 14 L42 20 L44 30 L38 38 L28 42 L18 38 L10 32 L8 22 Z"
+                    fill="currentColor" opacity="0.85"/>
+              <circle cx="22" cy="22" r="2.5" fill="#fff"/>
+              <circle cx="32" cy="20" r="2" fill="#fff"/>
+              <circle cx="28" cy="32" r="2" fill="#fff"/>
+              <circle cx="38" cy="28" r="2" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="hero-coupon-body">
+            <p class="hero-coupon-eyebrow">東海4県にお住まいの方</p>
+            <p class="hero-coupon-main">3つの<span class="hl">「0円」</span>キャンペーン</p>
+            <p class="hero-coupon-list">出張費・現地調査・キャンセル料 すべて無料</p>
+          </div>
+          <span class="hero-coupon-label">FREE</span>
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -252,7 +281,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         選ばれる<span class="accent">3つの理由</span>
       </h2>
       <p class="section-lead">
-        東海4県のハチ駆除専門サービスとして、<strong>即日対応の駆けつけ・事前見積金額厳守・1年再発保証＋1億円賠償保険</strong>の3軸で他社と比較されています。中間マージンを挟まないハチ駆除業者の自社直接対応で、業界相場より平均20〜30%お得なハチ駆除料金を実現。
+        東海4県のハチ駆除専門サービスとして、<strong>即日対応の駆けつけ・事前見積金額厳守・1年再発保証＋1億円賠償保険</strong>の3軸で他社と比較されています。中間マージンを挟まないハチ駆除業者の自社直接対応で、業界相場より平均20〜30%お得なハチ駆除料金を実現<small style="font-size:.75em;opacity:.7;">（※自社調べ・2026年5月時点）</small>。
       </p>
       <div class="strengths reveal-stagger">
         {strengths.map((s) => (
@@ -413,7 +442,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         明朗な<span class="accent">料金表</span>
       </h2>
       <p class="section-lead">
-        ハチ駆除の基本料金<strong>3,300円〜</strong>で現地に駆けつけ、現地調査のうえ<strong>その場で確定見積</strong>をご提示。<br />お伝えしたハチ駆除料金に1円も追加せず、出張費・調査費・キャンセル料はすべて無料です。
+        ハチ駆除の基本料金<strong>3,300円〜</strong>で現地に駆けつけ、現地調査のうえ<strong>その場で確定見積</strong>をご提示。<br />お伝えしたハチ駆除料金から追加請求はせず<small style="font-size:.85em;opacity:.75;">（※当初見積範囲外の作業をご希望の場合のみ、事前にご相談の上で再見積）</small>、出張費・調査費・キャンセル料はすべて無料です。
       </p>
 
       <!-- フック価格BOX -->
@@ -3110,6 +3139,211 @@ const showSeasonalAlert = isHornetPeakSeason();
     .reveal-stagger > * {
       transition: none !important;
     }
+  }
+
+  /* ==================================================== */
+  /* === PC Hero ワイド化 + 動画PC表示 + バッジ/クーポン === */
+  /* ==================================================== */
+  .hero-right {
+    display: none;
+  }
+
+  @media (min-width: 880px) {
+    /* Hero ワイド化 */
+    .hero {
+      min-height: 760px;
+      padding: 4.5rem 0 5.5rem;
+    }
+    .hero .container {
+      max-width: 1280px;
+    }
+    .hero-inner {
+      grid-template-columns: minmax(0, 560px) minmax(0, 440px);
+      gap: 3rem;
+      align-items: center;
+    }
+    /* PCでも動画表示。動画を右側に寄せて hero-right の背景的に */
+    .hero-bg-video {
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: right 30% center;
+      z-index: 1;
+    }
+    /* overlay を左寄せ → 右側で動画露出 */
+    .hero::before {
+      background:
+        linear-gradient(
+          to right,
+          rgba(15, 23, 34, 0.94) 0%,
+          rgba(15, 23, 34, 0.78) 30%,
+          rgba(15, 23, 34, 0.35) 55%,
+          rgba(15, 23, 34, 0.25) 75%,
+          rgba(15, 23, 34, 0.55) 100%
+        );
+    }
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      align-items: stretch;
+      position: relative;
+      z-index: 3;
+    }
+  }
+
+  @media (min-width: 1120px) {
+    .hero-inner {
+      grid-template-columns: minmax(0, 600px) minmax(0, 460px);
+      gap: 4rem;
+    }
+  }
+
+  /* === 保証バッジ (参考画像1) === */
+  .hero-badge-guarantee {
+    background: linear-gradient(135deg, #fef9ed 0%, #fdf2d5 50%, #fef9ed 100%);
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem 1.25rem;
+    text-align: center;
+    position: relative;
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(201, 167, 107, 0.5),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  }
+  .hero-badge-guarantee::before {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border: 1.5px solid #c9a76b;
+    border-radius: 10px;
+    pointer-events: none;
+  }
+  .hero-badge-guarantee::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 0.5px solid rgba(201, 167, 107, 0.5);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+  .hero-badge-eyebrow {
+    font-size: 0.875rem;
+    color: #8b5a2b;
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-badge-main {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #c81e1e;
+    margin: 0 0 0.85rem;
+    letter-spacing: 0.02em;
+    font-family: var(--font-num);
+    line-height: 1.2;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+    position: relative;
+    z-index: 1;
+  }
+  .hero-badge-note {
+    font-size: 0.75rem;
+    color: #5a4a3a;
+    line-height: 1.6;
+    margin: 0;
+    padding-top: 0.6rem;
+    border-top: 1px dashed #c9a76b;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* === クーポン要素 (参考画像2) === */
+  .hero-coupon {
+    position: relative;
+    background: #fff;
+    border: 2px dashed #c81e1e;
+    border-radius: 12px;
+    padding: 1.25rem 3rem 1.25rem 1.25rem;
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    align-items: center;
+    gap: 0.875rem;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  }
+  .hero-coupon::before,
+  .hero-coupon::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: #0f1722;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  .hero-coupon::before {
+    left: -7px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .hero-coupon::after {
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .hero-coupon-icon {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #fef2f2 0%, #fde0e0 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c81e1e;
+    flex-shrink: 0;
+  }
+  .hero-coupon-body {
+    min-width: 0;
+  }
+  .hero-coupon-eyebrow {
+    font-size: 0.75rem;
+    color: #4a5568;
+    margin: 0 0 0.2rem;
+    font-weight: 700;
+  }
+  .hero-coupon-main {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #0f1722;
+    margin: 0 0 0.25rem;
+    line-height: 1.25;
+  }
+  .hero-coupon-main .hl {
+    color: #c81e1e;
+    font-size: 1.1em;
+  }
+  .hero-coupon-list {
+    font-size: 0.75rem;
+    color: #5a6470;
+    margin: 0;
+    line-height: 1.5;
+  }
+  .hero-coupon-label {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    transform-origin: center;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    font-weight: 800;
+    color: #c81e1e;
+    white-space: nowrap;
   }
 </style>
 
