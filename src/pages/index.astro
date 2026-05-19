@@ -105,26 +105,22 @@ const showSeasonalAlert = isHornetPeakSeason();
   <!-- ===== ① Hero ===== -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-bg" aria-hidden="true">
-      <picture>
-        <source media="(max-width: 480px)" srcset={heroImage480} />
-        <source media="(max-width: 880px)" srcset={heroImage800} />
-        <img
-          src={heroImage1400}
-          alt=""
-          width="1400"
-          height="1400"
-          fetchpriority="high"
-          decoding="async"
-        />
-      </picture>
-      <!-- 動画: window load 後 + Save-Data/低速回線チェックを経由して JS で挿入 -->
-      <!-- HTML には書かず data-* で URL のみ保持 → LCP は <picture> img になる -->
-      <div
-        class="hero-bg-video-mount"
-        data-video-src={assetPath("videos/hero-mobile.mp4")}
-        data-video-poster={heroImage800}
+      <!-- 単一の <video>: poster 画像で初期描画 → LCP target が確定。
+           src は JS で後から設定して再生開始。これで「画像→動画」の切替フラッシュが消える -->
+      <video
+        class="hero-bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="none"
+        poster={heroImage800}
+        role="presentation"
         aria-hidden="true"
-      ></div>
+        width="540"
+        height="960"
+        data-src={assetPath("videos/hero-mobile.mp4")}
+      ></video>
     </div>
     <div class="container hero-inner">
       <div class="hero-content reveal">
@@ -4269,42 +4265,28 @@ const showSeasonalAlert = isHornetPeakSeason();
       }, 2500);
     }
 
-    // Hero 動画 遅延ロード (LCP 計測完了 + 低速/Save-Data チェック後に挿入)
-    function mountHeroVideo() {
-      var mount = document.querySelector(".hero-bg-video-mount");
-      if (!mount || mount.dataset.mounted === "1") return;
+    // Hero 動画 遅延再生: video 要素は HTML 既存 (poster だけ表示中)。
+    // LCP 計測完了後に src を設定して再生開始 → LCP candidate は video.poster で固定
+    function startHeroVideo() {
+      var v = document.querySelector("video.hero-bg-video");
+      if (!v || v.dataset.started === "1") return;
       var conn = navigator.connection || {};
-      if (conn.saveData) return; // 通信節約モードでは再生しない
-      if (conn.effectiveType && /^([23]g|slow-2g)$/i.test(conn.effectiveType)) return; // 4G未満は再生しない
+      if (conn.saveData) return;
+      if (conn.effectiveType && /^([23]g|slow-2g)$/i.test(conn.effectiveType)) return;
       if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      mount.dataset.mounted = "1";
-      var v = document.createElement("video");
-      v.className = "hero-bg-video";
-      v.autoplay = true;
-      v.muted = true;
-      v.loop = true;
-      v.playsInline = true;
-      v.setAttribute("playsinline", "");
+      v.dataset.started = "1";
       v.preload = "auto";
-      v.poster = mount.dataset.videoPoster || "";
-      v.setAttribute("role", "presentation");
-      v.setAttribute("aria-hidden", "true");
-      v.src = mount.dataset.videoSrc;
-      mount.appendChild(v);
-      v.play().catch(function () {}); // autoplay失敗は無視
+      v.src = v.dataset.src;
+      v.play().catch(function () {});
     }
-    // window load 後 + idle で挿入 (LCP イベントは img で確定済み)
-    if (document.readyState === "complete") {
+    // LCP 計測ウインドウ (~2.5s) 経過後に再生開始
+    function scheduleVideoStart() {
       ("requestIdleCallback" in window
         ? requestIdleCallback
-        : function (cb) { setTimeout(cb, 1500); })(mountHeroVideo, { timeout: 3000 });
-    } else {
-      window.addEventListener("load", function () {
-        ("requestIdleCallback" in window
-          ? requestIdleCallback
-          : function (cb) { setTimeout(cb, 1500); })(mountHeroVideo, { timeout: 3000 });
-      });
+        : function (cb) { setTimeout(cb, 2500); })(startHeroVideo, { timeout: 4000 });
     }
+    if (document.readyState === "complete") scheduleVideoStart();
+    else window.addEventListener("load", scheduleVideoStart);
 
     // 年号
     var yearEl = document.getElementById("copyright-year");

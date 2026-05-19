@@ -261,13 +261,12 @@ const allJsonLd = [
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- ヒーロー画像プリロード -->
+    <!-- ヒーロー画像プリロード: video.poster の LCP source を高優先度で先読み -->
     <link
       rel="preload"
       as="image"
-      href={assetPath("images/hero/hero-main-1400.webp")}
-      imagesrcset={`${assetPath("images/hero/hero-main-480.webp")} 480w, ${assetPath("images/hero/hero-main-800.webp")} 800w, ${assetPath("images/hero/hero-main-1400.webp")} 1400w`}
-      imagesizes="(max-width: 880px) 100vw, 50vw"
+      href={assetPath("images/hero/hero-main-800.webp")}
+      fetchpriority="high"
     />
 
     <!-- 初期表示制御：トップへリセット -->
