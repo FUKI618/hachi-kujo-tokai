@@ -117,7 +117,14 @@ const showSeasonalAlert = isHornetPeakSeason();
           decoding="async"
         />
       </picture>
-      <!-- 動画削除済 (2026-05: PSI 改善のため 4MB 動画を撤去、poster 画像のみで LCP 確保) -->
+      <!-- 動画: window load 後 + Save-Data/低速回線チェックを経由して JS で挿入 -->
+      <!-- HTML には書かず data-* で URL のみ保持 → LCP は <picture> img になる -->
+      <div
+        class="hero-bg-video-mount"
+        data-video-src={assetPath("videos/hero-mobile.mp4")}
+        data-video-poster={heroImage800}
+        aria-hidden="true"
+      ></div>
     </div>
     <div class="container hero-inner">
       <div class="hero-content reveal">
@@ -4260,6 +4267,43 @@ const showSeasonalAlert = isHornetPeakSeason();
             el.querySelectorAll("[data-count]").forEach(animateCount);
           });
       }, 2500);
+    }
+
+    // Hero 動画 遅延ロード (LCP 計測完了 + 低速/Save-Data チェック後に挿入)
+    function mountHeroVideo() {
+      var mount = document.querySelector(".hero-bg-video-mount");
+      if (!mount || mount.dataset.mounted === "1") return;
+      var conn = navigator.connection || {};
+      if (conn.saveData) return; // 通信節約モードでは再生しない
+      if (conn.effectiveType && /^([23]g|slow-2g)$/i.test(conn.effectiveType)) return; // 4G未満は再生しない
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      mount.dataset.mounted = "1";
+      var v = document.createElement("video");
+      v.className = "hero-bg-video";
+      v.autoplay = true;
+      v.muted = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.setAttribute("playsinline", "");
+      v.preload = "auto";
+      v.poster = mount.dataset.videoPoster || "";
+      v.setAttribute("role", "presentation");
+      v.setAttribute("aria-hidden", "true");
+      v.src = mount.dataset.videoSrc;
+      mount.appendChild(v);
+      v.play().catch(function () {}); // autoplay失敗は無視
+    }
+    // window load 後 + idle で挿入 (LCP イベントは img で確定済み)
+    if (document.readyState === "complete") {
+      ("requestIdleCallback" in window
+        ? requestIdleCallback
+        : function (cb) { setTimeout(cb, 1500); })(mountHeroVideo, { timeout: 3000 });
+    } else {
+      window.addEventListener("load", function () {
+        ("requestIdleCallback" in window
+          ? requestIdleCallback
+          : function (cb) { setTimeout(cb, 1500); })(mountHeroVideo, { timeout: 3000 });
+      });
     }
 
     // 年号
