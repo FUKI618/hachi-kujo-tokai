@@ -3954,6 +3954,241 @@ const showSeasonalAlert = isHornetPeakSeason();
       letter-spacing: 0.01em;
     }
   }
+
+  /* =========================================================== */
+  /* === PC 大画面 リフォーム (プロデザイナーレベル余白活用)   === */
+  /* =========================================================== */
+
+  /* PC ≥1024px : container 拡大、padding 充実 */
+  @media (min-width: 1024px) {
+    .container { max-width: 1320px; padding: 0 2rem; }
+    .container-narrow { max-width: 1080px; padding: 0 2rem; }
+    .section { padding: 5rem 0; }
+
+    /* Section heading 大型化 */
+    .section-eyebrow {
+      font-size: 0.8125rem;
+      padding: 0.45rem 1.25rem;
+      letter-spacing: 0.2em;
+    }
+    .section-title.headline {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+    .section-title.headline::after {
+      width: 60px;
+      height: 4px;
+      margin-top: 0.875rem;
+    }
+    .section-lead {
+      font-size: 1.0625rem;
+      line-height: 1.9;
+      max-width: 760px;
+      margin: 0 auto 3rem;
+    }
+
+    /* Strengths 3カード PC */
+    .strengths {
+      gap: 2rem;
+    }
+    .strength-card {
+      padding: 3.5rem 2rem 2.5rem;
+    }
+    .strength-title {
+      font-size: 1.375rem;
+      margin: 1rem 0;
+    }
+    .strength-desc {
+      font-size: 1rem;
+      line-height: 1.85;
+    }
+    .strength-icon { width: 5.5rem; height: 5.5rem; }
+    .strength-icon .icon { width: 2.75rem; height: 2.75rem; }
+    .strength-num { font-size: 1.375rem; width: 3rem; height: 3rem; }
+
+    /* Bee-types カード */
+    .bee-card-body { padding: 1.5rem 1.5rem 1.75rem; }
+    .bee-card-title { font-size: 1.25rem; margin-bottom: 0.625rem; }
+    .bee-card-desc { font-size: 0.9375rem; line-height: 1.85; }
+
+    /* Bee compare table */
+    .bee-compare table { font-size: 0.9375rem; }
+    .bee-compare th, .bee-compare td {
+      padding: 1.125rem 1rem;
+    }
+
+    /* Pricing table */
+    .rate-table { font-size: 1rem; }
+    .rate-table th { padding: 1.25rem 1.5rem; font-size: 0.9375rem; }
+    .rate-table td { padding: 1.375rem 1.5rem; font-size: 0.9375rem; }
+    .rate-hook { padding: 2rem 2.5rem; }
+    .rate-hook .hook-num { font-size: 3rem; }
+
+    /* Promises - 料金にまつわる3つの約束 */
+    .promise-card {
+      padding: 2rem 1.75rem;
+    }
+    .promise-title { font-size: 1.125rem; margin: 0.625rem 0 0.75rem; }
+    .promise-desc { font-size: 0.9375rem; line-height: 1.9; }
+
+    /* Compare table */
+    .compare-table { font-size: 0.9375rem; }
+    .compare-table thead th { padding: 2.5rem 1rem 1.375rem; font-size: 0.875rem; }
+    .compare-table thead th.is-us { font-size: 1.0625rem; }
+    .compare-table tbody th, .compare-table tbody td {
+      padding: 1.25rem 1.125rem;
+    }
+    .compare-cell { font-size: 0.9375rem; }
+    .compare-cell .icon { width: 1.375rem; height: 1.375rem; }
+
+    /* Cases */
+    .case-grid { gap: 1.75rem; }
+    .case-card { padding-bottom: 1.5rem; }
+    .case-card-body { padding: 1.25rem 1.5rem 1.5rem; }
+    .case-card-title { font-size: 1.125rem; line-height: 1.55; }
+    .case-card-price { font-size: 1.375rem; }
+    .case-card-meta { font-size: 0.8125rem; }
+
+    /* Voices */
+    .voices { gap: 1.75rem; }
+    .voice-card { padding: 1.75rem 1.5rem; }
+    .voice-card-name { font-size: 1rem; }
+    .voice-card-body { font-size: 0.9375rem; line-height: 1.85; }
+
+    /* Flow */
+    .flow { gap: 1.5rem; }
+    .flow-num { width: 4.5rem; height: 4.5rem; font-size: 1.75rem; }
+    .flow-step-title { font-size: 1rem; }
+    .flow-step-desc { font-size: 0.8125rem; line-height: 1.7; }
+
+    /* Areas */
+    .area-grid { gap: 1.75rem; }
+    .area-block { padding: 1.75rem 1.5rem; }
+    .area-block h3 { font-size: 1.125rem; margin-bottom: 0.875rem; }
+    .area-block ul { font-size: 0.9375rem; }
+
+    /* FAQ */
+    .faq-list { gap: 0.875rem; }
+    .faq-q { padding: 1.5rem 3.5rem 1.5rem 4rem; }
+    .faq-q-mark { font-size: 1.375rem; left: 1.5rem; }
+    .faq-q-text { font-size: 1.0625rem; }
+    .faq-a-inner { padding: 0 4rem 1.5rem; }
+    .faq-a-mark { font-size: 1.375rem; }
+    .faq-a p { font-size: 0.9375rem; line-height: 1.95; }
+
+    /* Contact grid 不均等修正 */
+    .contact-grid {
+      align-items: start;
+      gap: 2rem;
+    }
+    .contact-call { align-self: start; padding: 2.5rem 2.25rem; }
+    .contact-tel-big { font-size: 3rem; }
+    .contact-tel-note { font-size: 0.9375rem; }
+    .contact-perks { font-size: 0.9375rem; }
+    .contact-perks li { padding: 0.5rem 0; }
+
+    /* LINE 4 ステップガイド */
+    .contact-line-guide { padding: 2.5rem 2.25rem; }
+    .contact-line-guide > h3.headline { font-size: 1.5rem; margin-bottom: 1.75rem; }
+    .line-steps { gap: 1.25rem; }
+    .line-step-num { width: 40px; height: 40px; font-size: 1.25rem; }
+    .line-step-body strong { font-size: 1.125rem; }
+    .line-step-body p { font-size: 0.9375rem; line-height: 1.75; }
+
+    /* DIY-Guide / Scam-Warning カード PC で間延びさせる */
+    #diy-guide .reveal-stagger {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 2rem !important;
+      max-width: 1080px;
+      margin: 2.5rem auto 0 !important;
+    }
+    #diy-guide .reveal-stagger > article {
+      padding: 2rem 1.75rem !important;
+    }
+    #scam-warning .reveal-stagger {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 1.75rem !important;
+      max-width: 1200px;
+      margin: 2.5rem auto 0 !important;
+    }
+    #scam-warning .reveal-stagger article {
+      padding: 2rem 1.75rem !important;
+    }
+
+    /* VsGov の補助金事情 ボックス */
+    #vs-government aside {
+      padding: 1.75rem 2rem !important;
+    }
+
+    /* MidCTA 大型化 */
+    .mid-cta-h2 { font-size: clamp(2rem, 3.5vw, 2.75rem) !important; }
+    .mid-cta-tel { padding: 1.5rem 2.5rem !important; }
+    .mid-cta-tel .font-num { font-size: clamp(2rem, 3vw, 2.5rem) !important; }
+
+    /* Troubles bubble カード PC */
+    .troubles-grid { gap: 1rem 1.5rem; }
+    .bubble {
+      padding: 1.375rem 1.5rem 1.375rem 4rem;
+      font-size: 1rem;
+    }
+    .bubble::before {
+      width: 2.5rem;
+      height: 2.5rem;
+      left: 1rem;
+      font-size: 1.5rem;
+    }
+    .troubles-resolve {
+      padding: 2.5rem 2rem;
+      font-size: clamp(1.5rem, 2.5vw, 2rem) !important;
+    }
+  }
+
+  /* PC ≥1280px : さらに container 拡大 */
+  @media (min-width: 1280px) {
+    .container { max-width: 1400px; }
+    .container-narrow { max-width: 1140px; }
+    .section { padding: 6rem 0; }
+    .section-title.headline {
+      font-size: clamp(2.25rem, 3.5vw, 3rem);
+    }
+    .section-lead {
+      font-size: 1.125rem;
+      max-width: 800px;
+      margin-bottom: 3.5rem;
+    }
+    .strengths { gap: 2.5rem; }
+    .strength-card { padding: 4rem 2.25rem 2.75rem; }
+    .strength-title { font-size: 1.5rem; }
+    .strength-desc { font-size: 1.0625rem; }
+    .promises-list .promise-card { padding: 2.25rem 2rem; }
+    .promise-title { font-size: 1.25rem; }
+    .promise-desc { font-size: 1rem; }
+    .compare-table { font-size: 1rem; }
+    .compare-table thead th.is-us { font-size: 1.125rem; }
+    .compare-table tbody th, .compare-table tbody td { padding: 1.5rem 1.25rem; }
+    .case-card-title { font-size: 1.1875rem; }
+    .case-card-price { font-size: 1.5rem; }
+    .voice-card-body { font-size: 1rem; }
+    .faq-q-text { font-size: 1.125rem; }
+    .faq-a p { font-size: 1rem; }
+    .contact-tel-big { font-size: 3.5rem; }
+    .contact-line-guide > h3.headline { font-size: 1.75rem; }
+    .line-step-body strong { font-size: 1.1875rem; }
+    .line-step-body p { font-size: 1rem; }
+    .troubles-resolve {
+      font-size: clamp(1.75rem, 3vw, 2.375rem) !important;
+    }
+  }
+
+  /* PC ≥1600px : 大型モニタ向け、container さらに広く */
+  @media (min-width: 1600px) {
+    .container { max-width: 1480px; }
+    .section { padding: 7rem 0; }
+    .section-title.headline {
+      font-size: clamp(2.5rem, 3.5vw, 3.25rem);
+    }
+  }
 </style>
 
 <!-- ===== カウントアップ・FAQ展開・スクロール検知の inline JS ===== -->
