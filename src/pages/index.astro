@@ -117,20 +117,7 @@ const showSeasonalAlert = isHornetPeakSeason();
           decoding="async"
         />
       </picture>
-      <!-- Veo3 cinematic 動画 (defer load: preload=none で初期 fetch せず、autoplay 開始時のみ) -->
-      <video
-        class="hero-bg-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="none"
-        poster={heroImage800}
-        role="presentation"
-        data-src={assetPath("videos/hero-mobile.mp4")}
-      >
-        <source src={assetPath("videos/hero-mobile.mp4")} type="video/mp4" />
-      </video>
+      <!-- 動画削除済 (2026-05: PSI 改善のため 4MB 動画を撤去、poster 画像のみで LCP 確保) -->
     </div>
     <div class="container hero-inner">
       <div class="hero-content reveal">
@@ -742,7 +729,7 @@ const showSeasonalAlert = isHornetPeakSeason();
                 <small>{v.service}</small>
               </div>
             </div>
-            <div class="voice-rating" aria-label={`5段階評価のうち${v.rating}`}>
+            <div class="voice-rating" role="img" aria-label={`5段階評価のうち${v.rating}`}>
               {Array.from({ length: v.rating }).map(() => (
                 <svg class="icon"><use href="#i-star" /></svg>
               ))}

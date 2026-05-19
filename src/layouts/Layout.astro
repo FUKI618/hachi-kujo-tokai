@@ -291,7 +291,7 @@ const allJsonLd = [
     <link rel="dns-prefetch" href="https://www.google-analytics.com" />
     <link rel="dns-prefetch" href="https://formspree.io" />
 
-    <!-- Fonts: 非同期読み込み（preload+noscript方式は禁止：Astro が noscript の link を外に出す問題回避） -->
+    <!-- Fonts: weight絞り込み (PSI改善: 未使用CSS 149KB削減) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <script is:inline>
@@ -299,7 +299,7 @@ const allJsonLd = [
         var l = document.createElement("link");
         l.rel = "stylesheet";
         l.href =
-          "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Reggae+One&family=Shippori+Mincho+B1:wght@800&display=swap";
+          "https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Noto+Sans+JP:wght@400;700&family=Reggae+One&display=swap";
         document.head.appendChild(l);
       })();
     </script>
