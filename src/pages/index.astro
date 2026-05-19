@@ -4077,23 +4077,35 @@ const showSeasonalAlert = isHornetPeakSeason();
     .faq-a-mark { font-size: 1.375rem; }
     .faq-a p { font-size: 0.9375rem; line-height: 1.95; }
 
-    /* Contact grid 不均等修正 */
+    /* Contact grid: 左右の高さを揃え、左カードの中身を縦中央配置 */
     .contact-grid {
-      align-items: start;
+      align-items: stretch;
+      grid-template-columns: 1fr 1fr;
       gap: 2rem;
+      padding: 3rem;
     }
-    .contact-call { align-self: start; padding: 2.5rem 2.25rem; }
-    .contact-tel-big { font-size: 3rem; }
-    .contact-tel-note { font-size: 0.9375rem; }
-    .contact-perks { font-size: 0.9375rem; }
-    .contact-perks li { padding: 0.5rem 0; }
+    .contact-call {
+      align-self: stretch;
+      padding: 2.5rem 2.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .contact-call h3 { font-size: 1.625rem; margin-bottom: 1rem; }
+    .contact-call h3 .icon { width: 1.75rem; height: 1.75rem; }
+    .contact-tel-big { font-size: 3rem; margin-bottom: 0.5rem; }
+    .contact-tel-note { font-size: 1rem; margin-bottom: 1.5rem; }
+    .contact-perks { gap: 0.875rem; margin: 1.5rem 0 0; }
+    .contact-perks li { font-size: 1.0625rem; gap: 0.75rem; padding: 0.125rem 0; }
+    .contact-perks .icon { width: 1.375rem; height: 1.375rem; }
 
-    /* LINE 4 ステップガイド */
+    /* LINE 4 ステップガイド: 左カードと同じ視覚密度 */
     .contact-line-guide { padding: 2.5rem 2.25rem; }
-    .contact-line-guide > h3.headline { font-size: 1.5rem; margin-bottom: 1.75rem; }
+    .contact-line-guide > h3.headline { font-size: 1.625rem; margin-bottom: 1.75rem; }
+    .contact-line-guide > h3.headline .icon { width: 1.75rem; height: 1.75rem; }
     .line-steps { gap: 1.25rem; }
     .line-step-num { width: 40px; height: 40px; font-size: 1.25rem; }
-    .line-step-body strong { font-size: 1.125rem; }
+    .line-step-body strong { font-size: 1.0625rem; }
     .line-step-body p { font-size: 0.9375rem; line-height: 1.75; }
 
     /* DIY-Guide / Scam-Warning カード PC で間延びさせる */
@@ -4172,9 +4184,12 @@ const showSeasonalAlert = isHornetPeakSeason();
     .voice-card-body { font-size: 1rem; }
     .faq-q-text { font-size: 1.125rem; }
     .faq-a p { font-size: 1rem; }
+    .contact-call h3 { font-size: 1.75rem; }
     .contact-tel-big { font-size: 3.5rem; }
+    .contact-tel-note { font-size: 1.0625rem; }
+    .contact-perks li { font-size: 1.125rem; }
     .contact-line-guide > h3.headline { font-size: 1.75rem; }
-    .line-step-body strong { font-size: 1.1875rem; }
+    .line-step-body strong { font-size: 1.125rem; }
     .line-step-body p { font-size: 1rem; }
     .troubles-resolve {
       font-size: clamp(1.75rem, 3vw, 2.375rem) !important;
