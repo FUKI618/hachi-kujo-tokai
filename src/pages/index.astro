@@ -981,79 +981,103 @@ const showSeasonalAlert = isHornetPeakSeason();
     </div>
   </section>
 
-  <!-- ===== ⑭ Contact（お問い合わせ） ===== -->
-  <section class="section section-tinted" id="contact" aria-labelledby="contact-title">
+  <!-- ===== ⑭ Contact（無料相談・電話本命CTA） ===== -->
+  <section class="section section-tinted contact-section" id="contact" aria-labelledby="contact-title">
     <div class="container">
       <div class="section-eyebrow-wrap">
         <span class="section-eyebrow">CONTACT</span>
       </div>
       <h2 id="contact-title" class="section-title headline">
-        お問い合わせ・<span class="accent">無料相談</span>
+        蜂を見つけたら、<wbr /><span class="accent">まずは<wbr />無料相談</span>
       </h2>
-      <p class="section-lead">
-        お急ぎの方は<strong>お電話</strong>が最も早く対応できます。じっくり相談したい方は<strong>LINE</strong>から、巣の写真と所在地を送るだけ。お電話番号やメールアドレスの入力は不要です。
+      <p class="section-lead contact-lead">
+        巣の場所・大きさ・蜂の種類が分からなくても大丈夫です。<br />
+        お急ぎの方はお電話、写真で状況を伝えたい方は LINE からご相談ください。
       </p>
 
-      <div class="contact-grid reveal">
-        <div class="contact-call">
-          <h3 class="headline">
-            <svg class="icon"><use href="#i-phone" /></svg>
-            お急ぎの方はお電話で
-          </h3>
-          <a href={company.phoneTelLink} class="contact-tel-big font-num cta-glow" data-cta="contact_tel">
-            {company.phoneDisplay}
+      <div class="contact-panel reveal">
+        <!-- 電話CTAカード（本命） -->
+        <article class="contact-phone-card">
+          <span class="contact-phone-eyebrow">
+            <svg class="icon"><use href="#i-warning" /></svg>
+            URGENT CALL
+          </span>
+          <h3 class="contact-phone-title headline">お急ぎの方は<br class="phone-br" />お電話で</h3>
+          <p class="contact-phone-sub">最短30分で現地到着・即日駆除</p>
+          <a href={company.phoneTelLink} class="contact-phone-cta cta-glow" data-cta="contact_tel_btn">
+            <span class="contact-phone-cta-row">
+              <svg class="icon"><use href="#i-phone" /></svg>
+              <span class="contact-phone-number font-num">{company.phoneDisplay}</span>
+            </span>
+            <span class="contact-phone-tap">タップで発信・通話無料</span>
           </a>
-          <p class="contact-tel-note">通話無料・24時間365日受付・出張無料</p>
-          <ul class="contact-perks">
-            <li><svg class="icon"><use href="#i-check-circle" /></svg>最短30分で現地到着・即日駆除</li>
-            <li><svg class="icon"><use href="#i-check-circle" /></svg>基本3,300円〜・事前見積金額厳守</li>
-            <li><svg class="icon"><use href="#i-check-circle" /></svg>1年再発保証付きで再営巣も安心</li>
-            <li><svg class="icon"><use href="#i-check-circle" /></svg>夜間・深夜・土日祝も追加料金なし</li>
+          <ul class="contact-assurance-grid">
+            <li class="contact-assurance-item">
+              <svg class="icon"><use href="#i-headset" /></svg>
+              <span>24時間365日<br />受付</span>
+            </li>
+            <li class="contact-assurance-item">
+              <svg class="icon"><use href="#i-yen" /></svg>
+              <span>出張・見積り<br />無料</span>
+            </li>
+            <li class="contact-assurance-item">
+              <svg class="icon"><use href="#i-check-circle" /></svg>
+              <span>作業前に<br />金額提示</span>
+            </li>
+            <li class="contact-assurance-item">
+              <svg class="icon"><use href="#i-shield" /></svg>
+              <span>1年再発<br />保証</span>
+            </li>
           </ul>
-        </div>
+          <div class="contact-warning-note">
+            <svg class="icon"><use href="#i-warning" /></svg>
+            <span>蜂の種類や巣の場所が分からない場合も、無理に近づかずご相談ください。</span>
+          </div>
+        </article>
 
-        <!-- LINE 4ステップガイド (form 廃止後の置換) -->
-        <div class="contact-line-guide">
-          <h3 class="headline">
-            <svg class="icon" style="color:#06c755;"><use href="#i-line" /></svg>
-            LINEで かんたん4ステップ
-          </h3>
-          <ol class="line-steps">
-            <li class="line-step">
-              <span class="line-step-num">1</span>
-              <div class="line-step-body">
+        <!-- LINE 補助導線 -->
+        <article class="contact-line-card">
+          <span class="contact-line-eyebrow">
+            <svg class="icon"><use href="#i-line" /></svg>
+            PHOTO INQUIRY
+          </span>
+          <h3 class="contact-line-title headline">写真で状況を伝えたい方は LINE で</h3>
+          <ol class="contact-line-steps">
+            <li class="contact-line-step">
+              <span class="contact-line-num">1</span>
+              <div>
                 <strong>友達追加</strong>
-                <p>下のボタンをタップして、蜂の巣駆除ファクトリー東海の LINE 公式アカウントを友達追加。</p>
+                <p>下のボタンから LINE 公式アカウントを追加。</p>
               </div>
             </li>
-            <li class="line-step">
-              <span class="line-step-num">2</span>
-              <div class="line-step-body">
+            <li class="contact-line-step">
+              <span class="contact-line-num">2</span>
+              <div>
                 <strong>巣の写真を送る</strong>
-                <p>トーク画面で蜂の巣の写真・お住まいの市町村・連絡可能な時間帯をひと言メッセージで送信。</p>
+                <p>市町村と連絡可能な時間帯もひと言メッセージで。</p>
               </div>
             </li>
-            <li class="line-step">
-              <span class="line-step-num">3</span>
-              <div class="line-step-body">
+            <li class="contact-line-step">
+              <span class="contact-line-num">3</span>
+              <div>
                 <strong>概算見積を受取り</strong>
-                <p>最短15分（営業時間内）で概算金額・出動可能時刻を返信します。納得いかなければそのまま終了で OK。</p>
+                <p>営業時間内なら最短15分で金額と出動時刻を返信。</p>
               </div>
             </li>
-            <li class="line-step">
-              <span class="line-step-num">4</span>
-              <div class="line-step-body">
+            <li class="contact-line-step">
+              <span class="contact-line-num">4</span>
+              <div>
                 <strong>確定→駆除作業</strong>
-                <p>日時を確定し、最短30分で現地到着。現地で確定見積→納得後に作業開始→完了報告まで LINE 上で完結。</p>
+                <p>日時確定後、現地で確定見積→納得後に作業開始。</p>
               </div>
             </li>
           </ol>
-          <a href={company.lineUrl} class="btn btn-line btn-block btn-lg cta-glow-line" data-cta="contact_line">
+          <a href={company.lineUrl} class="btn btn-line btn-block contact-line-btn" data-cta="contact_line">
             <svg class="icon"><use href="#i-line" /></svg>
             LINEで友達追加して写真を送る
           </a>
-          <p class="privacy-note">※ お電話番号・メールアドレス・住所の入力は一切不要。LINE 上のやり取りだけで完結します。</p>
-        </div>
+          <p class="contact-line-privacy">※ 電話番号・メールアドレスの入力は不要です。</p>
+        </article>
       </div>
     </div>
   </section>
@@ -1098,9 +1122,16 @@ const showSeasonalAlert = isHornetPeakSeason();
   <!-- ===== Floating CTA（モバイル） ===== -->
   <div
     class="floating-cta"
-    x-data="{ shown: false }"
-    x-init="window.addEventListener('scroll', () => shown = window.scrollY > 500, { passive: true })"
-    :class="{ 'is-shown': shown }"
+    x-data="{ shown: false, atContact: false }"
+    x-init="window.addEventListener('scroll', () => {
+      shown = window.scrollY > 500;
+      const c = document.getElementById('contact');
+      if (c) {
+        const r = c.getBoundingClientRect();
+        atContact = r.top < window.innerHeight * 0.7 && r.bottom > 0;
+      }
+    }, { passive: true })"
+    :class="{ 'is-shown': shown && !atContact }"
     aria-hidden="true"
   >
     <a href={company.phoneTelLink} class="btn btn-primary cta-glow" data-cta="float_tel">
@@ -4539,6 +4570,348 @@ const showSeasonalAlert = isHornetPeakSeason();
       font-size: 1.65rem;
     }
     .trust-strip-points {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ====================================================
+     Contact section redesign
+     電話CTA本命化 + LINE 補助化 + 左右密度の均一化
+     ==================================================== */
+  .contact-section .contact-lead {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .contact-panel {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* ----- 電話CTAカード（本命） ----- */
+  .contact-phone-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #fffaf2 0%, #ffffff 70%);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 16px 36px rgba(200, 30, 30, 0.1);
+  }
+  /* 薄い斜めストライプの注意感 */
+  .contact-phone-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      135deg,
+      rgba(200, 30, 30, 0.04),
+      rgba(200, 30, 30, 0.04) 14px,
+      transparent 14px,
+      transparent 28px
+    );
+    opacity: 0.7;
+    z-index: 0;
+  }
+  .contact-phone-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-phone-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    align-self: flex-start;
+  }
+  .contact-phone-eyebrow .icon {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .contact-phone-title {
+    margin: 0;
+    font-size: clamp(1.5rem, 4.5vw, 2rem);
+    color: var(--color-dark);
+    line-height: 1.3;
+  }
+  .phone-br {
+    display: none;
+  }
+  .contact-phone-sub {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.92rem;
+    font-weight: 800;
+  }
+
+  /* 大きな赤い電話CTAボタン */
+  .contact-phone-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 1.1rem 1rem;
+    background: linear-gradient(180deg, var(--color-primary) 0%, #a51a1a 100%);
+    color: #fff;
+    border-radius: 14px;
+    text-decoration: none;
+    box-shadow: 0 14px 28px rgba(200, 30, 30, 0.32);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    margin-top: 0.25rem;
+  }
+  .contact-phone-cta:hover,
+  .contact-phone-cta:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 36px rgba(200, 30, 30, 0.42);
+    color: #fff;
+  }
+  .contact-phone-cta-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .contact-phone-cta .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    flex-shrink: 0;
+  }
+  .contact-phone-number {
+    font-size: clamp(1.5rem, 6.5vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .contact-phone-tap {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    opacity: 0.96;
+  }
+
+  /* 安心材料 2x2 グリッド */
+  .contact-assurance-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+  }
+  .contact-assurance-item {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.7rem 0.8rem;
+    background: #fff;
+    border: 1px solid rgba(200, 30, 30, 0.2);
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--color-dark);
+    line-height: 1.35;
+  }
+  .contact-assurance-item .icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  /* 注意書き */
+  .contact-warning-note {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.8rem 0.9rem;
+    background: var(--color-primary-light);
+    border-left: 3px solid var(--color-primary);
+    border-radius: 8px;
+    color: var(--color-dark);
+    font-size: 0.83rem;
+    font-weight: 700;
+    line-height: 1.55;
+  }
+  .contact-warning-note .icon {
+    width: 1.05rem;
+    height: 1.05rem;
+    color: var(--color-primary);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  /* ----- LINE カード（補助・トーン抑制） ----- */
+  .contact-line-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    box-shadow: 0 6px 20px rgba(15, 23, 34, 0.05);
+  }
+  .contact-line-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-pill);
+    background: rgba(6, 199, 85, 0.12);
+    color: #04a046;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    align-self: flex-start;
+  }
+  .contact-line-eyebrow .icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    color: #06c755;
+  }
+  .contact-line-title {
+    margin: 0;
+    font-size: clamp(1.15rem, 3vw, 1.4rem);
+    color: var(--color-dark);
+    line-height: 1.45;
+  }
+  .contact-line-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .contact-line-step {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    gap: 0.65rem;
+    align-items: start;
+  }
+  .contact-line-num {
+    width: 24px;
+    height: 24px;
+    background: rgba(6, 199, 85, 0.15);
+    color: #04a046;
+    border-radius: 50%;
+    font-weight: 900;
+    font-size: 0.78rem;
+    font-family: var(--font-num);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-line-step strong {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-dark);
+    margin-bottom: 0.1rem;
+    font-weight: 800;
+  }
+  .contact-line-step p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    line-height: 1.55;
+  }
+  .contact-line-btn {
+    margin-top: 0.25rem;
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+  }
+  .contact-line-privacy {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    margin: 0.15rem 0 0;
+    text-align: center;
+  }
+
+  /* ----- PC レイアウト ----- */
+  @media (min-width: 881px) {
+    .contact-panel {
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 1.75rem;
+      align-items: stretch;
+    }
+    .contact-phone-card {
+      padding: 2.5rem 2rem;
+      gap: 1.25rem;
+    }
+    .contact-phone-card,
+    .contact-line-card {
+      height: 100%;
+    }
+    .phone-br {
+      display: inline;
+    }
+    .contact-phone-cta {
+      padding: 1.4rem 1.25rem;
+    }
+    .contact-phone-cta .icon {
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+    .contact-assurance-grid {
+      gap: 0.7rem;
+    }
+    .contact-assurance-item {
+      padding: 0.85rem 1rem;
+      font-size: 0.9rem;
+    }
+    .contact-warning-note {
+      font-size: 0.88rem;
+      padding: 0.95rem 1.1rem;
+    }
+    .contact-line-card {
+      padding: 2.25rem 1.85rem;
+      gap: 1rem;
+    }
+    .contact-line-title {
+      font-size: 1.4rem;
+    }
+    .contact-line-step strong {
+      font-size: 0.95rem;
+    }
+    .contact-line-step p {
+      font-size: 0.85rem;
+    }
+  }
+
+  /* ----- スマホで電話カードを必ず先頭に ----- */
+  @media (max-width: 880px) {
+    .contact-phone-card {
+      order: 1;
+    }
+    .contact-line-card {
+      order: 2;
+    }
+  }
+
+  /* ----- 極小幅で電話番号が溢れないように ----- */
+  @media (max-width: 380px) {
+    .contact-phone-number {
+      font-size: 1.45rem;
+      letter-spacing: 0.02em;
+    }
+    .contact-phone-cta .icon {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+    .contact-assurance-grid {
       grid-template-columns: 1fr;
     }
   }
