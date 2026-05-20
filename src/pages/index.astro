@@ -25,9 +25,6 @@ const description = `蜂の巣駆除を愛知・岐阜・三重・静岡で最�
 const fmtJpy = (n: number) =>
   new Intl.NumberFormat("ja-JP").format(n);
 
-const heroImage480 = assetPath("images/hero/hero-main-480.webp");
-const heroImage800 = assetPath("images/hero/hero-main-800.webp");
-const heroImage1400 = assetPath("images/hero/hero-main-1400.webp");
 const heroPattern = assetPath("images/hero/pattern.svg");
 
 // Gemini生成画像（人物/文字なし）。未配置ならブロックごと非表示にしてブロークンリンクを防ぐ。
@@ -116,21 +113,20 @@ const showSeasonalAlert = isHornetPeakSeason();
   <!-- ===== ① Hero ===== -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-bg" aria-hidden="true">
-      <!-- 単一の <video>: poster 画像で初期描画 → LCP target が確定。
-           src は JS で後から設定して再生開始。これで「画像→動画」の切替フラッシュが消える -->
+      <!-- poster画像なしで動画即時再生。LCPは hero-h1 にシフト。
+           saveData / reduce-motion 時はJSで autoplay 抑制 -->
       <video
         class="hero-bg-video"
         autoplay
         muted
         loop
         playsinline
-        preload="none"
-        poster={heroImage800}
+        preload="auto"
         role="presentation"
         aria-hidden="true"
         width="540"
         height="960"
-        data-src={assetPath("videos/hero-mobile.mp4")}
+        src={assetPath("videos/hero-mobile.mp4")}
       ></video>
     </div>
     <div class="container hero-inner">
@@ -280,7 +276,6 @@ const showSeasonalAlert = isHornetPeakSeason();
             loading="lazy"
             decoding="async"
           />
-          <figcaption>※ 写真はイメージです</figcaption>
         </figure>
       )}
     </div>
@@ -352,7 +347,6 @@ const showSeasonalAlert = isHornetPeakSeason();
             loading="lazy"
             decoding="async"
           />
-          <figcaption>※ 写真はイメージです</figcaption>
         </figure>
       )}
       <div class="equipment-proof-copy">
@@ -548,8 +542,7 @@ const showSeasonalAlert = isHornetPeakSeason();
               loading="lazy"
               decoding="async"
             />
-            <figcaption>※ 写真はイメージです</figcaption>
-          </figure>
+            </figure>
         )}
         <div class="estimate-proof-copy">
           <h3 class="headline">金額は、作業前にご確認いただけます</h3>
@@ -783,7 +776,7 @@ const showSeasonalAlert = isHornetPeakSeason();
       <h2 id="cases-title" class="section-title headline">
         東海エリアの<span class="accent">駆除事例</span>
       </h2>
-      <p class="section-lead">愛知・岐阜・三重・静岡で実施した駆除事例をご紹介します。軒下・ベランダ・屋根裏・土中・庭木の営巣など、状況別の作業内容と料金をご確認いただけます（写真はイメージ）。</p>
+      <p class="section-lead">愛知・岐阜・三重・静岡で実施した駆除事例をご紹介します。軒下・ベランダ・屋根裏・土中・庭木の営巣など、状況別の作業内容と料金をご確認いただけます。</p>
       <div class="case-grid reveal-stagger">
         {cases.map((c) => (
           <article class="case-card">
@@ -901,7 +894,6 @@ const showSeasonalAlert = isHornetPeakSeason();
             loading="lazy"
             decoding="async"
           />
-          <figcaption>※ 写真はイメージです</figcaption>
         </figure>
       )}
     </div>
@@ -1270,6 +1262,8 @@ const showSeasonalAlert = isHornetPeakSeason();
     position: absolute;
     inset: 0;
     z-index: 0;
+    /* 動画ロード中のプレースホルダー: hero ::before のグラデと馴染む濃色 */
+    background-color: #0f1722;
   }
   .hero-bg img {
     width: 100%;
@@ -4478,20 +4472,6 @@ const showSeasonalAlert = isHornetPeakSeason();
     border-radius: 8px;
     box-shadow: 0 24px 48px rgba(15, 23, 34, 0.24);
   }
-  .trust-strip-visual figcaption,
-  .equipment-proof-image figcaption,
-  .aftercare-band-image figcaption,
-  .estimate-proof-image figcaption {
-    margin-top: 0.45rem;
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.72);
-  }
-  /* 白背景セクションのfigcaptionは可読性のため muted を上書き */
-  .equipment-proof-image figcaption,
-  .estimate-proof-image figcaption,
-  .aftercare-band-image figcaption {
-    color: var(--color-muted);
-  }
   .equipment-proof {
     background: #fff;
   }
@@ -4986,28 +4966,22 @@ const showSeasonalAlert = isHornetPeakSeason();
       }, 2500);
     }
 
-    // Hero 動画 遅延再生: video 要素は HTML 既存 (poster だけ表示中)。
-    // LCP 計測完了後に src を設定して再生開始 → LCP candidate は video.poster で固定
-    function startHeroVideo() {
+    // Hero 動画: HTML autoplay で即時再生。saveData/低速回線/reduce-motion 時のみ抑制
+    (function () {
       var v = document.querySelector("video.hero-bg-video");
-      if (!v || v.dataset.started === "1") return;
+      if (!v) return;
       var conn = navigator.connection || {};
-      if (conn.saveData) return;
-      if (conn.effectiveType && /^([23]g|slow-2g)$/i.test(conn.effectiveType)) return;
-      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      v.dataset.started = "1";
-      v.preload = "auto";
-      v.src = v.dataset.src;
-      v.play().catch(function () {});
-    }
-    // LCP 計測ウインドウ (~2.5s) 経過後に再生開始
-    function scheduleVideoStart() {
-      ("requestIdleCallback" in window
-        ? requestIdleCallback
-        : function (cb) { setTimeout(cb, 2500); })(startHeroVideo, { timeout: 4000 });
-    }
-    if (document.readyState === "complete") scheduleVideoStart();
-    else window.addEventListener("load", scheduleVideoStart);
+      var shouldPause =
+        conn.saveData ||
+        (conn.effectiveType && /^([23]g|slow-2g)$/i.test(conn.effectiveType)) ||
+        matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (shouldPause) {
+        v.removeAttribute("autoplay");
+        v.preload = "none";
+        v.removeAttribute("src");
+        v.pause();
+      }
+    })();
 
     // 年号
     var yearEl = document.getElementById("copyright-year");
