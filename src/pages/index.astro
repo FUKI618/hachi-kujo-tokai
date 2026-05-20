@@ -875,6 +875,38 @@ const showSeasonalAlert = isHornetPeakSeason();
     </div>
   </section>
 
+  <!-- ===== ⑪′ Aftercare band（駆除後の不安解消） ===== -->
+  <section
+    class={`aftercare-band${generatedCleanEaves ? "" : " is-no-image"}`}
+    aria-labelledby="aftercare-title"
+  >
+    <div class="container aftercare-band-inner">
+      <div class="aftercare-band-copy">
+        <span class="section-eyebrow">AFTER CARE</span>
+        <h2 id="aftercare-title" class="headline aftercare-band-title">
+          駆除後の不安も、その場で確認
+        </h2>
+        <p>
+          巣の撤去後は、戻りバチや再営巣しやすい場所を確認し、必要な対策をご案内します。
+          保証対象や注意点も作業後に説明します。
+        </p>
+      </div>
+      {generatedCleanEaves && (
+        <figure class="aftercare-band-image">
+          <img
+            src={generatedCleanEaves}
+            alt="蜂の巣が撤去された後の住宅軒下のイメージ"
+            width="720"
+            height="480"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>※ 写真はイメージです</figcaption>
+        </figure>
+      )}
+    </div>
+  </section>
+
   <!-- ===== ⑫ Areas（対応エリア） ===== -->
   <section class="section section-soft" id="area" aria-labelledby="area-title">
     <div class="container">
