@@ -3025,6 +3025,22 @@ const showSeasonalAlert = isHornetPeakSeason();
     height: 1.125rem;
   }
 
+  /* PCでは固定CTAを非表示（本文の圧迫を回避）、スマホは余白とタップ高を最適化 */
+  @media (min-width: 881px) {
+    .floating-cta {
+      display: none;
+    }
+  }
+  @media (max-width: 880px) {
+    .floating-cta {
+      padding: 0.6rem 0.75rem calc(0.6rem + env(safe-area-inset-bottom));
+    }
+    .floating-cta .btn {
+      min-height: 58px;
+      padding: 0.65rem 0.75rem;
+    }
+  }
+
   /* ----- Helpers ----- */
   .hl {
     background: linear-gradient(transparent 65%, var(--color-accent) 65%);
