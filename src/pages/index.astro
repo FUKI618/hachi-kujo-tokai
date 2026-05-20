@@ -536,6 +536,30 @@ const showSeasonalAlert = isHornetPeakSeason();
         </div>
       </div>
 
+      <!-- 事前金額確認ビジュアル（estimate-proof） -->
+      <div class={`estimate-proof reveal${generatedEstimate ? "" : " is-no-image"}`}>
+        {generatedEstimate && (
+          <figure class="estimate-proof-image">
+            <img
+              src={generatedEstimate}
+              alt="見積書と駆除道具のイメージ"
+              width="720"
+              height="480"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>※ 写真はイメージです</figcaption>
+          </figure>
+        )}
+        <div class="estimate-proof-copy">
+          <h3 class="headline">金額は、作業前にご確認いただけます</h3>
+          <p>
+            蜂の種類・巣の大きさ・高さ・場所によって作業内容は変わります。
+            現地確認後に金額をご説明し、納得いただいてから作業します。
+          </p>
+        </div>
+      </div>
+
       <!-- 料金表テーブル -->
       <div class="price-wrap reveal">
         <table class="price-table">
