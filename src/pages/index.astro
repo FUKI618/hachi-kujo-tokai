@@ -336,6 +336,42 @@ const showSeasonalAlert = isHornetPeakSeason();
     </div>
   </section>
 
+  <!-- ===== ④′ Equipment proof（装備で専門性補強） ===== -->
+  <section
+    class={`section equipment-proof${generatedEquipment ? "" : " is-no-image"}`}
+    aria-labelledby="equipment-proof-title"
+  >
+    <div class="container equipment-proof-inner">
+      {generatedEquipment && (
+        <figure class="equipment-proof-image">
+          <img
+            src={generatedEquipment}
+            alt="蜂駆除に使用する防護装備と専用機材のイメージ"
+            width="720"
+            height="480"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>※ 写真はイメージです</figcaption>
+        </figure>
+      )}
+      <div class="equipment-proof-copy">
+        <span class="section-eyebrow">SAFETY CHECK</span>
+        <h2 id="equipment-proof-title" class="headline equipment-proof-title">
+          種類と巣の場所を確認してから作業します
+        </h2>
+        <p>
+          スズメバチ・アシナガバチ・ミツバチなど、種類や営巣場所によって危険度と作業内容は変わります。
+          現地で状況を確認し、作業内容と金額をご説明してから駆除します。
+        </p>
+        <div class="equipment-proof-note">
+          <svg class="icon"><use href="#i-warning" /></svg>
+          <span>種類が分からない場合や、巣が見えない場所にある場合も、無理に近づかずご相談ください。</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== ⑤ BeeTypes（対応する蜂6種） ===== -->
   <section class="section section-soft" id="bee-types" aria-labelledby="bee-title">
     <div class="container">
