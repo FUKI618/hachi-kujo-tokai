@@ -41,3 +41,8 @@ test-results/
 
 # Local dev artifacts
 screenshots/
+
+# Gemini-generated image sources (WebP のみ配信、PNG はスクリプトで再生成可)
+public/images/generated/*.png
+public/images/generated/*.jpg
+public/images/generated/*.jpeg
