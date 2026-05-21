@@ -19,7 +19,7 @@ export const rates: Rate[] = [
   },
   {
     beeType: "スズメバチ",
-    basicPrice: "¥3,300〜",
+    basicPrice: "¥4,300〜",
     rangePrice: "¥18,000〜¥58,000",
     workCondition: "巣のサイズ・高さ・場所による",
   },
@@ -31,7 +31,7 @@ export const rates: Rate[] = [
   },
   {
     beeType: "オオスズメバチ",
-    basicPrice: "¥3,300〜",
+    basicPrice: "¥4,300〜",
     rangePrice: "¥28,000〜¥88,000",
     workCondition: "土中・樹洞・難所は要現地調査",
   },
