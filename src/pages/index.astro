@@ -164,81 +164,64 @@ const showSeasonalAlert = isHornetPeakSeason();
           </div>
         </div>
 
-        <div class="hero-cta">
-          <a href={company.phoneTelLink} class="hero-tel-card" data-cta="hero_tel">
-            <span class="hero-tel-card-icon" aria-hidden="true">
+        <div class="hero-cta hero-cta-redesign">
+          <a href={company.phoneTelLink} class="hero-primary-call" data-cta="hero_tel">
+            <span class="hero-primary-call-icon" aria-hidden="true">
               <svg class="icon"><use href="#i-phone" /></svg>
             </span>
-            <span class="hero-tel-card-body">
-              <span class="hero-tel-card-label">通話無料・24時間365日受付</span>
-              <span class="hero-tel-card-num font-num">{company.phoneDisplay}</span>
-              <span class="hero-tel-card-note">※ タップで発信</span>
+            <span class="hero-primary-call-body">
+              <span class="hero-primary-call-label">今すぐ無料相談・24時間365日受付</span>
+              <span class="hero-primary-call-number font-num">{company.phoneDisplay}</span>
+              <span class="hero-primary-call-note">タップで発信 / 出張・見積り無料</span>
             </span>
-            <svg class="hero-tel-card-arrow icon" aria-hidden="true"><use href="#i-arrow-right" /></svg>
+            <svg class="hero-primary-call-arrow icon" aria-hidden="true"><use href="#i-arrow-right" /></svg>
           </a>
-          <div class="hero-cta-row">
-            <a href={company.lineUrl} class="btn btn-line cta-glow-line hero-line-cta" data-cta="hero_line">
-              <svg class="icon"><use href="#i-line" /></svg>
-              LINEで写真を送って相談
-            </a>
-          </div>
+
+          <a href={company.lineUrl} class="hero-secondary-line" data-cta="hero_line">
+            <svg class="icon"><use href="#i-line" /></svg>
+            <span>LINEで写真を送って相談</span>
+          </a>
         </div>
       </div>
 
-      <!-- ===== Hero 右側 (PC専用): 保証メダル + 3つの¥0チップ ===== -->
-      <aside class="hero-right reveal-stagger" aria-label="保証とキャンペーン">
-        <!-- 保証メダル (medal風) -->
-        <div class="hero-medal">
-          <span class="hero-medal-ribbon">GUARANTEE</span>
-          <div class="hero-medal-body">
-            <div class="hero-medal-circle" aria-hidden="true">
-              <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="medalGold" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#f4d68a"/>
-                    <stop offset="50%" stop-color="#c9a14a"/>
-                    <stop offset="100%" stop-color="#8b6b1f"/>
-                  </linearGradient>
-                  <linearGradient id="medalGoldInner" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#fff5d4"/>
-                    <stop offset="100%" stop-color="#e8c463"/>
-                  </linearGradient>
-                </defs>
-                <circle cx="40" cy="40" r="38" fill="url(#medalGold)"/>
-                <circle cx="40" cy="40" r="32" fill="url(#medalGoldInner)"/>
-                <circle cx="40" cy="40" r="32" fill="none" stroke="#a07b2a" stroke-width="1" opacity="0.5"/>
-                <text x="40" y="38" text-anchor="middle" font-family="Georgia, serif" font-weight="900" font-size="22" fill="#7a5318">1</text>
-                <text x="40" y="52" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="10" fill="#7a5318" letter-spacing="0.1em">YEAR</text>
-              </svg>
-            </div>
-            <div class="hero-medal-text">
-              <p class="hero-medal-eyebrow">蜂の巣駆除ファクトリー東海のお約束</p>
-              <p class="hero-medal-title" role="heading" aria-level="2">再発防止<span class="hl-num">1年</span>保証</p>
-              <p class="hero-medal-note">作業済み箇所で同種のハチが1年以内に再営巣した場合、<strong>無料で再駆除</strong>いたします。</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 3つの「¥0」チップ -->
-        <div class="hero-zero-card">
-          <div class="hero-zero-head">
-            <span class="hero-zero-eyebrow">東海4県のお住まいの方</span>
-            <p class="hero-zero-title" role="heading" aria-level="2">ハチ駆除の<span class="hl">3つの「¥0」</span></p>
-          </div>
-          <div class="hero-zero-grid">
-            <div class="hero-zero-chip">
-              <span class="hero-zero-amount">¥0</span>
-              <span class="hero-zero-label">出張費</span>
-            </div>
-            <div class="hero-zero-chip">
-              <span class="hero-zero-amount">¥0</span>
-              <span class="hero-zero-label">見積り</span>
-            </div>
-            <div class="hero-zero-chip">
-              <span class="hero-zero-amount">¥0</span>
-              <span class="hero-zero-label">キャンセル</span>
-            </div>
-          </div>
+      <!-- ===== Hero 右側: 1枚の安心パネル ===== -->
+      <aside class="hero-right hero-assurance reveal" aria-label="保証と無料対応">
+        <div class="hero-assurance-panel">
+          <span class="hero-assurance-eyebrow">安心してご相談いただくために</span>
+          <h2 class="hero-assurance-title headline">
+            作業前に金額をご説明し、<br />
+            納得後に駆除します。
+          </h2>
+          <ul class="hero-assurance-list">
+            <li>
+              <svg class="icon"><use href="#i-check-circle" /></svg>
+              <span>
+                <strong>事前見積金額厳守</strong>
+                <small>作業後の追加請求はありません</small>
+              </span>
+            </li>
+            <li>
+              <svg class="icon"><use href="#i-yen" /></svg>
+              <span>
+                <strong>出張・見積り・キャンセル料 ¥0</strong>
+                <small>納得できなければ無料でお断りいただけます</small>
+              </span>
+            </li>
+            <li>
+              <svg class="icon"><use href="#i-shield" /></svg>
+              <span>
+                <strong>1年再発保証</strong>
+                <small>同一箇所で再営巣した場合は無料で再駆除</small>
+              </span>
+            </li>
+            <li>
+              <svg class="icon"><use href="#i-headset" /></svg>
+              <span>
+                <strong>24時間365日受付</strong>
+                <small>夜間・早朝もご相談いただけます</small>
+              </span>
+            </li>
+          </ul>
         </div>
       </aside>
     </div>
@@ -4894,6 +4877,391 @@ const showSeasonalAlert = isHornetPeakSeason();
     }
     .contact-assurance-grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  /* ====================================================
+     PC Hero 再設計: 左主役 + 右1枚の安心パネル
+     ==================================================== */
+  @media (min-width: 981px) {
+    .hero {
+      min-height: 760px;
+    }
+    .hero::before {
+      background:
+        linear-gradient(
+          90deg,
+          rgba(8, 13, 22, 0.92) 0%,
+          rgba(8, 13, 22, 0.78) 38%,
+          rgba(8, 13, 22, 0.44) 68%,
+          rgba(8, 13, 22, 0.18) 100%
+        );
+    }
+    .hero-bg-video,
+    .hero-bg img {
+      filter: blur(1.5px) saturate(0.9) brightness(0.82);
+      transform: scale(1.03);
+    }
+    .hero-inner {
+      grid-template-columns: minmax(0, 0.98fr) minmax(360px, 0.72fr);
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+    .hero-content {
+      max-width: 680px;
+    }
+    .hero-mascot-wrap {
+      display: none;
+    }
+    .hero-h1 {
+      margin-top: 1.1rem;
+      margin-bottom: 1.25rem;
+      max-width: 680px;
+    }
+    .hero-sub {
+      max-width: 650px;
+      margin-bottom: 1.35rem;
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      max-width: 520px;
+      margin: 0 0 1.4rem;
+    }
+    .hero-stat {
+      min-height: 92px;
+      padding: 0.9rem 0.75rem;
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+    }
+    .hero-stat-num {
+      font-size: clamp(1.75rem, 2.5vw, 2.35rem);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      margin-top: 0.35rem;
+      font-size: 0.78rem;
+    }
+
+    /* ===== PC: 電話CTA本命 + LINE 補助 ===== */
+    .hero-cta-redesign {
+      display: grid;
+      gap: 0.85rem;
+      max-width: 560px;
+    }
+    .hero-primary-call {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.05rem 1.2rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      color: #fff;
+      text-decoration: none;
+      box-shadow:
+        0 22px 48px rgba(200, 30, 30, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hero-primary-call:hover,
+    .hero-primary-call:focus-visible {
+      transform: translateY(-2px);
+      box-shadow:
+        0 28px 60px rgba(200, 30, 30, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      color: #fff;
+    }
+    .hero-primary-call-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+    .hero-primary-call-icon .icon {
+      width: 1.55rem;
+      height: 1.55rem;
+    }
+    .hero-primary-call-body {
+      display: grid;
+      gap: 0.15rem;
+      min-width: 0;
+    }
+    .hero-primary-call-label {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: #fff3d6;
+    }
+    .hero-primary-call-number {
+      font-size: clamp(1.85rem, 3vw, 2.65rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+    }
+    .hero-primary-call-note {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.86);
+    }
+    .hero-primary-call-arrow {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    .hero-secondary-line {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: fit-content;
+      min-width: 280px;
+      padding: 0.78rem 1.25rem;
+      border-radius: 999px;
+      background: rgba(6, 199, 85, 0.94);
+      color: #fff;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 14px 30px rgba(6, 199, 85, 0.24);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+    .hero-secondary-line:hover,
+    .hero-secondary-line:focus-visible {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+      color: #fff;
+    }
+    .hero-secondary-line .icon {
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+
+    /* ===== PC: 右側 安心パネル ===== */
+    .hero-right.hero-assurance {
+      align-self: center;
+    }
+    .hero-assurance-panel {
+      position: relative;
+      padding: 2rem;
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.94));
+      color: var(--color-dark);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.26);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      overflow: hidden;
+    }
+    .hero-assurance-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    }
+    .hero-assurance-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.7rem;
+      margin-bottom: 1rem;
+      border-radius: 999px;
+      background: var(--color-accent-light);
+      color: var(--color-primary-dark);
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+    }
+    .hero-assurance-title {
+      margin: 0 0 1.25rem;
+      font-size: clamp(1.35rem, 2.2vw, 2rem);
+      color: var(--color-dark);
+      line-height: 1.4;
+    }
+    .hero-assurance-list {
+      display: grid;
+      gap: 0.85rem;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .hero-assurance-list li {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      padding: 0.9rem;
+      border-radius: 10px;
+      background: #fff8e7;
+      border: 1px solid rgba(245, 179, 0, 0.32);
+    }
+    .hero-assurance-list .icon {
+      color: var(--color-primary);
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-top: 0.12rem;
+      flex-shrink: 0;
+    }
+    .hero-assurance-list strong {
+      display: block;
+      font-size: 0.98rem;
+      line-height: 1.35;
+      color: var(--color-dark);
+      font-weight: 800;
+    }
+    .hero-assurance-list small {
+      display: block;
+      margin-top: 0.25rem;
+      color: var(--color-muted);
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+  }
+
+  /* ====================================================
+     モバイル Hero 再設計補助 (PC新CTA構造をモバイルでも自然に)
+     ==================================================== */
+  @media (max-width: 980px) {
+    .hero-cta-redesign {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .hero-primary-call {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.95rem 1rem;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--color-dark);
+      text-decoration: none;
+      box-shadow: 0 16px 36px rgba(15, 23, 34, 0.22);
+    }
+    .hero-primary-call-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .hero-primary-call-icon .icon {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
+    .hero-primary-call-body {
+      display: grid;
+      gap: 0.1rem;
+      min-width: 0;
+    }
+    .hero-primary-call-label {
+      font-size: 0.75rem;
+      color: var(--color-primary);
+      font-weight: 800;
+    }
+    .hero-primary-call-number {
+      font-size: clamp(1.35rem, 6.5vw, 1.85rem);
+      font-weight: 800;
+      line-height: 1.05;
+      color: var(--color-dark);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .hero-primary-call-note {
+      font-size: 0.72rem;
+      color: var(--color-muted);
+    }
+    .hero-primary-call-arrow {
+      color: var(--color-primary);
+      width: 1.1rem;
+      height: 1.1rem;
+      flex-shrink: 0;
+    }
+    .hero-secondary-line {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border-radius: 999px;
+      background: var(--color-line);
+      color: #fff;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .hero-secondary-line .icon {
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+
+    .hero-assurance-panel {
+      margin-top: 1rem;
+      padding: 1.25rem;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--color-dark);
+      box-shadow: 0 16px 36px rgba(15, 23, 34, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-assurance-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    }
+    .hero-assurance-eyebrow {
+      display: inline-flex;
+      padding: 0.32rem 0.65rem;
+      margin-bottom: 0.8rem;
+      border-radius: 999px;
+      background: var(--color-accent-light);
+      color: var(--color-primary-dark);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .hero-assurance-title {
+      margin: 0 0 1rem;
+      font-size: 1.3rem;
+      line-height: 1.45;
+      color: var(--color-dark);
+    }
+    .hero-assurance-list {
+      display: grid;
+      gap: 0.65rem;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .hero-assurance-list li {
+      display: flex;
+      gap: 0.65rem;
+      padding: 0.8rem;
+      border-radius: 10px;
+      background: var(--color-soft);
+      align-items: flex-start;
+    }
+    .hero-assurance-list .icon {
+      color: var(--color-primary);
+      width: 1.2rem;
+      height: 1.2rem;
+      margin-top: 0.15rem;
+      flex-shrink: 0;
+    }
+    .hero-assurance-list strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--color-dark);
+    }
+    .hero-assurance-list small {
+      display: block;
+      margin-top: 0.2rem;
+      color: var(--color-muted);
+      font-size: 0.75rem;
+      line-height: 1.5;
     }
   }
 </style>
