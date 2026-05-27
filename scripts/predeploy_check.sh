@@ -3,6 +3,7 @@
 # Usage: bash scripts/predeploy_check.sh
 
 set -u
+set -o pipefail
 cd "$(dirname "$0")/.."
 
 errors=0

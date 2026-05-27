@@ -8,7 +8,7 @@ interface Props {
 import "../styles/global.css";
 import { assetPath, homePath, siteConfig } from "../lib/site";
 import { faqsToJsonLd } from "../data/faq";
-import { company } from "../data/company";
+import { company, tracking } from "../data/company";
 import { rates } from "../data/rates";
 import { flowSteps } from "../data/flow";
 import { areas } from "../data/areas";
@@ -306,13 +306,60 @@ const allJsonLd = [
     <!-- Alpine.js（FAQ・Floating CTA で使用） -->
     <script is:inline defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- GTM: 3秒遅延（Core Web Vitals 保護）— DIFF-POINT: GTM-ID を確定後に置換 -->
-    <script is:inline>
+    <!-- 計測タグ: GTM / GA4 / Google Ads（src/data/company.ts の tracking で管理） -->
+    <!-- GTM_ID 未設定でも GA4_ID 単体で動作。CWV保護のため 3秒遅延ロード。 -->
+    <script is:inline define:vars={{ tracking }}>
       window.dataLayer = window.dataLayer || [];
-      // GTM-XXXXXXX を実IDに差し替え
-      var GTM_ID = "GTM-XXXXXXX";
-      if (GTM_ID && GTM_ID !== "GTM-XXXXXXX") {
-        setTimeout(function () {
+      window.gtag = function () { window.dataLayer.push(arguments); };
+
+      // 共通 CV イベント送信関数（電話/LINE/フォームから呼び出し）
+      window.trackConversion = function (eventName, params) {
+        params = params || {};
+        // 1) dataLayer に push（GTM 経由用）
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+        // 2) gtag 直接送信（GA4 用、GTM未設定でも動く）
+        if (window.gtag && typeof window.gtag === "function") {
+          window.gtag("event", eventName, params);
+        }
+      };
+
+      // 電話/LINE/フォーム CTA の自動計測（クリック委譲）
+      document.addEventListener("click", function (e) {
+        var target = e.target.closest("[data-cta]");
+        if (!target) return;
+        var ctaId = target.getAttribute("data-cta");
+        var eventName = ctaId.indexOf("tel") !== -1 ? "phone_click"
+                      : ctaId.indexOf("line") !== -1 ? "line_click"
+                      : "cta_click";
+        window.trackConversion(eventName, {
+          cta_id: ctaId,
+          page_path: location.pathname,
+        });
+      });
+
+      // CWV保護: タグロードは 3秒遅延 or 最初のユーザー操作で起動
+      var tagsLoaded = false;
+      function loadTags() {
+        if (tagsLoaded) return;
+        tagsLoaded = true;
+
+        // GA4 (gtag.js) — GA4_ID 設定時のみ
+        if (tracking.ga4Id) {
+          var ga = document.createElement("script");
+          ga.async = true;
+          ga.src = "https://www.googletagmanager.com/gtag/js?id=" + tracking.ga4Id;
+          document.head.appendChild(ga);
+          window.gtag("js", new Date());
+          window.gtag("config", tracking.ga4Id, { send_page_view: true });
+        }
+
+        // Google Ads conversion linker — GADS_CONVERSION_ID 設定時のみ
+        if (tracking.gadsConversionId) {
+          window.gtag("config", tracking.gadsConversionId);
+        }
+
+        // GTM — GTM_ID 設定時のみ
+        if (tracking.gtmId) {
           (function (w, d, s, l, i) {
             w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
             var f = d.getElementsByTagName(s)[0],
@@ -321,9 +368,13 @@ const allJsonLd = [
             j.async = true;
             j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
             f.parentNode.insertBefore(j, f);
-          })(window, document, "script", "dataLayer", GTM_ID);
-        }, 3000);
+          })(window, document, "script", "dataLayer", tracking.gtmId);
+        }
       }
+      setTimeout(loadTags, 3000);
+      ["scroll", "click", "touchstart", "keydown"].forEach(function (ev) {
+        window.addEventListener(ev, loadTags, { once: true, passive: true });
+      });
     </script>
 
     <!-- JSON-LD: 構造化データ6種（LocalBusiness/Organization/HowTo/BreadcrumbList/FAQPage/OfferCatalog内蔵） -->

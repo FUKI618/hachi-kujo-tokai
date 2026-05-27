@@ -1,7 +1,17 @@
 /**
  * 会社情報 SSOT
  * DIFF-POINT: 屋号・住所・電話番号・代表者は確定後に差し替え
+ *
+ * 計測ID: tracking 内の空文字を取得後の実IDに差し替え。
+ * gtmId 未設定でも ga4Id 単体で計測動作する。
+ * 形式: GTM-xxxxxxx / G-xxxxxxxxxx / AW-xxxxxxxxx
  */
+
+export const tracking = {
+  gtmId: "",            // Google Tag Manager コンテナID
+  ga4Id: "",            // GA4 Measurement ID (gtag直接送信用)
+  gadsConversionId: "", // Google Ads コンバージョンID (conversion linker)
+} as const;
 
 export const company = {
   name: "蜂の巣駆除ファクトリー東海",

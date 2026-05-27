@@ -138,15 +138,15 @@ const showSeasonalAlert = isHornetPeakSeason();
         <div class="hero-mascot-wrap">
           <div class="hero-mascot" aria-hidden="true">
             <img src={assetPath("logo.svg")} alt="" width="72" height="72" />
-            <div class="speech-bubble">呼んだ？最短<strong>30分</strong>で出動！</div>
+            <div class="speech-bubble">緊急出動中！<strong>最短30分</strong>でプロが到着</div>
           </div>
         </div>
         <h1 id="hero-title" class="headline hero-h1">
-          <span class="hero-h1-line"><span class="hl-kw">蜂の巣駆除</span>、</span>
-          <span class="hero-h1-line"><span class="hl-num">今日中</span>に完了。</span>
+          <span class="hero-h1-line">その<span class="hl-kw">蜂の巣</span>、</span>
+          <span class="hero-h1-line"><span class="hl-num">30分</span>後にプロが来ます。</span>
         </h1>
         <p class="hero-sub">
-          攻撃性の高い<strong>スズメバチ</strong>も、防護装備の専門隊が<strong>24時間救急対応</strong>。最短<strong>30分</strong>で出動・基本<strong>3,300円〜</strong>・<strong>事前見積金額厳守</strong>・1年再発保証。
+          愛知・岐阜・三重・静岡で<strong>24時間365日</strong>受付。防護装備の専門隊が<strong>最短30分</strong>で到着し、<strong>基本3,300円〜・事前見積金額厳守</strong>で駆除します。
         </p>
 
         <div class="hero-stats reveal-stagger">
@@ -170,16 +170,16 @@ const showSeasonalAlert = isHornetPeakSeason();
               <svg class="icon"><use href="#i-phone" /></svg>
             </span>
             <span class="hero-primary-call-body">
-              <span class="hero-primary-call-label">今すぐ無料相談・24時間365日受付</span>
+              <span class="hero-primary-call-label">今すぐ電話で相談（通話料・出張・見積すべて無料）</span>
               <span class="hero-primary-call-number font-num">{company.phoneDisplay}</span>
-              <span class="hero-primary-call-note">タップで発信 / 出張・見積り無料</span>
+              <span class="hero-primary-call-note">タップで発信 → 平均30秒で出動手配</span>
             </span>
             <svg class="hero-primary-call-arrow icon" aria-hidden="true"><use href="#i-arrow-right" /></svg>
           </a>
 
           <a href={company.lineUrl} class="hero-secondary-line" data-cta="hero_line">
             <svg class="icon"><use href="#i-line" /></svg>
-            <span>LINEで写真を送って相談</span>
+            <span>LINEで巣の写真を送る → 5分で概算回答</span>
           </a>
         </div>
       </div>
@@ -659,7 +659,7 @@ const showSeasonalAlert = isHornetPeakSeason();
       <div class="mid-cta-row">
         <a href={company.lineUrl} class="btn btn-line cta-glow-line" data-cta="mid_line" style="min-width:280px;">
           <svg class="icon"><use href="#i-line" /></svg>
-          LINEで写真を送って相談
+          LINEで巣の写真を送る → 5分で概算回答
         </a>
       </div>
     </div>
