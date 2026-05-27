@@ -104,10 +104,20 @@ table {
   font-feature-settings: "tnum";
 }
 
+/* 電話番号 (tel: リンク内) は常に1行で表示する */
+a[href^="tel:"] .font-num,
+a[href^="tel:"] .hero-primary-call-number,
+a[href^="tel:"] .contact-phone-number,
+a[href^="tel:"] .mid-cta-tel-num {
+  white-space: nowrap;
+}
+
 .headline {
   font-weight: 700;
   letter-spacing: -0.01em;
-  line-height: 1.25;
+  line-height: 1.3;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 /* ================================================================
@@ -144,6 +154,11 @@ table {
 .btn-line {
   background: var(--color-line);
   color: #fff;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  line-height: 1.45;
+  text-align: center;
+  max-width: 100%;
 }
 .btn-line:hover {
   filter: brightness(1.05);
@@ -234,6 +249,9 @@ table {
   font-size: 0.95rem;
   color: var(--color-primary);
   white-space: nowrap;
+  word-break: keep-all;
+  max-width: 100%;
+  min-width: 0;
   box-shadow: 0 4px 12px rgba(200, 30, 30, 0.12);
 }
 .speech-bubble::before,
@@ -266,6 +284,16 @@ table {
 @media (max-width: 480px) {
   .hero-mascot img { width: 56px; height: 56px; }
   .speech-bubble { font-size: 0.85rem; padding: 6px 11px; }
+}
+@media (max-width: 360px) {
+  .hero-mascot { gap: 8px; }
+  .hero-mascot img { width: 48px; height: 48px; }
+  .speech-bubble {
+    font-size: 0.78rem;
+    padding: 6px 10px;
+    white-space: normal;
+    line-height: 1.35;
+  }
 }
 
 /* ================================================================
@@ -345,13 +373,16 @@ table {
 }
 
 .section-title {
-  font-size: clamp(1.625rem, 4.4vw, 2.375rem);
+  font-size: clamp(1.5rem, 4.4vw, 2.375rem);
   font-weight: 700;
   letter-spacing: -0.01em;
   text-align: center;
-  line-height: 1.25;
+  line-height: 1.35;
   margin: 0 0 1rem;
   color: var(--color-dark);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 .section-title .accent {
   color: var(--color-primary);
