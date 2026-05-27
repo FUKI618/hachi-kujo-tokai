@@ -29,9 +29,7 @@ const contactEmail = "hachikujo.qq@gmail.com";
   <header class="pp-header">
     <div class="container pp-header-inner">
       <a href={assetPath("")} class="pp-brand">
-        <span class="pp-brand-mark">
-          <svg aria-hidden="true"><use href="#pp-i-bee" /></svg>
-        </span>
+        <img src={assetPath("logo.svg")} alt="" width="40" height="40" class="pp-brand-logo" loading="eager" />
         <strong set:html={`蜂の巣駆除<wbr/>ファクトリー<wbr/>東海`}></strong>
       </a>
       <a href={company.phoneTelLink} class="pp-tel">
@@ -168,37 +166,37 @@ const contactEmail = "hachikujo.qq@gmail.com";
 
             <tr>
               <th>役務提供契約の<br />申込みの撤回・解除</th>
-              <td>
-                <p><strong>1. 役務提供前のキャンセル</strong></p>
-                <small>
-                  現地調査・お見積り提示の前であれば、お電話・メール・LINEいずれかの方法でいつでも無料でキャンセルいただけます。キャンセル料・違約金は一切発生しません。
-                </small>
-
-                <p style="margin-top:1rem;"><strong>2. 確定見積提示後・作業開始前のキャンセル</strong></p>
-                <small>
-                  現地到着後の確定見積をご確認のうえ、作業開始前であればキャンセル料0円でご辞退いただけます。出張費・現地調査費もご請求いたしません。
-                </small>
-
-                <p style="margin-top:1rem;"><strong>3. 作業開始後のキャンセル</strong></p>
-                <small>
-                  作業開始後（蜂への接近・薬剤散布・巣の除去等を開始した時点以降）に、お客様のご都合によりキャンセルされる場合は、それまでに発生した作業・出動の実費相当額をご請求する場合があります。
-                </small>
-
-                <p style="margin-top:1rem;"><strong>4. 訪問販売型役務提供契約のクーリング・オフ</strong></p>
-                <small>
-                  本サービスは、特定商取引法上の「訪問販売」または「特定継続的役務提供」に該当する場合があります。お客様のご自宅・指定場所において契約書面（または法定書面に相当する確定見積書）をお受け取りになった日から起算して<strong>8日以内</strong>であれば、書面または電磁的記録（メール・SMS・LINE等）により無条件で本契約を解除（クーリング・オフ）することができます。<br />
-                  ・クーリング・オフが成立した場合、お客様に違約金・損害賠償を一切ご請求いたしません。<br />
-                  ・既に役務の提供が行われた部分についても、その対価を請求いたしません。<br />
-                  ・既にお支払いいただいた料金は、速やかに全額返金いたします。<br />
-                  ・蜂駆除という役務の性質上、お客様のご要請に基づき<strong>8日以内に作業を完了させた</strong>場合であっても、上記クーリング・オフの権利は妨げられません。
-                </small>
-
-                <p style="margin-top:1rem;"><strong>5. クーリング・オフ通知先</strong></p>
-                <small>
-                  〒{company.address.postal} {company.address.region}{company.address.city} {company.address.street}<br />
-                  {company.legalName}（{company.name}） クーリング・オフ受付係<br />
-                  電話：{company.phoneDisplay}／メール：<a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-                </small>
+              <td class="pp-td-structured">
+                <div class="pp-clause">
+                  <h4>1. 役務提供前のキャンセル</h4>
+                  <p>現地調査・お見積り提示の前であれば、お電話・メール・LINEいずれかの方法でいつでも無料でキャンセルいただけます。キャンセル料・違約金は一切発生しません。</p>
+                </div>
+                <div class="pp-clause">
+                  <h4>2. 確定見積提示後・作業開始前のキャンセル</h4>
+                  <p>現地到着後の確定見積をご確認のうえ、作業開始前であればキャンセル料0円でご辞退いただけます。出張費・現地調査費もご請求いたしません。</p>
+                </div>
+                <div class="pp-clause">
+                  <h4>3. 作業開始後のキャンセル</h4>
+                  <p>作業開始後（蜂への接近・薬剤散布・巣の除去等を開始した時点以降）に、お客様のご都合によりキャンセルされる場合は、それまでに発生した作業・出動の実費相当額をご請求する場合があります。</p>
+                </div>
+                <div class="pp-clause pp-clause-highlight">
+                  <h4>4. 訪問販売型役務提供契約のクーリング・オフ</h4>
+                  <p>本サービスは、特定商取引法上の「訪問販売」または「特定継続的役務提供」に該当する場合があります。契約書面（または法定書面に相当する確定見積書）をお受け取りになった日から起算して<strong>8日以内</strong>であれば、書面または電磁的記録（メール・SMS・LINE等）により無条件で本契約を解除（クーリング・オフ）することができます。</p>
+                  <ul class="pp-clause-list">
+                    <li>違約金・損害賠償は一切請求いたしません。</li>
+                    <li>既に役務の提供が行われた部分の対価も請求いたしません。</li>
+                    <li>既にお支払いいただいた料金は、速やかに全額返金いたします。</li>
+                    <li><strong>8日以内に作業を完了させた場合</strong>であっても、クーリング・オフの権利は妨げられません。</li>
+                  </ul>
+                </div>
+                <div class="pp-clause pp-clause-contact">
+                  <h4>5. クーリング・オフ通知先</h4>
+                  <p>
+                    〒{company.address.postal} {company.address.region}{company.address.city} {company.address.street}<br />
+                    {company.legalName}（{company.name}） クーリング・オフ受付係<br />
+                    電話：<a href={company.phoneTelLink}>{company.phoneDisplay}</a>／メール：<a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+                  </p>
+                </div>
               </td>
             </tr>
 
@@ -258,22 +256,28 @@ const contactEmail = "hachikujo.qq@gmail.com";
     <div class="container pp-container">
       <h2 class="pp-h2">クーリング・オフ告知</h2>
       <div class="pp-card pp-body">
-        <div class="pp-cooloff-box">
-          <p class="pp-cooloff-h">
-            お客様は、特定商取引に関する法律 第9条に基づき、本契約の<strong>申込みの撤回または契約の解除</strong>を行うことができます。
-          </p>
-          <ul>
-            <li>契約書面（または確定見積書）を受領した日から起算して<strong>8日間以内</strong>であれば、書面または電磁的記録により無条件で解除可能です。</li>
-            <li>解除に伴う違約金・損害賠償・既履行部分の対価は、当社から一切請求いたしません。</li>
+        <div class="pp-cooloff-box" role="region" aria-label="クーリング・オフのご案内">
+          <div class="pp-cooloff-head">
+            <span class="pp-cooloff-badge">特商法 第9条</span>
+            <p class="pp-cooloff-h">
+              お客様は、本契約の<strong>申込みの撤回または契約の解除</strong>を行うことができます。
+            </p>
+          </div>
+          <ul class="pp-cooloff-list">
+            <li><strong>8日以内</strong>であれば、書面または電磁的記録により無条件で解除可能です。</li>
+            <li>違約金・損害賠償・既履行部分の対価は、当社から一切請求いたしません。</li>
             <li>既にお支払いいただいた金額は、速やかに全額をお返しします。</li>
             <li>役務の提供を受けるために変更された土地・建物の原状回復が必要な場合、当社の負担で実施します。</li>
             <li>緊急時の蜂駆除であっても、お客様のクーリング・オフ権は妨げられません。</li>
           </ul>
-          <p>
-            通知先：〒{company.address.postal} {company.address.region}{company.address.city} {company.address.street}<br />
-            {company.legalName}（{company.name}） クーリング・オフ受付係<br />
-            電話：{company.phoneDisplay}／メール：<a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-          </p>
+          <div class="pp-cooloff-contact">
+            <p class="pp-cooloff-contact-h">クーリング・オフ通知先</p>
+            <address class="pp-cooloff-contact-body">
+              〒{company.address.postal} {company.address.region}{company.address.city} {company.address.street}<br />
+              {company.legalName}（{company.name}） クーリング・オフ受付係<br />
+              電話：<a href={company.phoneTelLink}>{company.phoneDisplay}</a>／メール：<a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+            </address>
+          </div>
         </div>
 
         <h3>表記の改定</h3>
@@ -296,9 +300,7 @@ const contactEmail = "hachikujo.qq@gmail.com";
     <div class="container pp-footer-inner">
       <div>
         <div class="pp-footer-brand">
-          <span class="pp-brand-mark pp-brand-mark-sm">
-            <svg aria-hidden="true"><use href="#pp-i-bee" /></svg>
-          </span>
+          <img src={assetPath("logo.svg")} alt="" width="32" height="32" class="pp-brand-logo pp-brand-logo-sm" loading="lazy" />
           <strong set:html={`蜂の巣駆除<wbr/>ファクトリー<wbr/>東海`}></strong>
         </div>
         <p class="pp-footer-text">{company.serviceArea}のハチ駆除専門。</p>
@@ -658,7 +660,30 @@ const contactEmail = "hachikujo.qq@gmail.com";
     .pp-table td { font-size: 0.75rem; }
   }
 
-  /* === 特商法ページ用追加スタイル === */
+  /* === LP本体ロゴをヘッダー・フッターで使用 === */
+  .pp-brand-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: #f5b300;
+    padding: 0.3rem;
+    box-shadow: 0 4px 12px rgba(245, 179, 0, 0.35);
+    flex-shrink: 0;
+  }
+  .pp-brand-logo-sm {
+    width: 2rem;
+    height: 2rem;
+    padding: 0.25rem;
+    box-shadow: 0 2px 8px rgba(245, 179, 0, 0.25);
+  }
+  @media (max-width: 560px) {
+    .pp-brand-logo { width: 2rem; height: 2rem; padding: 0.25rem; }
+  }
+  @media (max-width: 360px) {
+    .pp-brand-logo { width: 1.75rem; height: 1.75rem; padding: 0.2rem; }
+  }
+
+  /* === 特商法ページ用追加スタイル (Expert audit 適用版) === */
   .pp-inline-link {
     color: #c81e1e;
     font-weight: 700;
@@ -666,54 +691,256 @@ const contactEmail = "hachikujo.qq@gmail.com";
   }
   .pp-inline-link:hover { color: #9a1414; }
 
-  .pp-cooloff-box {
-    background: #fff7ed;
-    border: 2px solid #f5b300;
-    border-radius: 12px;
-    padding: 1.5rem 1.5rem;
-    margin: 0 0 2rem;
+  /* H2: 中央寄せ廃止、赤縦バー + 黄ドット */
+  .pp-h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    text-align: left;
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 1.75rem;
   }
-  .pp-cooloff-h {
-    font-weight: 800;
+  .pp-h2::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.2em;
+    width: 4px; height: 1.1em;
+    background: linear-gradient(180deg, #c81e1e 0%, #f5b300 100%);
+    border-radius: 2px;
+  }
+  .pp-h2::after { display: none; }
+
+  /* eyebrow をリッチに */
+  .pp-eyebrow {
+    letter-spacing: 0.22em;
+    padding: 0.4rem 1.125rem;
+    background: #fff;
+    color: #c81e1e;
+    border: 1px solid rgba(200, 30, 30, 0.18);
+    box-shadow: 0 4px 12px rgba(245, 179, 0, 0.12);
+  }
+
+  /* Card refined */
+  .pp-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow:
+      0 1px 0 rgba(15, 23, 34, 0.04),
+      0 12px 32px rgba(15, 23, 34, 0.06);
+    border: 1px solid #f3efe7;
+  }
+
+  /* === Table refined: 縞模様廃止、左赤バー === */
+  .pp-table th {
+    background: transparent !important;
+    width: 11rem;
+    padding: 1.5rem 1rem 1.5rem 0.875rem !important;
     color: #0f1722;
-    margin: 0 0 1rem !important;
-    font-size: 1rem !important;
-    line-height: 1.7;
+    font-weight: 700;
+    font-size: 0.875rem;
+    vertical-align: top;
+    letter-spacing: 0.02em;
+    position: relative;
+    border-radius: 0 !important;
   }
-  .pp-cooloff-box ul {
-    margin: 0.5rem 0 1.25rem !important;
-    padding-left: 1.5rem;
+  .pp-table th::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 1.6rem;
+    width: 3px; height: 1rem;
+    background: linear-gradient(180deg, #c81e1e, #f5b300);
+    border-radius: 2px;
   }
-  .pp-cooloff-box ul li {
+  .pp-table td {
+    padding: 1.5rem 0 1.5rem 1.25rem !important;
     font-size: 0.9375rem;
-    line-height: 1.7;
+    line-height: 1.75;
+    color: #2d3748;
+  }
+  .pp-table tbody tr { border-bottom: 1px solid #ececec; }
+  .pp-table td > strong:first-child {
+    display: inline-block;
+    font-size: 1rem;
+    color: #0f1722;
     margin-bottom: 0.5rem;
   }
-  .pp-cooloff-box > p:last-of-type {
-    background: #fff;
-    padding: 1rem 1.25rem;
-    border-radius: 8px;
-    border-left: 4px solid #c81e1e;
-    font-size: 0.9375rem;
-    line-height: 1.7;
-    margin: 0 !important;
-  }
-
-  /* table 内の strong は赤で強調 */
   .pp-table td strong { color: #0f1722; }
-  .pp-table td p { margin: 0.25rem 0; font-size: 0.9375rem; }
   .pp-table td small {
     display: block;
-    color: #4a5568;
-    line-height: 1.7;
-    margin-top: 0.375rem;
+    color: #6b7280;
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    margin-top: 0.5rem;
   }
-  .pp-table td a { color: #c81e1e; text-decoration: underline; }
+  .pp-table td small + small { margin-top: 0.25rem; }
+  .pp-table td a { color: #c81e1e; text-decoration: underline; font-weight: 700; }
+
+  /* 「申込みの撤回・解除」セル専用構造 */
+  .pp-td-structured .pp-clause {
+    padding: 0.875rem 0;
+    border-bottom: 1px dashed #eee;
+  }
+  .pp-td-structured .pp-clause:last-child { border-bottom: 0; }
+  .pp-td-structured .pp-clause h4 {
+    font-size: 0.9375rem;
+    font-weight: 800;
+    color: #0f1722;
+    margin: 0 0 0.5rem;
+  }
+  .pp-td-structured .pp-clause p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #4a5568;
+    line-height: 1.85;
+  }
+  .pp-clause-list {
+    margin: 0.625rem 0 0;
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+    color: #4a5568;
+  }
+  .pp-clause-list li { margin-bottom: 0.25rem; line-height: 1.75; }
+  .pp-clause-highlight {
+    background: linear-gradient(180deg, #fffaf0 0%, #fff7e6 100%);
+    margin: 0.5rem -0.875rem;
+    padding: 1rem 0.875rem !important;
+    border-radius: 8px;
+    border-left: 3px solid #f5b300;
+  }
+  .pp-clause-contact {
+    background: #fafaf9;
+    margin: 0.5rem -0.875rem 0;
+    padding: 1rem 0.875rem !important;
+    border-radius: 8px;
+  }
+  .pp-clause-contact a { color: #c81e1e; font-weight: 700; }
+
+  /* === クーリング・オフBOX 再設計 === */
+  .pp-cooloff-box {
+    background: #fff;
+    border: 1px solid #fde2a8;
+    border-top: 4px solid #f5b300;
+    border-radius: 14px;
+    padding: 2rem 1.75rem;
+    margin: 0 0 2rem;
+    box-shadow: 0 6px 24px rgba(245, 179, 0, 0.12);
+  }
+  .pp-cooloff-head { margin-bottom: 1.25rem; }
+  .pp-cooloff-badge {
+    display: inline-block;
+    font-size: 0.6875rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    color: #c81e1e;
+    background: #fff1f1;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+  }
+  .pp-cooloff-h {
+    font-size: 1rem !important;
+    font-weight: 800;
+    color: #0f1722;
+    line-height: 1.75;
+    margin: 0 !important;
+  }
+  .pp-cooloff-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem !important;
+  }
+  .pp-cooloff-list li {
+    padding: 0.625rem 0 0.625rem 1.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    border-bottom: 1px dashed #f0e6cc;
+    position: relative;
+  }
+  .pp-cooloff-list li:last-child { border-bottom: 0; }
+  .pp-cooloff-list li::before {
+    content: "";
+    position: absolute;
+    left: 0.25rem; top: 1.05rem;
+    width: 0.5rem; height: 0.5rem;
+    background: #f5b300;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(245, 179, 0, 0.18);
+  }
+  .pp-cooloff-contact {
+    background: #fafaf9;
+    border-radius: 10px;
+    padding: 1.25rem 1.25rem;
+    border-left: 3px solid #c81e1e;
+  }
+  .pp-cooloff-contact-h {
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    color: #c81e1e;
+    margin: 0 0 0.5rem !important;
+  }
+  .pp-cooloff-contact-body {
+    font-style: normal;
+    font-size: 0.875rem;
+    line-height: 1.85;
+    color: #2d3748;
+    margin: 0;
+  }
+  .pp-cooloff-contact-body a { color: #c81e1e; font-weight: 700; }
+
+  /* 戻るボタン: CTA級にアップグレード */
+  .pp-back-btn {
+    background: linear-gradient(180deg, #c81e1e 0%, #a31818 100%) !important;
+    padding: 1rem 2.5rem !important;
+    font-size: 1rem !important;
+    box-shadow:
+      0 4px 0 #7c1111,
+      0 8px 20px rgba(200, 30, 30, 0.35) !important;
+  }
+  .pp-back-btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow:
+      0 5px 0 #7c1111,
+      0 10px 24px rgba(200, 30, 30, 0.4) !important;
+  }
 
   @media (max-width: 560px) {
-    .pp-cooloff-box { padding: 1.25rem 1rem; }
+    .pp-cooloff-box { padding: 1.5rem 1.125rem; }
     .pp-cooloff-h { font-size: 0.9375rem !important; }
-    .pp-cooloff-box ul li { font-size: 0.8125rem; }
-    .pp-cooloff-box > p:last-of-type { font-size: 0.8125rem; padding: 0.875rem 1rem; }
+    .pp-cooloff-list li { font-size: 0.8125rem; padding-left: 1.5rem; }
+    .pp-cooloff-contact-body { font-size: 0.8125rem; }
+
+    /* TEL を ピル型 */
+    .pp-tel {
+      background: #fff1f1;
+      color: #c81e1e;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8125rem;
+      box-shadow: inset 0 0 0 1px #fadcdc;
+    }
+
+    /* Table: TH/TD 縦積み */
+    .pp-table th,
+    .pp-table td {
+      display: block !important;
+      width: 100% !important;
+      padding: 0 !important;
+    }
+    .pp-table th {
+      padding: 1rem 0 0.5rem 0.875rem !important;
+      font-size: 0.8125rem !important;
+      color: #c81e1e !important;
+    }
+    .pp-table th::before { top: 1.1rem; height: 0.875rem; }
+    .pp-table td {
+      padding: 0 0 1.25rem 0 !important;
+      font-size: 0.875rem !important;
+    }
+    .pp-clause-highlight,
+    .pp-clause-contact {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
   }
 </style>
