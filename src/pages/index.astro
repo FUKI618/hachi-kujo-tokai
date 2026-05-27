@@ -227,6 +227,26 @@ const showSeasonalAlert = isHornetPeakSeason();
     </div>
   </section>
 
+  <!-- ===== ①′ 緊急ブロック（Loss aversion + 早期相談誘導） ===== -->
+  <section class="urgency-block" aria-labelledby="urgency-title">
+    <div class="container urgency-inner">
+      <h2 id="urgency-title" class="urgency-headline">
+        巣は1日で<span class="urgency-num">約3cm</span>拡大します
+      </h2>
+      <p class="urgency-sub">
+        今日の電話が、明日の費用を<strong>半分以下</strong>にすることがあります。蜂の巣は1日で2〜3cm成長し、サイズが2倍になれば作業時間も費用も比例して増えます。<br /><strong>今この瞬間が、いちばん小さい巣です。</strong>
+      </p>
+      <a href={company.phoneTelLink} class="urgency-cta" data-cta="urgency_tel">
+        <svg class="icon" aria-hidden="true"><use href="#i-phone" /></svg>
+        <span class="urgency-cta-body">
+          <span class="urgency-cta-label">迷う時間が、費用に変わる前に</span>
+          <span class="urgency-cta-number font-num">{company.phoneDisplay}</span>
+        </span>
+      </a>
+      <p class="urgency-note">※成長速度は蜂種・季節・環境により異なります</p>
+    </div>
+  </section>
+
   <!-- ===== ②′ Trust strip（Hero直下の安心材料バー） ===== -->
   <section
     class={`trust-strip${generatedEmergencyNest ? "" : " is-no-image"}`}
@@ -3093,6 +3113,126 @@ const showSeasonalAlert = isHornetPeakSeason();
     width: 1.125rem;
     height: 1.125rem;
   }
+  /* Floating CTA 電話ボタンに5秒1回のソフトパルス（注意喚起） */
+  .floating-cta .btn-primary {
+    animation: float-pulse 5s ease-in-out infinite;
+    will-change: transform;
+  }
+  @keyframes float-pulse {
+    0%, 92%, 100% { transform: scale(1); }
+    95% { transform: scale(1.05); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .floating-cta .btn-primary { animation: none; }
+  }
+
+  /* ====================================================
+     ①′ 煽りブロック（Loss aversion）
+     ==================================================== */
+  .urgency-block {
+    background: linear-gradient(180deg, #FFF7E6 0%, #FFEED1 100%);
+    border-left: 4px solid #E8A317;
+    padding: clamp(1.5rem, 5vw, 2.5rem) 0;
+  }
+  .urgency-inner {
+    max-width: 720px;
+    text-align: center;
+  }
+  .urgency-headline {
+    font-size: clamp(1.4rem, 5.5vw, 2rem);
+    font-weight: 900;
+    color: #4a2c0a;
+    line-height: 1.35;
+    margin: 0 0 0.85rem;
+    letter-spacing: 0.005em;
+  }
+  .urgency-num {
+    display: inline-block;
+    font-size: 1.25em;
+    color: #C97A0E;
+    margin: 0 0.1em;
+    font-weight: 900;
+    background: linear-gradient(transparent 65%, #FFD982 65%);
+    padding: 0 0.15em;
+  }
+  .urgency-sub {
+    font-size: clamp(0.95rem, 3.6vw, 1.05rem);
+    line-height: 1.75;
+    color: #5a3a14;
+    margin: 0 auto 1.5rem;
+    max-width: 600px;
+  }
+  .urgency-sub strong {
+    color: #C97A0E;
+    font-weight: 900;
+  }
+  .urgency-cta {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: 0.85rem;
+    margin: 0 auto 0.7rem;
+    padding: 0.9rem 1.5rem;
+    background: linear-gradient(135deg, #E8895A, #C5663A);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 14px;
+    box-shadow:
+      0 12px 28px rgba(217, 120, 71, 0.42),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    min-height: 64px;
+  }
+  .urgency-cta:hover,
+  .urgency-cta:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(217, 120, 71, 0.55);
+    color: #fff;
+  }
+  .urgency-cta .icon {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  .urgency-cta-body {
+    display: grid;
+    gap: 0.1rem;
+    text-align: left;
+    min-width: 0;
+  }
+  .urgency-cta-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #fff3d6;
+    letter-spacing: 0.02em;
+  }
+  .urgency-cta-number {
+    font-size: clamp(1.6rem, 6.5vw, 2.2rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  .urgency-note {
+    font-size: 0.72rem;
+    color: #8a6a3a;
+    margin: 0;
+    line-height: 1.5;
+  }
+  @media (max-width: 540px) {
+    .urgency-cta {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.2rem;
+      width: calc(100% - 2rem);
+      max-width: 360px;
+    }
+    .urgency-cta-body {
+      text-align: center;
+    }
+  }
 
   /* PCでは固定CTAを非表示（本文の圧迫を回避）、スマホは余白とタップ高を最適化 */
   @media (min-width: 881px) {
@@ -5058,10 +5198,11 @@ const showSeasonalAlert = isHornetPeakSeason();
       color: #fff3d6;
     }
     .hero-primary-call-number {
-      font-size: clamp(1.85rem, 3vw, 2.65rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: 0.02em;
+      font-size: clamp(2.75rem, 4.2vw, 4rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
     }
     .hero-primary-call-note {
       font-size: 0.78rem;
@@ -5221,11 +5362,11 @@ const showSeasonalAlert = isHornetPeakSeason();
       font-weight: 800;
     }
     .hero-primary-call-number {
-      font-size: clamp(1.35rem, 6.5vw, 1.85rem);
-      font-weight: 800;
-      line-height: 1.05;
+      font-size: clamp(2.2rem, 9.5vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1.0;
       color: var(--color-dark);
-      letter-spacing: 0.01em;
+      letter-spacing: 0.005em;
       white-space: nowrap;
     }
     .hero-primary-call-note {
