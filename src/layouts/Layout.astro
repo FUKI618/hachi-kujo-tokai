@@ -313,6 +313,8 @@ const allJsonLd = [
       window.gtag = function () { window.dataLayer.push(arguments); };
 
       // 共通 CV イベント送信関数（電話/LINE/フォームから呼び出し）
+      // - GA4: 標準 event として送信
+      // - Google Ads: conversion label が設定されていれば conversion event として送信
       window.trackConversion = function (eventName, params) {
         params = params || {};
         // 1) dataLayer に push（GTM 経由用）
@@ -320,6 +322,23 @@ const allJsonLd = [
         // 2) gtag 直接送信（GA4 用、GTM未設定でも動く）
         if (window.gtag && typeof window.gtag === "function") {
           window.gtag("event", eventName, params);
+        }
+        // 3) Google Ads conversion event 発火（コンバージョンラベル設定時のみ）
+        if (window.gtag && tracking.gadsConversionId && tracking.gadsConversionLabels) {
+          var labelMap = {
+            phone_click: tracking.gadsConversionLabels.phoneClick,
+            line_click: tracking.gadsConversionLabels.lineClick,
+            form_submit: tracking.gadsConversionLabels.formSubmit,
+          };
+          var label = labelMap[eventName];
+          if (label) {
+            window.gtag("event", "conversion", {
+              send_to: tracking.gadsConversionId + "/" + label,
+              value: 0.0,
+              currency: "JPY",
+              transaction_id: "",
+            });
+          }
         }
       };
 

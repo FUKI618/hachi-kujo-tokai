@@ -8,9 +8,20 @@
  */
 
 export const tracking = {
-  gtmId: "",            // Google Tag Manager コンテナID
-  ga4Id: "",            // GA4 Measurement ID (gtag直接送信用)
-  gadsConversionId: "", // Google Ads コンバージョンID (conversion linker)
+  gtmId: "",                       // Google Tag Manager コンテナID
+  ga4Id: "",                       // GA4 Measurement ID (gtag直接送信用)
+  gadsConversionId: "AW-1832578807", // Google Ads コンバージョンID (conversion linker)
+  /**
+   * Google Ads コンバージョンラベル (CV action 作成後に貼付)
+   * Google Ads UI → ツール → コンバージョン → 新規アクション作成
+   *   各アクションごとに `AW-XXXXX/LABEL` 形式の送信先が発行される
+   * 該当アクションの LABEL 部分のみをここに記載
+   */
+  gadsConversionLabels: {
+    phoneClick: "",   // 電話発信 CV (推奨カテゴリ: Phone calls)
+    lineClick: "",    // LINE 友だち追加クリック (推奨カテゴリ: Submit lead form)
+    formSubmit: "",   // フォーム送信 (将来用・推奨: Submit lead form)
+  },
 } as const;
 
 export const company = {
