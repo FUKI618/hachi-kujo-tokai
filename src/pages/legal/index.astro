@@ -1,0 +1,390 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { assetPath } from "../../lib/site";
+import { company } from "../../data/company";
+
+const title = `特定商取引法に基づく表示｜${company.name}`;
+const description = `${company.name}（運営：${company.legalName}）の特定商取引法に基づく表示。事業者情報・料金・支払方法・役務提供時期・キャンセル/解約・クーリングオフをご案内します。`;
+
+// 役務提供開始日（実務上、契約成立日＝役務提供日）
+const enactedDate = "2026年5月28日";
+const contactEmail = "hachikujo.qq@gmail.com";
+---
+
+<Layout title={title} description={description}>
+  <!-- SVG sprite（プライバシーポリシーと同一） -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="pp-i-bee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="13" rx="6" ry="7"/>
+      <path d="M12 6 L12 20 M9 6 L9 20 M15 6 L15 20"/>
+      <ellipse cx="6" cy="9" rx="3" ry="1.5" transform="rotate(-30 6 9)"/>
+      <ellipse cx="18" cy="9" rx="3" ry="1.5" transform="rotate(30 18 9)"/>
+    </symbol>
+    <symbol id="pp-i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/>
+    </symbol>
+  </svg>
+
+  <!-- ===== Simple Header ===== -->
+  <header class="pp-header">
+    <div class="container pp-header-inner">
+      <a href={assetPath("")} class="pp-brand">
+        <span class="pp-brand-mark">
+          <svg aria-hidden="true"><use href="#pp-i-bee" /></svg>
+        </span>
+        <strong set:html={`蜂の巣駆除<wbr/>ファクトリー<wbr/>東海`}></strong>
+      </a>
+      <a href={company.phoneTelLink} class="pp-tel">
+        <span class="pp-tel-icon"><svg aria-hidden="true"><use href="#pp-i-phone" /></svg></span>
+        {company.phoneDisplay}
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== Breadcrumb ===== -->
+  <nav class="pp-breadcrumb-wrap" aria-label="パンくず">
+    <div class="container">
+      <ol class="pp-breadcrumb">
+        <li><a href={assetPath("")}>ホーム</a></li>
+        <li aria-current="page">特定商取引法に基づく表示</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ===== ① ページタイトル ===== -->
+  <section class="section pp-title-section">
+    <div class="container pp-container">
+      <span class="pp-eyebrow">LEGAL NOTICE</span>
+      <h1 class="pp-title">
+        特定商取引法<br />に基づく表示
+      </h1>
+      <p class="pp-lead">
+        {company.name}（運営：<strong>{company.legalName}</strong>）が提供する蜂・蜂の巣駆除その他害虫駆除役務に関し、特定商取引に関する法律 第11条（通信販売の広告）および第13条（書面交付義務）に準じて、以下のとおり表示します。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== ② 特商法表示本体 ===== -->
+  <section class="section">
+    <div class="container pp-container">
+      <h2 class="pp-h2">事業者情報および取引条件</h2>
+      <div class="pp-card">
+        <table class="pp-table">
+          <tbody>
+            <tr>
+              <th>販売事業者</th>
+              <td>{company.legalName}（屋号：{company.name}）</td>
+            </tr>
+            <tr>
+              <th>運営統括責任者</th>
+              <td>{company.representative}</td>
+            </tr>
+            <tr>
+              <th>所在地</th>
+              <td>
+                〒{company.address.postal}<br />
+                {company.address.region}{company.address.city} {company.address.street}
+              </td>
+            </tr>
+            <tr>
+              <th>電話番号</th>
+              <td>
+                {company.phoneDisplay}<br />
+                <small>受付時間：{company.hours}</small>
+              </td>
+            </tr>
+            <tr>
+              <th>メールアドレス</th>
+              <td>
+                <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+              </td>
+            </tr>
+            <tr>
+              <th>事業内容</th>
+              <td>{company.businessType}</td>
+            </tr>
+            <tr>
+              <th>サービス名</th>
+              <td>蜂・蜂の巣駆除サービス／害虫駆除サービス／再発防止施工</td>
+            </tr>
+            <tr>
+              <th>対応エリア</th>
+              <td>{company.serviceArea}</td>
+            </tr>
+
+            <tr>
+              <th>役務の対価（料金）</th>
+              <td>
+                <strong>基本料金：3,300円（税込）〜</strong><br />
+                <small>
+                  ※ 上記は最小作業（軒下・露出箇所のアシナガバチ等、ごく小規模な巣の駆除）における出張料込み税込最低価格です。<br />
+                  ※ 実際の料金は、蜂の種類・巣の大きさ・設置場所の高さ・難所性（屋根裏・壁内・土中・樹洞 等）・防護装備の必要度により変動します。<br />
+                  ※ 標準的な料金レンジは、アシナガバチ：8,800円〜38,000円／スズメバチ：18,000円〜58,000円／オオスズメバチ：28,000円〜88,000円（いずれも税込）です。<br />
+                  ※ 現地調査のうえ作業前に確定見積を書面または口頭でご提示し、お客様の<strong>明示的なご同意（口頭・SMS・LINEを含む）</strong>を得てから作業を開始します。<br />
+                  ※ ご同意いただいた見積金額の範囲内で作業を完了し、追加請求はいたしません（作業中にお客様のご要望で範囲が変更となる場合は、事前にご相談のうえ再見積を提示します）。
+                </small>
+              </td>
+            </tr>
+            <tr>
+              <th>商品代金以外に<br />必要な費用</th>
+              <td>
+                <strong>出張費・現地調査費・お見積り：0円（無料）</strong><br />
+                <strong>ご成約に至らなかった場合のキャンセル料：0円（無料）</strong><br />
+                <small>
+                  ※ 上記の確定見積金額には、対応エリア内における出張費・現地調査費・基本作業費・廃棄物処分費・忌避剤散布費が含まれます。<br />
+                  ※ 対応エリア外（東海4県外）への出張は、別途お見積りいたします。<br />
+                  ※ 駐車場のないご住所で有料コインパーキング等の利用が必要な場合、実費を別途ご負担いただく場合があります（事前にお伝えします）。
+                </small>
+              </td>
+            </tr>
+            <tr>
+              <th>支払方法</th>
+              <td>
+                {company.payment.join("／")}<br />
+                <small>※ クレジットカードは VISA／Mastercard／JCB／AMEX／Diners に対応。<br />
+                ※ 後払いは所定の与信審査・条件に基づきご利用いただけます。</small>
+              </td>
+            </tr>
+            <tr>
+              <th>支払時期</th>
+              <td>
+                <strong>作業完了確認後、その場でお支払い</strong>（現金・クレジットカード・QRコード決済の場合）<br />
+                <small>
+                  ※ 銀行振込の場合：請求書発行日より7日以内にお振込みください。振込手数料はお客様にてご負担ください。<br />
+                  ※ 後払いの場合：作業完了後にご請求書を発行し、所定の支払期限内にコンビニ・銀行ATM等からお支払いください。
+                </small>
+              </td>
+            </tr>
+            <tr>
+              <th>役務の提供時期</th>
+              <td>
+                <strong>ご依頼受付後、最短30分で現地到着・即日駆除</strong><br />
+                <small>
+                  ※ 当日対応率98%（自社実績）。ただし、深夜帯・悪天候・繁忙期・遠方・現場到達難易度等により当日中の対応が困難な場合があります。その場合は受付時にお伝えのうえ、お客様にご都合の良い日時を改めて調整いたします。<br />
+                  ※ お電話・LINE・メールいずれの方法でも、受付後速やかに対応可能時刻をご連絡いたします。
+                </small>
+              </td>
+            </tr>
+
+            <tr>
+              <th>役務提供契約の<br />申込みの撤回・解除</th>
+              <td>
+                <p><strong>1. 役務提供前のキャンセル</strong></p>
+                <small>
+                  現地調査・お見積り提示の前であれば、お電話・メール・LINEいずれかの方法でいつでも無料でキャンセルいただけます。キャンセル料・違約金は一切発生しません。
+                </small>
+
+                <p style="margin-top:1rem;"><strong>2. 確定見積提示後・作業開始前のキャンセル</strong></p>
+                <small>
+                  現地到着後の確定見積をご確認のうえ、作業開始前であればキャンセル料0円でご辞退いただけます。出張費・現地調査費もご請求いたしません。
+                </small>
+
+                <p style="margin-top:1rem;"><strong>3. 作業開始後のキャンセル</strong></p>
+                <small>
+                  作業開始後（蜂への接近・薬剤散布・巣の除去等を開始した時点以降）に、お客様のご都合によりキャンセルされる場合は、それまでに発生した作業・出動の実費相当額をご請求する場合があります。
+                </small>
+
+                <p style="margin-top:1rem;"><strong>4. 訪問販売型役務提供契約のクーリング・オフ</strong></p>
+                <small>
+                  本サービスは、特定商取引法上の「訪問販売」または「特定継続的役務提供」に該当する場合があります。お客様のご自宅・指定場所において契約書面（または法定書面に相当する確定見積書）をお受け取りになった日から起算して<strong>8日以内</strong>であれば、書面または電磁的記録（メール・SMS・LINE等）により無条件で本契約を解除（クーリング・オフ）することができます。<br />
+                  ・クーリング・オフが成立した場合、お客様に違約金・損害賠償を一切ご請求いたしません。<br />
+                  ・既に役務の提供が行われた部分についても、その対価を請求いたしません。<br />
+                  ・既にお支払いいただいた料金は、速やかに全額返金いたします。<br />
+                  ・蜂駆除という役務の性質上、お客様のご要請に基づき<strong>8日以内に作業を完了させた</strong>場合であっても、上記クーリング・オフの権利は妨げられません。
+                </small>
+
+                <p style="margin-top:1rem;"><strong>5. クーリング・オフ通知先</strong></p>
+                <small>
+                  〒{company.address.postal} {company.address.region}{company.address.city} {company.address.street}<br />
+                  {company.legalName}（{company.name}） クーリング・オフ受付係<br />
+                  電話：{company.phoneDisplay}／メール：<a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+                </small>
+              </td>
+            </tr>
+
+            <tr>
+              <th>役務の品質保証・<br />再発保証</th>
+              <td>
+                <strong>1年間の再発保証</strong><br />
+                <small>
+                  作業完了日から1年以内に、駆除した同一箇所（または半径1m以内の近接箇所）に蜂が再営巣した場合は、無償で再駆除いたします。ただし、以下の場合は保証対象外となります。<br />
+                  ・天災・第三者の故意過失による営巣促進<br />
+                  ・お客様による忌避剤の除去・施工部位の改変<br />
+                  ・初回駆除時と異なる種類の蜂による営巣（別種営巣）<br />
+                  ・対象建物の解体・大規模リフォーム等による現場状況の根本的変化<br />
+                  ※ 保証適用には、初回作業時に発行する作業完了報告書または領収書のご提示が必要です。
+                </small>
+              </td>
+            </tr>
+
+            <tr>
+              <th>役務提供にあたっての<br />特記事項</th>
+              <td>
+                <small>
+                  ・本サービスは生体である蜂を対象とするため、現地状況（巣の位置・大きさ・種類・近隣環境）により、当初の見積から作業内容が変更となる場合があります。その際は必ず事前にお客様へご説明し、ご同意を得たうえで作業を変更します。<br />
+                  ・お客様および周辺住民の安全確保のため、作業中は対象箇所周辺への立入りをお控えいただく場合があります。<br />
+                  ・アレルギー反応等の医療的緊急事態が発生する可能性があるため、過去に蜂刺傷によるアナフィラキシーショック歴のあるお客様は、必ず事前にお申し出ください。<br />
+                  ・絶滅危惧種・希少種の蜂（ニホンミツバチの一部 等）と判明した場合は、駆除ではなく移動措置をご提案する場合があります。
+                </small>
+              </td>
+            </tr>
+
+            <tr>
+              <th>動作環境</th>
+              <td>
+                <small>
+                  本ウェブサイトは、以下の環境での閲覧を推奨します。<br />
+                  ・PC：Google Chrome／Safari／Microsoft Edge／Firefox の各最新版<br />
+                  ・スマートフォン：iOS 15以降の Safari、Android 10以降の Chrome<br />
+                  ・JavaScript および Cookie を有効にしてご利用ください。
+                </small>
+              </td>
+            </tr>
+
+            <tr>
+              <th>個人情報の取り扱い</th>
+              <td>
+                お客様からお預かりした個人情報は、別途定める<a href={assetPath("privacy-policy/")} class="pp-inline-link">プライバシーポリシー</a>に従って適切に取り扱います。
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ③ クーリング・オフ専用ボックス（強調） ===== -->
+  <section class="section pp-section-soft">
+    <div class="container pp-container">
+      <h2 class="pp-h2">クーリング・オフ告知</h2>
+      <div class="pp-card pp-body">
+        <div class="pp-cooloff-box">
+          <p class="pp-cooloff-h">
+            お客様は、特定商取引に関する法律 第9条に基づき、本契約の<strong>申込みの撤回または契約の解除</strong>を行うことができます。
+          </p>
+          <ul>
+            <li>契約書面（または確定見積書）を受領した日から起算して<strong>8日間以内</strong>であれば、書面または電磁的記録により無条件で解除可能です。</li>
+            <li>解除に伴う違約金・損害賠償・既履行部分の対価は、当社から一切請求いたしません。</li>
+            <li>既にお支払いいただいた金額は、速やかに全額をお返しします。</li>
+            <li>役務の提供を受けるために変更された土地・建物の原状回復が必要な場合、当社の負担で実施します。</li>
+            <li>緊急時の蜂駆除であっても、お客様のクーリング・オフ権は妨げられません。</li>
+          </ul>
+          <p>
+            通知先：〒{company.address.postal} {company.address.region}{company.address.city} {company.address.street}<br />
+            {company.legalName}（{company.name}） クーリング・オフ受付係<br />
+            電話：{company.phoneDisplay}／メール：<a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+          </p>
+        </div>
+
+        <h3>表記の改定</h3>
+        <p>当社は、法令の改正、サービス内容の変更、または料金体系の改定に応じて本表示を改定する場合があります。改定後の内容は本ページに掲載した時点で効力を生じます。重要な変更がある場合は、施行日の前にトップページにてお知らせします。</p>
+
+        <p class="pp-date">制定日：{enactedDate}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ④ 戻るリンク ===== -->
+  <section class="section pp-back-section">
+    <div class="container pp-container" style="text-align:center;">
+      <a href={assetPath("")} class="pp-back-btn">← トップページへ戻る</a>
+    </div>
+  </section>
+
+  <!-- ===== Simple Footer ===== -->
+  <footer class="pp-footer">
+    <div class="container pp-footer-inner">
+      <div>
+        <div class="pp-footer-brand">
+          <span class="pp-brand-mark pp-brand-mark-sm">
+            <svg aria-hidden="true"><use href="#pp-i-bee" /></svg>
+          </span>
+          <strong set:html={`蜂の巣駆除<wbr/>ファクトリー<wbr/>東海`}></strong>
+        </div>
+        <p class="pp-footer-text">{company.serviceArea}のハチ駆除専門。</p>
+      </div>
+      <div>
+        <h4 class="pp-footer-h">運営会社</h4>
+        <ul class="pp-footer-list">
+          <li>{company.legalName}</li>
+          <li>代表 {company.representative}</li>
+          <li>〒{company.address.postal}</li>
+          <li>{company.address.region}{company.address.city}<br />{company.address.street}</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pp-footer-h">サイトマップ</h4>
+        <ul class="pp-footer-list">
+          <li><a href={assetPath("")}>トップページ</a></li>
+          <li><a href={assetPath("") + "#price"}>料金表</a></li>
+          <li><a href={assetPath("") + "#faq"}>よくある質問</a></li>
+          <li><a href={assetPath("privacy-policy/")}>プライバシーポリシー</a></li>
+          <li><a href={assetPath("legal/")}>特定商取引法に基づく表示</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="pp-copyright">© {new Date().getFullYear()} {company.legalName}. All rights reserved.</p>
+  </footer>
+</Layout>
+
+<style is:global>
+  /* === 特商法ページ用追加スタイル === */
+  /* （pp-* スタイルは privacy-policy.astro の is:global と共有される） */
+  .pp-inline-link {
+    color: #c81e1e;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+  .pp-inline-link:hover { color: #9a1414; }
+
+  .pp-cooloff-box {
+    background: #fff7ed;
+    border: 2px solid #f5b300;
+    border-radius: 12px;
+    padding: 1.5rem 1.5rem;
+    margin: 0 0 2rem;
+  }
+  .pp-cooloff-h {
+    font-weight: 800;
+    color: #0f1722;
+    margin: 0 0 1rem !important;
+    font-size: 1rem !important;
+    line-height: 1.7;
+  }
+  .pp-cooloff-box ul {
+    margin: 0.5rem 0 1.25rem !important;
+    padding-left: 1.5rem;
+  }
+  .pp-cooloff-box ul li {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+  }
+  .pp-cooloff-box > p:last-of-type {
+    background: #fff;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    border-left: 4px solid #c81e1e;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    margin: 0 !important;
+  }
+
+  /* table 内の strong は赤で強調 */
+  .pp-table td strong { color: #0f1722; }
+  .pp-table td p { margin: 0.25rem 0; font-size: 0.9375rem; }
+  .pp-table td small {
+    display: block;
+    color: #4a5568;
+    line-height: 1.7;
+    margin-top: 0.375rem;
+  }
+  .pp-table td a { color: #c81e1e; text-decoration: underline; }
+
+  @media (max-width: 560px) {
+    .pp-cooloff-box { padding: 1.25rem 1rem; }
+    .pp-cooloff-h { font-size: 0.9375rem !important; }
+    .pp-cooloff-box ul li { font-size: 0.8125rem; }
+    .pp-cooloff-box > p:last-of-type { font-size: 0.8125rem; padding: 0.875rem 1rem; }
+  }
+</style>

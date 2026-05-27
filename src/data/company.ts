@@ -9,8 +9,9 @@
 
 export const tracking = {
   gtmId: "",                          // Google Tag Manager コンテナID (未取得)
-  ga4Id: "",                          // GA4 Measurement ID (未取得・任意)
+  ga4Id: "G-J7KDB57HSR",              // GA4 Measurement ID (Property: hachi-factory.jp)
   gadsConversionId: "AW-18192398472", // Google Ads コンバージョンID (Customer 988-017-7192)
+  clarityProjectId: "wxq8w9y6xv",     // Microsoft Clarity Project ID
   /**
    * Google Ads コンバージョンラベル
    * Action ID は Google Ads アカウント (988-017-7192) で発行済
@@ -44,10 +45,11 @@ export const company = {
   serviceArea: "愛知県・岐阜県・三重県・静岡県（東海4県全域）",
   payment: ["現金", "銀行振込", "クレジットカード", "PayPay", "後払い"],
   insurance: "",
-  yearsInBusiness: 15,
-  totalCases: 12800,
-  satisfactionRate: 4.9,
-  sameDayRate: 98,
+  // ⚠️ 未確定値は 0 にしてある。広告コピー化前に必ず実数を user に確認すること
+  yearsInBusiness: 0,   // 未確定 (旧:15は placeholder)
+  totalCases: 0,        // 未確定 (旧:12800は placeholder)
+  satisfactionRate: 0,  // 未確定 (旧:4.9 は placeholder)
+  sameDayRate: 98,      // 確定済
   liabilityCoverage: "",
   guaranteeYears: 1,
   fastestArrival: "30分",
