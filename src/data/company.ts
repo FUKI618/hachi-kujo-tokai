@@ -8,19 +8,20 @@
  */
 
 export const tracking = {
-  gtmId: "",                       // Google Tag Manager コンテナID
-  ga4Id: "",                       // GA4 Measurement ID (gtag直接送信用)
-  gadsConversionId: "AW-1832578807", // Google Ads コンバージョンID (conversion linker)
+  gtmId: "",                          // Google Tag Manager コンテナID (未取得)
+  ga4Id: "",                          // GA4 Measurement ID (未取得・任意)
+  gadsConversionId: "AW-18192398472", // Google Ads コンバージョンID (Customer 988-017-7192)
   /**
-   * Google Ads コンバージョンラベル (CV action 作成後に貼付)
-   * Google Ads UI → ツール → コンバージョン → 新規アクション作成
-   *   各アクションごとに `AW-XXXXX/LABEL` 形式の送信先が発行される
-   * 該当アクションの LABEL 部分のみをここに記載
+   * Google Ads コンバージョンラベル
+   * Action ID は Google Ads アカウント (988-017-7192) で発行済
+   * - LP_電話タップ:    PHONE_CALL_LEAD / Primary
+   * - LP_LINE_クリック: SUBMIT_LEAD_FORM / Primary
+   * - LP_フォーム送信:   未作成 (現状LPにフォームなし)
    */
   gadsConversionLabels: {
-    phoneClick: "",   // 電話発信 CV (推奨カテゴリ: Phone calls)
-    lineClick: "",    // LINE 友だち追加クリック (推奨カテゴリ: Submit lead form)
-    formSubmit: "",   // フォーム送信 (将来用・推奨: Submit lead form)
+    phoneClick: "IrFkCMiIqrQcEIjx5-JD",  // LP_電話タップ
+    lineClick: "dR_YCK-yqrQcEIjx5-JD",   // LP_LINE_クリック
+    formSubmit: "",                       // 未作成
   },
 } as const;
 
