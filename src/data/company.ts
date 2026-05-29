@@ -30,8 +30,8 @@ export const company = {
   name: "蜂の巣駆除ファクトリー東海",
   legalName: "株式会社LIV",
   representative: "水谷虎毅",
-  phone: "0120-46-8434",
-  phoneDisplay: "0120-46-8434",
+  phone: "0120-468-434",
+  phoneDisplay: "0120-468-434",
   phoneTelLink: "tel:0120468434",
   lineUrl: "https://line.me/R/ti/p/@318yzauf",
   address: {
