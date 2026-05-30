@@ -273,14 +273,37 @@ const allJsonLd = [
     <script is:inline>
       (function () {
         if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-        if (window.location.hash) {
-          history.replaceState(null, "", window.location.pathname + window.location.search);
-        }
+
+        // 初期スクロール制御:
+        //  - ハッシュ無し → 従来どおりトップ表示にリセット
+        //  - ハッシュ有り（例: Google広告サイトリンク /#price）→ 該当セクションへ
+        //    スクロール（ヘッダーオフセット考慮）。ハッシュは保持し、トップ強制しない。
+        var hash = window.location.hash;
+        var hasHash = !!(hash && hash.length > 1);
         var toTop = function () { window.scrollTo(0, 0); };
-        toTop();
-        document.addEventListener("DOMContentLoaded", toTop);
-        window.addEventListener("load", toTop);
-        window.addEventListener("pageshow", function (e) { if (e.persisted) toTop(); });
+        var scrollToHash = function () {
+          var el = null;
+          try { el = document.querySelector(hash); } catch (_) { return; }
+          if (!el) return;
+          var headerH =
+            (document.querySelector(".header") ? document.querySelector(".header").offsetHeight : 0) +
+            (document.querySelector(".topbar") ? document.querySelector(".topbar").offsetHeight : 0);
+          var top = el.getBoundingClientRect().top + window.pageYOffset - headerH - 8;
+          window.scrollTo({ top: top, behavior: "auto" });
+        };
+
+        if (!hasHash) {
+          toTop();
+          document.addEventListener("DOMContentLoaded", toTop);
+          window.addEventListener("load", toTop);
+        } else {
+          document.addEventListener("DOMContentLoaded", scrollToHash);
+          window.addEventListener("load", function () { setTimeout(scrollToHash, 150); });
+        }
+        window.addEventListener("pageshow", function (e) {
+          if (!e.persisted) return;
+          if (hasHash) { scrollToHash(); } else { toTop(); }
+        });
       })();
     </script>
 
