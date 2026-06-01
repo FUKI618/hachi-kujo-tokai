@@ -60,7 +60,7 @@ export const beeTypes: BeeType[] = [
     activeMonths: "4〜10月",
     nestLocation: "軒下・ベランダ・庭木",
     nestAppearance: "シャワー状の小ぶり巣",
-    priceRange: "¥1,980〜",
+    priceRange: "¥1,680〜",
   },
   {
     id: "mitsubachi",
@@ -74,7 +74,7 @@ export const beeTypes: BeeType[] = [
     activeMonths: "3〜11月",
     nestLocation: "屋根裏・壁内・床下",
     nestAppearance: "蜜入りの大規模巣",
-    priceRange: "¥1,980〜",
+    priceRange: "¥1,680〜",
   },
   {
     id: "kumabachi",
@@ -88,7 +88,7 @@ export const beeTypes: BeeType[] = [
     activeMonths: "5〜9月",
     nestLocation: "木材の穴",
     nestAppearance: "木材に開いた穴",
-    priceRange: "¥1,980〜",
+    priceRange: "¥1,680〜",
   },
   {
     id: "dorobachi",
@@ -102,6 +102,6 @@ export const beeTypes: BeeType[] = [
     activeMonths: "5〜10月",
     nestLocation: "外壁・換気口",
     nestAppearance: "泥で固めた小型巣",
-    priceRange: "¥1,980〜",
+    priceRange: "¥1,680〜",
   },
 ];

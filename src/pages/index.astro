@@ -20,7 +20,7 @@ import { vsGovernmentRows, subsidyNote } from "../data/vs-government";
 import { scamSigns, scamWarningSource } from "../data/scam-warning";
 
 const title = `東海の蜂の巣駆除なら最短30分｜基本1,680円〜｜${company.name}`;
-const description = `蜂の巣駆除を愛知・岐阜・三重・静岡で最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ¥2,680〜・アシナガバチ¥1,980〜、基本1,680円〜で対応。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証。`;
+const description = `蜂の巣駆除を愛知・岐阜・三重・静岡で最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ¥2,680〜・アシナガバチ¥1,680〜、基本1,680円〜で対応。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証。`;
 
 const fmtJpy = (n: number) =>
   new Intl.NumberFormat("ja-JP").format(n);
@@ -2059,6 +2059,50 @@ const showSeasonalAlert = isHornetPeakSeason();
     color: var(--color-muted);
     text-align: center;
     line-height: 1.8;
+  }
+
+  /* ----- 料金表 モバイル最適化（〜480px） ----- */
+  @media (max-width: 480px) {
+    .price-table {
+      table-layout: auto;
+    }
+    .price-table thead th {
+      padding: 0.7rem 0.4rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.01em;
+    }
+    .price-table th,
+    .price-table td {
+      padding: 0.85rem 0.4rem;
+      font-size: 0.8rem;
+    }
+    /* 種類列：折り返さず内容幅 */
+    .price-table tbody th {
+      font-size: 0.78rem;
+      padding-left: 0.55rem;
+      padding-right: 0.3rem;
+      line-height: 1.35;
+      white-space: normal;
+      word-break: keep-all;
+    }
+    /* 基本料金：赤字を少し小さく＆折り返さない */
+    .price-strong {
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+    /* 最終金額列：「現地で確定見積」を2行までに抑え中央寄せ */
+    .price-table td:last-child {
+      font-size: 0.74rem;
+      line-height: 1.45;
+      color: var(--color-muted);
+    }
+  }
+  @media (max-width: 360px) {
+    .price-table thead th { font-size: 0.66rem; padding: 0.6rem 0.3rem; }
+    .price-table th,
+    .price-table td { padding: 0.75rem 0.3rem; }
+    .price-strong { font-size: 0.85rem; }
+    .price-table td:last-child { font-size: 0.7rem; }
   }
 
   .price-promises {

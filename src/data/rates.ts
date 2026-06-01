@@ -4,7 +4,7 @@
  *
  * 価格戦略（2026-06-01改定）:
  * - 基本料金 ¥1,680〜（中間業者を挟まない自社直接価格のフロント表示）
- * - スズメバチ・オオスズメバチ ¥2,680〜 / それ以外のハチ ¥1,980〜
+ * - スズメバチ・オオスズメバチ ¥2,680〜 / それ以外のハチ ¥1,680〜
  * - 上限(MAX)は表示せず「現地見積で確定」で不透明感を打ち消す方針。
  *   rangePrice は「現地確認後の確定見積でご提示」に統一（具体上限額は出さない）。
  */
@@ -22,8 +22,8 @@ const QUOTE_NOTE = "現地で確定見積";
 export const rates: Rate[] = [
   {
     beeType: "アシナガバチ",
-    basicPrice: "¥1,980〜",
-    basicPriceNum: 1980,
+    basicPrice: "¥1,680〜",
+    basicPriceNum: 1680,
     rangePrice: QUOTE_NOTE,
     workCondition: "巣のサイズ・高さ・場所により変動／現地で確定見積",
   },
@@ -36,8 +36,8 @@ export const rates: Rate[] = [
   },
   {
     beeType: "ミツバチ",
-    basicPrice: "¥1,980〜",
-    basicPriceNum: 1980,
+    basicPrice: "¥1,680〜",
+    basicPriceNum: 1680,
     rangePrice: QUOTE_NOTE,
     workCondition: "取り出し難度・蜜量により変動／現地で確定見積",
   },
@@ -50,8 +50,8 @@ export const rates: Rate[] = [
   },
   {
     beeType: "クマバチ・その他",
-    basicPrice: "¥1,980〜",
-    basicPriceNum: 1980,
+    basicPrice: "¥1,680〜",
+    basicPriceNum: 1680,
     rangePrice: QUOTE_NOTE,
     workCondition: "巣のサイズ・場所により変動／現地で確定見積",
   },
