@@ -156,7 +156,7 @@ const showSeasonalAlert = isHornetPeakSeason();
           </div>
           <div class="hero-stat is-featured">
             <div class="hero-stat-num font-num">¥<span data-count="1680" data-format="comma">0</span><small>〜</small></div>
-            <div class="hero-stat-label">基本料金</div>
+            <div class="hero-stat-label">基本料金<small class="hero-stat-note">※種類・場所で変動</small></div>
           </div>
           <div class="hero-stat">
             <div class="hero-stat-num font-num"><span data-count="1">0</span><small>年</small></div>
@@ -617,6 +617,40 @@ const showSeasonalAlert = isHornetPeakSeason();
     </div>
   </section>
 
+  <!-- ===== ⑧′ Scam-Warning（悪質業者の見抜き方） ===== -->
+  <section class="section" id="scam-warning" aria-labelledby="scam-title">
+    <div class="container container-narrow">
+      <div class="section-eyebrow-wrap">
+        <span class="section-eyebrow">RED FLAGS</span>
+      </div>
+      <h2 id="scam-title" class="section-title headline">
+        「ぼったくり」<wbr />業者の<wbr /><span class="accent">3つのサイン</span>
+      </h2>
+      <p class="section-lead">
+        「<strong>ぼったくられた</strong>」「<strong>悪徳業者</strong>に当たった」── 国民生活センターには『4,000円見積→11万円請求』のようなハチ駆除の高額請求事例が多数寄せられています。<strong>{company.name}が悪徳業者と指摘されない理由</strong>を、典型サインと対比して説明します。
+      </p>
+      <div class="reveal-stagger" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:1.25rem;margin-top:2rem;">
+        {scamSigns.map((s) => (
+          <article style="background:#fff;border-radius:14px;padding:1.5rem 1.25rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);position:relative;border-top:4px solid #c81e1e;">
+            <span class="font-num" style="position:absolute;top:-1rem;left:1rem;background:#c81e1e;color:#fff;font-weight:900;font-size:1.1rem;padding:.25rem .75rem;border-radius:6px;">{s.num}</span>
+            <header style="display:flex;align-items:center;gap:.5rem;margin:.5rem 0 1rem;color:#c81e1e;">
+              <svg class="icon" style="width:1.4rem;height:1.4rem;flex-shrink:0;"><use href={`#i-${s.iconId}`} /></svg>
+              <h3 class="headline" style="font-size:1.1rem;margin:0;color:#c81e1e;">{s.redFlag}</h3>
+            </header>
+            <p style="margin:0 0 1rem;font-size:.93rem;line-height:1.75;color:#4a5568;">{s.description}</p>
+            <div style="background:#f0fdf4;border-left:4px solid #2e7d32;padding:.85rem 1rem;border-radius:6px;">
+              <span style="display:block;font-size:.85rem;font-weight:700;color:#2e7d32;margin-bottom:.25rem;">{company.name}は</span>
+              <p style="margin:0;font-size:.95rem;line-height:1.7;">{s.ourCommitment}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p style="margin-top:1.5rem;font-size:.85rem;color:#6b7280;text-align:center;">
+        参考: <a href={scamWarningSource.url} target="_blank" rel="noopener noreferrer" style="color:#0f1722;text-decoration:underline;">{scamWarningSource.text}</a>
+      </p>
+    </div>
+  </section>
+
   <!-- ===== ⑥′ VsGovernment（市役所では無料？） ===== -->
   <section class="section section-soft" id="vs-government" aria-labelledby="vsg-title">
     <div class="container container-narrow">
@@ -745,40 +779,6 @@ const showSeasonalAlert = isHornetPeakSeason();
       </div>
       <p class="price-note" style="margin-top:1rem;">
         ※ 比較は業界の一般的な相場・公開情報に基づく当社の独自調査です。
-      </p>
-    </div>
-  </section>
-
-  <!-- ===== ⑧′ Scam-Warning（悪質業者の見抜き方） ===== -->
-  <section class="section" id="scam-warning" aria-labelledby="scam-title">
-    <div class="container container-narrow">
-      <div class="section-eyebrow-wrap">
-        <span class="section-eyebrow">RED FLAGS</span>
-      </div>
-      <h2 id="scam-title" class="section-title headline">
-        「ぼったくり」<wbr />業者の<wbr /><span class="accent">3つのサイン</span>
-      </h2>
-      <p class="section-lead">
-        「<strong>ぼったくられた</strong>」「<strong>悪徳業者</strong>に当たった」── 国民生活センターには『4,000円見積→11万円請求』のようなハチ駆除の高額請求事例が多数寄せられています。<strong>{company.name}が悪徳業者と指摘されない理由</strong>を、典型サインと対比して説明します。
-      </p>
-      <div class="reveal-stagger" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:1.25rem;margin-top:2rem;">
-        {scamSigns.map((s) => (
-          <article style="background:#fff;border-radius:14px;padding:1.5rem 1.25rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);position:relative;border-top:4px solid #c81e1e;">
-            <span class="font-num" style="position:absolute;top:-1rem;left:1rem;background:#c81e1e;color:#fff;font-weight:900;font-size:1.1rem;padding:.25rem .75rem;border-radius:6px;">{s.num}</span>
-            <header style="display:flex;align-items:center;gap:.5rem;margin:.5rem 0 1rem;color:#c81e1e;">
-              <svg class="icon" style="width:1.4rem;height:1.4rem;flex-shrink:0;"><use href={`#i-${s.iconId}`} /></svg>
-              <h3 class="headline" style="font-size:1.1rem;margin:0;color:#c81e1e;">{s.redFlag}</h3>
-            </header>
-            <p style="margin:0 0 1rem;font-size:.93rem;line-height:1.75;color:#4a5568;">{s.description}</p>
-            <div style="background:#f0fdf4;border-left:4px solid #2e7d32;padding:.85rem 1rem;border-radius:6px;">
-              <span style="display:block;font-size:.85rem;font-weight:700;color:#2e7d32;margin-bottom:.25rem;">{company.name}は</span>
-              <p style="margin:0;font-size:.95rem;line-height:1.7;">{s.ourCommitment}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-      <p style="margin-top:1.5rem;font-size:.85rem;color:#6b7280;text-align:center;">
-        参考: <a href={scamWarningSource.url} target="_blank" rel="noopener noreferrer" style="color:#0f1722;text-decoration:underline;">{scamWarningSource.text}</a>
       </p>
     </div>
   </section>
@@ -1431,6 +1431,14 @@ const showSeasonalAlert = isHornetPeakSeason();
     margin-top: 0.375rem;
     letter-spacing: 0.04em;
     font-weight: 600;
+  }
+  .hero-stat-note {
+    display: block;
+    font-size: 0.625rem;
+    font-weight: 500;
+    opacity: 0.7;
+    letter-spacing: 0;
+    margin-top: 0.1rem;
   }
   .hero-cta {
     display: grid;
