@@ -22,7 +22,7 @@ export const vsGovernmentRows: VsGovRow[] = [
       state: "warn",
       text: "原則として自己負担（一部市町村でアシナガ等に補助金あり）",
     },
-    us: { state: "us-ok", text: "基本¥3,300〜・事前見積金額厳守" },
+    us: { state: "us-ok", text: "基本¥1,680〜・事前見積金額厳守" },
   },
   {
     label: "出動速度",

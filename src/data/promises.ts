@@ -20,9 +20,9 @@ export const promises: Promise[] = [
   {
     num: "②",
     iconId: "yen",
-    title: "他社より高ければご相談",
+    title: "基本1,680円〜・他社より高ければご相談",
     description:
-      "他社見積より <strong>高い場合はご相談</strong> ください。中間業者を挟まない自社直接対応で <strong>業界相場より平均20〜30%お得</strong> な料金を実現しています<small style=\"font-size:.85em;opacity:.75;\">（※自社調べ・2026年5月時点）</small>。",
+      "基本料金 <strong>1,680円〜</strong>。<strong>広告代理店も中間業者も挟まない自社直接対応</strong>だから、品質はそのままに相場より大幅に抑えた価格を実現できます。他社見積より <strong>高い場合はご相談</strong> ください。",
   },
   {
     num: "③",

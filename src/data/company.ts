@@ -53,7 +53,7 @@ export const company = {
   liabilityCoverage: "",
   guaranteeYears: 1,
   fastestArrival: "30分",
-  basicPrice: 3300,
+  basicPrice: 1680,
   geo: {
     lat: 35.1798,
     lng: 136.8979,

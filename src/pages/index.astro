@@ -19,8 +19,8 @@ import { diyOkConditions, diyNgConditions } from "../data/diy-guide";
 import { vsGovernmentRows, subsidyNote } from "../data/vs-government";
 import { scamSigns, scamWarningSource } from "../data/scam-warning";
 
-const title = `東海の蜂の巣駆除なら最短30分｜基本3,300円〜｜${company.name}`;
-const description = `蜂の巣駆除を愛知・岐阜・三重・静岡で最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ・アシナガバチに基本3,300円〜で対応。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証。`;
+const title = `東海の蜂の巣駆除なら最短30分｜基本1,680円〜｜${company.name}`;
+const description = `蜂の巣駆除を愛知・岐阜・三重・静岡で最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ¥2,680〜・アシナガバチ¥1,980〜、基本1,680円〜で対応。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証。`;
 
 const fmtJpy = (n: number) =>
   new Intl.NumberFormat("ja-JP").format(n);
@@ -146,7 +146,7 @@ const showSeasonalAlert = isHornetPeakSeason();
           <span class="hero-h1-line"><span class="hl-num">30分</span>後にプロが来ます。</span>
         </h1>
         <p class="hero-sub">
-          愛知・岐阜・三重・静岡で<strong>24時間365日</strong>受付。防護装備の専門隊が<strong>最短30分</strong>で到着し、<strong>基本3,300円〜・事前見積金額厳守</strong>で駆除します。
+          愛知・岐阜・三重・静岡で<strong>24時間365日</strong>受付。防護装備の専門隊が<strong>最短30分</strong>で到着し、<strong>基本1,680円〜・事前見積金額厳守</strong>で駆除します。
         </p>
 
         <div class="hero-stats reveal-stagger">
@@ -155,7 +155,7 @@ const showSeasonalAlert = isHornetPeakSeason();
             <div class="hero-stat-label">最短現地到着</div>
           </div>
           <div class="hero-stat is-featured">
-            <div class="hero-stat-num font-num">¥<span data-count="3300" data-format="comma">0</span><small>〜</small></div>
+            <div class="hero-stat-num font-num">¥<span data-count="1680" data-format="comma">0</span><small>〜</small></div>
             <div class="hero-stat-label">基本料金</div>
           </div>
           <div class="hero-stat">
@@ -212,6 +212,13 @@ const showSeasonalAlert = isHornetPeakSeason();
               <span>
                 <strong>1年再発保証</strong>
                 <small>同一箇所で再営巣した場合は無料で再駆除</small>
+              </span>
+            </li>
+            <li>
+              <svg class="icon"><use href="#i-check-circle" /></svg>
+              <span>
+                <strong>自社直接対応の専門隊</strong>
+                <small>仲介を挟まず有資格スタッフが防護装備で施工</small>
               </span>
             </li>
             <li>
@@ -317,7 +324,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         選ばれる<span class="accent">3つの理由</span>
       </h2>
       <p class="section-lead">
-        東海4県のハチ駆除専門。<strong>即日駆けつけ・事前見積金額厳守・1年再発保証</strong>の3軸で選ばれています。中間マージンなしの自社直接対応で業界相場より20〜30%お得<small style="font-size:.75em;opacity:.7;">（※自社調べ）</small>。
+        東海4県のハチ駆除専門。<strong>基本1,680円〜・即日駆けつけ・事前見積金額厳守・1年再発保証</strong>で選ばれています。広告代理店も中間業者も挟まない<strong>自社直接対応</strong>だから、品質はそのままにこの価格を実現しています。
       </p>
       <div class="strengths reveal-stagger">
         {strengths.map((s) => (
@@ -434,6 +441,9 @@ const showSeasonalAlert = isHornetPeakSeason();
             </tbody>
           </table>
         </div>
+        <p class="price-note" style="margin-top:1rem;">
+          ※ 料金目安は種類ごとの基本料金です。巣の大きさ・高さ・場所により変動し、正確な金額は現地確認後の確定見積でお伝えします（お伝えした金額から追加請求はありません）。
+        </p>
       </div>
     </div>
   </section>
@@ -513,7 +523,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         明朗な<span class="accent">料金表</span>
       </h2>
       <p class="section-lead">
-        基本<strong>3,300円〜</strong>で駆けつけ、現地で<strong>確定見積</strong>を提示。見積金額の範囲内で作業し追加請求なし<small style="font-size:.85em;opacity:.75;">（範囲変更時は事前相談）</small>。出張・調査・キャンセル料すべて無料。
+        基本<strong>1,680円〜</strong>・中間業者を挟まない自社価格で駆けつけ、現地で<strong>確定見積</strong>を提示。<strong>お伝えした金額から1円も追加請求しません</strong><small style="font-size:.85em;opacity:.75;">（範囲変更時は事前相談）</small>。出張・調査・キャンセル料すべて無料。
       </p>
 
       <!-- フック価格BOX -->
@@ -521,7 +531,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         <div class="price-hook-row">
           <div class="price-hook-from">
             <span class="price-hook-label">基本料金</span>
-            <span class="price-hook-num font-num">¥3,300<small>〜</small></span>
+            <span class="price-hook-num font-num">¥1,680<small>〜</small></span>
             <span class="price-hook-sub">最小巣・到達容易な場所の場合</span>
           </div>
           <div class="price-hook-arrow" aria-hidden="true"></div>
@@ -563,7 +573,7 @@ const showSeasonalAlert = isHornetPeakSeason();
             <tr>
               <th>蜂の種類</th>
               <th>基本料金</th>
-              <th>想定価格帯</th>
+              <th>最終金額</th>
               <th class="hide-mobile">作業条件の例</th>
             </tr>
           </thead>
@@ -580,9 +590,9 @@ const showSeasonalAlert = isHornetPeakSeason();
         </table>
       </div>
       <p class="price-note">
-        ※ 想定価格帯は過去の駆除実績に基づく一般的なレンジです。<strong>正確な金額は現場確認後の確定見積でご提示し、お伝えした金額から1円も上がることはありません。</strong><br />
-        ※ 業界相場（5〜8万円）と比較して、当社は中間業者を挟まない自社直接対応のため<strong>平均20〜30%お得</strong>です（自社調べ）。<br />
-        ※ 出張費・現地調査・見積り・キャンセル料はすべて無料。他社見積より高ければご相談ください。
+        ※ 上記の基本料金は、最小の巣・到達しやすい場所の最低価格です。<strong>スズメバチや高所・屋根裏・土中など難所の巣は、数千円〜数万円規模になります。</strong>いずれの場合も作業前の確定見積でお伝えし、その金額から1円も上がることはありません。<br />
+        ※ 中間業者を挟まない自社直接対応だから出せる価格です。他社見積より高ければご相談ください。<br />
+        ※ 出張費・現地調査・見積り・キャンセル料はすべて無料です。
       </p>
 
       <!-- 3つの約束 -->
@@ -698,7 +708,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         他社との<span class="accent">違い</span>
       </h2>
       <p class="section-lead">
-        仲介サイトや一般的な駆除業者と比べ、当社は<strong>最短30分の即日対応・基本3,300円〜・事前見積金額厳守・1年再発保証</strong>のすべてで明確な差があります。広告代理店も中間業者も挟まない自社直接運営で、業界相場の青天井請求を排除しています。
+        仲介サイトや一般的な駆除業者と比べ、当社は<strong>最短30分の即日対応・基本1,680円〜・事前見積金額厳守・1年再発保証</strong>のすべてで明確な差があります。広告代理店も中間業者も挟まない自社直接運営で、業界相場の青天井請求を排除しています。
       </p>
       <div class="compare-wrap reveal">
         <div class="compare-scroll">
@@ -808,6 +818,14 @@ const showSeasonalAlert = isHornetPeakSeason();
                 ¥{fmtJpy(c.priceJpy)}
                 <small>（税込）</small>
               </div>
+              <ul class="case-factors" aria-label="この金額の内訳">
+                {c.priceBreakdown.map((b) => (
+                  <li class="case-factor-tag">{b}</li>
+                ))}
+              </ul>
+              <p class="case-why">
+                <strong>なぜこの金額？</strong>{c.priceFactors}
+              </p>
             </div>
           </article>
         ))}
@@ -1090,7 +1108,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         </div>
         <p class="footer-tagline">
           愛知・岐阜・三重・静岡のハチ駆除24時間救急対応。<br />
-          基本3,300円〜・事前見積金額厳守・1年保証で東海エリアのハチ被害を解決します。
+          基本1,680円〜・事前見積金額厳守・1年保証で東海エリアのハチ被害を解決します。
         </p>
       </div>
       <div>
@@ -2574,6 +2592,36 @@ const showSeasonalAlert = isHornetPeakSeason();
     color: var(--color-muted);
     margin-left: 0.25rem;
     font-weight: 600;
+  }
+  .case-factors {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .case-factor-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    background: var(--color-soft, #f6f1e7);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0.18rem 0.6rem;
+    line-height: 1.4;
+  }
+  .case-why {
+    margin: 0.7rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+  .case-why strong {
+    display: block;
+    color: var(--color-dark);
+    font-size: 0.82rem;
+    margin-bottom: 0.15rem;
   }
 
   /* ----- Voices ----- */
