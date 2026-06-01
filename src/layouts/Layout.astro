@@ -261,12 +261,14 @@ const allJsonLd = [
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- ヒーロー動画プリロード: 即時再生のため video 本体を先読み -->
+    <!-- ヒーロー: LCP高速化のため軽量poster(WebP 34KB)を高優先で先読み。
+         動画本体は preload=metadata で遅延ロードしレンダリングを妨げない -->
     <link
       rel="preload"
-      as="video"
-      href={assetPath("videos/hero-mobile.mp4")}
-      type="video/mp4"
+      as="image"
+      href={assetPath("videos/hero-poster.webp")}
+      type="image/webp"
+      fetchpriority="high"
     />
 
     <!-- 初期表示制御：トップへリセット -->

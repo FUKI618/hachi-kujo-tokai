@@ -113,15 +113,16 @@ const showSeasonalAlert = isHornetPeakSeason();
   <!-- ===== ① Hero ===== -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-bg" aria-hidden="true">
-      <!-- poster画像なしで動画即時再生。LCPは hero-h1 にシフト。
-           saveData / reduce-motion 時はJSで autoplay 抑制 -->
+      <!-- 軽量WebP poster(34KB)を即描画→LCP確定。動画本体はpreload=metadataで
+           遅延ロードしレンダリングを妨げない。saveData/reduce-motion時はJSでautoplay抑制 -->
       <video
         class="hero-bg-video"
         autoplay
         muted
         loop
         playsinline
-        preload="auto"
+        preload="metadata"
+        poster={assetPath("videos/hero-poster.webp")}
         role="presentation"
         aria-hidden="true"
         width="540"
