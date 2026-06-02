@@ -240,8 +240,11 @@ const allJsonLd = [
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
     <!-- Favicon -->
+    <link rel="icon" href={assetPath("favicon.ico")} sizes="32x32" />
     <link rel="icon" href={faviconUrl} type="image/svg+xml" />
-    <link rel="apple-touch-icon" href={faviconUrl} />
+    <link rel="icon" href={assetPath("favicon-96.png")} type="image/png" sizes="96x96" />
+    <link rel="apple-touch-icon" href={assetPath("apple-touch-icon.png")} />
+    <link rel="manifest" href={assetPath("site.webmanifest")} />
 
     <!-- OGP -->
     <meta property="og:title" content={title} />
