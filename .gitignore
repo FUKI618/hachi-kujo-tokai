@@ -46,3 +46,6 @@ screenshots/
 public/images/generated/*.png
 public/images/generated/*.jpg
 public/images/generated/*.jpeg
+
+# design research artifacts
+.lazyweb/
