@@ -348,10 +348,16 @@ const allJsonLd = [
         // 1) dataLayer に push（GTM 経由用）
         window.dataLayer.push(Object.assign({ event: eventName }, params));
         // 2) gtag 直接送信（GA4 用、GTM未設定でも動く）
+        //    transport_type:'beacon' で tel: 遷移時も sendBeacon により ping を取りこぼさない
         if (window.gtag && typeof window.gtag === "function") {
-          window.gtag("event", eventName, params);
+          var ga4Params = Object.assign({}, params);
+          delete ga4Params.event_callback;
+          delete ga4Params.event_timeout;
+          ga4Params.transport_type = "beacon";
+          window.gtag("event", eventName, ga4Params);
         }
         // 3) Google Ads conversion event 発火（コンバージョンラベル設定時のみ）
+        //    beacon + event_callback で tel: 遷移前に CV ping を確実に送る
         if (window.gtag && tracking.gadsConversionId && tracking.gadsConversionLabels) {
           var labelMap = {
             phone_click: tracking.gadsConversionLabels.phoneClick,
@@ -365,6 +371,9 @@ const allJsonLd = [
               value: 0.0,
               currency: "JPY",
               transaction_id: "",
+              transport_type: "beacon",
+              event_callback: params.event_callback,
+              event_timeout: params.event_timeout || 1000,
             });
           }
         }
@@ -375,9 +384,37 @@ const allJsonLd = [
         var target = e.target.closest("[data-cta]");
         if (!target) return;
         var ctaId = target.getAttribute("data-cta");
-        var eventName = ctaId.indexOf("tel") !== -1 ? "phone_click"
+        var isTel = ctaId.indexOf("tel") !== -1;
+        var eventName = isTel ? "phone_click"
                       : ctaId.indexOf("line") !== -1 ? "line_click"
                       : "cta_click";
+
+        // tel: のみ: CV ping を遷移前に保証しつつ、発信は fail-safe で必ず実行する
+        var href = target.getAttribute("href");
+        if (isTel && href && href.indexOf("tel:") === 0) {
+          e.preventDefault();
+          loadTags(); // gtag.js のロードを前倒し（800ms 遅延ロードの取りこぼし防止）
+          var navigated = false;
+          var go = function () {
+            if (navigated) return;
+            navigated = true;
+            window.location.href = href; // 電話発信
+          };
+          try {
+            window.trackConversion(eventName, {
+              cta_id: ctaId,
+              page_path: location.pathname,
+              event_callback: go,    // ping 完了後に発信
+              event_timeout: 1000,
+            });
+          } finally {
+            // ping 遅延/失敗/未ロードでも必ず発信（電話を絶対に阻害しない）
+            setTimeout(go, 1100);
+          }
+          return;
+        }
+
+        // tel: 以外は従来通り（遷移を妨げない）
         window.trackConversion(eventName, {
           cta_id: ctaId,
           page_path: location.pathname,
