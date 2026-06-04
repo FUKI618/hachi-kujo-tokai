@@ -55,4 +55,10 @@ export const compareRows: CompareRow[] = [
     general: { state: "warn", text: "外注の場合あり" },
     intermediary: { state: "bad", text: "毎回変わる" },
   },
+  {
+    label: "対応体制",
+    us: { state: "us-ok", text: "東海4県の地元・自社が直接施工" },
+    general: { state: "warn", text: "下請けに外注の場合あり" },
+    intermediary: { state: "bad", text: "全国チェーン＝現地は下請け手配" },
+  },
 ];
