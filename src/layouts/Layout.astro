@@ -340,6 +340,26 @@ const allJsonLd = [
       window.dataLayer = window.dataLayer || [];
       window.gtag = function () { window.dataLayer.push(arguments); };
 
+      // === CV計測タグ(gtag.js)は eager 初期化＆ロード ===
+      // 旧実装は gtag.js を 800ms/初回操作まで遅延 → 「初回操作がいきなり電話タップ」だと
+      // gtag未ロード＋dataLayer順序崩れで 電話タップCV ping が消失（LP_電話タップ=0/要確認 の原因）。
+      // Ads/GA4 を即時初期化（タップ前に準備＋順序保証＋Googleのタグ検証が通る）。重いClarity/GTMのみ遅延維持。
+      window.gtag("js", new Date());
+      if (tracking.gadsConversionId) {
+        window.gtag("config", tracking.gadsConversionId);
+      }
+      if (tracking.ga4Id) {
+        window.gtag("config", tracking.ga4Id, { send_page_view: true });
+      }
+      (function () {
+        var primaryId = tracking.ga4Id || tracking.gadsConversionId;
+        if (!primaryId) return;
+        var s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=" + primaryId;
+        document.head.appendChild(s);
+      })();
+
       // 共通 CV イベント送信関数（電話/LINE/フォームから呼び出し）
       // - GA4: 標準 event として送信
       // - Google Ads: conversion label が設定されていれば conversion event として送信
@@ -393,7 +413,7 @@ const allJsonLd = [
         var href = target.getAttribute("href");
         if (isTel && href && href.indexOf("tel:") === 0) {
           e.preventDefault();
-          loadTags(); // gtag.js のロードを前倒し（800ms 遅延ロードの取りこぼし防止）
+          // gtag は上部で eager ロード済み。ここでの先読みは不要。
           var navigated = false;
           var go = function () {
             if (navigated) return;
@@ -421,26 +441,12 @@ const allJsonLd = [
         });
       });
 
-      // CWV保護: タグロードは 3秒遅延 or 最初のユーザー操作で起動
-      var tagsLoaded = false;
-      function loadTags() {
-        if (tagsLoaded) return;
-        tagsLoaded = true;
-
-        // GA4 (gtag.js) — GA4_ID 設定時のみ
-        if (tracking.ga4Id) {
-          var ga = document.createElement("script");
-          ga.async = true;
-          ga.src = "https://www.googletagmanager.com/gtag/js?id=" + tracking.ga4Id;
-          document.head.appendChild(ga);
-          window.gtag("js", new Date());
-          window.gtag("config", tracking.ga4Id, { send_page_view: true });
-        }
-
-        // Google Ads conversion linker — GADS_CONVERSION_ID 設定時のみ
-        if (tracking.gadsConversionId) {
-          window.gtag("config", tracking.gadsConversionId);
-        }
+      // CWV保護: 重いタグ（Clarity/GTM）のみ遅延ロード。
+      // CV計測の要 gtag.js は上部で eager ロード済み（遅延しない）。
+      var heavyLoaded = false;
+      function loadHeavyTags() {
+        if (heavyLoaded) return;
+        heavyLoaded = true;
 
         // Microsoft Clarity — CLARITY_PROJECT_ID 設定時のみ
         if (tracking.clarityProjectId) {
@@ -465,10 +471,9 @@ const allJsonLd = [
           })(window, document, "script", "dataLayer", tracking.gtmId);
         }
       }
-      // CWV影響軽微で取りこぼし大幅減: 3000ms → 800ms (CV発火 3秒遅延罠の解消)
-      setTimeout(loadTags, 800);
+      setTimeout(loadHeavyTags, 2000);
       ["scroll", "click", "touchstart", "keydown"].forEach(function (ev) {
-        window.addEventListener(ev, loadTags, { once: true, passive: true });
+        window.addEventListener(ev, loadHeavyTags, { once: true, passive: true });
       });
     </script>
 
