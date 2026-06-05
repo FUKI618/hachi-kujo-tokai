@@ -49,3 +49,9 @@ public/images/generated/*.jpeg
 
 # design research artifacts
 .lazyweb/
+
+# dev screenshot/check scripts (not part of build)
+.shot_*.mjs
+.cv_test.mjs
+.check_imgs.mjs
+.final_check.mjs
