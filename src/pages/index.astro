@@ -110,98 +110,102 @@ const showSeasonalAlert = isHornetPeakSeason();
     </div>
   )}
 
-  <!-- ===== ① Hero ===== -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-bg" aria-hidden="true">
-      <!-- 軽量WebP poster(34KB)を即描画→LCP確定。動画本体はpreload=metadataで
-           遅延ロードしレンダリングを妨げない。saveData/reduce-motion時はJSでautoplay抑制 -->
-      <video
-        class="hero-bg-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="metadata"
-        poster={assetPath("videos/hero-poster.webp")}
-        role="presentation"
-        aria-hidden="true"
-        width="540"
-        height="960"
-        src={assetPath("videos/hero-mobile.mp4")}
-      ></video>
-    </div>
+  <!-- ===== ① Hero（反応型・写真主導） ===== -->
+  <section class="rhero" aria-labelledby="hero-title">
+    <div class="rhero-bg" aria-hidden="true"></div>
+    <div class="container rhero-inner">
 
-    <!-- ===== Hero 統合トラスト帯（エリア＋約束を1本に・黄2連を解消／景表法OK） ===== -->
-    <div class="hero-trustbar" aria-label="対応エリアとサービスのお約束">
-      <p class="hero-trustbar-area">
-        <svg class="icon" aria-hidden="true"><use href="#i-pin" /></svg>
-        愛知・名古屋近郊の蜂の巣駆除
+      <!-- 1. トップ警告フラッグ -->
+      <p class="rhero-toptag reveal">
+        <span class="rhero-flag"><small>最短</small><b>30</b><small>分</small></span>
+        <span class="rhero-toptag-main"><em>そのまま放置すると危険！</em>で駆けつけます</span>
       </p>
-      <ul class="hero-trustbar-promises">
-        <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle" /></svg>自社直接施工</li>
-        <li><svg class="icon" aria-hidden="true"><use href="#i-shield" /></svg>1年再発保証</li>
-        <li><svg class="icon" aria-hidden="true"><use href="#i-lightning" /></svg>最短30分</li>
-        <li><svg class="icon" aria-hidden="true"><use href="#i-yen" /></svg>出張・見積¥0</li>
+
+      <!-- 2. アクション主役写真 -->
+      <figure class="rhero-action reveal">
+        <img src={assetPath("images/generated/hero-action.jpg")} width="1536" height="1024"
+             alt="防護装備で住宅の軒下の蜂の巣を駆除する専門スタッフ（イメージ）" loading="eager" decoding="async" fetchpriority="high" />
+        <span class="rhero-action-badge"><strong>1年</strong><span>再発保証</span></span>
+        <figcaption class="rhero-action-cap">※写真はイメージです</figcaption>
+      </figure>
+
+      <!-- 3. お悩みサムネ4枚帯 -->
+      <ul class="rhero-thumbs reveal-stagger" aria-label="よくある蜂被害">
+        <li>
+          <img src={assetPath("images/generated/emergency-nest-eaves.webp")} width="240" height="180" alt="軒下の蜂の巣（イメージ）" loading="lazy" decoding="async" />
+          <span>軒下に<wbr />巣がある</span>
+        </li>
+        <li>
+          <img src={assetPath("images/bee-types/oosuzumebachi.webp")} width="240" height="180" alt="大きな蜂（イメージ）" loading="lazy" decoding="async" />
+          <span>大きい蜂が<wbr />出入りする</span>
+        </li>
+        <li>
+          <img src={assetPath("images/cases/case-01.webp")} width="240" height="180" alt="ベランダ・庭木の蜂の巣（イメージ）" loading="lazy" decoding="async" />
+          <span>ベランダ・<wbr />庭に巣</span>
+        </li>
+        <li>
+          <img src={assetPath("images/generated/clean-eaves-after-removal.webp")} width="240" height="180" alt="屋根裏・室外機まわりの蜂（イメージ）" loading="lazy" decoding="async" />
+          <span>室外機・<wbr />屋根裏に蜂</span>
+        </li>
       </ul>
-    </div>
 
-    <div class="container hero-inner">
-      <div class="hero-content reveal">
-        <h1 id="hero-title" class="headline hero-h1">
-          <span class="hero-h1-line">その<span class="hl-kw">蜂の巣</span>、基本<span class="hl-num">1,680円</span>〜。</span>
-          <span class="hero-h1-line">追加請求は<span class="hl-num">1円もなし</span>。</span>
-        </h1>
-        <p class="hero-sub">
-          愛知県全域・名古屋近郊（岐阜・三重の一部）で<strong>24時間365日</strong>受付。防護装備の専門隊が<strong>最短30分</strong>で到着し、現地で<strong>確定見積</strong>を提示。<strong>お伝えした金額を厳守・1年再発保証つき</strong>だから、安くても安心です。
-        </p>
-
-        <div class="hero-stats reveal-stagger">
-          <div class="hero-stat">
-            <div class="hero-stat-num font-num"><span data-count="30">0</span><small>分</small></div>
-            <div class="hero-stat-label">最短現地到着</div>
-          </div>
-          <div class="hero-stat is-featured">
-            <div class="hero-stat-num font-num">¥<span data-count="1680" data-format="comma">0</span><small>〜</small></div>
-            <div class="hero-stat-label">基本料金<small class="hero-stat-note">※種類・場所で変動</small></div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-num font-num"><span data-count="1">0</span><small>年</small></div>
-            <div class="hero-stat-label">再発保証付き</div>
-          </div>
-        </div>
-
-        <div class="hero-cta hero-cta-redesign">
-          <a href={company.phoneTelLink} class="hero-primary-call" data-cta="hero_tel">
-            <span class="hero-primary-call-icon" aria-hidden="true">
-              <svg class="icon"><use href="#i-phone" /></svg>
-            </span>
-            <span class="hero-primary-call-body">
-              <span class="hero-primary-call-label">今すぐ電話で相談（通話料・出張・見積すべて無料）</span>
-              <span class="hero-primary-call-number font-num">{company.phoneDisplay}</span>
-              <span class="hero-primary-call-note">タップで発信 → 平均30秒で出動手配</span>
-            </span>
-            <svg class="hero-primary-call-arrow icon" aria-hidden="true"><use href="#i-arrow-right" /></svg>
-          </a>
-
-          <a href={company.lineUrl} class="hero-secondary-line" data-cta="hero_line">
-            <svg class="icon" aria-hidden="true"><use href="#i-line" /></svg>
-            <span>LINEで巣の写真を送る<wbr /> <span style="white-space:nowrap;">→ 5分で概算回答</span></span>
-          </a>
-        </div>
+      <!-- 4. 特大タイトル -->
+      <div class="rhero-title reveal">
+        <span class="rhero-title-sub">危険な<span class="rhero-title-kw">蜂の巣</span>・蜂被害を</span>
+        <span class="rhero-title-main">
+          <span class="rhero-title-day">即日</span>
+          <span class="rhero-title-xl" data-text="スピード解決">スピード解決</span>
+        </span>
+        <span class="rhero-title-area"><svg class="icon" aria-hidden="true"><use href="#i-pin" /></svg>名古屋市・近郊エリア対応 ／ 24時間365日受付</span>
       </div>
 
-      <!-- ===== Hero 右側: 1枚の安心パネル ===== -->
-      <aside class="hero-right hero-assurance reveal" aria-label="保証と無料対応">
-        <figure class="hero-staff">
-          <img src={assetPath("images/generated/staff-onsite.webp")} width="760" height="1140"
-               alt="防護装備で蜂の巣駆除に対応するスタッフ（イメージ）" loading="eager" decoding="async" />
-          <figcaption class="hero-staff-cap">
-            <span>防護装備の専門スタッフが<strong>自社直接</strong>で対応</span>
-            <span class="hero-staff-note">※写真はイメージです</span>
-          </figcaption>
-          <span class="hero-staff-badge" aria-hidden="true"><strong>1年</strong><span>再発保証</span><small>戻り蜂も無料</small></span>
-        </figure>
-      </aside>
+      <!-- 5. 大価格ブロック（捏造演出なし・正直版） -->
+      <div class="rhero-price reveal">
+        <div class="rhero-price-main">
+          <span class="rhero-price-label">基本料金</span>
+          <span class="rhero-price-num font-num">¥1,680<small>〜</small></span>
+          <span class="rhero-price-tax">（税込）</span>
+        </div>
+        <div class="rhero-price-free">
+          <strong>追加料金&nbsp;0円</strong>
+          <span>事前見積の金額を厳守</span>
+        </div>
+        <p class="rhero-price-note">※ 種類・巣の大きさ・場所で変動。出張・現地調査・見積りもすべて0円。</p>
+      </div>
+
+      <!-- 6. 実績フォトカード3枚 -->
+      <ul class="rhero-benefits reveal-stagger" aria-label="サービスの特長">
+        <li>
+          <img src={assetPath("images/generated/staff-onsite.webp")} width="200" height="150" alt="名古屋・愛知で自社対応するスタッフ（イメージ）" loading="lazy" decoding="async" />
+          <span>名古屋・愛知で<wbr />自社直接対応</span>
+        </li>
+        <li>
+          <img src={assetPath("images/generated/estimate-document-tools.webp")} width="200" height="150" alt="見積書（イメージ）" loading="lazy" decoding="async" />
+          <span>見積後の<wbr />追加請求なし</span>
+        </li>
+        <li>
+          <img src={assetPath("images/generated/protective-equipment.webp")} width="200" height="150" alt="防護装備（イメージ）" loading="lazy" decoding="async" />
+          <span>危険な蜂も<wbr />即日駆除対応</span>
+        </li>
+      </ul>
+
+      <!-- 7. CTA帯 -->
+      <div class="rhero-cv reveal">
+        <p class="rhero-cv-head"><span class="rhero-cv-zero">現地調査・お見積り<b>0円</b></span>今すぐお問い合わせください！</p>
+        <a href={company.phoneTelLink} class="rhero-tel" data-cta="hero_tel">
+          <span class="rhero-tel-icon" aria-hidden="true"><svg class="icon"><use href="#i-phone" /></svg></span>
+          <span class="rhero-tel-body">
+            <span class="rhero-tel-label">今すぐ無料電話相談（通話料無料）</span>
+            <span class="rhero-tel-num font-num">{company.phoneDisplay}</span>
+            <span class="rhero-tel-note">タップで発信・24時間365日受付</span>
+          </span>
+        </a>
+        <a href={company.lineUrl} class="rhero-line" data-cta="hero_line">
+          <svg class="icon" aria-hidden="true"><use href="#i-line" /></svg>
+          <span>LINEで巣の写真を送る<small>→ 概算をすぐ回答</small></span>
+        </a>
+      </div>
+
     </div>
   </section>
 
@@ -5641,3 +5645,399 @@ const showSeasonalAlert = isHornetPeakSeason();
     });
   })();
 </script>
+
+<!-- ===== 反応型ヒーロー v2（redesign/response-lp） ===== -->
+<style is:global>
+  .rhero {
+    position: relative;
+    overflow: hidden;
+    color: var(--color-dark);
+    padding: 0.9rem 0 1.6rem;
+    isolation: isolate;
+  }
+  .rhero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(130% 70% at 50% -8%, #ffd24a 0%, #ffb01f 34%, #ff8c0a 70%, #f57600 100%);
+  }
+  .rhero-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      repeating-linear-gradient(60deg, rgba(120, 60, 0, 0.07) 0 1px, transparent 1px 22px),
+      repeating-linear-gradient(-60deg, rgba(120, 60, 0, 0.07) 0 1px, transparent 1px 22px),
+      repeating-linear-gradient(0deg, rgba(120, 60, 0, 0.05) 0 1px, transparent 1px 22px);
+    opacity: 0.55;
+  }
+  .rhero-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  /* --- 1. トップ警告フラッグ --- */
+  .rhero-toptag {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 4px 0 rgba(120, 60, 0, 0.25);
+  }
+  .rhero-flag {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.05em;
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 900;
+    padding: 0.4rem 0.7rem;
+    flex-shrink: 0;
+  }
+  .rhero-flag small { font-size: 0.78rem; }
+  .rhero-flag b { font-size: 1.5rem; line-height: 1; font-family: var(--font-num); }
+  .rhero-toptag-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-dark);
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(0.8rem, 3.4vw, 1.05rem);
+    padding: 0.3rem 0.6rem;
+    text-align: center;
+    line-height: 1.25;
+  }
+  .rhero-toptag-main em {
+    font-style: normal;
+    color: #ffe000;
+  }
+
+  /* --- 2. アクション主役写真 --- */
+  .rhero-action {
+    position: relative;
+    margin: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 4px solid #fff;
+    box-shadow: 0 14px 28px rgba(120, 60, 0, 0.34);
+    aspect-ratio: 16 / 10;
+  }
+  .rhero-action img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+  .rhero-action-badge {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    border: 3px solid #fff;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+    line-height: 1.05;
+    text-align: center;
+    transform: rotate(8deg);
+  }
+  .rhero-action-badge strong { font-size: 1.3rem; font-weight: 900; }
+  .rhero-action-badge span { font-size: 0.58rem; font-weight: 700; margin-top: 0.05rem; }
+  .rhero-action-cap {
+    position: absolute;
+    left: 0.45rem;
+    bottom: 0.4rem;
+    font-size: 0.6rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-sm);
+  }
+
+  /* --- 3. お悩みサムネ4枚 --- */
+  .rhero-thumbs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+  }
+  .rhero-thumbs li {
+    background: #fff;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 4px 9px rgba(120, 60, 0, 0.18);
+    border: 2px solid #fff;
+  }
+  .rhero-thumbs img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+  }
+  .rhero-thumbs span {
+    display: block;
+    font-size: 0.64rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    padding: 0.28rem 0.1rem;
+    line-height: 1.22;
+    text-align: center;
+    border-top: 2px solid var(--color-accent);
+  }
+
+  /* --- 4. 特大タイトル --- */
+  .rhero-title { text-align: center; position: relative; padding: 0.2rem 0; }
+  .rhero-title-sub {
+    display: inline-block;
+    font-size: clamp(1.05rem, 5vw, 1.65rem);
+    font-weight: 900;
+    color: #fff;
+    -webkit-text-stroke: 0.5px var(--color-dark);
+    paint-order: stroke fill;
+    text-shadow: 0 2px 0 rgba(120, 60, 0, 0.45), 0 0 1px var(--color-dark);
+    letter-spacing: 0.01em;
+  }
+  .rhero-title-kw { color: #ffe000; }
+  .rhero-title-main {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.15rem;
+  }
+  /* 黄色サンバースト */
+  .rhero-title-main::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 50%;
+    width: 130%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    background: repeating-conic-gradient(from 0deg, #ffe200 0deg 7deg, #ffc400 7deg 14deg);
+    -webkit-mask: radial-gradient(circle, #000 38%, transparent 62%);
+    mask: radial-gradient(circle, #000 38%, transparent 62%);
+    opacity: 0.85;
+    animation: rhero-spin 22s linear infinite;
+  }
+  @keyframes rhero-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+  .rhero-title-day {
+    background: var(--color-dark);
+    color: #fff;
+    font-weight: 900;
+    font-size: clamp(1.25rem, 5.4vw, 1.9rem);
+    padding: 0.1em 0.32em;
+    border-radius: 0.35rem;
+    transform: rotate(-3deg);
+    box-shadow: 0 3px 0 rgba(120, 60, 0, 0.4);
+    flex-shrink: 0;
+  }
+  .rhero-title-xl {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: clamp(2.2rem, 11.4vw, 4.4rem);
+    line-height: 0.98;
+    white-space: nowrap;
+    color: #fff;
+    letter-spacing: 0.005em;
+    -webkit-text-stroke: 3px var(--color-dark);
+    paint-order: stroke fill;
+    text-shadow:
+      0 4px 0 var(--color-dark),
+      0 7px 16px rgba(0, 0, 0, 0.4);
+  }
+  .rhero-title-area {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    background: var(--color-dark);
+    color: #fff;
+    font-weight: 700;
+    font-size: clamp(0.72rem, 3vw, 0.9rem);
+    padding: 0.3rem 0.9rem;
+    border-radius: var(--radius-pill);
+  }
+  .rhero-title-area .icon { width: 0.9rem; height: 0.9rem; color: var(--color-accent); }
+
+  /* --- 5. 大価格ブロック --- */
+  .rhero-price {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 14px 28px rgba(120, 60, 0, 0.24);
+    padding: 0.95rem 1.1rem 0.85rem;
+    border: 3px solid var(--color-dark);
+    text-align: center;
+  }
+  .rhero-price-main {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .rhero-price-label {
+    background: var(--color-dark);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-sm);
+    align-self: center;
+  }
+  .rhero-price-num {
+    color: var(--color-primary);
+    font-weight: 900;
+    font-size: clamp(3rem, 15vw, 4rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .rhero-price-num small { font-size: 0.4em; }
+  .rhero-price-tax { font-size: 0.9rem; font-weight: 700; color: var(--color-muted); align-self: flex-end; }
+  .rhero-price-free {
+    margin-top: 0.6rem;
+    background: var(--color-accent);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    border: 2px solid var(--color-dark);
+  }
+  .rhero-price-free strong { font-size: 1.2rem; font-weight: 900; color: var(--color-primary); }
+  .rhero-price-free span { font-size: 0.78rem; font-weight: 800; color: var(--color-dark); }
+  .rhero-price-note { margin: 0.55rem 0 0; font-size: 0.66rem; color: var(--color-muted); line-height: 1.5; }
+
+  /* --- 6. 実績フォトカード3枚 --- */
+  .rhero-benefits {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.45rem;
+  }
+  .rhero-benefits li {
+    background: #fff;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 5px 12px rgba(120, 60, 0, 0.18);
+  }
+  .rhero-benefits img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+  .rhero-benefits span {
+    display: block;
+    font-size: 0.66rem;
+    font-weight: 800;
+    color: var(--color-dark);
+    padding: 0.35rem 0.15rem;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  /* --- 7. CTA帯 --- */
+  .rhero-cv {
+    background: var(--color-dark);
+    border-radius: var(--radius-lg);
+    padding: 0.85rem 0.9rem 1rem;
+    display: grid;
+    gap: 0.55rem;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+  }
+  .rhero-cv-head {
+    margin: 0 0 0.1rem;
+    text-align: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(0.9rem, 3.8vw, 1.1rem);
+    line-height: 1.4;
+  }
+  .rhero-cv-zero {
+    display: inline-block;
+    background: var(--color-accent);
+    color: var(--color-dark);
+    padding: 0.1rem 0.55rem;
+    border-radius: var(--radius-sm);
+    margin-right: 0.4rem;
+  }
+  .rhero-cv-zero b { font-family: var(--font-num); font-size: 1.25em; }
+  .rhero-tel {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 0.7rem 0.9rem;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+    border: 2px solid var(--color-accent);
+  }
+  .rhero-tel-icon {
+    width: 2.8rem; height: 2.8rem; flex-shrink: 0;
+    background: var(--color-primary); border-radius: 50%;
+    display: grid; place-items: center;
+    animation: rhero-ring 1.6s ease-in-out infinite;
+  }
+  .rhero-tel-icon .icon { width: 1.5rem; height: 1.5rem; color: #fff; }
+  @keyframes rhero-ring { 0%,100%{transform:rotate(0)} 8%,24%{transform:rotate(-9deg)} 16%,32%{transform:rotate(9deg)} 40%{transform:rotate(0)} }
+  .rhero-tel-body { display: flex; flex-direction: column; line-height: 1.08; min-width: 0; }
+  .rhero-tel-label { font-size: 0.7rem; font-weight: 800; color: var(--color-primary); }
+  .rhero-tel-num { font-size: clamp(1.75rem, 8.5vw, 2.3rem); font-weight: 900; color: var(--color-dark); letter-spacing: 0.01em; }
+  .rhero-tel-note { font-size: 0.62rem; color: var(--color-muted); font-weight: 600; margin-top: 0.08rem; }
+  .rhero-line {
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    background: var(--color-line); color: #fff;
+    font-weight: 800; font-size: 1.02rem;
+    padding: 0.8rem 1rem; border-radius: var(--radius-md);
+    box-shadow: 0 8px 16px rgba(6, 199, 85, 0.4);
+  }
+  .rhero-line .icon { width: 1.4rem; height: 1.4rem; }
+  .rhero-line small { display: block; font-size: 0.68rem; font-weight: 600; opacity: 0.95; }
+
+  /* --- デスクトップ --- */
+  @media (min-width: 900px) {
+    .rhero { padding: 1.6rem 0 2.5rem; }
+    .rhero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "toptag  toptag"
+        "title   action"
+        "price   action"
+        "benefits thumbs"
+        "cv      cv";
+      column-gap: 2rem;
+      row-gap: 1rem;
+      align-items: start;
+    }
+    .rhero-toptag { grid-area: toptag; }
+    .rhero-action { grid-area: action; align-self: stretch; aspect-ratio: auto; height: 100%; min-height: 360px; }
+    .rhero-title { grid-area: title; text-align: left; }
+    .rhero-title-main { justify-content: flex-start; }
+    .rhero-thumbs { grid-area: thumbs; }
+    .rhero-price { grid-area: price; text-align: left; align-self: start; }
+    .rhero-price-main { justify-content: flex-start; }
+    .rhero-price-free { justify-content: flex-start; }
+    .rhero-benefits { grid-area: benefits; }
+    .rhero-cv {
+      grid-area: cv;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1rem;
+    }
+    .rhero-cv-head { grid-column: 1 / -1; }
+    .rhero-line { font-size: 1.1rem; }
+  }
+</style>
