@@ -57,7 +57,7 @@ export const compareRows: CompareRow[] = [
   },
   {
     label: "対応体制",
-    us: { state: "us-ok", text: "東海4県の地元・自社が直接施工" },
+    us: { state: "us-ok", text: "名古屋・愛知の地元・自社が直接施工" },
     general: { state: "warn", text: "下請けに外注の場合あり" },
     intermediary: { state: "bad", text: "全国チェーン＝現地は下請け手配" },
   },

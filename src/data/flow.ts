@@ -17,7 +17,7 @@ export const flowSteps: FlowStep[] = [
   {
     num: 2,
     title: "現地到着",
-    description: "最短30分で東海4県に出動します。",
+    description: "最短30分で名古屋・近郊エリアに出動します。",
   },
   {
     num: 3,

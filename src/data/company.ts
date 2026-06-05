@@ -42,7 +42,7 @@ export const company = {
   },
   hours: "24時間365日 受付",
   businessType: "蜂・蜂の巣駆除／害虫駆除／再発防止施工",
-  serviceArea: "愛知県・岐阜県・三重県・静岡県（東海4県全域）",
+  serviceArea: "愛知県全域＋岐阜県南部・三重県北部（名古屋近郊エリア）",
   payment: ["現金", "銀行振込", "クレジットカード", "PayPay", "後払い"],
   insurance: "",
   // ⚠️ 未確定値は 0 にしてある。広告コピー化前に必ず実数を user に確認すること

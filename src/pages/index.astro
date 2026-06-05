@@ -19,8 +19,8 @@ import { diyOkConditions, diyNgConditions } from "../data/diy-guide";
 import { vsGovernmentRows, subsidyNote } from "../data/vs-government";
 import { promiseCards } from "../data/scam-warning";
 
-const title = `東海の蜂の巣駆除なら最短30分｜基本1,680円〜｜${company.name}`;
-const description = `蜂の巣駆除を愛知・岐阜・三重・静岡で最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ¥2,680〜・アシナガバチ¥1,680〜、基本1,680円〜で対応。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証。`;
+const title = `名古屋・愛知の蜂の巣駆除なら最短30分｜基本1,680円〜｜${company.name}`;
+const description = `蜂の巣駆除を名古屋・愛知＋岐阜・三重の近郊エリアで最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ¥2,680〜・アシナガバチ¥1,680〜、基本1,680円〜で対応。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証。`;
 
 const fmtJpy = (n: number) =>
   new Intl.NumberFormat("ja-JP").format(n);
@@ -135,7 +135,7 @@ const showSeasonalAlert = isHornetPeakSeason();
     <div class="hero-trustbar" aria-label="対応エリアとサービスのお約束">
       <p class="hero-trustbar-area">
         <svg class="icon" aria-hidden="true"><use href="#i-pin" /></svg>
-        愛知・岐阜・三重・静岡の蜂の巣駆除
+        愛知・名古屋近郊の蜂の巣駆除
       </p>
       <ul class="hero-trustbar-promises">
         <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle" /></svg>自社直接施工</li>
@@ -152,7 +152,7 @@ const showSeasonalAlert = isHornetPeakSeason();
           <span class="hero-h1-line">追加請求は<span class="hl-num">1円もなし</span>。</span>
         </h1>
         <p class="hero-sub">
-          愛知・岐阜・三重・静岡で<strong>24時間365日</strong>受付。防護装備の専門隊が<strong>最短30分</strong>で到着し、現地で<strong>確定見積</strong>を提示。<strong>お伝えした金額を厳守・1年再発保証つき</strong>だから、安くても安心です。
+          愛知県全域・名古屋近郊（岐阜・三重の一部）で<strong>24時間365日</strong>受付。防護装備の専門隊が<strong>最短30分</strong>で到着し、現地で<strong>確定見積</strong>を提示。<strong>お伝えした金額を厳守・1年再発保証つき</strong>だから、安くても安心です。
         </p>
 
         <div class="hero-stats reveal-stagger">
@@ -289,7 +289,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         選ばれる<span class="accent">3つの理由</span>
       </h2>
       <p class="section-lead">
-        東海4県のハチ駆除専門。<strong>基本1,680円〜・即日駆けつけ・事前見積金額厳守・1年再発保証</strong>で選ばれています。広告代理店も中間業者も挟まない<strong>自社直接対応</strong>だから、品質はそのままにこの価格を実現しています。
+        名古屋・愛知のハチ駆除専門。<strong>基本1,680円〜・即日駆けつけ・事前見積金額厳守・1年再発保証</strong>で選ばれています。広告代理店も中間業者も挟まない<strong>自社直接対応</strong>だから、品質はそのままにこの価格を実現しています。
       </p>
       <div class="strengths reveal-stagger">
         {strengths.map((s) => (
@@ -629,9 +629,9 @@ const showSeasonalAlert = isHornetPeakSeason();
         <span class="section-eyebrow">CASE STUDIES</span>
       </div>
       <h2 id="cases-title" class="section-title headline">
-        東海エリアの<span class="accent">駆除事例</span>
+        名古屋・愛知エリアの<span class="accent">駆除事例</span>
       </h2>
-      <p class="section-lead">愛知・岐阜・三重・静岡で実施した駆除事例をご紹介します。軒下・ベランダ・屋根裏・土中・庭木の営巣など、状況別の作業内容と料金をご確認いただけます。</p>
+      <p class="section-lead">名古屋・愛知や近郊で実施した駆除事例をご紹介します。軒下・ベランダ・屋根裏・土中・庭木の営巣など、状況別の作業内容と料金をご確認いただけます。</p>
       <div class="case-grid reveal-stagger">
         {cases.slice(0, 3).map((c) => (
           <article class="case-card">
@@ -681,7 +681,7 @@ const showSeasonalAlert = isHornetPeakSeason();
       <h2 id="voices-title" class="section-title headline">
         お客様の<span class="accent">声</span>
       </h2>
-      <p class="section-lead">東海エリアの<strong>ハチ駆除 口コミ・評判</strong>をご紹介。一軒家・マンション・賃貸物件など実際のお客様からの感想を掲載。スピード対応・追加請求なし・戻りバチへの再発防止など、リアルな評価をご覧ください。</p>
+      <p class="section-lead">名古屋・愛知の<strong>ハチ駆除 口コミ・評判</strong>をご紹介。一軒家・マンション・賃貸物件など実際のお客様からの感想を掲載。スピード対応・追加請求なし・戻りバチへの再発防止など、リアルな評価をご覧ください。</p>
       <div class="voices reveal-stagger">
         {voices.map((v) => (
           <article class="voice-card">
@@ -772,7 +772,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         対応<span class="accent">エリア</span>
       </h2>
       <p class="section-lead">
-        愛知・岐阜・三重・静岡の東海4県全域に自社スタッフが常駐し、最短30分で駆けつけます。一軒家・マンション・賃貸物件・店舗いずれも対応可。記載のない市町村でも、近隣エリアからの出動でほぼ全域カバー可能です。お気軽にご相談ください。
+        名古屋市を拠点に、愛知県全域＋岐阜県南部・三重県北部（名古屋近郊エリア）へ自社スタッフが最短30分で駆けつけます。一軒家・マンション・賃貸物件・店舗いずれも対応可。記載のない市町村でも、近隣エリアからの出動でカバーできる場合があります。対応エリア外（遠方）も別途お見積りで承りますので、お気軽にご相談ください。
       </p>
       <div class="area-grid reveal-stagger">
         {areas.map((a) => (
@@ -946,8 +946,8 @@ const showSeasonalAlert = isHornetPeakSeason();
           <strong>{company.name}</strong>
         </div>
         <p class="footer-tagline">
-          愛知・岐阜・三重・静岡のハチ駆除24時間救急対応。<br />
-          基本1,680円〜・事前見積金額厳守・1年保証で東海エリアのハチ被害を解決します。
+          愛知・名古屋近郊のハチ駆除24時間救急対応。<br />
+          基本1,680円〜・事前見積金額厳守・1年保証で名古屋・愛知エリアのハチ被害を解決します。
         </p>
       </div>
       <div>
