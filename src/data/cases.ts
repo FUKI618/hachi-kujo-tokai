@@ -44,7 +44,7 @@ export const cases: Case[] = [
     id: "case-03",
     imageBase: "case-03",
     beeType: "ミツバチ",
-    area: "浜松市中央区",
+    area: "各務原市",
     location: "屋根裏",
     title: "屋根裏のミツバチ大規模巣を撤去",
     priceJpy: 28000,

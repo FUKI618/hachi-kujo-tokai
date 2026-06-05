@@ -33,7 +33,7 @@ export const voices: Voice[] = [
   },
   {
     initial: "M",
-    area: "浜松市",
+    area: "春日井市",
     ageBracket: "30代",
     service: "ミツバチ駆除",
     rating: 5,
