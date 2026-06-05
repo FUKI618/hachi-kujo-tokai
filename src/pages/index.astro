@@ -195,9 +195,9 @@ const showSeasonalAlert = isHornetPeakSeason();
         <a href={company.phoneTelLink} class="rhero-tel" data-cta="hero_tel">
           <span class="rhero-tel-icon" aria-hidden="true"><svg class="icon"><use href="#i-phone" /></svg></span>
           <span class="rhero-tel-body">
-            <span class="rhero-tel-label">今すぐ無料電話相談（通話料無料）</span>
+            <span class="rhero-tel-cta">蜂を見たら<em>今すぐ電話</em><span class="rhero-tel-free">無料</span></span>
             <span class="rhero-tel-num font-num">{company.phoneDisplay}</span>
-            <span class="rhero-tel-note">タップで発信・24時間365日受付</span>
+            <span class="rhero-tel-note">最短30分で駆けつけ｜通話料0円・24時間365日受付</span>
           </span>
         </a>
         <a href={company.lineUrl} class="rhero-line" data-cta="hero_line">
@@ -5992,9 +5992,11 @@ const showSeasonalAlert = isHornetPeakSeason();
   }
   .rhero-tel-icon .icon { width: 1.5rem; height: 1.5rem; color: #fff; }
   @keyframes rhero-ring { 0%,100%{transform:rotate(0)} 8%,24%{transform:rotate(-9deg)} 16%,32%{transform:rotate(9deg)} 40%{transform:rotate(0)} }
-  .rhero-tel-body { display: flex; flex-direction: column; line-height: 1.08; min-width: 0; }
-  .rhero-tel-label { font-size: 0.7rem; font-weight: 800; color: var(--color-primary); }
-  .rhero-tel-num { font-size: clamp(1.75rem, 8.5vw, 2.3rem); font-weight: 900; color: var(--color-dark); letter-spacing: 0.01em; }
+  .rhero-tel-body { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; }
+  .rhero-tel-cta { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; font-size: clamp(1.3rem, 6vw, 1.7rem); font-weight: 900; color: var(--color-dark); line-height: 1.12; }
+  .rhero-tel-cta em { font-style: normal; color: var(--color-primary); }
+  .rhero-tel-free { background: var(--color-primary); color: #fff; font-size: 0.68rem; font-weight: 900; padding: 0.08rem 0.45rem; border-radius: var(--radius-sm); letter-spacing: 0.04em; }
+  .rhero-tel-num { font-size: clamp(1.1rem, 5vw, 1.45rem); font-weight: 800; color: var(--color-dark); letter-spacing: 0.03em; margin-top: 0.12rem; }
   .rhero-tel-note { font-size: 0.62rem; color: var(--color-muted); font-weight: 600; margin-top: 0.08rem; }
   .rhero-line {
     display: flex; align-items: center; justify-content: center; gap: 0.5rem;
@@ -6033,12 +6035,19 @@ const showSeasonalAlert = isHornetPeakSeason();
     .rhero-benefits { grid-area: benefits; }
     .rhero-cv {
       grid-area: cv;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
+      grid-template-columns: 1.7fr 1fr;
+      align-items: stretch;
       gap: 1rem;
     }
     .rhero-cv-head { grid-column: 1 / -1; }
-    .rhero-line { font-size: 1.1rem; }
+    .rhero-tel { padding: 1.05rem 1.6rem; }
+    .rhero-tel-icon { width: 3.5rem; height: 3.5rem; }
+    .rhero-tel-icon .icon { width: 1.85rem; height: 1.85rem; }
+    .rhero-tel-cta { font-size: 1.9rem; }
+    .rhero-tel-free { font-size: 0.8rem; }
+    .rhero-tel-num { font-size: 1.7rem; }
+    .rhero-tel-note { font-size: 0.72rem; }
+    .rhero-line { font-size: 1.02rem; }
   }
 </style>
 

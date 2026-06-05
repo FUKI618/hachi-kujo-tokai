@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+const OUT = '/Users/fuki/Code/LP作成/蜂';
+const b = await chromium.launch();
+const ctx = await b.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2 });
+const page = await ctx.newPage();
+await page.addInitScript(() => { const s=document.createElement('style'); s.textContent='*{animation:none!important;transition:none!important}'; document.documentElement.appendChild(s); });
+await page.goto('http://localhost:4321/?cb=cv2', { waitUntil: 'networkidle', timeout: 60000 });
+await page.addStyleTag({ content: '.reveal,.reveal-stagger,.reveal>*,.reveal-stagger>*{opacity:1!important;transform:none!important;filter:none!important}' });
+await page.waitForTimeout(400);
+const el = await page.$('.rhero-cv');
+await el.screenshot({ path: `${OUT}/cv-d.jpeg`, type: 'jpeg', quality: 92, timeout: 60000 });
+console.log('saved cv-d');
+await b.close();
