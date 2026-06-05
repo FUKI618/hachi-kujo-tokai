@@ -5827,14 +5827,14 @@ const showSeasonalAlert = isHornetPeakSeason();
     z-index: -1;
     left: 50%;
     top: 50%;
-    width: 130%;
+    width: 92%;
     aspect-ratio: 1;
     transform: translate(-50%, -50%);
     background: repeating-conic-gradient(from 0deg, #ffe200 0deg 7deg, #ffc400 7deg 14deg);
-    -webkit-mask: radial-gradient(circle, #000 38%, transparent 62%);
-    mask: radial-gradient(circle, #000 38%, transparent 62%);
-    opacity: 0.85;
-    animation: rhero-spin 22s linear infinite;
+    -webkit-mask: radial-gradient(circle, #000 24%, transparent 48%);
+    mask: radial-gradient(circle, #000 24%, transparent 48%);
+    opacity: 0.25;
+    animation: none;
   }
   @keyframes rhero-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
   .rhero-title-day {
@@ -6278,19 +6278,20 @@ const showSeasonalAlert = isHornetPeakSeason();
   .rhero-title { position: relative; }
   .rhero-hornet {
     position: absolute;
-    left: -0.6rem;
-    top: 30%;
-    width: clamp(4.5rem, 22vw, 7.5rem);
+    left: auto;
+    right: -0.3rem;
+    top: -2.6rem;
+    width: clamp(3.4rem, 14vw, 4.6rem);
     height: auto;
-    transform: rotate(-8deg);
-    z-index: 1;
+    transform: rotate(10deg);
+    z-index: 3;
     pointer-events: none;
-    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.35));
   }
   .rhero-title-sub,
   .rhero-title-main,
   .rhero-title-area { position: relative; z-index: 2; }
   @media (min-width: 900px) {
-    .rhero-hornet { left: auto; right: -0.5rem; top: -1.2rem; width: 8.5rem; }
+    .rhero-hornet { left: auto; right: -1rem; top: -3rem; width: 6.5rem; transform: rotate(12deg); }
   }
 </style>
