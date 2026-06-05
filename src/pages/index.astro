@@ -5811,7 +5811,16 @@ const showSeasonalAlert = isHornetPeakSeason();
     text-shadow: 0 2px 0 rgba(120, 60, 0, 0.45), 0 0 1px var(--color-dark);
     letter-spacing: 0.01em;
   }
-  .rhero-title-kw { color: #ffe000; }
+  .rhero-title-kw {
+    color: var(--color-dark);
+    background: var(--color-accent);
+    padding: 0.02em 0.22em;
+    border-radius: 0.2em;
+    -webkit-text-stroke: 0;
+    text-shadow: none;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
   .rhero-title-main {
     position: relative;
     display: flex;
