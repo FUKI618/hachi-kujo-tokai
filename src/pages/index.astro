@@ -116,21 +116,31 @@ const showSeasonalAlert = isHornetPeakSeason();
     <div class="container rhero-inner">
 
       <!-- 1. トップ警告フラッグ -->
-      <p class="rhero-toptag reveal">
+      <p class="rhero-toptag">
         <span class="rhero-flag"><small>最短</small><b>30</b><small>分</small></span>
         <span class="rhero-toptag-main"><em>そのまま放置すると危険！</em>で駆けつけます</span>
       </p>
 
-      <!-- 2. アクション主役写真 -->
-      <figure class="rhero-action reveal">
+      <!-- 2. 特大タイトル（画像の真上） -->
+      <div class="rhero-title">
+        <span class="rhero-title-sub">危険な<span class="rhero-title-kw">蜂の巣</span>・蜂被害を</span>
+        <span class="rhero-title-main">
+          <span class="rhero-title-day">即日</span>
+          <span class="rhero-title-xl" data-text="スピード解決">スピード解決</span>
+        </span>
+        <span class="rhero-title-area"><svg class="icon" aria-hidden="true"><use href="#i-pin" /></svg>名古屋市・近郊エリア対応 ／ 24時間365日受付</span>
+      </div>
+
+      <!-- 3. アクション主役写真 -->
+      <figure class="rhero-action">
         <img src={assetPath("images/generated/hero-action.jpg")} width="1536" height="1024"
              alt="防護装備で住宅の軒下の蜂の巣を駆除する専門スタッフ（イメージ）" loading="eager" decoding="async" fetchpriority="high" />
         <span class="rhero-action-badge"><strong>1年</strong><span>再発保証</span></span>
         <figcaption class="rhero-action-cap">※写真はイメージです</figcaption>
       </figure>
 
-      <!-- 3. お悩みサムネ4枚帯 -->
-      <ul class="rhero-thumbs reveal-stagger" aria-label="よくある蜂被害">
+      <!-- 4. お悩みサムネ4枚帯 -->
+      <ul class="rhero-thumbs" aria-label="よくある蜂被害">
         <li>
           <img src={assetPath("images/generated/emergency-nest-eaves.webp")} width="240" height="180" alt="軒下の蜂の巣（イメージ）" loading="lazy" decoding="async" />
           <span>軒下に<wbr />巣がある</span>
@@ -149,18 +159,8 @@ const showSeasonalAlert = isHornetPeakSeason();
         </li>
       </ul>
 
-      <!-- 4. 特大タイトル -->
-      <div class="rhero-title reveal">
-        <span class="rhero-title-sub">危険な<span class="rhero-title-kw">蜂の巣</span>・蜂被害を</span>
-        <span class="rhero-title-main">
-          <span class="rhero-title-day">即日</span>
-          <span class="rhero-title-xl" data-text="スピード解決">スピード解決</span>
-        </span>
-        <span class="rhero-title-area"><svg class="icon" aria-hidden="true"><use href="#i-pin" /></svg>名古屋市・近郊エリア対応 ／ 24時間365日受付</span>
-      </div>
-
       <!-- 5. 大価格ブロック（捏造演出なし・正直版） -->
-      <div class="rhero-price reveal">
+      <div class="rhero-price">
         <div class="rhero-price-main">
           <span class="rhero-price-label">基本料金</span>
           <span class="rhero-price-num font-num">¥1,680<small>〜</small></span>
@@ -174,7 +174,7 @@ const showSeasonalAlert = isHornetPeakSeason();
       </div>
 
       <!-- 6. 実績フォトカード3枚 -->
-      <ul class="rhero-benefits reveal-stagger" aria-label="サービスの特長">
+      <ul class="rhero-benefits" aria-label="サービスの特長">
         <li>
           <img src={assetPath("images/generated/staff-onsite.webp")} width="200" height="150" alt="名古屋・愛知で自社対応するスタッフ（イメージ）" loading="lazy" decoding="async" />
           <span>名古屋・愛知で<wbr />自社直接対応</span>
@@ -190,7 +190,7 @@ const showSeasonalAlert = isHornetPeakSeason();
       </ul>
 
       <!-- 7. CTA帯 -->
-      <div class="rhero-cv reveal">
+      <div class="rhero-cv">
         <p class="rhero-cv-head"><span class="rhero-cv-zero">現地調査・お見積り<b>0円</b></span>今すぐお問い合わせください！</p>
         <a href={company.phoneTelLink} class="rhero-tel" data-cta="hero_tel">
           <span class="rhero-tel-icon" aria-hidden="true"><svg class="icon"><use href="#i-phone" /></svg></span>
