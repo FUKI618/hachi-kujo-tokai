@@ -123,6 +123,7 @@ const showSeasonalAlert = isHornetPeakSeason();
 
       <!-- 2. 特大タイトル（画像の真上） -->
       <div class="rhero-title">
+        <img class="rhero-hornet" src={assetPath("images/generated/hornet.png")} width="300" height="300" alt="" aria-hidden="true" loading="eager" decoding="async" />
         <span class="rhero-title-sub">危険な<span class="rhero-title-kw">蜂の巣</span>・蜂被害を</span>
         <span class="rhero-title-main">
           <span class="rhero-title-day">即日</span>
@@ -6270,5 +6271,26 @@ const showSeasonalAlert = isHornetPeakSeason();
     font-size: 0.72rem !important;
     color: #fff3d6 !important;
     font-weight: 700 !important;
+  }
+</style>
+
+<style is:global>
+  .rhero-title { position: relative; }
+  .rhero-hornet {
+    position: absolute;
+    left: -0.6rem;
+    top: 30%;
+    width: clamp(4.5rem, 22vw, 7.5rem);
+    height: auto;
+    transform: rotate(-8deg);
+    z-index: 1;
+    pointer-events: none;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+  }
+  .rhero-title-sub,
+  .rhero-title-main,
+  .rhero-title-area { position: relative; z-index: 2; }
+  @media (min-width: 900px) {
+    .rhero-hornet { left: auto; right: -0.5rem; top: -1.2rem; width: 8.5rem; }
   }
 </style>
