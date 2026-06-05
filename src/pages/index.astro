@@ -221,8 +221,9 @@ const showSeasonalAlert = isHornetPeakSeason();
       <a href={company.phoneTelLink} class="urgency-cta" data-cta="urgency_tel">
         <svg class="icon" aria-hidden="true"><use href="#i-phone" /></svg>
         <span class="urgency-cta-body">
-          <span class="urgency-cta-label">迷う時間が、費用に変わる前に</span>
+          <span class="urgency-cta-lead">今すぐ電話で相談する</span>
           <span class="urgency-cta-number font-num">{company.phoneDisplay}</span>
+          <span class="urgency-cta-label">迷う時間が、費用に変わる前に</span>
         </span>
       </a>
       <p class="urgency-note">※成長速度は蜂種・季節・環境により異なります</p>
@@ -559,8 +560,9 @@ const showSeasonalAlert = isHornetPeakSeason();
       <a href={company.phoneTelLink} class="mid-cta-tel cta-glow" data-cta="mid_tel" aria-label={`電話で相談 ${company.phoneDisplay} 通話無料・24時間365日受付`}>
         <span class="mid-cta-tel-icon" aria-hidden="true"><svg class="icon"><use href="#i-phone" /></svg></span>
         <span class="mid-cta-tel-body">
+          <span class="mid-cta-tel-cta">今すぐ電話で<em>無料相談</em></span>
           <span class="mid-cta-tel-num font-num">{company.phoneDisplay}</span>
-          <small class="mid-cta-tel-sub">通話無料・24時間365日受付</small>
+          <small class="mid-cta-tel-sub">最短30分で駆けつけ・通話料0円・24時間365日</small>
         </span>
       </a>
       <div class="mid-cta-row">
@@ -864,11 +866,12 @@ const showSeasonalAlert = isHornetPeakSeason();
           <h3 class="contact-phone-title headline">お急ぎの方は<br class="phone-br" />お電話で</h3>
           <p class="contact-phone-sub">最短30分で現地到着・即日駆除</p>
           <a href={company.phoneTelLink} class="contact-phone-cta cta-glow" data-cta="contact_tel_btn">
+            <span class="contact-phone-cta-lead">今すぐ電話で<em>相談する</em></span>
             <span class="contact-phone-cta-row">
               <svg class="icon"><use href="#i-phone" /></svg>
               <span class="contact-phone-number font-num">{company.phoneDisplay}</span>
             </span>
-            <span class="contact-phone-tap">タップで発信・通話無料</span>
+            <span class="contact-phone-tap">タップで発信・最短30分で駆けつけ・通話料0円</span>
           </a>
           <ul class="contact-assurance-grid">
             <li class="contact-assurance-item">
@@ -6204,5 +6207,68 @@ const showSeasonalAlert = isHornetPeakSeason();
   .floating-cta .btn-primary {
     box-shadow: 0 8px 20px rgba(200, 30, 30, 0.45);
     font-weight: 900;
+  }
+</style>
+
+<!-- ===== 電話CTA：緊急コピー先行・番号従（全ボタン統一） ===== -->
+<style is:global>
+  /* 中盤CTA帯 */
+  .mid-cta-tel-cta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: clamp(1.2rem, 5.4vw, 1.65rem);
+    font-weight: 900;
+    color: var(--color-dark);
+    line-height: 1.15;
+  }
+  .mid-cta-tel-cta em {
+    font-style: normal;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.62em;
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-sm);
+  }
+  .mid-cta-tel-num {
+    font-size: clamp(1.1rem, 4.6vw, 1.45rem) !important;
+    color: var(--color-dark);
+    margin-top: 0.1rem;
+  }
+
+  /* 連絡先 URGENT電話カード */
+  .contact-phone-cta-lead {
+    font-size: clamp(1.3rem, 5.8vw, 1.75rem);
+    font-weight: 900;
+    line-height: 1.15;
+  }
+  .contact-phone-cta-lead em {
+    font-style: normal;
+    background: #fff;
+    color: var(--color-primary);
+    padding: 0.05rem 0.45rem;
+    border-radius: var(--radius-sm);
+  }
+  .contact-phone-number {
+    font-size: clamp(1.25rem, 5.2vw, 1.85rem) !important;
+    opacity: 0.96;
+  }
+
+  /* 緊急ブロックの電話 */
+  .urgency-cta-body { gap: 0.15rem; }
+  .urgency-cta-lead {
+    font-size: clamp(1.2rem, 5.4vw, 1.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+    color: #fff;
+  }
+  .urgency-cta-number {
+    font-size: clamp(1.15rem, 4.8vw, 1.45rem) !important;
+    opacity: 0.95;
+  }
+  .urgency-cta-label {
+    font-size: 0.72rem !important;
+    color: #fff3d6 !important;
+    font-weight: 700 !important;
   }
 </style>
