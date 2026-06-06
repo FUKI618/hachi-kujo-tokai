@@ -174,23 +174,7 @@ const showSeasonalAlert = isHornetPeakSeason();
         <p class="rhero-price-note">※ 種類・巣の大きさ・場所で変動。出張・現地調査・見積りもすべて0円。</p>
       </div>
 
-      <!-- 6. 実績フォトカード3枚 -->
-      <ul class="rhero-benefits" aria-label="サービスの特長">
-        <li>
-          <img src={assetPath("images/generated/staff-onsite.webp")} width="200" height="150" alt="名古屋・愛知で自社対応するスタッフ（イメージ）" loading="lazy" decoding="async" />
-          <span>名古屋・愛知で<wbr />自社直接対応</span>
-        </li>
-        <li>
-          <img src={assetPath("images/generated/estimate-document-tools.webp")} width="200" height="150" alt="見積書（イメージ）" loading="lazy" decoding="async" />
-          <span>見積後の<wbr />追加請求なし</span>
-        </li>
-        <li>
-          <img src={assetPath("images/generated/protective-equipment.webp")} width="200" height="150" alt="防護装備（イメージ）" loading="lazy" decoding="async" />
-          <span>危険な蜂も<wbr />即日駆除対応</span>
-        </li>
-      </ul>
-
-      <!-- 7. CTA帯 -->
+      <!-- 6. CTA帯（モバイル: 価格ブロック直後に前傾。PCはgrid-area "cv"で従来位置） -->
       <div class="rhero-cv">
         <p class="rhero-cv-head"><span class="rhero-cv-zero">現地調査・お見積り<b>0円</b></span>今すぐお問い合わせください！</p>
         <a href={company.phoneTelLink} class="rhero-tel" data-cta="hero_tel">
@@ -206,6 +190,22 @@ const showSeasonalAlert = isHornetPeakSeason();
           <span>LINEで巣の写真を送る<small>→ 概算をすぐ回答</small></span>
         </a>
       </div>
+
+      <!-- 7. 実績フォトカード3枚（モバイル: CTA後ろへ。PCはgrid-area "benefits"で従来位置） -->
+      <ul class="rhero-benefits" aria-label="サービスの特長">
+        <li>
+          <img src={assetPath("images/generated/staff-onsite.webp")} width="200" height="150" alt="名古屋・愛知で自社対応するスタッフ（イメージ）" loading="lazy" decoding="async" />
+          <span>名古屋・愛知で<wbr />自社直接対応</span>
+        </li>
+        <li>
+          <img src={assetPath("images/generated/estimate-document-tools.webp")} width="200" height="150" alt="見積書（イメージ）" loading="lazy" decoding="async" />
+          <span>見積後の<wbr />追加請求なし</span>
+        </li>
+        <li>
+          <img src={assetPath("images/generated/protective-equipment.webp")} width="200" height="150" alt="防護装備（イメージ）" loading="lazy" decoding="async" />
+          <span>危険な蜂も<wbr />即日駆除対応</span>
+        </li>
+      </ul>
 
     </div>
   </section>
@@ -986,16 +986,17 @@ const showSeasonalAlert = isHornetPeakSeason();
   <!-- ===== Floating CTA（モバイル） ===== -->
   <div
     class="floating-cta"
-    x-data="{ shown: false, atContact: false }"
-    x-init="window.addEventListener('scroll', () => {
-      shown = window.scrollY > 500;
-      const c = document.getElementById('contact');
-      if (c) {
-        const r = c.getBoundingClientRect();
-        atContact = r.top < window.innerHeight * 0.7 && r.bottom > 0;
-      }
-    }, { passive: true })"
-    :class="{ 'is-shown': shown && !atContact }"
+    x-data="{ atContact: false }"
+    x-init="const sync = () => {
+        const c = document.getElementById('contact');
+        if (c) {
+          const r = c.getBoundingClientRect();
+          atContact = r.top < window.innerHeight * 0.7 && r.bottom > 0;
+        }
+      };
+      sync();
+      window.addEventListener('scroll', sync, { passive: true });"
+    :class="{ 'is-shown': !atContact }"
     aria-hidden="true"
   >
     <a href={company.phoneTelLink} class="btn btn-primary cta-glow" data-cta="float_tel">
