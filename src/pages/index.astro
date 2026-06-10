@@ -957,6 +957,11 @@ const showSeasonalAlert = isHornetPeakSeason();
           愛知・名古屋近郊のハチ駆除24時間救急対応。<br />
           基本1,680円〜・事前見積金額厳守・1年保証で名古屋・愛知エリアのハチ被害を解決します。
         </p>
+        <p class="footer-operator" style="font-size:0.78rem; line-height:1.7; opacity:0.82; margin-top:0.85rem;">
+          運営：{company.legalName}（代表 {company.representative}）<br />
+          所在地：〒{company.address.postal} {company.address.region}{company.address.city}{company.address.street}<br />
+          受付：24時間365日（通話・出張・見積すべて無料）
+        </p>
       </div>
       <div>
         <h4>サービス</h4>
@@ -997,7 +1002,7 @@ const showSeasonalAlert = isHornetPeakSeason();
       sync();
       window.addEventListener('scroll', sync, { passive: true });"
     :class="{ 'is-shown': !atContact }"
-    aria-hidden="true"
+    :aria-hidden="atContact"
   >
     <a href={company.phoneTelLink} class="btn btn-primary cta-glow" data-cta="float_tel">
       <svg class="icon"><use href="#i-phone" /></svg>
