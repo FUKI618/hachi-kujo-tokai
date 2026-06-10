@@ -122,15 +122,15 @@ const showSeasonalAlert = isHornetPeakSeason();
       </p>
 
       <!-- 2. 特大タイトル（画像の真上） -->
-      <div class="rhero-title">
+      <h1 class="rhero-title" id="hero-title">
         <img class="rhero-hornet" src={assetPath("images/generated/hornet.webp")} width="300" height="300" alt="" aria-hidden="true" loading="eager" decoding="async" />
         <span class="rhero-title-sub">危険な<span class="rhero-title-kw">蜂の巣</span>・蜂被害を</span>
         <span class="rhero-title-main">
           <span class="rhero-title-day">即日</span>
           <span class="rhero-title-xl" data-text="スピード解決">スピード解決</span>
         </span>
-        <span class="rhero-title-area"><svg class="icon" aria-hidden="true"><use href="#i-pin" /></svg>名古屋市・近郊エリア対応 ／ 24時間365日受付</span>
-      </div>
+        <span class="rhero-title-area"><svg class="icon" aria-hidden="true"><use href="#i-pin" /></svg>愛知・岐阜・三重（名古屋近郊エリア）対応 ／ 24時間365日受付</span>
+      </h1>
 
       <!-- 3. アクション主役写真 -->
       <figure class="rhero-action">
@@ -5801,7 +5801,7 @@ const showSeasonalAlert = isHornetPeakSeason();
   }
 
   /* --- 4. 特大タイトル --- */
-  .rhero-title { text-align: center; position: relative; padding: 0.2rem 0; }
+  .rhero-title { text-align: center; position: relative; padding: 0.2rem 0; margin: 0; font-size: inherit; }
   .rhero-title-sub {
     display: inline-block;
     font-size: clamp(1.05rem, 5vw, 1.65rem);
