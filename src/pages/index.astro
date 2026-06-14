@@ -64,6 +64,11 @@ const strengthsShown = strengths.slice(0, 6);
       <span class="bname">{company.name}</span>
       <span class="btag">蜂の巣駆除のプロ集団</span>
     </div>
+    <!-- 緑ドット下の「ただ今受付中」: ヒーロー画像のAI崩れ文字を実テキストで上書き -->
+    <div class="xnow-patch" aria-hidden="true">
+      <span>ただ今</span>
+      <span>受付中</span>
+    </div>
     <a class="xtel xtel-cta" href={company.phoneTelLink} data-cta="hero_tel"
        aria-label={`今すぐ電話で相談 ${company.phoneDisplay}・24時間受付・最短30分で出動`}></a>
     <a class="xtel xtel-head" href={company.phoneTelLink} data-cta="header_tel"
@@ -295,6 +300,13 @@ const strengthsShown = strengths.slice(0, 6);
     font-weight:900; color:#0e0e0d; font-size:3.1cqw; line-height:1; letter-spacing:-.02em; white-space:nowrap; }
   .xbrand-patch .btag { font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
     font-weight:700; color:#5a5a5a; font-size:1.7cqw; line-height:1; white-space:nowrap; }
+  /* 緑ドット下「ただ今受付中」の下地パッチ＋実テキスト（画像のAI崩れ文字を上書き） */
+  .xnow-patch { position:absolute; left:82.8%; top:53.2%; width:10.6%; height:4.6%;
+    background:linear-gradient(180deg,#dc2a02,#ce0801);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.15cqw;
+    pointer-events:none; overflow:hidden; }
+  .xnow-patch span { font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-weight:800; color:#fff; font-size:2.4cqw; line-height:1; letter-spacing:-.01em; white-space:nowrap; }
 
   /* ===== 下半分 共通（ヒーロー基調） ===== */
   .xb { --red:#a60101; --red2:#c81e1e; --ink:#241608; --cream:#fdfcf6; --line:rgba(20,12,4,.10);
