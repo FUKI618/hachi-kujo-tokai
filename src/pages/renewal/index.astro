@@ -1,0 +1,1607 @@
+---
+/**
+ * リニューアルLP — パターンA「緊急レスキュー型」(pattern-A-emergency.png 忠実再現)
+ * 設計: lp-renewal-2026-06/01_improvement-items.md / mockups/pattern-A-emergency.png
+ *
+ * モックからの意図的差分（実データ置換・虚偽広告回避）:
+ * - 電話番号: 0120-24-1190(ダミー) → company.phone 実番号
+ * - 評価: 4.9(1,248件) → ★5.0(117件・Google実測 2026-06-03)
+ * - 料金: スズメバチ4,980円/大型9,800円(ダミー) → rates.ts SSOT準拠
+ * - お客様の声の地域: 東京/埼玉/千葉(ダミー) → 実データ(名古屋/岐阜)
+ *
+ * 広告ランク用アンカー: #emergency #price #early-nest #bee-types #danger #area
+ * ⚠️ 本番昇格まで sitemap除外/noindex を検討。GBP件数は切替時に最新化。
+ */
+import Layout from "../../layouts/Layout.astro";
+import { assetPath } from "../../lib/site";
+import { company } from "../../data/company";
+import { rates } from "../../data/rates";
+import { beeTypes } from "../../data/bee-types";
+import { areas } from "../../data/areas";
+import { vsGovernmentRows } from "../../data/vs-government";
+import { cases } from "../../data/cases";
+import { voices } from "../../data/voices";
+import { flowSteps } from "../../data/flow";
+import { faqs } from "../../data/faq";
+
+const GBP_RATING = "5.0";
+const GBP_REVIEWS = 117; // 2026-06-03 Google local_pack 実測値
+
+const title =
+  "蜂の巣駆除 1,680円〜 最短30分で出動｜名古屋・東海4県 24時間365日";
+const description =
+  "蜂の巣駆除を最短30分・基本1,680円〜（税込）。名古屋・愛知全域＋岐阜南部・三重北部に24時間365日出動。見積もり・出張費無料、お見積り額からの追加請求は一切なし。作り始めの小さい巣も即日駆除します。";
+
+const routerCards = [
+  {
+    href: "#emergency",
+    icon: "siren",
+    label: "今すぐ駆除を依頼",
+    sub: "最短30分で駆けつけ！",
+  },
+  {
+    href: "#price",
+    icon: "yen",
+    label: "料金のご案内",
+    sub: "明朗会計・追加費用なし",
+  },
+  {
+    href: "#bee-types",
+    icon: "nest",
+    label: "蜂の巣の種類",
+    sub: "主な種類と特徴を解説",
+  },
+  {
+    href: "#danger",
+    icon: "search",
+    label: "蜂の危険性",
+    sub: "刺されるリスクと対処法",
+  },
+];
+
+// 料金のご案内（モック準拠: 3行 × 高さ条件列 / 価格はSSOT準拠の実額）
+const priceRows = [
+  { name: "アシナガバチの巣", cond: "高さ3m未満", price: "1,680円〜", hot: false },
+  { name: "スズメバチの巣", cond: "高さ3m未満", price: "2,680円〜", hot: true },
+  { name: "スズメバチの巣（大型）", cond: "高さ3m以上・特殊作業", price: "現地見積", hot: false },
+];
+
+const displayVoices = voices.slice(0, 3);
+const displayCases = cases.slice(0, 3);
+const displayFaqs = faqs.slice(0, 10);
+---
+
+<Layout title={title} description={description}>
+  <main class="ra">
+    <!-- SVGアイコン定義 -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol id="ra-i-phone" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M6.6 3h2.9l1.6 4.2-2 1.6a13.8 13.8 0 0 0 6.1 6.1l1.6-2 4.2 1.6v2.9c0 1-.8 1.8-1.8 1.8C10.7 19.2 4.8 13.3 4.8 4.8 4.8 3.8 5.6 3 6.6 3Z"
+        />
+      </symbol>
+      <!-- 緊急回転灯（塗り）: モック準拠 -->
+      <symbol id="ra-i-siren" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="4.4" y="16.3" width="15.2" height="3.4" rx="1.4" />
+        <path d="M12 5.6c-3.15 0-5.6 2.5-5.6 5.9v4.2h11.2v-4.2c0-3.4-2.45-5.9-5.6-5.9Z" />
+        <rect x="10.9" y="2.3" width="2.2" height="2.9" rx="1.1" />
+        <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+          <path d="M3.7 9.4 1.6 8.6" /><path d="M20.3 9.4l2.1-.8" />
+          <path d="M3.1 13.3 1 13.7" /><path d="M20.9 13.3l2.1.4" />
+        </g>
+      </symbol>
+      <symbol id="ra-i-yen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M8.5 7.5 12 12.5l3.5-5M12 12.5V17M9.3 13.4h5.4M9.3 15.6h5.4" />
+      </symbol>
+      <!-- 吊り下げ式の蜂の巣（塗り）: モック準拠 -->
+      <symbol id="ra-i-nest" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="3.8" y="3" width="16.4" height="2.3" rx="1.15" />
+        <rect x="11.1" y="5.1" width="1.8" height="2.2" />
+        <path d="M12 6.6c-3.05 0-5.2 2.7-5.2 6.1 0 3.4 2.2 6 5.2 8.1 3-2.1 5.2-4.7 5.2-8.1 0-3.4-2.15-6.1-5.2-6.1Zm0 11.1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z" />
+      </symbol>
+      <!-- 虫眼鏡＋警告アスタリスク: モック準拠 -->
+      <symbol id="ra-i-search" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M10.6 3a7.6 7.6 0 1 0 4.62 13.64l3.78 3.78a1.32 1.32 0 0 0 1.87-1.87l-3.78-3.78A7.6 7.6 0 0 0 10.6 3Zm0 2.45a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3Z" />
+        <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M10.6 7.2v6.1M7.95 8.7l5.3 3.1M13.25 8.7l-5.3 3.1" />
+        </g>
+      </symbol>
+      <symbol id="ra-i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m9 5 7 7-7 7" />
+      </symbol>
+      <symbol id="ra-i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3 5 5.6v6.1c0 4.3 2.9 7.3 7 8.9 4.1-1.6 7-4.6 7-8.9V5.6Z" />
+        <path d="m8.8 11.8 2.2 2.2 4.2-4.4" />
+      </symbol>
+      <symbol id="ra-i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <rect x="5.5" y="3.5" width="13" height="17" rx="1.6" />
+        <path d="M9 8.5h6M9 12h6M9 15.5h3.6" />
+      </symbol>
+      <symbol id="ra-i-broom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <path d="M14 3 9.5 9.5M5 21c.8-4 2.4-6.6 4.5-8.5l3 2C11 17 8.8 19.6 5 21Z" />
+        <path d="m9.5 9.5 3 2" />
+      </symbol>
+      <symbol id="ra-i-user" viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="8.4" r="4" />
+        <path d="M4 20.5c.6-4 3.9-6.5 8-6.5s7.4 2.5 8 6.5c.1.8-.5 1.5-1.3 1.5H5.3c-.8 0-1.4-.7-1.3-1.5Z" />
+      </symbol>
+    </svg>
+
+    <!-- ===== ヘッダー ===== -->
+    <header class="ra-header">
+      <div class="ra-header-inner">
+        <div class="ra-brand">
+          <img src={assetPath("logo.svg")} alt="" class="ra-logo" width="38" height="38" />
+          <div class="ra-brand-text">
+            <strong>{company.name}</strong>
+            <span>24時間365日対応</span>
+          </div>
+        </div>
+        <div class="ra-header-rating" aria-label={`Google口コミ評価${GBP_RATING}、${GBP_REVIEWS}件`}>
+          <span class="ra-stars" aria-hidden="true">★★★★★</span>
+          <span class="ra-rating-text">{GBP_RATING}（{GBP_REVIEWS}件の評価）</span>
+        </div>
+        <a href={company.phoneTelLink} class="ra-header-tel" data-cta="ra-header-tel">
+          <svg class="ra-tel-icon" aria-hidden="true"><use href="#ra-i-phone" /></svg>
+          <span class="ra-header-tel-body">
+            <strong>{company.phoneDisplay}</strong>
+            <small>24時間受付中</small>
+          </span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ===== HERO（暗色・緊急） ===== -->
+    <section class="ra-hero" id="top" aria-labelledby="ra-hero-title">
+      <img
+        src={assetPath("images/hero/hero-main-800.webp")}
+        srcset={`${assetPath("images/hero/hero-main-480.webp")} 480w, ${assetPath("images/hero/hero-main-800.webp")} 800w, ${assetPath("images/hero/hero-main-1400.webp")} 1400w`}
+        sizes="(max-width: 880px) 100vw, 50vw"
+        alt="軒下にできたスズメバチの巣"
+        class="ra-hero-img"
+        width="800"
+        height="800"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="ra-hero-overlay" aria-hidden="true"></div>
+      <div class="ra-container ra-hero-inner">
+        <h1 id="ra-hero-title" class="ra-hero-title">
+          <span class="ra-hero-line1">蜂の巣駆除</span>
+          <span class="ra-hero-line2">
+            1,680<span class="ra-hero-yen">円</span><span class="ra-hero-tax">(税込)</span><span class="ra-hero-kara">〜</span>
+          </span>
+          <span class="ra-hero-line3">
+            <span class="ra-speed" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="ra-hero-line3-text">最短30分で出動</span>
+          </span>
+        </h1>
+        <div class="ra-hero-cta">
+          <a href={company.phoneTelLink} class="ra-btn-tel" data-cta="ra-hero-tel">
+            <svg class="ra-btn-icon" aria-hidden="true"><use href="#ra-i-phone" /></svg>
+            電話
+          </a>
+          <a href={company.lineUrl} class="ra-btn-line" data-cta="ra-hero-line" rel="noopener" target="_blank">
+            <span class="ra-line-badge" aria-hidden="true">LINE</span>
+            LINE
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 意図ルーター（2x2） ===== -->
+    <nav class="ra-router" aria-label="状況別のご案内">
+      <div class="ra-container">
+        <div class="ra-router-grid">
+          {
+            routerCards.map((card) => (
+              <a href={card.href} class="ra-router-card">
+                <svg class="ra-router-icon" aria-hidden="true">
+                  <use href={`#ra-i-${card.icon}`} />
+                </svg>
+                <span class="ra-router-body">
+                  <span class="ra-router-label">{card.label}</span>
+                  <span class="ra-router-sub">{card.sub}</span>
+                </span>
+                <svg class="ra-router-chev" aria-hidden="true">
+                  <use href="#ra-i-chev" />
+                </svg>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== 料金のご案内 ===== -->
+    <section class="ra-section" id="price" aria-labelledby="ra-price-title">
+      <div class="ra-container">
+        <div class="ra-price-head">
+          <h2 id="ra-price-title" class="ra-section-title">
+            <svg class="ra-title-icon" aria-hidden="true"><use href="#ra-i-yen" /></svg>
+            料金のご案内
+          </h2>
+          <span class="ra-free-badge">見積もり・出張費 無料</span>
+        </div>
+        <div class="ra-price-list">
+          {
+            priceRows.map((row) => (
+              <div class={`ra-price-row${row.hot ? " ra-price-hot" : ""}`}>
+                <span class="ra-price-name">{row.name}</span>
+                <span class="ra-price-cond">{row.cond}</span>
+                <span class="ra-price-value">
+                  {row.price.includes("円〜")
+                    ? (<>{row.price.replace("円〜", "")}<small>円〜</small></>)
+                    : (<span class="ra-price-quote">{row.price}</span>)}
+                </span>
+                {row.hot && <span class="ra-hot-ribbon">人気<br />No.1</span>}
+              </div>
+            ))
+          }
+        </div>
+        <p class="ra-price-note">
+          ※巣の場所や状況により料金が変動する場合があります。作業前に確定見積をご提示し、<strong>その金額から追加請求は一切ありません</strong>。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== プロの駆除で安心・安全 ===== -->
+    <section class="ra-safe" aria-labelledby="ra-safe-title">
+      <div class="ra-container">
+        <div class="ra-safe-band">
+        <div class="ra-safe-inner">
+          <div class="ra-safe-copy">
+            <p class="ra-safe-lead">プロの駆除で</p>
+            <h2 id="ra-safe-title" class="ra-safe-title">安心・安全！</h2>
+            <ul class="ra-safe-points" role="list">
+              <li>
+                <svg aria-hidden="true"><use href="#ra-i-shield" /></svg>
+                <span>経験豊富な<br />専門スタッフ</span>
+              </li>
+              <li>
+                <svg aria-hidden="true"><use href="#ra-i-doc" /></svg>
+                <span>確実・丁寧な<br />駆除作業</span>
+              </li>
+              <li>
+                <svg aria-hidden="true"><use href="#ra-i-broom" /></svg>
+                <span>巣の撤去・清掃<br />まで対応</span>
+              </li>
+            </ul>
+          </div>
+          <figure class="ra-safe-photo">
+            <img
+              src={assetPath("images/generated/hero-action.webp")}
+              alt="防護服を着た当社スタッフによる蜂の巣駆除作業"
+              width="450"
+              height="300"
+              loading="lazy"
+            />
+          </figure>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== お客様の声 ===== -->
+    <section class="ra-section" id="voices" aria-labelledby="ra-voices-title">
+      <div class="ra-container">
+        <div class="ra-voices-head">
+          <h2 id="ra-voices-title" class="ra-section-title">お客様の声</h2>
+          <p class="ra-voices-note">★{GBP_RATING}・{GBP_REVIEWS}件 — たくさんのご満足をいただいています！</p>
+        </div>
+        <div class="ra-voices-grid">
+          {
+            displayVoices.map((v) => (
+              <blockquote class="ra-voice-card">
+                <p class="ra-voice-stars" aria-label="評価5点満点中5点">★★★★★ <strong>5.0</strong></p>
+                <p class="ra-voice-comment">{v.comment}</p>
+                <footer class="ra-voice-meta">
+                  <span class="ra-voice-avatar" aria-hidden="true">
+                    <svg><use href="#ra-i-user" /></svg>
+                  </span>
+                  {v.area} / {v.ageBracket}（{v.service}）
+                </footer>
+              </blockquote>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 緊急CTA帯 ===== -->
+    <section class="ra-urgent" id="emergency" aria-labelledby="ra-urgent-title">
+      <div class="ra-container">
+        <h2 id="ra-urgent-title" class="ra-urgent-title">
+          <span class="ra-slash" aria-hidden="true">＼＼</span> 危険を感じたら<span class="ra-urgent-em">今すぐ</span>お電話ください！ <span class="ra-slash" aria-hidden="true">／／</span>
+        </h2>
+        <a href={company.phoneTelLink} class="ra-urgent-tel" data-cta="ra-emergency-tel">
+          <svg class="ra-btn-icon" aria-hidden="true"><use href="#ra-i-phone" /></svg>
+          <span class="ra-urgent-num">{company.phoneDisplay}</span>
+          <span class="ra-urgent-badge">24時間<br />受付中</span>
+        </a>
+        <p class="ra-urgent-note">通話無料・年中無休・即日対応｜最短30分で出動・当日対応率{company.sameDayRate}%</p>
+      </div>
+    </section>
+
+    <!-- ===== 作り始めの巣（本日追加KWの着地） ===== -->
+    <section class="ra-section ra-section-soft" id="early-nest" aria-labelledby="ra-early-title">
+      <div class="ra-container">
+        <h2 id="ra-early-title" class="ra-section-title ra-center">
+          作り始めの小さい巣は「いま」が最安
+        </h2>
+        <p class="ra-answer">
+          <strong>Q. 蜂が巣を作り始めたらどうすればいい？</strong><br />
+          A. 巣が小さいうちの駆除が最も安全で安価です。作業が短時間で済むため、基本料金1,680円〜の最安帯で収まりやすいタイミングです。
+        </p>
+        <ul class="ra-early-points" role="list">
+          <li><strong>巣は1〜2週間で急成長。</strong>働き蜂の羽化後は規模も料金も上がります。</li>
+          <li><strong>蜂がいない巣も油断禁物。</strong>女王蜂の再利用や近くの本巣の可能性があります。</li>
+          <li><strong>スプレー自力駆除は刺傷事故のもと。</strong>小さくても近づかずご相談ください。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== 蜂の巣の種類・危険性 ===== -->
+    <section class="ra-section" id="bee-types" aria-labelledby="ra-bee-title">
+      <div class="ra-container">
+        <h2 id="ra-bee-title" class="ra-section-title ra-center">蜂の巣の種類と危険性</h2>
+        <p class="ra-section-sub" id="danger">
+          種類がわからなくてもLINEで写真を送れば判別します。<strong>スズメバチは日本の蜂刺傷死亡の主因</strong>（年15〜21人）— 巣に近づかず、プロにお任せください。
+        </p>
+        <div class="ra-bee-grid">
+          {
+            beeTypes.map((bee) => (
+              <article class="ra-bee-card">
+                <img
+                  src={assetPath(`images/bee-types/${bee.imageBase}.webp`)}
+                  alt={bee.name}
+                  width="96"
+                  height="96"
+                  loading="lazy"
+                />
+                <div class="ra-bee-body">
+                  <h3>{bee.name}</h3>
+                  <p class={`ra-bee-danger ra-d-${bee.dangerLevel}`}>{bee.dangerLabel}</p>
+                  <p class="ra-bee-loc">巣の場所: {bee.nestLocation}</p>
+                  <p class="ra-bee-price">{bee.priceRange}</p>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 対応エリア ===== -->
+    <section class="ra-section ra-section-soft" id="area" aria-labelledby="ra-area-title">
+      <div class="ra-container">
+        <h2 id="ra-area-title" class="ra-section-title ra-center">対応エリア</h2>
+        <p class="ra-section-sub">名古屋市は全16区対応。{company.serviceArea}へ自社スタッフが直接伺います。</p>
+        {
+          areas.map((area) => (
+            <div class="ra-area-block">
+              <h3>{area.prefecture}</h3>
+              <ul class="ra-area-chips" role="list">
+                {area.cities.map((city) => (
+                  <li>{city}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ===== 市役所・補助金 ===== -->
+    <section class="ra-section" id="vs-government" aria-labelledby="ra-gov-title">
+      <div class="ra-container">
+        <h2 id="ra-gov-title" class="ra-section-title ra-center">市役所は駆除してくれる？</h2>
+        <p class="ra-answer">
+          <strong>Q. 市役所に頼めば無料で駆除してもらえる？</strong><br />
+          A. 多くの市町村で駆除作業自体は行っておらず、相談・業者紹介・スプレー貸出が中心です。補助金も対象はスズメバチ等に限定されがちです。お住まいの自治体の制度はお電話時にご案内します。
+        </p>
+        <div class="ra-gov-wrap">
+          <table class="ra-gov-table">
+            <thead>
+              <tr><th></th><th scope="col">市役所・自治体</th><th scope="col">当社</th></tr>
+            </thead>
+            <tbody>
+              {
+                vsGovernmentRows.map((row) => (
+                  <tr>
+                    <th scope="row">{row.label}</th>
+                    <td class={`ra-cell-${row.government.state}`}>{row.government.text}</td>
+                    <td class={`ra-cell-${row.us.state}`}>{row.us.text}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 施工事例 ===== -->
+    <section class="ra-section ra-section-soft" id="cases" aria-labelledby="ra-cases-title">
+      <div class="ra-container">
+        <h2 id="ra-cases-title" class="ra-section-title ra-center">施工事例 — 実額まで公開</h2>
+        <div class="ra-cases-grid">
+          {
+            displayCases.map((c) => (
+              <article class="ra-case-card">
+                <img
+                  src={assetPath(`images/cases/${c.imageBase}.webp`)}
+                  alt={c.title}
+                  width="360"
+                  height="240"
+                  loading="lazy"
+                />
+                <div class="ra-case-body">
+                  <p class="ra-case-area">{c.area}・{c.location}</p>
+                  <h3>{c.title}</h3>
+                  <p class="ra-case-price">¥{c.priceJpy.toLocaleString("ja-JP")}</p>
+                  <ul class="ra-case-badges" role="list">
+                    {c.priceBreakdown.map((b) => (
+                      <li>{b}</li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 流れ ===== -->
+    <section class="ra-section" id="flow" aria-labelledby="ra-flow-title">
+      <div class="ra-container">
+        <h2 id="ra-flow-title" class="ra-section-title ra-center">ご依頼の流れ</h2>
+        <ol class="ra-flow-list">
+          {
+            flowSteps.map((step) => (
+              <li>
+                <span class="ra-flow-num" aria-hidden="true">{step.num}</span>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="ra-section ra-section-soft" id="faq" aria-labelledby="ra-faq-title">
+      <div class="ra-container">
+        <h2 id="ra-faq-title" class="ra-section-title ra-center">よくあるご質問</h2>
+        <div class="ra-faq-list">
+          {
+            displayFaqs.map((f) => (
+              <details class="ra-faq-item">
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 最終CTA ===== -->
+    <section class="ra-final" id="contact" aria-labelledby="ra-final-title">
+      <div class="ra-container">
+        <h2 id="ra-final-title" class="ra-urgent-title">
+          <span class="ra-slash" aria-hidden="true">＼＼</span> 蜂の巣、<span class="ra-urgent-em">今日中に</span>解決しましょう <span class="ra-slash" aria-hidden="true">／／</span>
+        </h2>
+        <a href={company.phoneTelLink} class="ra-urgent-tel" data-cta="ra-final-tel">
+          <svg class="ra-btn-icon" aria-hidden="true"><use href="#ra-i-phone" /></svg>
+          <span class="ra-urgent-num">{company.phoneDisplay}</span>
+          <span class="ra-urgent-badge">24時間<br />受付中</span>
+        </a>
+        <a href={company.lineUrl} class="ra-final-line" data-cta="ra-final-line" rel="noopener" target="_blank">
+          LINEで写真を送って概算見積り
+        </a>
+        <p class="ra-final-company">
+          {company.name}（{company.legalName}）<br />
+          {company.address.region}{company.address.city}{company.address.street}
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== 追従フッターCTA ===== -->
+    <div class="ra-sticky" role="complementary" aria-label="お問い合わせ">
+      <a href={company.phoneTelLink} class="ra-sticky-tel" data-cta="ra-sticky-tel">
+        <svg class="ra-btn-icon-s" aria-hidden="true"><use href="#ra-i-phone" /></svg>
+        電話をかける
+      </a>
+      <a href={company.lineUrl} class="ra-sticky-line" data-cta="ra-sticky-line" rel="noopener" target="_blank">
+        <span class="ra-line-badge-s" aria-hidden="true">LINE</span>
+        LINEで相談する
+      </a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  /* ===== パターンA: 緊急レスキュー デザイントークン ===== */
+  .ra {
+    --red: #d7261d;
+    --red-deep: #b11c14;
+    --orange: #f59e0b;
+    --orange-deep: #e8930c;
+    --dark: #17181c;
+    --dark-2: #232428;
+    --ink: #222a32;
+    --ink-soft: #5b6770;
+    --gold: #f5b301;
+    --line-green: #06c755;
+    --paper: #ffffff;
+    --soft: #f6f4f0;
+    --border: #e6e2da;
+    color: var(--ink);
+    font-feature-settings: "palt";
+    line-height: 1.7;
+    padding-bottom: 56px; /* 追従CTA分 */
+    background: #fff;
+  }
+  .ra-container {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  /* ===== ヘッダー（モック準拠: 暗色・3カラム） ===== */
+  .ra-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #131418;
+  }
+  .ra-header-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0.45rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .ra-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+    flex: 1;
+  }
+  .ra-logo {
+    width: 38px;
+    height: 38px;
+    flex: none;
+  }
+  .ra-brand-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .ra-brand-text strong {
+    font-size: 0.7rem;
+    font-weight: 800;
+    white-space: nowrap;
+    color: #fff;
+  }
+  .ra-brand-text span {
+    font-size: 0.6rem;
+    color: #b9bdc6;
+    white-space: nowrap;
+  }
+  .ra-header-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.25;
+    flex: none;
+  }
+  .ra-stars {
+    color: var(--gold);
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+  }
+  .ra-rating-text {
+    font-size: 0.62rem;
+    color: #e8eaee;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .ra-header-tel {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: linear-gradient(180deg, #e6362c, var(--red-deep));
+    border: 1px solid #ff9d97;
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    text-decoration: none;
+    box-shadow: 0 0 12px rgba(230, 54, 44, 0.55);
+  }
+  .ra-tel-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+  .ra-header-tel-body {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+  .ra-header-tel-body strong {
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+  .ra-header-tel-body small {
+    font-size: 0.62rem;
+    opacity: 0.92;
+  }
+
+  /* ===== HERO ===== */
+  .ra-hero {
+    position: relative;
+    background: var(--dark);
+    overflow: hidden;
+  }
+  .ra-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 巣はソース左側 → 反転で右に配置。巣全体(縦20〜70%)が切れない焦点に */
+    object-position: 50% 44%;
+    transform: scaleX(-1);
+  }
+  .ra-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(100deg, rgba(13, 13, 16, 0.92) 0%, rgba(13, 13, 16, 0.78) 42%, rgba(13, 13, 16, 0.25) 100%),
+      linear-gradient(0deg, rgba(13, 13, 16, 0.85) 0%, rgba(13, 13, 16, 0) 40%);
+  }
+  .ra-hero-inner {
+    position: relative;
+    z-index: 1;
+    padding-top: 2.1rem;
+    padding-bottom: 1.7rem;
+  }
+  .ra-hero-title {
+    margin: 0 0 1.3rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    /* モック準拠: 極太ゴシック(900)＋斜体。Webフォントで太さを確実に出す */
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic StdN",
+      system-ui, sans-serif;
+    font-weight: 900;
+    font-style: italic;
+  }
+  .ra-hero-line1 {
+    font-size: clamp(2.4rem, 11.5vw, 3.9rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: 0.01em;
+    color: #fff;
+    /* 白文字＋黒フチ＋立体影（フチは背面描画で字幅を保つ） */
+    paint-order: stroke;
+    -webkit-text-stroke: 2px #160f08;
+    text-shadow: 0 2px 0 #2b2017, 0 5px 11px rgba(0, 0, 0, 0.62);
+  }
+  .ra-hero-line2 {
+    font-size: clamp(3.1rem, 16.5vw, 6.4rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: 0.005em;
+    color: #fff;
+    /* 数字はより厚いフチと強い立体感でステッカー風に */
+    paint-order: stroke;
+    -webkit-text-stroke: 3.5px #160f08;
+    text-shadow: 0 3px 0 #2b2017, 0 4px 1px #1a120a, 0 8px 16px rgba(0, 0, 0, 0.7);
+  }
+  .ra-hero-yen {
+    font-size: 0.5em;
+  }
+  .ra-hero-tax {
+    font-size: 0.22em;
+    font-weight: 700;
+    vertical-align: super;
+    margin-left: 0.2em;
+  }
+  .ra-hero-kara {
+    font-size: 0.55em;
+  }
+  .ra-hero-line3 {
+    margin-top: 0.45rem;
+    font-size: clamp(1.55rem, 7.8vw, 2.6rem);
+    font-weight: 900;
+    color: var(--orange);
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    align-self: flex-start;
+    position: relative;
+    padding-bottom: 0.24em;
+    /* オレンジ＋黒フチ＋影で迫力を出す */
+    paint-order: stroke;
+    -webkit-text-stroke: 2px #2a1600;
+    text-shadow: 0 2px 7px rgba(0, 0, 0, 0.6);
+  }
+  /* モック準拠: 最短30分で出動 の下に赤い疾走アンダーライン */
+  .ra-hero-line3::after {
+    content: "";
+    position: absolute;
+    left: -0.2em;
+    right: 0;
+    bottom: 0;
+    height: 0.13em;
+    background: linear-gradient(90deg, #8f1410, var(--red) 55%, #ff5a3c);
+    border-radius: 2px;
+    transform: skewX(-35deg);
+  }
+  /* ≡ スピードバー（右揃え・短→長） */
+  .ra-speed {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.13em;
+  }
+  .ra-speed i {
+    display: block;
+    height: 0.13em;
+    border-radius: 2px;
+    background: var(--orange);
+  }
+  .ra-speed i:nth-child(1) { width: 0.75em; }
+  .ra-speed i:nth-child(2) { width: 1.05em; }
+  .ra-speed i:nth-child(3) { width: 1.35em; }
+  .ra-hero-cta {
+    display: grid;
+    grid-template-columns: 1.12fr 1fr;
+    gap: 0.85rem;
+    max-width: 760px;
+  }
+  .ra-btn-icon {
+    width: 1.3em;
+    height: 1.3em;
+    fill: currentColor;
+  }
+  .ra-btn-tel,
+  .ra-btn-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    border-radius: 999px;
+    min-height: 80px;
+    font-size: clamp(1.65rem, 7.6vw, 2.35rem);
+    font-weight: 900;
+    color: #fff;
+    text-decoration: none;
+  }
+  .ra-btn-tel {
+    background: linear-gradient(180deg, #e6362c, var(--red-deep));
+    border: 2.5px solid #ff9b95;
+    /* モック準拠: 強いネオン発光リング */
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.25),
+      inset 0 0 14px rgba(255, 120, 110, 0.55),
+      0 0 0 3px rgba(215, 38, 29, 0.4),
+      0 0 26px 4px rgba(240, 60, 48, 0.8),
+      0 6px 18px rgba(0, 0, 0, 0.45);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+  }
+  .ra-btn-line {
+    background: var(--line-green);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  }
+  .ra-line-badge {
+    background: #fff;
+    color: var(--line-green);
+    font-size: 0.42em;
+    font-weight: 900;
+    border-radius: 50%;
+    width: 2.1em;
+    height: 2.1em;
+    display: grid;
+    place-items: center;
+    letter-spacing: -0.03em;
+  }
+  .ra-hero-note {
+    position: relative;
+    z-index: 1;
+    margin: 0.9rem 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  /* ===== ルーター ===== */
+  .ra-router {
+    background: #fff;
+    padding: 1.1rem 0 0.4rem;
+  }
+  .ra-router-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+  .ra-router-card {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--red); /* モックの赤い左縁（グロー付き） */
+    border-radius: 10px;
+    padding: 0.75rem 0.7rem;
+    text-decoration: none;
+    box-shadow:
+      -2px 0 8px rgba(215, 38, 29, 0.3),
+      0 4px 12px rgba(34, 42, 50, 0.12);
+  }
+  .ra-router-icon {
+    width: 30px;
+    height: 30px;
+    color: var(--red);
+    flex: none;
+  }
+  .ra-router-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+  }
+  .ra-router-label {
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .ra-router-sub {
+    font-size: 0.68rem;
+    color: var(--ink-soft);
+  }
+  .ra-router-chev {
+    width: 16px;
+    height: 16px;
+    color: var(--red);
+    flex: none;
+  }
+
+  /* ===== セクション共通 ===== */
+  .ra-section {
+    padding: 2.1rem 0;
+  }
+  .ra-section-soft {
+    background: var(--soft);
+  }
+  .ra-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: clamp(1.2rem, 4.6vw, 1.55rem);
+    font-weight: 900;
+    color: var(--ink);
+    margin: 0 0 1rem;
+    line-height: 1.4;
+  }
+  .ra-center {
+    justify-content: center;
+    text-align: center;
+  }
+  .ra-title-icon {
+    width: 26px;
+    height: 26px;
+    color: var(--red);
+    flex: none;
+  }
+  .ra-section-sub {
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin: -0.4rem 0 1.2rem;
+  }
+  .ra-answer {
+    background: #fff7ed;
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+    margin: 0 0 1.2rem;
+  }
+
+  /* ===== 料金 ===== */
+  .ra-price-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+  }
+  .ra-price-head .ra-section-title {
+    margin: 0;
+  }
+  .ra-free-badge {
+    border: 2px solid var(--red);
+    color: var(--red);
+    font-size: 0.78rem;
+    font-weight: 800;
+    border-radius: 8px;
+    padding: 0.3rem 0.7rem;
+    background: #fff;
+  }
+  /* モック準拠: 白枠テーブル＋罫線、ハイライト行は橙地に赤価格 */
+  .ra-price-list {
+    background: #fff;
+    border: 1px solid #e3e0d8;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(34, 42, 50, 0.06);
+  }
+  .ra-price-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    background: #fff;
+    padding: 0.85rem 0.95rem;
+    border-bottom: 1px solid #eceae3;
+  }
+  .ra-price-row:first-child {
+    border-radius: 10px 10px 0 0;
+  }
+  .ra-price-row:last-child {
+    border-bottom: none;
+    border-radius: 0 0 10px 10px;
+  }
+  .ra-price-hot {
+    background: linear-gradient(180deg, #fde2bd, #f8cf93);
+  }
+  .ra-price-hot .ra-price-name,
+  .ra-price-hot .ra-price-value {
+    color: var(--red);
+  }
+  .ra-price-name {
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+  .ra-price-cond {
+    font-size: 0.74rem;
+    color: var(--ink-soft);
+  }
+  .ra-price-value {
+    font-size: 1.55rem;
+    font-weight: 900;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .ra-price-value small {
+    font-size: 0.58em;
+  }
+  .ra-price-quote {
+    font-size: 1.05rem;
+    font-weight: 900;
+  }
+  /* モック準拠: 右端に重なる角丸四角の赤バッジ */
+  .ra-hot-ribbon {
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(180deg, #e6362c, var(--red-deep));
+    color: #fff;
+    font-size: 0.66rem;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.2;
+    width: 2.9em;
+    height: 2.9em;
+    display: grid;
+    place-content: center;
+    border-radius: 9px;
+    box-shadow: 0 3px 7px rgba(177, 28, 20, 0.4);
+  }
+  .ra-price-note {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin: 0.8rem 0 0;
+  }
+  .ra-price-note strong {
+    color: var(--red-deep);
+  }
+
+  /* ===== 安心・安全 ===== */
+  .ra-safe {
+    padding: 0.4rem 0 2.1rem;
+  }
+  /* モック準拠: ハザードストライプは上下のみ・写真は右端まで全面・モバイルも横長 */
+  .ra-safe-band {
+    padding: 8px 0;
+    border-radius: 8px;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--orange-deep) 0 10px,
+      #fff6e8 10px 19px
+    );
+  }
+  .ra-safe-inner {
+    background: #fffdf8;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 0.9rem;
+    align-items: stretch;
+    overflow: hidden;
+  }
+  .ra-safe-copy {
+    padding: 0.9rem 0 0.9rem 1rem;
+    align-self: center;
+  }
+  .ra-safe-lead {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .ra-safe-title {
+    margin: 0 0 0.8rem;
+    font-size: clamp(1.7rem, 8vw, 2.3rem);
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1.2;
+  }
+  .ra-safe-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  .ra-safe-points li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .ra-safe-points svg {
+    width: 30px;
+    height: 30px;
+    color: var(--orange-deep);
+  }
+  .ra-safe-photo {
+    margin: 0;
+  }
+  .ra-safe-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    display: block;
+  }
+
+  /* ===== 声（モック準拠: 左寄せ見出し＋注記、3列） ===== */
+  .ra-voices-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+  }
+  .ra-voices-head .ra-section-title {
+    margin: 0;
+  }
+  .ra-voices-note {
+    font-size: 0.74rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .ra-voices-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+  }
+  @media (max-width: 700px) {
+    .ra-voices-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .ra-voice-card {
+    margin: 0;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.05rem;
+    box-shadow: 0 3px 10px rgba(34, 42, 50, 0.06);
+  }
+  .ra-voice-stars {
+    color: var(--gold);
+    font-size: 0.85rem;
+    margin: 0 0 0.45rem;
+  }
+  .ra-voice-stars strong {
+    color: var(--ink);
+  }
+  .ra-voice-comment {
+    font-size: 0.88rem;
+    margin: 0 0 0.55rem;
+  }
+  .ra-voice-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+  }
+  .ra-voice-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ece7dd;
+    border: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .ra-voice-avatar svg {
+    width: 18px;
+    height: 18px;
+    color: #8d8576;
+    fill: currentColor;
+    margin-top: 3px;
+  }
+
+  /* ===== 緊急CTA帯 / 最終CTA（モック準拠: 黒帯） ===== */
+  .ra-urgent,
+  .ra-final {
+    background: #131418;
+    padding: 1.9rem 0 2.2rem;
+    text-align: center;
+  }
+  .ra-urgent-title {
+    font-size: min(4.3vw, 1.5rem);
+    font-weight: 900;
+    color: #fff;
+    margin: 0 0 1rem;
+    white-space: nowrap; /* ＼＼…／／ を常に1行（モック準拠） */
+  }
+  .ra-urgent-em {
+    color: var(--red);
+  }
+  .ra-slash {
+    color: var(--red);
+    font-weight: 900;
+    letter-spacing: -0.28em;
+    margin: 0 0.35em;
+    white-space: nowrap;
+  }
+  .ra-urgent-tel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    max-width: 620px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #e6362c, var(--red-deep));
+    border: 2px solid #ff8d86;
+    border-radius: 14px;
+    color: #fff;
+    font-size: clamp(1.6rem, 8vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    padding: 0.7rem 1rem;
+    text-decoration: none;
+    box-shadow:
+      0 0 0 3px rgba(215, 38, 29, 0.25),
+      0 0 20px rgba(230, 54, 44, 0.45),
+      0 6px 16px rgba(0, 0, 0, 0.25);
+  }
+  .ra-urgent-badge {
+    background: #fff;
+    color: var(--red);
+    font-size: 0.78rem;
+    font-weight: 900;
+    line-height: 1.25;
+    border-radius: 8px;
+    padding: 0.3rem 0.5rem;
+  }
+  .ra-urgent-note {
+    margin: 0.7rem 0 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.88);
+  }
+  .ra-final-line {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.8rem;
+    background: var(--line-green);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1rem;
+    border-radius: 999px;
+    padding: 0.8rem 1.6rem;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(6, 199, 85, 0.35);
+  }
+  .ra-final-company {
+    margin: 1.5rem 0 0;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.62);
+  }
+
+  /* ===== 作り始め ===== */
+  .ra-early-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .ra-early-points li {
+    background: #fff;
+    border-radius: 10px;
+    padding: 0.8rem 0.95rem;
+    font-size: 0.86rem;
+    box-shadow: 0 2px 8px rgba(34, 42, 50, 0.06);
+  }
+  .ra-early-points strong {
+    color: var(--red-deep);
+  }
+
+  /* ===== 蜂種（モック準拠: 大きめ画像・3列・ゆったり余白） ===== */
+  .ra-bee-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .ra-bee-card {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem;
+  }
+  .ra-bee-card img {
+    width: 96px;
+    height: 96px;
+    border-radius: 10px;
+    object-fit: contain;
+    flex: none;
+  }
+  .ra-bee-body {
+    min-width: 0;
+  }
+  .ra-bee-card h3 {
+    font-size: 1.12rem;
+    font-weight: 800;
+    margin: 0 0 0.3rem;
+    color: var(--ink);
+  }
+  .ra-bee-danger {
+    font-size: 0.86rem;
+    font-weight: 800;
+    margin: 0 0 0.45rem;
+  }
+  .ra-d-highest { color: #8f1410; }
+  .ra-d-high { color: var(--orange-deep); }
+  .ra-d-medium { color: var(--orange-deep); }
+  .ra-d-low { color: #1c8a5a; }
+  .ra-bee-loc {
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+    margin: 0 0 0.5rem;
+  }
+  .ra-bee-price {
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: var(--red);
+    margin: 0;
+  }
+  @media (min-width: 760px) {
+    .ra-bee-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.4rem 1.6rem;
+    }
+  }
+
+  /* ===== エリア ===== */
+  .ra-area-block {
+    margin-bottom: 1rem;
+  }
+  .ra-area-block h3 {
+    font-size: 0.95rem;
+    margin: 0 0 0.45rem;
+  }
+  .ra-area-chips {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .ra-area-chips li {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+  }
+
+  /* ===== 行政比較 ===== */
+  .ra-gov-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ra-gov-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(34, 42, 50, 0.08);
+    font-size: 0.84rem;
+  }
+  .ra-gov-table th,
+  .ra-gov-table td {
+    padding: 0.7rem 0.65rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+  .ra-gov-table thead th {
+    background: var(--dark-2);
+    color: #fff;
+    font-size: 0.78rem;
+  }
+  .ra-gov-table tbody th {
+    white-space: nowrap;
+    font-size: 0.78rem;
+    background: var(--soft);
+  }
+  .ra-cell-us-ok {
+    background: #fdf0e3;
+    font-weight: 700;
+    color: #8a4a00;
+  }
+  .ra-cell-warn {
+    color: var(--orange-deep);
+  }
+  .ra-cell-bad {
+    color: #9aa4ad;
+  }
+
+  /* ===== 事例 ===== */
+  .ra-cases-grid {
+    display: grid;
+    gap: 0.9rem;
+  }
+  .ra-case-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .ra-case-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .ra-case-body {
+    padding: 0.85rem 0.95rem 1rem;
+  }
+  .ra-case-area {
+    font-size: 0.74rem;
+    color: var(--ink-soft);
+    margin: 0 0 0.15rem;
+  }
+  .ra-case-body h3 {
+    font-size: 0.92rem;
+    margin: 0 0 0.35rem;
+  }
+  .ra-case-price {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--red);
+    margin: 0 0 0.45rem;
+  }
+  .ra-case-badges {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+  .ra-case-badges li {
+    background: var(--soft);
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.18rem 0.55rem;
+  }
+
+  /* ===== 流れ ===== */
+  .ra-flow-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .ra-flow-list li {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+    background: var(--soft);
+    border-radius: 10px;
+    padding: 0.8rem 0.95rem;
+  }
+  .ra-flow-num {
+    flex: none;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    font-weight: 900;
+    display: grid;
+    place-items: center;
+  }
+  .ra-flow-list h3 {
+    font-size: 0.92rem;
+    margin: 0 0 0.1rem;
+  }
+  .ra-flow-list p {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ===== FAQ ===== */
+  .ra-faq-list {
+    display: grid;
+    gap: 0.55rem;
+  }
+  .ra-faq-item {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0 1rem;
+  }
+  .ra-faq-item summary {
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding: 0.8rem 0;
+  }
+  .ra-faq-item p {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin: 0;
+    padding: 0 0 0.95rem;
+  }
+
+  /* ===== 追従CTA ===== */
+  .ra-sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.22);
+  }
+  .ra-sticky-tel,
+  .ra-sticky-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 56px;
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: #fff;
+    text-decoration: none;
+  }
+  .ra-sticky-tel {
+    background: var(--red);
+  }
+  .ra-sticky-line {
+    background: var(--line-green);
+  }
+  .ra-btn-icon-s {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+  .ra-line-badge-s {
+    background: #fff;
+    color: var(--line-green);
+    font-size: 0.6rem;
+    font-weight: 900;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+  }
+
+  /* ===== デスクトップ ===== */
+  @media (max-width: 560px) {
+    .ra-header-rating {
+      display: none; /* 390px幅では3カラムが収まらないため省略（ヒーロー直下に実績表示あり） */
+    }
+  }
+  /* モバイルでも横長を維持（ユーザー指定）。文字側だけ縮小 */
+  @media (max-width: 700px) {
+    .ra-safe-title {
+      font-size: 1.35rem;
+    }
+    .ra-safe-lead {
+      font-size: 0.82rem;
+    }
+    .ra-safe-points li {
+      font-size: 0.52rem;
+      white-space: nowrap;
+    }
+    .ra-safe-points svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+  @media (min-width: 880px) {
+    .ra-hero-inner {
+      padding-top: 3.4rem;
+      padding-bottom: 3rem;
+      max-width: 1040px;
+    }
+    .ra-hero-title {
+      max-width: 560px;
+    }
+    .ra-hero-cta {
+      max-width: 520px;
+    }
+    .ra-router-grid {
+      grid-template-columns: repeat(2, 1fr); /* モックは900px幅でも2x2 */
+    }
+    .ra-safe-band {
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+    }
+    .ra-voices-grid,
+    .ra-cases-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .ra-sticky {
+      display: none;
+    }
+    .ra {
+      padding-bottom: 0;
+    }
+  }
+</style>

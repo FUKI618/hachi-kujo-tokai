@@ -57,6 +57,16 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* 意図別アンカー着地の受け皿: sticky ヘッダーで見出しが隠れないよう余白を確保 */
+:where(section[id]) {
+  scroll-margin-top: 88px;
+}
+@media (min-width: 900px) {
+  :where(section[id]) {
+    scroll-margin-top: 104px;
+  }
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);

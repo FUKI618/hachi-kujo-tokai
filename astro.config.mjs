@@ -9,6 +9,12 @@ export default defineConfig({
   site: SITE,
   base: BASE,
   trailingSlash: "always",
+  // 現行トップLPは差し替え（使わない）。新LP本体を / に移設したため、
+  // 旧 /pro/ URL（公開済み・privacy/legal の戻りリンク・広告等）は / へ送る。
+  // 旧トップは src/pages/_index-old.astro に退避（_接頭辞でルート除外＝可逆）。
+  redirects: {
+    "/pro/": "/",
+  },
   integrations: [
     sitemap({
       serialize(item) {
