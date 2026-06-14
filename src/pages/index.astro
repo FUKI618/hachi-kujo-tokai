@@ -74,7 +74,7 @@ const strengthsShown = strengths.slice(0, 6);
   <div class="xb">
 
     <!-- 料金 -->
-    <section class="xb-sec" aria-labelledby="s-rate">
+    <section class="xb-sec" id="price" aria-labelledby="s-rate">
       <h2 class="xb-h" id="s-rate"><span>蜂の巣駆除 料金のご案内</span></h2>
       <p class="xb-lead">基本<b>1,680円〜</b>。広告代理店も中間業者も挟まない<b>自社直接対応</b>だから実現できる価格です。</p>
 
@@ -104,7 +104,7 @@ const strengthsShown = strengths.slice(0, 6);
     <CtaDual id="rate_cta" lead="この料金で即日対応。今すぐご相談ください" />
 
     <!-- 選ばれる理由 -->
-    <section class="xb-sec xb-sec-tint" aria-labelledby="s-why">
+    <section class="xb-sec xb-sec-tint" id="scam-warning" aria-labelledby="s-why">
       <h2 class="xb-h" id="s-why"><span>選ばれる理由</span></h2>
       <div class="xb-why">
         {strengthsShown.map((s) => (
@@ -120,7 +120,7 @@ const strengthsShown = strengths.slice(0, 6);
     </section>
 
     <!-- 蜂の種類 -->
-    <section class="xb-sec" aria-labelledby="s-bee">
+    <section class="xb-sec" id="bee-types" aria-labelledby="s-bee">
       <h2 class="xb-h" id="s-bee"><span>対応する蜂の種類</span></h2>
       <p class="xb-lead">それぞれ危険度・営巣場所が異なります。<b>種類が分からなくても</b>現地で判別から承ります。</p>
       <div class="xbee-grid">
@@ -153,7 +153,7 @@ const strengthsShown = strengths.slice(0, 6);
     </section>
 
     <!-- 施工事例 -->
-    <section class="xb-sec xb-sec-tint" aria-labelledby="s-case">
+    <section class="xb-sec xb-sec-tint" id="cases" aria-labelledby="s-case">
       <h2 class="xb-h" id="s-case"><span>施工事例</span></h2>
       <div class="xb-cases">
         {casesShown.map((c) => (
@@ -223,7 +223,7 @@ const strengthsShown = strengths.slice(0, 6);
     </section>
 
     <!-- 対応エリア -->
-    <section class="xb-sec xb-sec-tint" aria-labelledby="s-area">
+    <section class="xb-sec xb-sec-tint" id="area" aria-labelledby="s-area">
       <h2 class="xb-h" id="s-area"><span>対応エリア</span></h2>
       <div class="xb-areas">
         {areas.map((a) => (
@@ -249,7 +249,7 @@ const strengthsShown = strengths.slice(0, 6);
     </section>
 
     <!-- 最終CTA（電話＋LINE） -->
-    <section class="xb-cta-sec" aria-label="お問い合わせ">
+    <section class="xb-cta-sec" id="contact" aria-label="お問い合わせ">
       <p class="xb-cta-lead">まずはお気軽にご相談ください</p>
       <div class="xb-cta-btns">
         <a href={company.phoneTelLink} class="xb-cta-btn xb-cta-tel" data-cta="footer_tel" aria-label={`電話で相談 ${company.phoneDisplay}`}>
