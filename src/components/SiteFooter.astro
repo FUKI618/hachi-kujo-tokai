@@ -1,26 +1,19 @@
 ---
 /**
- * SiteFooter — 運営者情報＋法的リンク（QS透明性・広告審査・信頼）。
- * プライバシーポリシー(/privacy-policy/)・特定商取引法表示(/legal/) へリンク。
+ * SiteFooter — 法的リンク＋著作権（軽量）。
+ * 会社情報（運営/所在地/電話/事業/対応/支払）は重複を避け
+ * プライバシーポリシー・会社情報ページ(/privacy-policy/)に集約。
  */
 import { company } from "../data/company";
 import { assetPath } from "../lib/site";
-const addr = `〒${company.address.postal} ${company.address.region}${company.address.city}${company.address.street}`;
 const year = 2026;
 ---
 <footer class="xfoot">
   <div class="xfoot-inner">
     <p class="xfoot-brand">{company.name}</p>
-    <dl class="xfoot-info">
-      <div><dt>運営</dt><dd>{company.legalName}（代表 {company.representative}）</dd></div>
-      <div><dt>所在地</dt><dd>{addr}</dd></div>
-      <div><dt>電話</dt><dd><a href={company.phoneTelLink}>{company.phoneDisplay}</a>（{company.hours}）</dd></div>
-      <div><dt>事業</dt><dd>{company.businessType}</dd></div>
-      <div><dt>対応</dt><dd>{company.serviceArea}</dd></div>
-      <div><dt>支払</dt><dd>{company.payment.join("・")}</dd></div>
-    </dl>
-    <nav class="xfoot-links" aria-label="法的情報">
-      <a href={assetPath("privacy-policy/")}>プライバシーポリシー</a>
+    <p class="xfoot-sub">{company.serviceArea}のハチ駆除専門</p>
+    <nav class="xfoot-links" aria-label="会社情報・法的情報">
+      <a href={assetPath("privacy-policy/")}>プライバシーポリシー・会社情報</a>
       <a href={assetPath("legal/")}>特定商取引法に基づく表示</a>
     </nav>
     <p class="xfoot-copy">© {year} {company.legalName}</p>
@@ -28,16 +21,11 @@ const year = 2026;
 </footer>
 <style>
   .xfoot { background:#241a0e; color:#cfc4b2; }
-  .xfoot-inner { max-width:480px; margin:0 auto; padding:26px 18px 30px; font-size:.74rem; line-height:1.7; }
-  .xfoot-brand { color:#fff; font-weight:900; font-size:.98rem; margin:0 0 14px; }
-  .xfoot-info { margin:0 0 16px; display:flex; flex-direction:column; gap:6px; }
-  .xfoot-info div { display:flex; gap:.7rem; }
-  .xfoot-info dt { color:#9a8c74; min-width:3.6em; flex-shrink:0; font-weight:700; }
-  .xfoot-info dd { margin:0; }
-  .xfoot-info a { color:#f0e6d4; }
-  .xfoot-links { display:flex; flex-wrap:wrap; gap:.5rem 1.2rem; margin:0 0 16px;
-    border-top:1px solid rgba(255,255,255,.12); padding-top:16px; }
-  .xfoot-links a { color:#f0e6d4; text-decoration:underline; font-weight:700; }
+  .xfoot-inner { max-width:480px; margin:0 auto; padding:26px 18px 30px; }
+  .xfoot-brand { color:#fff; font-weight:900; font-size:.98rem; margin:0 0 4px; }
+  .xfoot-sub { margin:0 0 16px; font-size:.7rem; color:#9a8c74; }
+  .xfoot-links { display:flex; flex-wrap:wrap; gap:.5rem 1.2rem; margin:0 0 14px; }
+  .xfoot-links a { color:#f0e6d4; text-decoration:underline; font-weight:700; font-size:.78rem; }
   .xfoot-copy { margin:0; color:#8a7c64; font-size:.66rem; }
   @media (max-width:767px){ .xfoot-inner { padding-bottom:86px; } }
 </style>
