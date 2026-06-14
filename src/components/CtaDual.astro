@@ -38,4 +38,10 @@ const { id, lead = "お急ぎはお電話、写真でのお見積りはLINEが�
   .xcta-line { background:#06C755; }
   .xcta-line b { font-size:1.06rem; font-weight:900; }
   .xcta-badge { background:#fff; color:#06C755; font-weight:900; font-size:.82rem; padding:.2rem .5rem; border-radius:8px; flex-shrink:0; }
+  /* PC: 横並び＋幅拡大（モバイル不変） */
+  @media (min-width:900px){
+    .xcta { max-width:820px; padding:26px 16px; }
+    .xcta-btns { flex-direction:row; }
+    .xcta-btn { flex:1; padding:1rem 1rem; }
+  }
 </style>
