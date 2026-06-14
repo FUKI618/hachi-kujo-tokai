@@ -1,0 +1,41 @@
+---
+/**
+ * CtaDual — セクション中間に挟む「電話＋LINE」2択CTA。
+ * 計測: data-cta="{id}_tel"（phone_click→Google Ads CV）/ "{id}_line"（line_click→Google Ads CV）。
+ * 配色: 電話=橙グラデ（ヒーローCTAと同系）/ LINE=#06C755。
+ */
+import { company } from "../data/company";
+interface Props { id: string; lead?: string; }
+const { id, lead = "お急ぎはお電話、写真でのお見積りはLINEが便利です" } = Astro.props;
+---
+<div class="xcta">
+  <p class="xcta-lead">{lead}</p>
+  <div class="xcta-btns">
+    <a href={company.phoneTelLink} class="xcta-btn xcta-tel" data-cta={`${id}_tel`}
+       aria-label={`電話で相談 ${company.phoneDisplay}・24時間受付`}>
+      <svg viewBox="0 0 24 24" class="xcta-ic" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/></svg>
+      <span class="xcta-t"><b class="num">{company.phoneDisplay}</b><small>24時間365日・通話無料・タップで発信</small></span>
+    </a>
+    <a href={company.lineUrl} class="xcta-btn xcta-line" data-cta={`${id}_line`} target="_blank" rel="noopener"
+       aria-label="LINEで無料相談・写真見積">
+      <span class="xcta-badge">LINE</span>
+      <span class="xcta-t"><b>LINEで相談する</b><small>写真を送るだけで無料見積</small></span>
+    </a>
+  </div>
+</div>
+<style>
+  .xcta { max-width:480px; margin-inline:auto; padding:20px 16px; }
+  .xcta-lead { text-align:center; font-weight:800; font-size:.84rem; color:#a60101; margin:0 0 11px; line-height:1.5; }
+  .xcta-btns { display:flex; flex-direction:column; gap:10px; }
+  .xcta-btn { display:flex; align-items:center; justify-content:center; gap:.6rem; padding:.82rem 1rem; border-radius:14px;
+    text-decoration:none; color:#fff; box-shadow:0 6px 16px rgba(0,0,0,.16); }
+  .xcta-btn:active { transform:translateY(1px); }
+  .xcta-ic { width:1.7rem; height:1.7rem; flex-shrink:0; }
+  .xcta-t { display:flex; flex-direction:column; line-height:1.12; align-items:flex-start; }
+  .xcta-t small { font-size:.58rem; opacity:.96; margin-top:2px; font-weight:600; }
+  .xcta-tel { background:linear-gradient(180deg,#ff8a1f,#e2231a); }
+  .xcta-tel .num { font-size:1.5rem; font-weight:900; letter-spacing:.01em; font-variant-numeric:tabular-nums; }
+  .xcta-line { background:#06C755; }
+  .xcta-line b { font-size:1.06rem; font-weight:900; }
+  .xcta-badge { background:#fff; color:#06C755; font-weight:900; font-size:.82rem; padding:.2rem .5rem; border-radius:8px; flex-shrink:0; }
+</style>
