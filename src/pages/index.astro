@@ -77,70 +77,14 @@ const strengthsShown = strengths.slice(0, 6);
        aria-label={`電話で相談 ${company.phoneDisplay}・24時間受付中`}></a>
   </div>
 
-  <!-- ===== PC専用ヒーロー（≥900pxで表示。モバイルは焼込み画像 .xhero を使用） =====
-       承認モック c5（チラシ型）を実テキスト+CSSで忠実再現。写真はスタッフ切り抜き1枚のみ＝
-       見出し/料金/CTA/バッジは全て crawlable な実HTML（SEO・品質スコア・A11y・Retina対策）。
-       container query 単位(cqw)で全要素をステージ幅に連動＝画像同様に崩れずスケール。 -->
+  <!-- ===== PC専用ヒーロー（≥900pxで表示。モバイルは焼込み画像 .xhero を使用） ===== -->
   <section class="xhero-pc" aria-label="蜂の巣駆除 即日スピード解決｜最短30分・基本1,680円〜">
-    <div class="xhpc-stage">
-      <!-- ブランド帯 -->
-      <div class="xhpc-brand">
-        <span class="xhpc-tag">24時間365日受付・最短30分で出動</span>
-        <p class="xhpc-name">{company.name}</p>
-      </div>
-
-      <!-- スタッフ写真（唯一の画像） -->
-      <img class="xhpc-photo" src={assetPath("images/generated/hero-pc-staff-cut.webp")} width="687" height="763"
-        alt={`紺の作業服を着た${company.name}の駆除スタッフ2名（噴霧器・点検ボード）`}
+    <div class="xhpc-wrap">
+      <img class="xhpc-mock" src={assetPath("images/generated/hero-pc-chirashi.webp")} width="1376" height="768"
+        alt={`蜂の巣駆除 即日スピード解決｜最短30分で到着・基本1,680円〜（税込）・見積出張キャンセル0円・1年保証｜${company.name} 電話${company.phoneDisplay}`}
         loading="eager" decoding="async" fetchpriority="high" />
-
-      <!-- リボン -->
-      <p class="xhpc-ribbon"><span>最短その日のうちに駆除完了！</span></p>
-
-      <!-- 見出し -->
-      <h1 class="xhpc-h1">
-        <span class="xhpc-h1-row"><span class="xhpc-box">蜂の巣</span><span class="xhpc-kj">駆除</span></span>
-        <span class="xhpc-h1-sub">即日スピード解決</span>
-      </h1>
-
-      <!-- 訴求チェック -->
-      <ul class="xhpc-checks">
-        <li>安心できる毎日を取り戻します！</li>
-        <li>プロがスピード対応！</li>
-      </ul>
-
-      <!-- 到着時間 -->
-      <p class="xhpc-watch">
-        <svg class="xhpc-watch-ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="#F26108" d="M9 1h6v2H9z"/><path fill="#F26108" d="M19.03 7.39l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42A8.96 8.96 0 0012 4a9 9 0 109 9 8.96 8.96 0 00-1.97-5.61zM13 14h-2V8h2z"/></svg>
-        <span class="xhpc-watch-tx">最短<b>30分</b>で到着</span>
-      </p>
-
-      <!-- 安心バッジ -->
-      <ul class="xhpc-badges">
-        <li><span>即日<br>対応</span></li>
-        <li><span>1年<br>保証</span></li>
-        <li><span>相談・調査<br>見積<b>無料</b></span></li>
-      </ul>
-
-      <!-- 料金フキダシ -->
-      <p class="xhpc-price">基本<b class="r">¥1,680〜</b><small>(税込)</small><br>見積・出張・キャンセル<b class="r">0円</b></p>
-
-      <!-- 電話CTA -->
-      <a class="xhpc-tel" href={company.phoneTelLink} data-cta="hero_tel"
-        aria-label={`今すぐ電話で相談 ${company.phoneDisplay}・24時間受付・タップで発信`}>
-        <svg class="xhpc-tel-ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="#F26108" d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.3 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C9.6 21 3 14.4 3 6c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.3 1z"/></svg>
-        <span class="xhpc-tel-tx"><b>0120-468-434</b><small>今すぐお電話ください</small></span>
-      </a>
-
-      <!-- LINE CTA -->
-      <a class="xhpc-line" href={company.lineUrl} data-cta="hero_line" target="_blank" rel="noopener"
-        aria-label="LINEで無料相談・写真見積">
-        <span class="xhpc-line-logo" aria-hidden="true">LINE</span>
-        <span class="xhpc-line-tx">写真を送るだけで<b>無料見積</b></span>
-      </a>
-
-      <!-- 景表法配慮（AI生成スタッフ） -->
-      <p class="xhpc-note">※スタッフ写真はイメージです</p>
+      <a class="xhpc-tap xhpc-tap-tel" href={company.phoneTelLink} data-cta="hero_tel" aria-label={`今すぐ電話で相談 ${company.phoneDisplay}・24時間受付・タップで発信`}></a>
+      <a class="xhpc-tap xhpc-tap-line" href={company.lineUrl} data-cta="hero_line" target="_blank" rel="noopener" aria-label="LINEで無料相談・写真見積"></a>
     </div>
   </section>
 
@@ -537,105 +481,13 @@ const strengthsShown = strengths.slice(0, 6);
   @media (min-width:900px){
     .xhero { display:none; }                       /* モバイル焼込み画像はPCで隠す */
 
-    /* === PC専用ヒーロー：承認モックc5を実テキスト+CSSで忠実再現（写真1枚以外は全て実HTML） === */
-    .xhero-pc { display:block; }
-    .xhpc-stage {
-      container-type:size; position:relative; width:100%; max-width:1320px; margin:0 auto;
-      aspect-ratio:1376/768; overflow:hidden;
-      background:linear-gradient(180deg,#ffffff 0%,#ffffff 10%,#cfe8fb 19%,#e6f4fe 64%,#f7fcff 100%);
-      font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",YuGothic,Meiryo,sans-serif;
-      color:#0D3568; -webkit-font-smoothing:antialiased;
-    }
-    .xhpc-stage > * { position:absolute; margin:0; }
-
-    /* ブランド帯 */
-    .xhpc-brand { top:1.4%; left:13.5%; line-height:1.1; }
-    .xhpc-tag { display:inline-block; background:#CC080C; color:#fff; font-weight:700;
-      font-size:1.5cqw; padding:.35cqw 1cqw; border-radius:.4cqw; letter-spacing:.02em; }
-    .xhpc-name { margin-top:.7cqw; font-size:2.85cqw; font-weight:800; color:#0D3568; letter-spacing:.01em; }
-
-    /* スタッフ写真（唯一の画像） */
-    .xhpc-photo { left:0.5%; bottom:0; height:69%; width:auto; object-fit:contain; z-index:1;
-      filter:drop-shadow(0 .3cqw .6cqw rgba(13,53,104,.18)); }
-
-    /* リボン */
-    .xhpc-ribbon { top:14.5%; left:15%; width:50%; text-align:center; z-index:3; }
-    .xhpc-ribbon span { position:relative; display:inline-block;
-      background:linear-gradient(180deg,#f7831e,#e2540a); color:#fff; font-weight:800;
-      font-size:2.7cqw; padding:.7cqw 3.2cqw; border-radius:.6cqw; letter-spacing:.01em;
-      box-shadow:0 .35cqw 0 #b8460a; }
-    .xhpc-ribbon span::before, .xhpc-ribbon span::after { content:""; position:absolute; top:0; bottom:0; width:1.7cqw; background:#c34c08; }
-    .xhpc-ribbon span::before { left:-1.7cqw; clip-path:polygon(0 0,100% 0,100% 100%,0 100%,55% 50%); }
-    .xhpc-ribbon span::after  { right:-1.7cqw; clip-path:polygon(0 0,100% 0,45% 50%,100% 100%,0 100%); }
-
-    /* 見出し */
-    .xhpc-h1 { top:21%; left:3.5%; z-index:3; line-height:1; }
-    .xhpc-h1-row { display:flex; align-items:center; gap:.6cqw; }
-    .xhpc-box { display:inline-block; background:#FFD500; color:#1a1a1a; font-weight:900;
-      font-size:8.9cqw; padding:.2cqw 1.2cqw .8cqw; border:.55cqw solid #1a1a1a; border-radius:1.3cqw;
-      box-shadow:0 .4cqw 0 rgba(0,0,0,.18); }
-    .xhpc-kj { font-size:9.5cqw; font-weight:900; color:#16233f;
-      text-shadow:.2cqw .2cqw 0 #fff,-.2cqw .2cqw 0 #fff,.2cqw -.2cqw 0 #fff,-.2cqw -.2cqw 0 #fff,0 .55cqw 0 rgba(0,0,0,.15); }
-    .xhpc-h1-sub { display:block; margin-top:1cqw; margin-left:.4cqw; font-size:5cqw; font-weight:900;
-      color:#0D3568; text-shadow:.12cqw .12cqw 0 #fff,-.12cqw .12cqw 0 #fff,.12cqw -.12cqw 0 #fff,-.12cqw -.12cqw 0 #fff; }
-
-    /* 訴求チェック */
-    .xhpc-checks { top:56.5%; left:34.5%; list-style:none; padding:0; z-index:3; display:flex; flex-direction:column; gap:.7cqw; }
-    .xhpc-checks li { position:relative; padding-left:3cqw; font-size:2.15cqw; font-weight:800; color:#16233f; line-height:1.2;
-      text-shadow:0 0 .5cqw #fff,0 0 .5cqw #fff; }
-    .xhpc-checks li::before { content:""; position:absolute; left:0; top:-.1cqw; width:2.1cqw; height:2.1cqw;
-      background:#0A62AC; border-radius:.4cqw; }
-    .xhpc-checks li::after { content:""; position:absolute; left:.55cqw; top:.35cqw; width:.55cqw; height:1.05cqw;
-      border:solid #fff; border-width:0 .35cqw .35cqw 0; transform:rotate(43deg); }
-
-    /* 到着時間ピル */
-    .xhpc-watch { top:71.5%; left:34%; width:27.5%; display:flex; align-items:center; justify-content:center; gap:1cqw;
-      background:#fff; border:.35cqw solid #ffe0c2; border-radius:6cqw; padding:.9cqw 1.4cqw; z-index:3;
-      box-shadow:0 .3cqw .7cqw rgba(13,53,104,.14); }
-    .xhpc-watch-ic { width:3.6cqw; height:3.6cqw; flex:none; }
-    .xhpc-watch-tx { font-size:2.4cqw; font-weight:900; color:#0D3568; white-space:nowrap; }
-    .xhpc-watch-tx b { font-size:3.5cqw; color:#e2540a; }
-
-    /* 安心バッジ */
-    .xhpc-badges { top:83%; left:34.5%; list-style:none; padding:0; display:flex; gap:1.2cqw; z-index:3; }
-    .xhpc-badges li { width:9cqw; height:9cqw; border-radius:50%;
-      background:radial-gradient(circle at 50% 35%,#f8842a,#e2540a); border:.4cqw solid #fff;
-      box-shadow:0 .3cqw .6cqw rgba(13,53,104,.2); display:flex; align-items:center; justify-content:center; }
-    .xhpc-badges li span { color:#fff; font-weight:800; font-size:1.55cqw; line-height:1.15; text-align:center; }
-    .xhpc-badges li b { display:block; font-size:1.9cqw; }
-
-    /* 料金フキダシ */
-    .xhpc-price { top:45.5%; left:65%; width:33.5%; text-align:center; z-index:3;
-      background:#fff; border:.45cqw solid #f7831e; border-radius:1.4cqw; padding:1.2cqw 1cqw;
-      font-size:2.3cqw; font-weight:800; color:#0D3568; line-height:1.45;
-      box-shadow:0 .4cqw .9cqw rgba(13,53,104,.15); }
-    .xhpc-price .r { color:#E11020; font-size:3cqw; font-weight:900; }
-    .xhpc-price small { font-size:1.6cqw; font-weight:700; }
-    .xhpc-price::after { content:""; position:absolute; left:24%; bottom:-1.7cqw; width:2.4cqw; height:2.4cqw;
-      background:#fff; border-right:.45cqw solid #f7831e; border-bottom:.45cqw solid #f7831e; transform:rotate(45deg); }
-
-    /* 電話CTA */
-    .xhpc-tel { top:69.5%; left:65%; width:33.5%; display:flex; align-items:center; gap:1cqw; z-index:3;
-      background:linear-gradient(180deg,#f7942a,#ef6206); border-radius:8cqw; padding:1cqw 1.4cqw;
-      text-decoration:none; box-shadow:0 .5cqw 1cqw rgba(226,84,10,.4); -webkit-tap-highlight-color:transparent; }
-    .xhpc-tel-ic { width:4.2cqw; height:4.2cqw; flex:none; background:#fff; border-radius:50%; padding:.9cqw; box-sizing:border-box; }
-    .xhpc-tel-tx { display:flex; flex-direction:column; line-height:1.05; }
-    .xhpc-tel-tx b { font-size:3.05cqw; font-weight:900; color:#fff; letter-spacing:0; white-space:nowrap; }
-    .xhpc-tel-tx small { font-size:1.55cqw; font-weight:700; color:#fff; }
-
-    /* LINE CTA */
-    .xhpc-line { top:86%; left:65%; width:33.5%; display:flex; align-items:center; gap:1cqw; z-index:3;
-      background:#08A60B; border-radius:8cqw; padding:.9cqw 1.4cqw; text-decoration:none;
-      box-shadow:0 .4cqw .8cqw rgba(8,166,11,.35); -webkit-tap-highlight-color:transparent; }
-    .xhpc-line-logo { flex:none; background:#fff; color:#08A60B; font-weight:900; font-size:1.6cqw;
-      border-radius:.7cqw; padding:.3cqw .65cqw; letter-spacing:-.02em; }
-    .xhpc-line-tx { font-size:2.05cqw; font-weight:800; color:#fff; white-space:nowrap; }
-    .xhpc-line-tx b { font-weight:900; }
-
-    /* 景表法注記 */
-    .xhpc-note { left:.8%; bottom:.6%; font-size:1cqw; color:rgba(13,53,104,.6); z-index:4; }
-
-    .xhpc-tel:hover, .xhpc-line:hover, .xhpc-tel:focus-visible, .xhpc-line:focus-visible { filter:brightness(1.06); }
+    /* === PC専用ヒーロー（AI生成チラシ型モック画像＋透明タップ計測） === */
+    .xhero-pc { display:block; background:linear-gradient(180deg,#cfe8fb 0%,#eaf6ff 62%,#f4fbff 100%); padding-bottom:2px; }
+    .xhpc-wrap { position:relative; max-width:1320px; margin:0 auto; line-height:0; }
+    .xhpc-mock { width:100%; height:auto; display:block; }
+    .xhpc-tap { position:absolute; display:block; z-index:2; -webkit-tap-highlight-color:transparent; border-radius:14px; }
+    .xhpc-tap-tel  { left:57.5%; top:68.5%; width:41.5%; height:16.5%; }
+    .xhpc-tap-line { left:65.5%; top:85%;  width:31.5%; height:10%; }
 
     /* 下半分：横幅を使う多段グリッド */
     .xb { max-width:1080px; }
