@@ -55,3 +55,4 @@ public/images/generated/*.jpeg
 .cv_test.mjs
 .check_imgs.mjs
 .final_check.mjs
+.fonttmp/

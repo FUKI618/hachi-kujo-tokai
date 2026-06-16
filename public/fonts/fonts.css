@@ -1,0 +1,5 @@
+/* 自動生成: scripts/build-fonts.py。実HTML使用文字のみ subset した self-host fonts。 */
+@font-face{font-family:"Noto Sans JP";font-style:normal;font-weight:400 900;font-display:swap;src:url("/fonts/notosansjp-var.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:700;font-display:swap;src:url("/fonts/inter-700.woff2") format("woff2");}
+@font-face{font-family:"M PLUS 1p";font-style:normal;font-weight:900;font-display:swap;src:url("/fonts/mplus1p-900.woff2") format("woff2");}
+@font-face{font-family:"Reggae One";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/reggaeone-400.woff2") format("woff2");}
