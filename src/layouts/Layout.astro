@@ -225,7 +225,7 @@ const allJsonLd = [
     <meta name="theme-color" content={siteConfig.themeColor} />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://*.clarity.ms https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.google.co.jp https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://www.clarity.ms https://c.clarity.ms https://c.bing.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.google.co.jp https://www.googleadservices.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://ad.doubleclick.net https://*.clarity.ms https://formspree.io; frame-src https://td.doubleclick.net; form-action 'self' https://formspree.io"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://*.clarity.ms; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.google.co.jp https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://www.clarity.ms https://c.clarity.ms https://c.bing.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.google.co.jp https://www.googleadservices.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://ad.doubleclick.net https://*.clarity.ms https://formspree.io; frame-src https://td.doubleclick.net; form-action 'self' https://formspree.io"
     />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
@@ -310,7 +310,6 @@ const allJsonLd = [
     </script>
 
     <!-- Performance: DNS Prefetch / Preconnect for 3rd parties -->
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="dns-prefetch" href="https://www.google-analytics.com" />
     <link rel="dns-prefetch" href="https://formspree.io" />
@@ -326,9 +325,6 @@ const allJsonLd = [
       @font-face{font-family:"M PLUS 1p";font-style:normal;font-weight:900;font-display:swap;src:url("/fonts/mplus1p-900.woff2") format("woff2")}
       @font-face{font-family:"Reggae One";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/reggaeone-400.woff2") format("woff2")}
     </style>
-
-    <!-- Alpine.js（FAQ・Floating CTA で使用） -->
-    <script is:inline defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- 計測タグ: GTM / GA4 / Google Ads（src/data/company.ts の tracking で管理） -->
     <!-- GTM_ID 未設定でも GA4_ID 単体で動作。CWV保護のため 3秒遅延ロード。 -->
