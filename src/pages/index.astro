@@ -11,6 +11,7 @@ import { assetPath } from "../lib/site";
 import { company } from "../data/company";
 import { rates } from "../data/rates";
 import { strengths } from "../data/strengths";
+import { promiseCards } from "../data/scam-warning";
 import { beeTypes } from "../data/bee-types";
 import { cases } from "../data/cases";
 import { voices } from "../data/voices";
@@ -169,6 +170,22 @@ const strengthsShown = strengths.slice(0, 6);
             <div class="xb-why-body">
               <h3 set:html={s.title}></h3>
               <p>{s.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 安心の3つのお約束 -->
+    <section class="xb-sec" id="promise" aria-labelledby="s-promise">
+      <h2 class="xb-h" id="s-promise"><span>安心の3つのお約束</span></h2>
+      <div class="xpromise">
+        {promiseCards.map((p) => (
+          <div class="xb-card xpromise-card">
+            <span class="xpromise-ic" aria-hidden="true">✓</span>
+            <div class="xpromise-body">
+              <h3>{p.label}</h3>
+              <p>{p.body}</p>
             </div>
           </div>
         ))}
@@ -423,6 +440,13 @@ const strengthsShown = strengths.slice(0, 6);
   .xvs-pt { margin:.6rem 0 0; font-size:.78rem; line-height:1.65; color:#3f3526; }
   .xvs-lead2 { text-align:center; font-size:.84rem; line-height:1.7; color:#46402f; margin:1rem auto 0; max-width:780px; font-weight:600; }
 
+  /* 安心の3つのお約束 */
+  .xpromise { display:grid; grid-template-columns:1fr; gap:12px; max-width:880px; margin-inline:auto; }
+  .xpromise-card { display:flex; gap:.7rem; align-items:flex-start; padding:1rem .9rem; }
+  .xpromise-ic { flex-shrink:0; width:1.9rem; height:1.9rem; border-radius:50%; background:var(--red); color:#fff; font-weight:900; display:flex; align-items:center; justify-content:center; font-size:1.05rem; line-height:1; }
+  .xpromise-body h3 { margin:0 0 .3rem; font-size:.92rem; font-weight:800; color:#2a2113; }
+  .xpromise-body p { margin:0; font-size:.8rem; line-height:1.7; color:#3f3526; }
+
   /* 蜂種（統一カード） */
   .xbee-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
   .xbee { display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
@@ -506,13 +530,13 @@ const strengthsShown = strengths.slice(0, 6);
   .xb-cta-lead { margin:0 0 14px; font-weight:900; font-size:1rem; }
   .xb-cta-btns { display:flex; flex-direction:column; gap:10px; max-width:360px; margin:0 auto; }
   .xb-cta-btn { display:flex; align-items:center; justify-content:center; gap:.6rem; color:#fff;
-    padding:.78rem 1rem; border-radius:14px; box-shadow:0 8px 20px rgba(0,0,0,.28); text-decoration:none; }
+    padding:.78rem 1rem; border-radius:14px; box-shadow:0 8px 20px rgba(0,0,0,.28); text-decoration:none; text-shadow:0 1px 2px rgba(0,0,0,.32); }
   .xb-cta-btn span { display:flex; flex-direction:column; align-items:flex-start; line-height:1.12; }
-  .xb-cta-btn small { font-size:.58rem; opacity:.95; margin-top:2px; font-weight:600; }
-  .xb-cta-tel { background:linear-gradient(180deg,#ff8a1f,#e2231a); }
+  .xb-cta-btn small { font-size:.6rem; opacity:1; margin-top:2px; font-weight:700; }
+  .xb-cta-tel { background:linear-gradient(180deg,#e8590c,#c4150c); }
   .xb-cta-tel .xic { width:1.7rem; height:1.7rem; }
   .xb-cta-tel b { font-size:1.5rem; line-height:1; letter-spacing:.01em; }
-  .xb-cta-line { background:#06C755; }
+  .xb-cta-line { background:#04a847; }
   .xb-cta-line b { font-size:1.05rem; font-weight:900; }
   .xb-cta-line-badge { background:#fff; color:#06C755; font-weight:900; font-size:.82rem; padding:.2rem .5rem; border-radius:8px; flex-shrink:0; }
   .xb-cta-sub { margin:14px 0 0; font-size:.74rem; opacity:.95; }
@@ -521,12 +545,12 @@ const strengthsShown = strengths.slice(0, 6);
   .xfloat { position:fixed; left:0; right:0; bottom:0; z-index:60; display:flex; gap:8px; padding:8px;
     background:#fff; border-top:1px solid rgba(20,12,4,.1); box-shadow:0 -4px 16px rgba(0,0,0,.16); }
   .xfloat-btn { display:flex; align-items:center; justify-content:center; gap:.4rem; color:#fff; font-weight:800;
-    padding:.6rem .5rem; border-radius:12px; text-decoration:none; box-shadow:0 4px 12px rgba(0,0,0,.2); }
-  .xfloat-tel { flex:1.5; background:linear-gradient(180deg,#ff7a1a,#e2231a); }
-  .xfloat-line { flex:1; background:#06C755; }
+    padding:.6rem .5rem; border-radius:12px; text-decoration:none; box-shadow:0 4px 12px rgba(0,0,0,.2); text-shadow:0 1px 2px rgba(0,0,0,.32); }
+  .xfloat-tel { flex:1.5; background:linear-gradient(180deg,#e8590c,#c4150c); }
+  .xfloat-line { flex:1; background:#04a847; }
   .xfloat .xic { width:1.3rem; height:1.3rem; }
   .xfloat-tx { display:flex; flex-direction:column; line-height:1.1; align-items:flex-start; }
-  .xfloat-tx small { font-size:.56rem; font-weight:600; opacity:.92; }
+  .xfloat-tx small { font-size:.58rem; font-weight:700; opacity:1; }
   .xfloat-line-badge { background:#fff; color:#06C755; font-weight:900; font-size:.72rem; padding:.12rem .4rem; border-radius:6px; }
   @media (min-width:900px){ .xfloat { display:none; } }
 
@@ -552,6 +576,7 @@ const strengthsShown = strengths.slice(0, 6);
     .xb-why { display:grid; grid-template-columns:repeat(3,1fr); align-items:stretch; }
     .xdanger-grid { grid-template-columns:1fr 1fr; max-width:880px; margin-inline:auto; gap:20px; }
     .xdanger img { height:300px; }
+    .xpromise { grid-template-columns:repeat(3,1fr); }
     .xbee-grid { grid-template-columns:repeat(3,1fr); }
     .xb-cases { grid-template-columns:repeat(4,1fr); }
     .xb-voices { display:grid; grid-template-columns:repeat(3,1fr); align-items:start; }
