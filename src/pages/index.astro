@@ -140,6 +140,25 @@ const strengthsShown = strengths.slice(0, 6);
 
     <CtaDual id="rate_cta" lead="この料金で即日対応。今すぐご相談ください" />
 
+    <!-- 他社見積もり比較（中間マージンゼロ＝価格優位） -->
+    <section class="xb-sec xb-sec-tint" id="vs-quote" aria-labelledby="s-vsquote">
+      <h2 class="xb-h" id="s-vsquote"><span>他社のお見積もりから、最大<b class="xvs-off">50%OFF</b>も</span></h2>
+      <p class="xb-lead">紹介サイトや仲介業者を通すと<b>中間マージン</b>が上乗せされます。当社は受付から駆除まで<b>すべて自社で完結</b>。そのぶん<b>価格をおさえられます</b>。</p>
+      <div class="xvs">
+        <div class="xvs-card xvs-other">
+          <span class="xvs-tag">紹介サイト・仲介経由</span>
+          <p class="xvs-pt">受付会社 → 仲介手数料 → 下請け<br /><b>中間マージンが上乗せ</b></p>
+        </div>
+        <div class="xvs-card xvs-ours">
+          <span class="xvs-tag xvs-tag-on">当社（自社施工）</span>
+          <p class="xvs-pt">受付も駆除も<b>自社で完結</b><br /><b>中間マージン 0円</b></p>
+        </div>
+      </div>
+      <p class="xvs-lead2"><b>いま、他社のお見積もりで「高いな」と感じていませんか？</b><br />そのお見積もりを、まずは見せてください。安くできるか、その場でお答えします。</p>
+      <CtaDual id="vsquote_cta" lead="他社のお見積もりが高いと感じたら、まずはご相談を" />
+      <p class="xb-note">※ 削減率は蜂の種類・巣の状況・他社のお見積もり内容により異なります。実際のお見積もり比較に基づく実績であり、すべての案件で50%お安くなることを保証するものではありません。</p>
+    </section>
+
     <!-- 選ばれる理由 -->
     <section class="xb-sec xb-sec-tint" id="scam-warning" aria-labelledby="s-why">
       <h2 class="xb-h" id="s-why"><span>選ばれる理由</span></h2>
@@ -393,6 +412,16 @@ const strengthsShown = strengths.slice(0, 6);
   .xdanger { margin:0; overflow:hidden; display:flex; flex-direction:column; }
   .xdanger img { width:100%; height:200px; object-fit:cover; display:block; }
   .xdanger-cap { margin:0; padding:.7rem .8rem .85rem; font-size:.78rem; line-height:1.6; color:#46402f; font-weight:600; }
+
+  /* 他社見積もり比較（中間マージンゼロ） */
+  .xvs-off { color:var(--red); font-size:1.18em; font-weight:900; }
+  .xvs { display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:880px; margin:14px auto 0; }
+  .xvs-card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:.9rem .7rem; text-align:center; }
+  .xvs-ours { border-color:var(--red); box-shadow:0 4px 14px rgba(226,35,26,.12); }
+  .xvs-tag { display:inline-block; font-size:.72rem; font-weight:800; color:#8a7c68; background:#f1ece3; border-radius:999px; padding:.25rem .7rem; }
+  .xvs-tag-on { color:#fff; background:var(--red); }
+  .xvs-pt { margin:.6rem 0 0; font-size:.78rem; line-height:1.65; color:#3f3526; }
+  .xvs-lead2 { text-align:center; font-size:.84rem; line-height:1.7; color:#46402f; margin:1rem auto 0; max-width:780px; font-weight:600; }
 
   /* 蜂種（統一カード） */
   .xbee-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
