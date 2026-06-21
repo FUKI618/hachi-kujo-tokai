@@ -111,6 +111,20 @@ const strengthsShown = strengths.slice(0, 6);
       <p class="xb-note">※ 写真はイメージです。</p>
     </section>
 
+    <!-- こんなお悩み（共感） -->
+    <section class="xb-sec" id="trouble" aria-labelledby="s-trouble">
+      <h2 class="xb-h" id="s-trouble"><span>こんなお悩みありませんか？</span></h2>
+      <ul class="xtrouble">
+        <li>家の周りで蜂をよく見かける</li>
+        <li>軒下・ベランダに巣ができている</li>
+        <li>屋根裏や壁の中から羽音がする</li>
+        <li>市販スプレーで駆除したが減らない</li>
+        <li>去年駆除したのに今年もまた出た</li>
+        <li>小さな子ども・ペットがいて不安</li>
+      </ul>
+      <p class="xb-note xtrouble-cta">ひとつでも当てはまれば、無理せず<b>プロにご相談を</b>。最短30分で駆けつけます。</p>
+    </section>
+
     <!-- 料金 -->
     <section class="xb-sec" id="price" aria-labelledby="s-rate">
       <h2 class="xb-h" id="s-rate"><span>蜂の巣駆除 料金のご案内</span></h2>
@@ -137,6 +151,7 @@ const strengthsShown = strengths.slice(0, 6);
         ))}
       </div>
       <p class="xb-note">※ 巣のサイズ・高さ・場所により変動。<b>現地で確定見積</b>をお伝えし、ご納得後に作業。事前見積金額からの追加請求はありません。</p>
+      <p class="xpay">お支払い：<b>現金・クレジットカード・PayPay・銀行振込・後払い</b> に対応</p>
     </section>
 
     <CtaDual id="rate_cta" lead="この料金で即日対応。今すぐご相談ください" />
@@ -225,6 +240,15 @@ const strengthsShown = strengths.slice(0, 6);
       </div>
     </section>
 
+    <!-- 蜂の巣ができやすい場所 -->
+    <section class="xb-sec xb-sec-tint" id="spots" aria-labelledby="s-spots">
+      <h2 class="xb-h" id="s-spots"><span>蜂の巣ができやすい場所</span></h2>
+      <p class="xb-lead">下記のような場所にも対応します。<b>高所・狭所・屋根裏・土の中</b>など、自力では危険な場所こそプロにお任せください。場所が分からなくても現地で調査します。</p>
+      <ul class="xspots">
+        <li>軒下</li><li>屋根裏・天井裏</li><li>ベランダ</li><li>エアコン室外機</li><li>換気口・換気扇</li><li>壁の中・戸袋</li><li>床下</li><li>庭木・生垣</li><li>物置・倉庫</li><li>土の中</li>
+      </ul>
+    </section>
+
     <!-- 施工事例 -->
     <section class="xb-sec xb-sec-tint" id="cases" aria-labelledby="s-case">
       <h2 class="xb-h" id="s-case"><span>施工事例</span></h2>
@@ -293,6 +317,12 @@ const strengthsShown = strengths.slice(0, 6);
           </li>
         ))}
       </ol>
+    </section>
+
+    <!-- 戻り蜂・再発防止 -->
+    <section class="xb-sec" id="prevention" aria-labelledby="s-prevention">
+      <h2 class="xb-h" id="s-prevention"><span>戻り蜂対策・再発防止まで</span></h2>
+      <p class="xb-lead">巣を撤去しても、エサ採りに出ていた<b>戻り蜂</b>や、同じ場所への再営巣が起こることがあります。当社は撤去後に<b>忌避処理・侵入経路の対策</b>まで行い、<b>1年間の再発保証</b>をお付けします（保証条件は作業時にご説明します）。</p>
     </section>
 
     <!-- 対応エリア -->
@@ -446,6 +476,18 @@ const strengthsShown = strengths.slice(0, 6);
   .xpromise-ic { flex-shrink:0; width:1.9rem; height:1.9rem; border-radius:50%; background:var(--red); color:#fff; font-weight:900; display:flex; align-items:center; justify-content:center; font-size:1.05rem; line-height:1; }
   .xpromise-body h3 { margin:0 0 .3rem; font-size:.92rem; font-weight:800; color:#2a2113; }
   .xpromise-body p { margin:0; font-size:.8rem; line-height:1.7; color:#3f3526; }
+
+  /* こんなお悩み（共感チェックリスト） */
+  .xtrouble { max-width:600px; margin:0 auto; display:grid; gap:8px; list-style:none; padding:0; }
+  .xtrouble li { position:relative; background:#fff; border:1px solid var(--line); border-radius:10px; padding:.7rem .8rem .7rem 2.3rem; font-size:.84rem; font-weight:600; color:#3f3526; }
+  .xtrouble li::before { content:"✓"; position:absolute; left:.6rem; top:50%; transform:translateY(-50%); color:#fff; background:var(--red); width:1.25rem; height:1.25rem; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:900; }
+  .xtrouble-cta { text-align:center; }
+  /* 蜂の巣ができやすい場所 */
+  .xspots { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; max-width:680px; margin:14px auto 0; list-style:none; padding:0; }
+  .xspots li { background:#fff; border:1px solid var(--line); border-radius:9999px; padding:.45rem .9rem; font-size:.82rem; font-weight:700; color:#46402f; box-shadow:0 2px 6px rgba(20,12,4,.05); }
+  /* 決済手段 */
+  .xpay { text-align:center; font-size:.76rem; color:#6b5d4a; margin:10px 2px 0; }
+  .xpay b { color:#3f3526; font-weight:800; }
 
   /* 蜂種（統一カード） */
   .xbee-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
