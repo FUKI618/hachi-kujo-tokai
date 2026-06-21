@@ -18,6 +18,7 @@ import { voices } from "../data/voices";
 import { compareRows } from "../data/compare";
 import { flowSteps } from "../data/flow";
 import { areas } from "../data/areas";
+import { vsGovernmentRows, subsidyNote } from "../data/vs-government";
 import { faqs } from "../data/faq";
 import CtaDual from "../components/CtaDual.astro";
 import SiteFooter from "../components/SiteFooter.astro";
@@ -126,6 +127,7 @@ const strengthsShown = strengths.slice(0, 6);
     </section>
 
     <!-- 料金 -->
+    <span id="pricing" class="x-anchor" aria-hidden="true"></span>
     <section class="xb-sec" id="price" aria-labelledby="s-rate">
       <h2 class="xb-h" id="s-rate"><span>蜂の巣駆除 料金のご案内</span></h2>
       <p class="xb-lead">基本<b>1,680円〜</b>。広告代理店も中間業者も挟まない<b>自社直接対応</b>だから実現できる価格です。</p>
@@ -208,6 +210,7 @@ const strengthsShown = strengths.slice(0, 6);
     </section>
 
     <!-- 蜂の種類 -->
+    <span id="types" class="x-anchor" aria-hidden="true"></span>
     <section class="xb-sec" id="bee-types" aria-labelledby="s-bee">
       <h2 class="xb-h" id="s-bee"><span>対応する蜂の種類</span></h2>
       <p class="xb-lead">それぞれ危険度・営巣場所が異なります。<b>種類が分からなくても</b>現地で判別から承ります。</p>
@@ -303,6 +306,26 @@ const strengthsShown = strengths.slice(0, 6);
             ))}
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- 市役所では無料？（vs 行政） -->
+    <section class="xb-sec xb-sec-tint" id="vs-government" aria-labelledby="s-vsgov">
+      <h2 class="xb-h" id="s-vsgov"><span>市役所では無料で駆除してもらえる？</span></h2>
+      <p class="xb-lead">「市役所＝無料」と思われがちですが、<b>原則は自己負担</b>で、駆除作業そのものは行わない自治体が大半です。当社との違いをまとめました。</p>
+      <div class="xgov">
+        <div class="xgov-head"><span class="xgov-label">&nbsp;</span><span>市役所・行政</span><span class="xgov-h-us">当社</span></div>
+        {vsGovernmentRows.map((r) => (
+          <div class="xgov-row">
+            <span class="xgov-label">{r.label}</span>
+            <span class={`xgov-cell xgov-${r.government.state}`}>{r.government.text}</span>
+            <span class={`xgov-cell xgov-${r.us.state}`}>{r.us.text}</span>
+          </div>
+        ))}
+      </div>
+      <div class="xgov-note">
+        <b>{subsidyNote.text}</b>
+        <ul>{subsidyNote.bullets.map((b) => (<li>{b}</li>))}</ul>
       </div>
     </section>
 
@@ -488,6 +511,23 @@ const strengthsShown = strengths.slice(0, 6);
   /* 決済手段 */
   .xpay { text-align:center; font-size:.76rem; color:#6b5d4a; margin:10px 2px 0; }
   .xpay b { color:#3f3526; font-weight:800; }
+  /* 別名アンカー（サイトリンク飛び先一致用） */
+  .x-anchor { display:block; height:0; overflow:hidden; scroll-margin-top:8px; }
+  /* 市役所 vs 当社 */
+  .xgov { max-width:680px; margin:14px auto 0; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff; box-shadow:0 3px 12px rgba(20,12,4,.06); }
+  .xgov-head, .xgov-row { display:grid; grid-template-columns:.85fr 1.35fr 1.35fr; }
+  .xgov-head { background:#f1ece3; font-weight:800; font-size:.74rem; text-align:center; }
+  .xgov-head span, .xgov-row span { padding:.6rem .55rem; border-bottom:1px solid var(--line); }
+  .xgov-head .xgov-h-us { background:#fff1e8; color:var(--red); }
+  .xgov-row:last-child span { border-bottom:0; }
+  .xgov-label { font-weight:800; font-size:.72rem; color:#46402f; background:#faf6ef; display:flex; align-items:center; }
+  .xgov-cell { font-size:.72rem; line-height:1.55; }
+  .xgov-us-ok { color:#0a7d28; font-weight:700; }
+  .xgov-warn { color:#a9750a; }
+  .xgov-bad { color:#b3261e; }
+  .xgov-note { max-width:680px; margin:14px auto 0; font-size:.74rem; color:#5b4f3d; line-height:1.6; }
+  .xgov-note ul { margin:.4rem 0 0; padding-left:1.1rem; }
+  .xgov-note li { margin-bottom:.2rem; }
 
   /* 蜂種（統一カード） */
   .xbee-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
