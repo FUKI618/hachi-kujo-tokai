@@ -127,14 +127,61 @@ const strengthsShown = strengths.slice(0, 6);
     </ul>
   </div>
 
-  <!-- ===== PC専用ヒーロー（≥900pxで表示。モバイルは焼込み画像 .xhero を使用） ===== -->
+  <!-- ===== PC専用ヒーロー（≥900pxで表示・チラシを実HTMLで再現／16:9固定キャンバス・%絶対配置） ===== -->
   <section class="xhero-pc" aria-label="蜂の巣駆除 即日スピード解決｜最短30分・基本1,680円〜">
-    <div class="xhpc-wrap">
-      <img class="xhpc-mock" src={assetPath("images/generated/hero-pc-chirashi.webp")} width="1376" height="768"
-        alt={`蜂の巣駆除 即日スピード解決｜最短30分で到着・基本1,680円〜（税込）・見積出張キャンセル0円・1年保証｜${company.name} 電話${company.phoneDisplay}`}
-        loading="eager" decoding="async" fetchpriority="high" />
-      <a class="xhpc-tap xhpc-tap-tel" href={company.phoneTelLink} data-cta="hero_tel" aria-label={`今すぐ電話で相談 ${company.phoneDisplay}・24時間受付・タップで発信`}></a>
-      <a class="xhpc-tap xhpc-tap-line" href={company.lineUrl} data-cta="hero_line" target="_blank" rel="noopener" aria-label="LINEで無料相談・写真見積"></a>
+    <div class="xpc">
+      <!-- 背景：スタッフ＋空（文字なしクリーン下地・原画相当） -->
+      <img class="xpc-bg" src={assetPath("images/generated/hero-pc-bg.webp")} width="1376" height="768"
+        alt="蜂の巣駆除に対応する防護服のプロスタッフ2名" loading="eager" decoding="async" fetchpriority="high" />
+
+      <!-- 上部白バー -->
+      <div class="xpc-bar" aria-hidden="true">
+        <span class="xpc-bar-sub">24時間365日受付・最短30分で出動</span>
+        <span class="xpc-bar-brand"><img class="xpc-bar-logo" src={assetPath("images/generated/hero-bee-logo.webp")} width="132" height="120" alt="" />{company.name}</span>
+      </div>
+
+      <!-- リボン -->
+      <div class="xpc-ribbon" aria-hidden="true"><span>【最短その日のうちに駆除完了！】</span></div>
+
+      <!-- 見出し -->
+      <p class="xpc-h1" aria-hidden="true"><span class="xpc-h1-box">蜂の巣</span><span class="xpc-h1-out">駆除</span></p>
+      <p class="xpc-h2" aria-hidden="true">即日スピード解決</p>
+
+      <!-- チェック -->
+      <ul class="xpc-checks" aria-hidden="true">
+        <li><svg viewBox="0 0 24 24" class="xpc-chk"><path d="M4 12.5 L9.5 18 L20 6"/></svg>安心できる毎日を取り戻します！</li>
+        <li><svg viewBox="0 0 24 24" class="xpc-chk"><path d="M4 12.5 L9.5 18 L20 6"/></svg>プロがスピード対応！</li>
+      </ul>
+
+      <!-- 最短30分 -->
+      <div class="xpc-min" aria-hidden="true">
+        <svg viewBox="0 0 24 24" class="xpc-min-ic"><circle cx="12" cy="13" r="8"/><path d="M12 13 V9 M12 13 l3 2 M9 3 h6"/></svg>
+        最短<b>30分</b>で到着
+      </div>
+
+      <!-- 丸バッジ3つ -->
+      <ul class="xpc-seals" aria-hidden="true">
+        <li><b>即日</b><b>対応</b></li>
+        <li><b>1年</b><b>保証</b></li>
+        <li><small>相談・</small><small>調査・見積</small><b>無料</b></li>
+      </ul>
+
+      <!-- 価格バブル -->
+      <div class="xpc-price" aria-hidden="true">
+        <span class="xpc-price-1">基本<b>¥1,680〜</b><i>（税込）</i> /</span>
+        <span class="xpc-price-2">見積・出張・キャンセル<b>0円</b></span>
+      </div>
+
+      <!-- 電話CTA -->
+      <a class="xpc-tel" href={company.phoneTelLink} data-cta="hero_tel" aria-label={`今すぐ電話で相談 ${company.phoneDisplay}・24時間受付`}>
+        <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
+        <span class="xpc-tel-tx"><b class="font-num">{company.phoneDisplay}</b><small>今すぐお電話ください</small></span>
+      </a>
+
+      <!-- LINE -->
+      <a class="xpc-line" href={company.lineUrl} data-cta="hero_line" target="_blank" rel="noopener" aria-label="LINEで無料相談・写真見積">
+        <span class="xpc-line-badge">LINE</span>写真を送るだけで無料見積
+      </a>
     </div>
   </section>
 
@@ -521,7 +568,7 @@ const strengthsShown = strengths.slice(0, 6);
   .xh-price { left:0; top:31.9%; width:100%; height:8.8%; margin:0; display:flex; align-items:center; justify-content:center; gap:2.4cqw; }
   .xhp-cell { display:flex; align-items:baseline; gap:.4cqw; color:#1a1a1a; font-weight:900; }
   .xhp-cell small { font-size:3.6cqw; }
-  .xhp-num { font-size:9.2cqw; font-weight:900; color:#d4151c; letter-spacing:-.02em; line-height:1; }
+  .xhp-num { font-size:8.6cqw; font-weight:900; color:#d4151c; letter-spacing:-.02em; line-height:1; }
   .xhp-tilde { font-size:5cqw; color:#d4151c; }
   .xhp-tax { font-size:2.2cqw; color:#777; font-style:normal; font-weight:700; }
   .xhp-div { width:.4cqw; height:7cqw; background:#cfc7ba; align-self:center; }
@@ -789,13 +836,51 @@ const strengthsShown = strengths.slice(0, 6);
   @media (min-width:900px){
     .xhero { display:none; }                       /* モバイル焼込み画像はPCで隠す */
 
-    /* === PC専用ヒーロー（AI生成チラシ型モック画像＋透明タップ計測） === */
-    .xhero-pc { display:block; background:linear-gradient(180deg,#cfe8fb 0%,#eaf6ff 62%,#f4fbff 100%); padding-bottom:2px; }
-    .xhpc-wrap { position:relative; max-width:1320px; margin:0 auto; line-height:0; }
-    .xhpc-mock { width:100%; height:auto; display:block; }
-    .xhpc-tap { position:absolute; display:block; z-index:2; -webkit-tap-highlight-color:transparent; border-radius:14px; }
-    .xhpc-tap-tel  { left:57.5%; top:68.5%; width:41.5%; height:16.5%; }
-    .xhpc-tap-line { left:65.5%; top:85%;  width:31.5%; height:10%; }
+    /* === PC専用ヒーロー（チラシを実HTML再現／16:9固定キャンバス・%絶対配置・cqwフォント） === */
+    .xhero-pc { display:block; }
+    .xpc { position:relative; width:100%; max-width:1320px; margin:0 auto; aspect-ratio:1376/768; container-type:inline-size; overflow:hidden;
+      font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
+    .xpc > * { position:absolute; }
+    .xpc-bg { inset:0; width:100%; height:100%; object-fit:cover; background:linear-gradient(180deg,#a7d8f9,#eef8ff); }
+    .xpc-bar { left:0; top:0; width:100%; height:12.5%; background:#fff; display:flex; flex-direction:column; justify-content:center; padding:0 2.5cqw; gap:.4cqw; }
+    .xpc-bar-sub { display:inline-block; background:#2a2a2a; color:#fff; font-size:1.5cqw; font-weight:800; padding:.25cqw 1cqw; border-radius:.4cqw; width:fit-content; letter-spacing:.02em; }
+    .xpc-bar-brand { display:flex; align-items:center; gap:.7cqw; font-size:2.8cqw; font-weight:900; color:#1a3f6b; letter-spacing:-.01em; }
+    .xpc-bar-logo { width:3.1cqw; height:auto; }
+    .xpc-ribbon { left:17%; top:14%; width:51%; height:10%; display:flex; align-items:center; justify-content:center; }
+    .xpc-ribbon span { display:flex; align-items:center; justify-content:center; width:100%; height:80%; background:linear-gradient(180deg,#f5821f,#e8590c); color:#fff; font-size:3cqw; font-weight:900; letter-spacing:.02em;
+      clip-path:polygon(4% 0,96% 0,100% 30%,93% 50%,100% 70%,96% 100%,4% 100%,0 70%,7% 50%,0 30%); box-shadow:0 .5cqw 1cqw rgba(0,0,0,.18); line-height:1; }
+    .xpc-h1 { left:16%; top:26%; width:50%; height:19%; margin:0; display:flex; align-items:flex-start; gap:.6cqw; }
+    .xpc-h1-box { font-size:8.6cqw; font-weight:900; color:#1a1a1a; background:#ffe200; border:.5cqw solid #1a1a1a; border-radius:1.6cqw; padding:0 1cqw; line-height:1.05; letter-spacing:-.04em; }
+    .xpc-h1-out { font-size:8.6cqw; font-weight:900; color:#fff; -webkit-text-stroke:.65cqw #1a1a1a; paint-order:stroke fill; letter-spacing:-.04em; line-height:1.05; }
+    .xpc-h2 { left:16%; top:45.5%; width:52%; height:11%; margin:0; display:flex; align-items:flex-start; font-size:5cqw; font-weight:900; color:#1a3f6b; letter-spacing:-.02em; line-height:1; -webkit-text-stroke:.35cqw #fff; paint-order:stroke fill; text-shadow:0 0 .6cqw #fff,0 .15cqw .3cqw rgba(255,255,255,.9); }
+    .xpc-checks { list-style:none; margin:0; left:33%; top:56.5%; width:36%; height:13%; padding:0; display:flex; flex-direction:column; justify-content:center; gap:.7cqw; }
+    .xpc-checks li { display:flex; align-items:center; gap:.7cqw; font-size:1.85cqw; font-weight:800; color:#222; white-space:nowrap; text-shadow:0 0 .5cqw #fff,0 0 .5cqw #fff; }
+    .xpc-chk { width:2.7cqw; height:2.7cqw; flex-shrink:0; fill:none; stroke:#1a5fa5; stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round; }
+    .xpc-min { left:34%; top:69%; width:28%; height:12.5%; display:flex; align-items:center; justify-content:center; gap:1cqw;
+      background:linear-gradient(180deg,#f5821f,#e8590c); color:#fff; border-radius:9999px; font-size:2.5cqw; font-weight:900; white-space:nowrap; }
+    .xpc-min b { font-size:1.3em; color:#ffe200; margin:0 .1em; }
+    .xpc-min-ic { width:2.8cqw; height:2.8cqw; fill:none; stroke:#fff; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    .xpc-seals { list-style:none; margin:0; left:36%; top:83.5%; width:26%; height:15%; padding:0; display:flex; justify-content:space-between; align-items:center; }
+    .xpc-seals li { width:30%; aspect-ratio:1/1; border-radius:50%; background:linear-gradient(180deg,#f5821f,#e8590c); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 0 0 .4cqw #fff,0 0 0 .8cqw #e8590c; text-align:center; line-height:1.08; }
+    .xpc-seals b { font-size:2.6cqw; font-weight:900; }
+    .xpc-seals small { font-size:1.55cqw; font-weight:800; line-height:1.15; }
+    .xpc-seals li:last-child small { font-size:1.1cqw; }
+    .xpc-seals li:last-child b { font-size:2.4cqw; margin-top:.15cqw; }
+    .xpc-price { left:65%; top:35%; width:33.5%; height:21%; background:#fff; border:.45cqw solid #e8590c; border-radius:2cqw; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:.6cqw; padding:0 1.6cqw; filter:drop-shadow(0 .6cqw 1cqw rgba(0,0,0,.12)); }
+    .xpc-price span { display:flex; align-items:baseline; justify-content:center; font-size:2.1cqw; font-weight:900; color:#1a1a1a; white-space:nowrap; line-height:1.15; }
+    .xpc-price b { color:#e8590c; font-size:1.28em; }
+    .xpc-price i { font-size:.62em; font-style:normal; color:#555; }
+    .xpc-price-2 b { font-size:1.32em; }
+    .xpc-price::after { content:""; position:absolute; left:30%; bottom:-2.3cqw; border:1.2cqw solid transparent; border-top-color:#e8590c; }
+    .xpc-tel { left:62%; top:69%; width:36.5%; height:12.5%; display:flex; align-items:center; gap:1.5cqw; text-decoration:none; color:#fff;
+      background:linear-gradient(180deg,#f5821f,#e8590c); border-radius:9999px; padding:0 2.5cqw; box-shadow:0 .6cqw 1.4cqw rgba(180,60,6,.3); }
+    .xpc-tel .xic { width:4cqw; height:4cqw; flex-shrink:0; }
+    .xpc-tel-tx { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; }
+    .xpc-tel-tx b { font-size:3.5cqw; font-weight:900; letter-spacing:0; }
+    .xpc-tel-tx small { font-size:1.7cqw; font-weight:700; }
+    .xpc-line { left:64.5%; top:85%; width:34%; height:9%; display:flex; align-items:center; gap:1.2cqw; text-decoration:none; color:#fff;
+      background:#06C755; border-radius:1.5cqw; padding:0 1.6cqw; font-size:2.1cqw; font-weight:900; white-space:nowrap; }
+    .xpc-line-badge { background:#fff; color:#06C755; font-weight:900; font-size:.85em; padding:.2cqw .7cqw; border-radius:.5cqw; }
 
     /* 下半分：横幅を使う多段グリッド */
     .xb { max-width:1080px; }
