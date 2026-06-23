@@ -504,14 +504,17 @@ const strengthsShown = strengths.slice(0, 6);
   <SiteFooter />
 
   <div class="xfloat">
-    <a href={company.phoneTelLink} class="xfloat-btn xfloat-tel" data-cta="float_tel" aria-label={`電話で無料相談 ${company.phoneDisplay}・通話料0円・24時間受付`}>
-      <svg class="xic"><use href="#i-phone" /></svg>
-      <span class="xfloat-tx"><b>電話で無料相談</b><small>相談だけOK・通話無料</small></span>
-    </a>
-    <a href={company.lineUrl} class="xfloat-btn xfloat-line" data-cta="float_line" target="_blank" rel="noopener" aria-label="LINEで相談">
-      <span class="xfloat-line-badge">LINE</span>
-      <span class="xfloat-tx"><b>相談</b><small>写真で見積</small></span>
-    </a>
+    <p class="xfloat-msg"><span class="xfm-1">他社のお見積もり、見せてください</span><b class="xfm-2">中間マージン0円で“さらにお安く”ご提案</b></p>
+    <div class="xfloat-row">
+      <a href={company.phoneTelLink} class="xfloat-btn xfloat-tel" data-cta="float_tel" aria-label={`電話で無料相談 ${company.phoneDisplay}・通話料0円・24時間受付`}>
+        <svg class="xic"><use href="#i-phone" /></svg>
+        <span class="xfloat-tx"><b>電話で無料相談</b><small>相談だけOK・通話無料</small></span>
+      </a>
+      <a href={company.lineUrl} class="xfloat-btn xfloat-line" data-cta="float_line" target="_blank" rel="noopener" aria-label="LINEで見積相談・他社見積もり可">
+        <span class="xfloat-line-badge">LINE</span>
+        <span class="xfloat-tx"><b>見積相談</b><small>他社見積もりOK</small></span>
+      </a>
+    </div>
   </div>
 </Layout>
 
@@ -819,16 +822,22 @@ const strengthsShown = strengths.slice(0, 6);
   .xb-cta-sub { margin:14px 0 0; font-size:.74rem; opacity:.95; }
 
   /* フローティング（電話＋LINE）バー */
-  .xfloat { position:fixed; left:0; right:0; bottom:0; z-index:60; display:flex; gap:8px; padding:8px;
-    background:#fff; border-top:1px solid rgba(20,12,4,.1); box-shadow:0 -4px 16px rgba(0,0,0,.16); }
-  .xfloat-btn { display:flex; align-items:center; justify-content:center; gap:.4rem; color:#fff; font-weight:800;
-    padding:.6rem .5rem; border-radius:12px; text-decoration:none; box-shadow:0 4px 12px rgba(0,0,0,.2); text-shadow:0 1px 2px rgba(0,0,0,.32); }
+  .xfloat { position:fixed; left:0; right:0; bottom:0; z-index:60; display:flex; flex-direction:column; gap:6px; padding:7px 8px calc(7px + env(safe-area-inset-bottom,0px));
+    background:#fff; border-top:1px solid rgba(20,12,4,.1); box-shadow:0 -4px 18px rgba(0,0,0,.2); }
+  .xfloat-msg { margin:0; display:flex; flex-direction:column; align-items:center; gap:1px; text-align:center;
+    background:linear-gradient(180deg,#c4150c,#9c0d0b); color:#fff; border-radius:9px; padding:.4rem .5rem; box-shadow:0 2px 8px rgba(150,20,12,.3); }
+  .xfm-1 { font-size:.72rem; font-weight:800; }
+  .xfm-2 { font-size:.84rem; font-weight:900; color:#ffd23f; }
+  .xfloat-row { display:flex; gap:8px; }
+  .xfloat-btn { display:flex; align-items:center; justify-content:center; gap:.45rem; color:#fff; font-weight:800;
+    padding:.74rem .5rem; border-radius:12px; text-decoration:none; box-shadow:0 4px 12px rgba(0,0,0,.2); text-shadow:0 1px 2px rgba(0,0,0,.32); }
   .xfloat-tel { flex:1.9; background:linear-gradient(180deg,#e8590c,#c4150c); }
   .xfloat-line { flex:1; background:#04a847; }
-  .xfloat .xic { width:1.3rem; height:1.3rem; }
-  .xfloat-tx { display:flex; flex-direction:column; line-height:1.1; align-items:flex-start; }
+  .xfloat .xic { width:1.5rem; height:1.5rem; }
+  .xfloat-tx { display:flex; flex-direction:column; line-height:1.12; align-items:flex-start; }
+  .xfloat-tx b { font-size:.98rem; }
   .xfloat-tx small { font-size:.58rem; font-weight:700; opacity:1; }
-  .xfloat-line-badge { background:#fff; color:#06C755; font-weight:900; font-size:.72rem; padding:.12rem .4rem; border-radius:6px; }
+  .xfloat-line-badge { background:#fff; color:#06C755; font-weight:900; font-size:.74rem; padding:.14rem .42rem; border-radius:6px; }
   @media (min-width:900px){ .xfloat { display:none; } }
 
   /* ===== PC(≥900px)最適化：横幅を使うレイアウト（モバイルは @media 外＝一切不変） ===== */
