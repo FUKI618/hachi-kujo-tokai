@@ -266,10 +266,10 @@ const allJsonLd = [
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- LCP高速化: 実LCP要素を高優先で先読み（旧 hero-poster.webp は未使用のため廃止）。
-         mobile(<900px)=焼込みヒーロー emergency-hero-full / PC(≥900px)=画像ヒーロー hero-pc-chirashi。media属性で該当幅だけ先読み -->
+    <!-- LCP高速化: 実LCP要素を高優先で先読み。
+         mobile(<900px)=HTMLヒーロー実写真 hero-mob-photo / PC(≥900px)=画像ヒーロー hero-pc-chirashi。media属性で該当幅だけ先読み -->
     <link rel="preload" as="image" type="image/webp" fetchpriority="high"
-      href={assetPath("images/generated/emergency-hero-full.webp")} media="(max-width: 899px)" />
+      href={assetPath("images/generated/hero-mob-photo.webp")} media="(max-width: 899px)" />
     <link rel="preload" as="image" type="image/webp" fetchpriority="high"
       href={assetPath("images/generated/hero-pc-chirashi.webp")} media="(min-width: 900px)" />
 

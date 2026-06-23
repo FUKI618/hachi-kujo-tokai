@@ -1,8 +1,8 @@
 ---
 /**
  * /pro/ — 蜂の巣駆除ファクトリー東海｜緊急・電話ファースト集客LP
- * ヒーロー: 承認モック emergency-hero.webp を 100% 画像で使用＝ピクセル完全一致。
- *   社名のみ下地パッチ＋実テキストで上書き。電話＝透明 tel: オーバーレイ（data-cta で CV 自動発火）。
+ * ヒーロー(モバイル): 承認チラシを実HTML/CSSで99%再現（2:3固定キャンバス・%絶対配置・cqwフォント）。実写真は hero-mob-photo（Gemini生成・人物の顔なし）。
+ *   見出し/価格/電話は実テキスト（QS/SEO/AEO）。電話＝実 tel: リンク（data-cta で CV 自動発火）。PC(≥900px)は承認画像 hero-pc-chirashi を継続使用。
  * 下半分: 実HTML（実データSSOT）でSEO/AEO対策。配色はヒーロー基調（赤#a60101 / 橙CTA / クリーム#fdfcf6）。
  *   画像は実写真（cases / bee-types / generated）のみ。FAQは FAQPage 構造化データを併設。
  */
@@ -26,7 +26,6 @@ import SiteFooter from "../components/SiteFooter.astro";
 const title = `名古屋・愛知の蜂の巣駆除なら最短30分｜基本1,680円〜・1年保証｜${company.name}`;
 const description = `蜂の巣駆除を名古屋・愛知＋岐阜・三重の近郊エリアで最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ¥2,680〜・アシナガバチ¥1,680〜。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証。`;
 
-const heroImg = assetPath("images/generated/emergency-hero-full.webp");
 const beeShown = beeTypes.slice(0, 6);
 const casesShown = cases.slice(0, 4);
 
@@ -59,32 +58,73 @@ const strengthsShown = strengths.slice(0, 6);
 
   <!-- HERO＋本文を1枚のカードに（PCで中央に浮かせる／モバイルは無スタイル＝不変） -->
   <div class="lp-card">
-  <!-- ===== HERO（承認モック画像＝ピクセル完全） ===== -->
+  <!-- ===== HERO（焼込みチラシを実HTMLで99%再現／2:3固定キャンバス・%絶対配置） ===== -->
   <div class="xhero">
-    <img src={heroImg} width="1024" height="1536"
-      alt={`蜂の巣駆除 即日スピード解決｜最短30分で現場到着・基本1,680円〜（税込）・1年保証・追加0円の明朗会計・当日対応98%・名古屋・愛知・岐阜・三重対応【${company.name}】電話${company.phoneDisplay}`}
-      loading="eager" decoding="async" fetchpriority="high" />
-    <div class="xbrand-patch" aria-hidden="true">
-      <span class="bname">{company.name}</span>
-      <span class="btag">蜂の巣駆除のプロ集団</span>
+    <!-- L8 実写真（原画から切出し・背面） -->
+    <img class="xh-photo" src={assetPath("images/generated/hero-mob-photo.webp")} width="1024" height="418"
+      alt="防護手袋のプロが専用工具で軒下のスズメバチの巣を取り除く様子" loading="eager" decoding="async" fetchpriority="high" />
+
+    <!-- L1 上部赤バー -->
+    <div class="xh-bar" aria-hidden="true">24時間365日受付・<b>最短30分</b>で出動</div>
+
+    <!-- L2 ブランド帯 -->
+    <div class="xh-brand">
+      <img class="xh-logo" src={assetPath("images/generated/hero-bee-logo.webp")} width="132" height="120" alt="" aria-hidden="true" />
+      <span class="xh-btext"><b class="xh-bname">{company.name}</b><small class="xh-btag">蜂の巣駆除のプロ集団</small></span>
+      <a class="xh-headtel" href={company.phoneTelLink} data-cta="header_tel" aria-label={`電話で相談 ${company.phoneDisplay}・24時間受付中`}>
+        <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
+        <span class="xh-headtel-tx"><b class="font-num">{company.phoneDisplay}</b><small>24時間受付中</small></span>
+      </a>
     </div>
-    <!-- 緑ドット下の「ただ今受付中」: ヒーロー画像のAI崩れ文字を実テキストで上書き -->
-    <div class="xnow-patch" aria-hidden="true">
-      <span>ただ今</span>
-      <span>受付中</span>
-    </div>
-    <!-- 通話無料 金シール（押下喚起・絵文字なし・電話鳴動パルス） -->
-    <div class="xseal" aria-hidden="true">
-      <span class="xseal-ring"></span>
-      <span class="xseal-body">
-        <b class="xseal-l1">通話料</b>
-        <b class="xseal-l2">無料</b>
+
+    <!-- L3 赤リボンバナー -->
+    <div class="xh-banner" aria-hidden="true"><span><em>そのまま放置</em><i>すると</i><b>危険！</b></span></div>
+
+    <!-- L4/L5 見出し -->
+    <p class="xh-h1" aria-hidden="true">蜂の巣駆除</p>
+    <p class="xh-h2" aria-hidden="true">即日スピード解決</p>
+
+    <!-- L6 価格行 -->
+    <p class="xh-price" aria-hidden="true">
+      <span class="xhp-cell"><small>最短</small><b class="xhp-num">30</b><small>分</small></span>
+      <span class="xhp-div"></span>
+      <span class="xhp-cell"><small>基本</small><b class="xhp-num">¥1,680</b><small class="xhp-tilde">〜</small><i class="xhp-tax">（税込）</i></span>
+    </p>
+
+    <!-- L7 電話CTA帯 -->
+    <a class="xh-cta" href={company.phoneTelLink} data-cta="hero_tel"
+       aria-label={`今すぐ電話で相談 ${company.phoneDisplay}・24時間受付・通話料0円・タップで発信`}>
+      <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
+      <span class="xh-cta-tx">
+        <small class="xh-cta-top">＼今すぐお電話ください！／</small>
+        <b class="xh-cta-num font-num">{company.phoneDisplay}</b>
+        <small class="xh-cta-bot">今すぐ電話・24時間受付・タップで発信</small>
       </span>
-    </div>
-    <a class="xtel xtel-cta" href={company.phoneTelLink} data-cta="hero_tel"
-       aria-label={`今すぐ電話で相談 ${company.phoneDisplay}・24時間受付・最短30分で出動`}></a>
-    <a class="xtel xtel-head" href={company.phoneTelLink} data-cta="header_tel"
-       aria-label={`電話で相談 ${company.phoneDisplay}・24時間受付中`}></a>
+    </a>
+    <!-- 緑ドット「ただ今受付中」 -->
+    <span class="xh-now" aria-hidden="true"><i class="xh-now-dot"></i>ただ今受付中</span>
+    <!-- 金「通話料無料」シール -->
+    <span class="xseal" aria-hidden="true"><span class="xseal-ring"></span><span class="xseal-body"><b class="xseal-l1">通話料</b><b class="xseal-l2">無料</b></span></span>
+
+    <!-- L9 信頼4列 -->
+    <ul class="xh-trust" aria-hidden="true">
+      <li>
+        <svg viewBox="0 0 24 24" class="xht-ic"><circle cx="12" cy="13" r="8"/><path d="M12 13 V9 M12 13 l3 2 M9 3 h6"/></svg>
+        <span><small>最短</small><b>30<em>分</em></b><small>で現場到着</small></span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" class="xht-ic xht-fill"><path d="M12 2 L20 5 V11 C20 16 16 20 12 22 C8 20 4 16 4 11 V5 Z"/><path class="xht-chk" d="M8.5 12 l2.5 2.5 L16 9"/></svg>
+        <span><small>安心の</small><b>1<em>年</em></b><small>保証</small></span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" class="xht-ic"><circle cx="12" cy="12" r="9"/><text x="12" y="15.5" class="xht-y0">¥0</text></svg>
+        <span><small>見積後</small><b>追加0<em>円</em></b><small>明朗会計</small></span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" class="xht-ic xht-fill"><path d="M4 11 L12 4 L20 11 V21 H4 Z"/></svg>
+        <span><small>当日対応</small><b>98<em>%</em></b><small>迅速対応</small></span>
+      </li>
+    </ul>
   </div>
 
   <!-- ===== PC専用ヒーロー（≥900pxで表示。モバイルは焼込み画像 .xhero を使用） ===== -->
@@ -190,11 +230,11 @@ const strengthsShown = strengths.slice(0, 6);
       <h2 class="xb-h" id="s-local"><span>名古屋の地元会社が、自社で直接うかがいます</span></h2>
       <p class="xb-lead">「全国対応」をうたう紹介サイトの多くは、受付だけで実作業は地域の下請けに手配します。当社は<b>名古屋市中区に拠点を置く実在の会社</b>が、受付から駆除・保証まで<b>自社で一貫対応</b>。中間マージンがないから<b>速く・適正価格</b>でうかがえます。</p>
       <ul class="xlocal-badges" aria-label="地元・自社対応の特長">
-        <li><span class="xlb-ic" aria-hidden="true">📍</span>{company.address.city}に拠点</li>
-        <li><span class="xlb-ic" aria-hidden="true">🔧</span>自社施工で直接対応</li>
-        <li><span class="xlb-ic" aria-hidden="true">⏱</span>最短{company.fastestArrival}で出動</li>
-        <li><span class="xlb-ic" aria-hidden="true">💴</span>中間マージン0円</li>
-        <li><span class="xlb-ic" aria-hidden="true">🛡</span>受付〜駆除〜1年保証まで自社完結</li>
+        <li><img class="xlb-ic" src={assetPath("images/icons/badge-pin.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />{company.address.city}に拠点</li>
+        <li><img class="xlb-ic" src={assetPath("images/icons/badge-wrench.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />自社施工で直接対応</li>
+        <li><img class="xlb-ic" src={assetPath("images/icons/badge-clock.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />最短{company.fastestArrival}で出動</li>
+        <li><img class="xlb-ic" src={assetPath("images/icons/badge-coin.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />中間マージン0円</li>
+        <li><img class="xlb-ic" src={assetPath("images/icons/badge-shield.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />受付〜駆除〜1年保証まで自社完結</li>
       </ul>
       <p class="xb-note xlocal-note">運営会社・代表者などの会社概要は<a href={assetPath("privacy-policy/")}>会社情報ページ</a>に記載しています。</p>
     </section>
@@ -432,39 +472,99 @@ const strengthsShown = strengths.slice(0, 6);
   .x-sr { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
   .xic { display:inline-block; width:1.2em; height:1.2em; flex-shrink:0; vertical-align:middle; }
 
-  /* ===== HERO ===== */
-  .xhero { position:relative; width:100%; max-width:480px; margin-inline:auto; background:#fdfcf6; container-type:inline-size; }
-  .xhero img { width:100%; height:auto; display:block; }
-  .xhero .xtel { position:absolute; display:block; }
-  .xtel-cta  { left:6%;  top:43.2%; width:88%; height:11.1%; }
-  .xtel-head { left:59%; top:4.8%;  width:38%; height:4.8%; }
-  .xbrand-patch { position:absolute; left:15.6%; top:6.6%; width:43%; height:6.6%;
-    background:#fdfcf6; display:flex; flex-direction:column; justify-content:center; gap:.3cqw; pointer-events:none; }
-  .xbrand-patch .bname { font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
-    font-weight:900; color:#0e0e0d; font-size:3.1cqw; line-height:1; letter-spacing:-.02em; white-space:nowrap; }
-  .xbrand-patch .btag { font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
-    font-weight:700; color:#5a5a5a; font-size:1.7cqw; line-height:1; white-space:nowrap; }
-  /* 緑ドット下「ただ今受付中」の下地パッチ＋実テキスト（画像のAI崩れ文字を上書き） */
-  .xnow-patch { position:absolute; left:82.8%; top:53.2%; width:10.6%; height:4.6%;
-    background:linear-gradient(180deg,#dc2a02,#ce0801);
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.15cqw;
-    pointer-events:none; overflow:hidden; }
-  .xnow-patch span { font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
-    font-weight:800; color:#fff; font-size:2.4cqw; line-height:1; letter-spacing:-.01em; white-space:nowrap; }
-
-  /* 通話無料 金シール（押下喚起・純CSSコイン＋鳴動リング） */
-  .xseal { position:absolute; left:80%; top:43.4%; width:14.5%; aspect-ratio:1/1; transform:rotate(-6deg); pointer-events:none; z-index:6;
+  /* ===== HERO（焼込みチラシの実HTML再現／2:3固定キャンバス・%絶対配置・cqwフォント） ===== */
+  .xhero { position:relative; width:100%; max-width:480px; margin-inline:auto; aspect-ratio:1024/1536;
+    background:#fefdf7; container-type:inline-size; overflow:hidden;
     font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
+  .xhero > * { position:absolute; }
+
+  /* L8 写真（背面・原画切出し） */
+  .xh-photo { left:0; top:59.4%; width:100%; height:27.2%; object-fit:cover; object-position:center top; }
+
+  /* L1 上部赤バー */
+  .xh-bar { left:0; top:0; width:100%; height:3.8%; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(180deg,#b81210,#8e0c0a); color:#fff; font-size:2.95cqw; font-weight:800; letter-spacing:-.01em; white-space:nowrap; }
+  .xh-bar b { color:#ffd23f; font-weight:900; margin:0 .1em; }
+
+  /* L2 ブランド帯 */
+  .xh-brand { left:0; top:3.8%; width:100%; height:9.5%; display:flex; align-items:center; gap:1.5cqw; padding:0 3cqw; }
+  .xh-logo { width:9cqw; height:auto; flex-shrink:0; }
+  .xh-btext { display:flex; flex-direction:column; line-height:1.05; }
+  .xh-bname { font-size:3.3cqw; font-weight:900; color:#111; letter-spacing:-.035em; white-space:nowrap; }
+  .xh-btag { font-size:1.7cqw; font-weight:700; color:#5a5a5a; }
+  .xh-headtel { margin-left:auto; display:flex; align-items:center; gap:1cqw; text-decoration:none; color:#fff;
+    background:linear-gradient(180deg,#f2630e,#d61e01); border-radius:2cqw; padding:1cqw 2cqw; }
+  .xh-headtel .xic { width:3.4cqw; height:3.4cqw; }
+  .xh-headtel-tx { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; }
+  .xh-headtel-tx b { font-size:3.3cqw; font-weight:900; }
+  .xh-headtel-tx small { font-size:1.5cqw; font-weight:700; }
+
+  /* L3 赤リボンバナー */
+  .xh-banner { left:0; top:13%; width:100%; height:5%; display:flex; align-items:center; justify-content:center; }
+  .xh-banner span { display:inline-flex; align-items:center; gap:.12em; background:linear-gradient(178deg,#cf1512,#9c0d0b);
+    color:#ffd23f; font-size:4.4cqw; font-weight:900; padding:.5cqw 6cqw; letter-spacing:-.02em; transform:skewX(-4deg);
+    clip-path:polygon(2% 0,98% 0,100% 50%,98% 100%,2% 100%,0 50%); box-shadow:0 1cqw 2cqw rgba(0,0,0,.14);
+    text-shadow:0 .2cqw .2cqw rgba(0,0,0,.35); }
+  .xh-banner em { font-style:normal; }
+  .xh-banner i { font-style:normal; color:#fff; font-size:.72em; }
+  .xh-banner b { color:#ffd23f; font-size:1.32em; }
+
+  /* L4/L5 見出し（黒＋白縁・斜体） */
+  .xh-h1 { left:0; top:16.1%; width:100%; height:12%; margin:0; display:flex; align-items:center; justify-content:center;
+    font-size:15.3cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.05em; transform:skewX(-5deg);
+    -webkit-text-stroke:.75cqw #fff; paint-order:stroke fill; text-shadow:0 .6cqw 1cqw rgba(0,0,0,.18); }
+  .xh-h2 { left:0; top:27.1%; width:100%; height:7%; margin:0; display:flex; align-items:center; justify-content:center;
+    font-size:8.7cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.04em; transform:skewX(-5deg);
+    -webkit-text-stroke:.45cqw #fff; paint-order:stroke fill; }
+
+  /* L6 価格行 */
+  .xh-price { left:0; top:31.9%; width:100%; height:8.8%; margin:0; display:flex; align-items:center; justify-content:center; gap:2.4cqw; }
+  .xhp-cell { display:flex; align-items:baseline; gap:.4cqw; color:#1a1a1a; font-weight:900; }
+  .xhp-cell small { font-size:3.6cqw; }
+  .xhp-num { font-size:9.2cqw; font-weight:900; color:#d4151c; letter-spacing:-.02em; line-height:1; }
+  .xhp-tilde { font-size:5cqw; color:#d4151c; }
+  .xhp-tax { font-size:2.2cqw; color:#777; font-style:normal; font-weight:700; }
+  .xhp-div { width:.4cqw; height:7cqw; background:#cfc7ba; align-self:center; }
+
+  /* L7 電話CTA帯 */
+  .xh-cta { left:5%; top:42.6%; width:90%; height:13.4%; display:flex; align-items:center; gap:2cqw;
+    text-decoration:none; color:#fff; background:linear-gradient(180deg,#f06a0c 0%,#e64805 45%,#cd1000 100%);
+    border-radius:3cqw; padding:0 3.5cqw; box-shadow:0 1.4cqw 3cqw rgba(170,30,4,.4), inset 0 .3cqw 0 rgba(255,255,255,.25); }
+  .xh-cta .xic { width:8cqw; height:8cqw; flex-shrink:0; filter:drop-shadow(0 .2cqw .3cqw rgba(0,0,0,.3)); }
+  .xh-cta-tx { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; flex:1; min-width:0; }
+  .xh-cta-top { font-size:2.7cqw; font-weight:900; color:#ffe39a; letter-spacing:.02em; }
+  .xh-cta-num { font-size:7.6cqw; font-weight:900; letter-spacing:0; line-height:1.02; }
+  .xh-cta-bot { font-size:2cqw; font-weight:700; }
+
+  /* 緑ドット ただ今受付中 */
+  .xh-now { top:51.2%; left:80%; width:14.5%; height:4.2%; display:flex; align-items:center; justify-content:center; gap:.5cqw; color:#fff; font-size:1.85cqw; font-weight:800; }
+  .xh-now-dot { width:1.6cqw; height:1.6cqw; border-radius:50%; background:#27d24a; box-shadow:0 0 0 .4cqw rgba(255,255,255,.5); }
+
+  /* L9 信頼4列 */
+  .xh-trust { list-style:none; margin:0; left:0; top:86.7%; width:100%; height:13.3%; padding:0 1.5cqw;
+    display:grid; grid-template-columns:repeat(4,1fr); align-items:center; background:#fefdf7; }
+  .xh-trust li { display:flex; align-items:center; justify-content:center; gap:1cqw; }
+  .xht-ic { width:7.6cqw; height:7.6cqw; flex-shrink:0; fill:none; stroke:#c0151c; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+  .xht-ic.xht-fill { fill:#c0151c; stroke:none; }
+  .xht-chk { stroke:#fff; stroke-width:2.2; fill:none; }
+  .xht-y0 { fill:#c0151c; stroke:none; font-size:9px; font-weight:900; text-anchor:middle; font-family:sans-serif; }
+  .xh-trust span { display:flex; flex-direction:column; line-height:1.05; color:#333; }
+  .xh-trust small { font-size:1.7cqw; font-weight:700; }
+  .xh-trust b { font-size:3.4cqw; font-weight:900; color:#1a1a1a; }
+  .xh-trust b em { color:#c0151c; font-style:normal; font-size:.72em; }
+
+  /* 通話無料 金シール（CTA右上・cqw） */
+  .xseal { top:39.6%; left:82.5%; width:13.5%; aspect-ratio:1/1; transform:rotate(-8deg); pointer-events:none; z-index:6; }
   .xseal-body { position:absolute; inset:0; border-radius:50%;
     background:radial-gradient(110% 110% at 32% 24%, #fdf0c2 0%, #f7d785 34%, #eab63f 64%, #cf9220 100%);
-    box-shadow:0 3px 9px rgba(60,30,0,.42), inset 0 0 0 1.4px #fff7e0, inset 0 0 0 3.5px #b9831a;
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.05cqw; }
-  .xseal-l1 { font-size:2.3cqw; font-weight:900; color:#7a1208; line-height:1; letter-spacing:.04em; }
-  .xseal-l2 { font-size:5.6cqw; font-weight:900; color:#a60101; line-height:.9; letter-spacing:-.01em; }
-  .xseal-ring { position:absolute; inset:0; border-radius:50%; border:2px solid #f2c14e; opacity:0;
+    box-shadow:0 .6cqw 1.8cqw rgba(60,30,0,.42), inset 0 0 0 .3cqw #fff7e0, inset 0 0 0 .7cqw #b9831a;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .xseal-l1 { font-size:2.4cqw; font-weight:900; color:#7a1208; line-height:1; letter-spacing:.04em; }
+  .xseal-l2 { font-size:5.6cqw; font-weight:900; color:#a60101; line-height:.9; }
+  .xseal-ring { position:absolute; inset:0; border-radius:50%; border:.4cqw solid #f2c14e; opacity:0;
     animation:xsealring 1.9s cubic-bezier(.22,.61,.36,1) infinite; }
-  @keyframes xsealring { 0%{ transform:scale(1); opacity:.6; } 70%{ transform:scale(1.5); opacity:0; } 100%{ opacity:0; } }
-  @media (prefers-reduced-motion:reduce){ .xseal-ring { animation:none; } }
+  @keyframes xsealring { 0%{ transform:scale(1); opacity:.6; } 70%{ transform:scale(1.4); opacity:0; } 100%{ opacity:0; } }
+  @media (prefers-reduced-motion:reduce){ .xseal-ring,.xh-now-dot { animation:none; } }
 
   /* ===== 下半分 共通（ヒーロー基調） ===== */
   .xb { --red:#a60101; --red2:#c81e1e; --ink:#241608; --cream:#fdfcf6; --line:rgba(20,12,4,.10);
@@ -474,11 +574,15 @@ const strengthsShown = strengths.slice(0, 6);
   .xb-sec-tint { background:#fff6ec; }
   .xb-h { display:flex; justify-content:center; margin:0 0 16px; }
   .xb-h span { display:inline-block; background:linear-gradient(180deg,#b81810,#8c1108); color:#fff;
-    font-size:1.06rem; font-weight:900; letter-spacing:.01em; padding:.5rem 1.1rem; border-radius:9999px;
+    font-size:1.06rem; font-weight:900; letter-spacing:.01em; padding:.62rem 1.5rem; border-radius:16px;
+    line-height:1.45; text-align:center; text-wrap:balance; word-break:auto-phrase; max-width:90%;
     box-shadow:0 4px 12px rgba(150,20,12,.28); }
-  .xb-lead { font-size:.86rem; line-height:1.75; margin:0 0 14px; }
+  /* 全体テキスト監査：日本語の文節折返しで途中改行・不格好を解消 */
+  .xb h3 { text-wrap:balance; word-break:auto-phrase; }
+  .xb p, .xb li, .xb figcaption, .xb dd, .xb dt { word-break:auto-phrase; text-wrap:pretty; }
+  .xb-lead { font-size:.86rem; line-height:1.75; margin:0 0 14px; word-break:auto-phrase; text-wrap:pretty; }
   .xb-lead b, .xb-note b { color:var(--red); font-weight:900; }
-  .xb-note { font-size:.72rem; color:#6b5d4a; line-height:1.6; margin:12px 2px 0; }
+  .xb-note { font-size:.72rem; color:#6b5d4a; line-height:1.6; margin:12px 2px 0; word-break:auto-phrase; text-wrap:pretty; }
   .xb-card { background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 3px 12px rgba(20,12,4,.06); }
   .xb-chip { background:linear-gradient(180deg,#ff7a1a,#e2231a); color:#fff; font-weight:900;
     padding:.28rem .7rem; border-radius:9999px; font-size:.96rem; white-space:nowrap; box-shadow:0 2px 6px rgba(200,40,10,.25); }
@@ -520,20 +624,20 @@ const strengthsShown = strengths.slice(0, 6);
   .xdanger-cap { margin:0; padding:.7rem .8rem .85rem; font-size:.78rem; line-height:1.6; color:#46402f; font-weight:600; }
 
   /* 他社見積もり比較（中間マージンゼロ） */
-  .xvs-off { color:var(--red); font-size:1.18em; font-weight:900; }
+  .xvs-off { color:#ffd23f; font-size:1.22em; font-weight:900; text-shadow:0 1px 2px rgba(80,6,4,.55); }
   .xvs { display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:880px; margin:14px auto 0; }
   .xvs-card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:.9rem .7rem; text-align:center; }
   .xvs-ours { border-color:var(--red); box-shadow:0 4px 14px rgba(226,35,26,.12); }
   .xvs-tag { display:inline-block; font-size:.72rem; font-weight:800; color:#8a7c68; background:#f1ece3; border-radius:999px; padding:.25rem .7rem; }
   .xvs-tag-on { color:#fff; background:var(--red); }
-  .xvs-pt { margin:.6rem 0 0; font-size:.78rem; line-height:1.65; color:#3f3526; }
-  .xvs-lead2 { text-align:center; font-size:.84rem; line-height:1.7; color:#46402f; margin:1rem auto 0; max-width:780px; font-weight:600; }
+  .xvs-pt { margin:.6rem 0 0; font-size:.78rem; line-height:1.65; color:#3f3526; word-break:auto-phrase; text-wrap:pretty; }
+  .xvs-lead2 { text-align:center; font-size:.84rem; line-height:1.7; color:#46402f; margin:1rem auto 0; max-width:780px; font-weight:600; word-break:auto-phrase; text-wrap:pretty; }
 
   /* 地元の実在企業（差別化トラストバッジ） */
   .xlocal-badges { list-style:none; margin:14px auto 0; padding:0; max-width:680px; display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
   .xlocal-badges li { display:flex; align-items:center; gap:.4rem; background:#fff; border:1px solid var(--line); border-radius:9999px;
     padding:.5rem .9rem; font-size:.82rem; font-weight:800; color:#3f3526; box-shadow:0 2px 8px rgba(20,12,4,.05); }
-  .xlb-ic { font-size:1rem; line-height:1; }
+  .xlb-ic { width:1.35rem; height:1.35rem; flex-shrink:0; }
   .xlocal-note { text-align:center; }
   .xlocal-note a { color:var(--red); font-weight:800; text-decoration:underline; }
 
