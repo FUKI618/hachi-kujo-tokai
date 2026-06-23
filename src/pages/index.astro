@@ -73,6 +73,14 @@ const strengthsShown = strengths.slice(0, 6);
       <span>ただ今</span>
       <span>受付中</span>
     </div>
+    <!-- 通話無料 金シール（押下喚起・絵文字なし・電話鳴動パルス） -->
+    <div class="xseal" aria-hidden="true">
+      <span class="xseal-ring"></span>
+      <span class="xseal-body">
+        <b class="xseal-l1">通話料</b>
+        <b class="xseal-l2">無料</b>
+      </span>
+    </div>
     <a class="xtel xtel-cta" href={company.phoneTelLink} data-cta="hero_tel"
        aria-label={`今すぐ電話で相談 ${company.phoneDisplay}・24時間受付・最短30分で出動`}></a>
     <a class="xtel xtel-head" href={company.phoneTelLink} data-cta="header_tel"
@@ -175,6 +183,20 @@ const strengthsShown = strengths.slice(0, 6);
       <p class="xvs-lead2"><b>いま、他社のお見積もりで「高いな」と感じていませんか？</b><br />そのお見積もりを、まずは見せてください。安くできるか、その場でお答えします。</p>
       <CtaDual id="vsquote_cta" lead="他社のお見積もりが高いと感じたら、まずはご相談を" />
       <p class="xb-note">※ 「最大50%」は、中間マージンをカットした当社価格を他社のお見積もり内容と比較した場合の最大値です。蜂の種類・巣の状況・他社条件により異なり、すべての案件で50%お安くなることを保証するものではありません。</p>
+    </section>
+
+    <!-- 地元の実在企業（差別化＝名古屋拠点・自社直接） -->
+    <section class="xb-sec" id="local" aria-labelledby="s-local">
+      <h2 class="xb-h" id="s-local"><span>名古屋の地元会社が、自社で直接うかがいます</span></h2>
+      <p class="xb-lead">「全国対応」をうたう紹介サイトの多くは、受付だけで実作業は地域の下請けに手配します。当社は<b>名古屋市中区に拠点を置く実在の会社</b>が、受付から駆除・保証まで<b>自社で一貫対応</b>。中間マージンがないから<b>速く・適正価格</b>でうかがえます。</p>
+      <ul class="xlocal-badges" aria-label="地元・自社対応の特長">
+        <li><span class="xlb-ic" aria-hidden="true">📍</span>{company.address.city}に拠点</li>
+        <li><span class="xlb-ic" aria-hidden="true">🔧</span>自社施工で直接対応</li>
+        <li><span class="xlb-ic" aria-hidden="true">⏱</span>最短{company.fastestArrival}で出動</li>
+        <li><span class="xlb-ic" aria-hidden="true">💴</span>中間マージン0円</li>
+        <li><span class="xlb-ic" aria-hidden="true">🛡</span>受付〜駆除〜1年保証まで自社完結</li>
+      </ul>
+      <p class="xb-note xlocal-note">運営会社・代表者などの会社概要は<a href={assetPath("privacy-policy/")}>会社情報ページ</a>に記載しています。</p>
     </section>
 
     <!-- 選ばれる理由 -->
@@ -395,9 +417,9 @@ const strengthsShown = strengths.slice(0, 6);
   <SiteFooter />
 
   <div class="xfloat">
-    <a href={company.phoneTelLink} class="xfloat-btn xfloat-tel" data-cta="float_tel" aria-label={`電話で相談 ${company.phoneDisplay}`}>
+    <a href={company.phoneTelLink} class="xfloat-btn xfloat-tel" data-cta="float_tel" aria-label={`電話で無料相談 ${company.phoneDisplay}・通話料0円・24時間受付`}>
       <svg class="xic"><use href="#i-phone" /></svg>
-      <span class="xfloat-tx"><b>電話で相談</b><small class="font-num">{company.phoneDisplay}</small></span>
+      <span class="xfloat-tx"><b>電話で無料相談</b><small>通話料0円・24時間</small></span>
     </a>
     <a href={company.lineUrl} class="xfloat-btn xfloat-line" data-cta="float_line" target="_blank" rel="noopener" aria-label="LINEで相談">
       <span class="xfloat-line-badge">LINE</span>
@@ -429,6 +451,20 @@ const strengthsShown = strengths.slice(0, 6);
     pointer-events:none; overflow:hidden; }
   .xnow-patch span { font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
     font-weight:800; color:#fff; font-size:2.4cqw; line-height:1; letter-spacing:-.01em; white-space:nowrap; }
+
+  /* 通話無料 金シール（押下喚起・純CSSコイン＋鳴動リング） */
+  .xseal { position:absolute; left:80%; top:43.4%; width:14.5%; aspect-ratio:1/1; transform:rotate(-6deg); pointer-events:none; z-index:6;
+    font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
+  .xseal-body { position:absolute; inset:0; border-radius:50%;
+    background:radial-gradient(110% 110% at 32% 24%, #fdf0c2 0%, #f7d785 34%, #eab63f 64%, #cf9220 100%);
+    box-shadow:0 3px 9px rgba(60,30,0,.42), inset 0 0 0 1.4px #fff7e0, inset 0 0 0 3.5px #b9831a;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.05cqw; }
+  .xseal-l1 { font-size:2.3cqw; font-weight:900; color:#7a1208; line-height:1; letter-spacing:.04em; }
+  .xseal-l2 { font-size:5.6cqw; font-weight:900; color:#a60101; line-height:.9; letter-spacing:-.01em; }
+  .xseal-ring { position:absolute; inset:0; border-radius:50%; border:2px solid #f2c14e; opacity:0;
+    animation:xsealring 1.9s cubic-bezier(.22,.61,.36,1) infinite; }
+  @keyframes xsealring { 0%{ transform:scale(1); opacity:.6; } 70%{ transform:scale(1.5); opacity:0; } 100%{ opacity:0; } }
+  @media (prefers-reduced-motion:reduce){ .xseal-ring { animation:none; } }
 
   /* ===== 下半分 共通（ヒーロー基調） ===== */
   .xb { --red:#a60101; --red2:#c81e1e; --ink:#241608; --cream:#fdfcf6; --line:rgba(20,12,4,.10);
@@ -492,6 +528,14 @@ const strengthsShown = strengths.slice(0, 6);
   .xvs-tag-on { color:#fff; background:var(--red); }
   .xvs-pt { margin:.6rem 0 0; font-size:.78rem; line-height:1.65; color:#3f3526; }
   .xvs-lead2 { text-align:center; font-size:.84rem; line-height:1.7; color:#46402f; margin:1rem auto 0; max-width:780px; font-weight:600; }
+
+  /* 地元の実在企業（差別化トラストバッジ） */
+  .xlocal-badges { list-style:none; margin:14px auto 0; padding:0; max-width:680px; display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+  .xlocal-badges li { display:flex; align-items:center; gap:.4rem; background:#fff; border:1px solid var(--line); border-radius:9999px;
+    padding:.5rem .9rem; font-size:.82rem; font-weight:800; color:#3f3526; box-shadow:0 2px 8px rgba(20,12,4,.05); }
+  .xlb-ic { font-size:1rem; line-height:1; }
+  .xlocal-note { text-align:center; }
+  .xlocal-note a { color:var(--red); font-weight:800; text-decoration:underline; }
 
   /* 安心の3つのお約束 */
   .xpromise { display:grid; grid-template-columns:1fr; gap:12px; max-width:880px; margin-inline:auto; }
