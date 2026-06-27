@@ -11,13 +11,11 @@ const { id, lead = "お急ぎはお電話、写真でのお見積りはLINEが�
 <div class="xcta">
   <p class="xcta-lead">{lead}</p>
   <div class="xcta-btns">
-    <a href={company.phoneTelLink} class="xcta-btn xcta-tel" data-cta={`${id}_tel`}
-       aria-label={`電話で相談 ${company.phoneDisplay}・24時間受付`}>
+    <a href={company.phoneTelLink} class="xcta-btn xcta-tel" data-cta={`${id}_tel`}>
       <svg viewBox="0 0 24 24" class="xcta-ic" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/></svg>
       <span class="xcta-t"><b class="num">{company.phoneDisplay}</b><small>24時間365日・通話無料・タップで発信</small></span>
     </a>
-    <a href={company.lineUrl} class="xcta-btn xcta-line" data-cta={`${id}_line`} target="_blank" rel="noopener"
-       aria-label="LINEで無料相談・写真見積">
+    <a href={company.lineUrl} class="xcta-btn xcta-line" data-cta={`${id}_line`} target="_blank" rel="noopener">
       <span class="xcta-badge">LINE</span>
       <span class="xcta-t"><b>LINEで相談する</b><small>写真を送るだけで無料見積</small></span>
     </a>
@@ -38,9 +36,9 @@ const { id, lead = "お急ぎはお電話、写真でのお見積りはLINEが�
   .xcta-tel { background:linear-gradient(180deg,#e8590c,#c4150c); }
   .xcta-tel .num { font-size:1.5rem; font-weight:900; letter-spacing:.01em; font-variant-numeric:tabular-nums; }
   /* 電話を主・LINEを従に：LINEは一段細く */
-  .xcta-line { background:#04a847; padding-top:.55rem; padding-bottom:.55rem; }
+  .xcta-line { background:#047d36; padding-top:.55rem; padding-bottom:.55rem; }
   .xcta-line b { font-size:1rem; font-weight:900; }
-  .xcta-badge { background:#fff; color:#06C755; font-weight:900; font-size:.8rem; padding:.18rem .48rem; border-radius:8px; flex-shrink:0; }
+  .xcta-badge { background:#fff; color:#057a35; font-weight:900; font-size:.8rem; padding:.18rem .48rem; border-radius:8px; flex-shrink:0; }
   /* 電話不安の解消＋押した後の道筋 */
   .xcta-rea { display:flex; flex-wrap:wrap; justify-content:center; gap:.25rem .7rem; margin:.75rem 0 0; padding:0; }
   .xcta-rea span { font-size:.7rem; font-weight:800; color:#0a7d28; }

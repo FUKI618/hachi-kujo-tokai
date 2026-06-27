@@ -57,7 +57,7 @@ const strengthsShown = strengths.slice(0, 6);
   </svg>
 
   <!-- HERO＋本文を1枚のカードに（PCで中央に浮かせる／モバイルは無スタイル＝不変） -->
-  <div class="lp-card">
+  <main class="lp-card">
   <!-- ===== HERO（焼込みチラシを実HTMLで99%再現／2:3固定キャンバス・%絶対配置） ===== -->
   <div class="xhero">
     <!-- L8 実写真（原画から切出し・背面） -->
@@ -71,7 +71,7 @@ const strengthsShown = strengths.slice(0, 6);
     <div class="xh-brand">
       <img class="xh-logo" src={assetPath("images/generated/hero-bee-logo.webp")} width="132" height="120" alt="" aria-hidden="true" />
       <span class="xh-btext"><b class="xh-bname">{company.name}</b><small class="xh-btag">蜂の巣駆除のプロ集団</small></span>
-      <a class="xh-headtel" href={company.phoneTelLink} data-cta="header_tel" aria-label={`電話で相談 ${company.phoneDisplay}・24時間受付中`}>
+      <a class="xh-headtel" href={company.phoneTelLink} data-cta="header_tel">
         <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
         <span class="xh-headtel-tx"><b class="font-num">{company.phoneDisplay}</b><small>24時間受付中</small></span>
       </a>
@@ -92,8 +92,7 @@ const strengthsShown = strengths.slice(0, 6);
     </p>
 
     <!-- L7 電話CTA帯 -->
-    <a class="xh-cta" href={company.phoneTelLink} data-cta="hero_tel"
-       aria-label={`今すぐ電話で相談 ${company.phoneDisplay}・24時間受付・通話料0円・タップで発信`}>
+    <a class="xh-cta" href={company.phoneTelLink} data-cta="hero_tel">
       <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
       <span class="xh-cta-tx">
         <small class="xh-cta-top">＼今すぐお電話ください！／</small>
@@ -173,13 +172,13 @@ const strengthsShown = strengths.slice(0, 6);
       </div>
 
       <!-- 電話CTA -->
-      <a class="xpc-tel" href={company.phoneTelLink} data-cta="hero_tel" aria-label={`今すぐ電話で相談 ${company.phoneDisplay}・24時間受付`}>
+      <a class="xpc-tel" href={company.phoneTelLink} data-cta="hero_tel">
         <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
         <span class="xpc-tel-tx"><b class="font-num">{company.phoneDisplay}</b><small>今すぐお電話ください</small></span>
       </a>
 
       <!-- LINE -->
-      <a class="xpc-line" href={company.lineUrl} data-cta="hero_line" target="_blank" rel="noopener" aria-label="LINEで無料相談・写真見積">
+      <a class="xpc-line" href={company.lineUrl} data-cta="hero_line" target="_blank" rel="noopener">
         <span class="xpc-line-badge">LINE</span>写真を送るだけで無料見積
       </a>
     </div>
@@ -487,11 +486,11 @@ const strengthsShown = strengths.slice(0, 6);
     <section class="xb-cta-sec" id="contact" aria-label="お問い合わせ">
       <p class="xb-cta-lead">まずはお気軽にご相談ください</p>
       <div class="xb-cta-btns">
-        <a href={company.phoneTelLink} class="xb-cta-btn xb-cta-tel" data-cta="footer_tel" aria-label={`電話で相談 ${company.phoneDisplay}`}>
+        <a href={company.phoneTelLink} class="xb-cta-btn xb-cta-tel" data-cta="footer_tel">
           <svg class="xic"><use href="#i-phone" /></svg>
           <span><b class="font-num">{company.phoneDisplay}</b><small>24時間365日受付・通話無料・タップで発信</small></span>
         </a>
-        <a href={company.lineUrl} class="xb-cta-btn xb-cta-line" data-cta="footer_line" target="_blank" rel="noopener" aria-label="LINEで無料相談">
+        <a href={company.lineUrl} class="xb-cta-btn xb-cta-line" data-cta="footer_line" target="_blank" rel="noopener">
           <span class="xb-cta-line-badge">LINE</span>
           <span><b>LINEで相談する</b><small>写真を送るだけで無料見積</small></span>
         </a>
@@ -499,18 +498,18 @@ const strengthsShown = strengths.slice(0, 6);
       <p class="xb-cta-sub">見積り・出張・キャンセル料すべて0円／最短30分で現場到着</p>
     </section>
   </div>
-  </div><!-- /.lp-card -->
+  </main><!-- /.lp-card -->
 
   <SiteFooter />
 
   <div class="xfloat">
     <p class="xfloat-msg"><span class="xfm-1">他社のお見積もり、見せてください</span><b class="xfm-2">もっとお得にできるか その場で回答！</b></p>
     <div class="xfloat-row">
-      <a href={company.phoneTelLink} class="xfloat-btn xfloat-tel" data-cta="float_tel" aria-label={`電話で無料相談 ${company.phoneDisplay}・通話料0円・24時間受付`}>
+      <a href={company.phoneTelLink} class="xfloat-btn xfloat-tel" data-cta="float_tel">
         <svg class="xic"><use href="#i-phone" /></svg>
         <span class="xfloat-tx"><b>電話で無料相談</b><small>相談だけOK・通話無料</small></span>
       </a>
-      <a href={company.lineUrl} class="xfloat-btn xfloat-line" data-cta="float_line" target="_blank" rel="noopener" aria-label="LINEで見積相談・他社見積もり可">
+      <a href={company.lineUrl} class="xfloat-btn xfloat-line" data-cta="float_line" target="_blank" rel="noopener">
         <span class="xfloat-line-badge">LINE</span>
         <span class="xfloat-tx"><b>見積相談</b><small>他社見積もりOK</small></span>
       </a>
@@ -562,10 +561,10 @@ const strengthsShown = strengths.slice(0, 6);
   /* L4/L5 見出し（黒＋白縁・斜体） */
   .xh-h1 { left:0; top:16.1%; width:100%; height:12%; margin:0; display:flex; align-items:center; justify-content:center;
     font-size:15.3cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.05em; transform:skewX(-5deg);
-    -webkit-text-stroke:.75cqw #fff; paint-order:stroke fill; text-shadow:0 .6cqw 1cqw rgba(0,0,0,.18); }
+    -webkit-text-stroke:.75cqw #fff; paint-order:stroke fill; text-shadow:0 0 .6cqw rgba(0,0,0,.95), 0 .55cqw .9cqw rgba(0,0,0,.5); }
   .xh-h2 { left:0; top:27.1%; width:100%; height:7%; margin:0; display:flex; align-items:center; justify-content:center;
     font-size:8.7cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.04em; transform:skewX(-5deg);
-    -webkit-text-stroke:.45cqw #fff; paint-order:stroke fill; }
+    -webkit-text-stroke:.45cqw #fff; paint-order:stroke fill; text-shadow:0 0 .55cqw rgba(0,0,0,.95), 0 .45cqw .8cqw rgba(0,0,0,.48); }
 
   /* L6 価格行 */
   .xh-price { left:0; top:31.9%; width:100%; height:8.8%; margin:0; display:flex; align-items:center; justify-content:center; gap:2.4cqw; }
@@ -573,7 +572,7 @@ const strengthsShown = strengths.slice(0, 6);
   .xhp-cell small { font-size:3.6cqw; }
   .xhp-num { font-size:8.6cqw; font-weight:900; color:#d4151c; letter-spacing:-.02em; line-height:1; }
   .xhp-tilde { font-size:5cqw; color:#d4151c; }
-  .xhp-tax { font-size:2.2cqw; color:#777; font-style:normal; font-weight:700; }
+  .xhp-tax { font-size:2.2cqw; color:#6b6b6b; font-style:normal; font-weight:700; }
   .xhp-div { width:.4cqw; height:7cqw; background:#cfc7ba; align-self:center; }
 
   /* L7 電話CTA帯 */
@@ -653,10 +652,10 @@ const strengthsShown = strengths.slice(0, 6);
   .xrate-thumb { width:74px; height:48px; border-radius:8px; object-fit:contain; flex-shrink:0; border:1px solid var(--line); background:#fff; padding:2px; }
   .xrate-info { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
   .xrate-name { font-size:1rem; font-weight:900; line-height:1.2; }
-  .xrate-cond { font-size:.66rem; color:#8a7c68; line-height:1.5; }
+  .xrate-cond { font-size:.66rem; color:#6b5d4a; line-height:1.5; }
   .xrate-price { flex-shrink:0; display:flex; flex-direction:column; align-items:flex-end; line-height:1; }
   .xrate-price b { font-size:1.3rem; font-weight:900; color:#e2231a; letter-spacing:.01em; font-variant-numeric:tabular-nums; }
-  .xrate-price small { font-size:.58rem; color:#8a7c68; margin-top:4px; font-weight:700; }
+  .xrate-price small { font-size:.58rem; color:#6b5d4a; margin-top:4px; font-weight:700; }
 
   /* 選ばれる理由 / 流れ 共通 num */
   .xb-num { flex-shrink:0; width:2.1rem; height:2.1rem; border-radius:50%; display:grid; place-items:center;
@@ -678,7 +677,7 @@ const strengthsShown = strengths.slice(0, 6);
   .xvs { display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:880px; margin:14px auto 0; }
   .xvs-card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:.9rem .7rem; text-align:center; }
   .xvs-ours { border-color:var(--red); box-shadow:0 4px 14px rgba(226,35,26,.12); }
-  .xvs-tag { display:inline-block; font-size:.72rem; font-weight:800; color:#8a7c68; background:#f1ece3; border-radius:999px; padding:.25rem .7rem; }
+  .xvs-tag { display:inline-block; font-size:.72rem; font-weight:800; color:#6b5d4a; background:#f1ece3; border-radius:999px; padding:.25rem .7rem; }
   .xvs-tag-on { color:#fff; background:var(--red); }
   .xvs-pt { margin:.6rem 0 0; font-size:.78rem; line-height:1.65; color:#3f3526; word-break:auto-phrase; text-wrap:pretty; }
   .xvs-lead2 { text-align:center; font-size:.84rem; line-height:1.7; color:#46402f; margin:1rem auto 0; max-width:780px; font-weight:600; word-break:auto-phrase; text-wrap:pretty; }
@@ -721,7 +720,7 @@ const strengthsShown = strengths.slice(0, 6);
   .xgov-label { font-weight:800; font-size:.72rem; color:#46402f; background:#faf6ef; display:flex; align-items:center; }
   .xgov-cell { font-size:.72rem; line-height:1.55; }
   .xgov-us-ok { color:#0a7d28; font-weight:700; }
-  .xgov-warn { color:#a9750a; }
+  .xgov-warn { color:#8a5e00; }
   .xgov-bad { color:#b3261e; }
   .xgov-note { max-width:680px; margin:14px auto 0; font-size:.74rem; color:#5b4f3d; line-height:1.6; }
   .xgov-note ul { margin:.4rem 0 0; padding-left:1.1rem; }
@@ -737,8 +736,8 @@ const strengthsShown = strengths.slice(0, 6);
     padding:.16rem .46rem; border-radius:6px; box-shadow:0 2px 5px rgba(0,0,0,.25); white-space:nowrap; }
   .xbee-badge-max  { background:#7e0c0c; }
   .xbee-badge-high { background:#c81e1e; }
-  .xbee-badge-mid  { background:#e07a18; }
-  .xbee-badge-low  { background:#3a8a3a; }
+  .xbee-badge-mid  { background:#a85400; }
+  .xbee-badge-low  { background:#2f7a2f; }
   .xbee-body { display:flex; flex-direction:column; gap:.4rem; padding:.7rem .8rem .85rem; flex:1; }
   .xbee-name { margin:0; font-size:.98rem; font-weight:900; line-height:1.2; }
   .xbee-meter { display:flex; gap:3px; }
@@ -749,7 +748,7 @@ const strengthsShown = strengths.slice(0, 6);
     display:-webkit-box; -webkit-line-clamp:3; line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
   .xbee-meta { margin:auto 0 0; display:flex; flex-direction:column; gap:2px; font-size:.64rem; color:#7a6c58; padding-top:.2rem; }
   .xbee-meta div { display:flex; gap:.4rem; }
-  .xbee-meta dt { margin:0; font-weight:800; color:#a2937a; min-width:2.4em; flex-shrink:0; }
+  .xbee-meta dt { margin:0; font-weight:800; color:#6b5d4a; min-width:2.4em; flex-shrink:0; }
   .xbee-meta dd { margin:0; }
 
   /* 事例 */
@@ -816,9 +815,9 @@ const strengthsShown = strengths.slice(0, 6);
   .xb-cta-tel { background:linear-gradient(180deg,#e8590c,#c4150c); }
   .xb-cta-tel .xic { width:1.7rem; height:1.7rem; }
   .xb-cta-tel b { font-size:1.5rem; line-height:1; letter-spacing:.01em; }
-  .xb-cta-line { background:#04a847; }
+  .xb-cta-line { background:#047d36; }
   .xb-cta-line b { font-size:1.05rem; font-weight:900; }
-  .xb-cta-line-badge { background:#fff; color:#06C755; font-weight:900; font-size:.82rem; padding:.2rem .5rem; border-radius:8px; flex-shrink:0; }
+  .xb-cta-line-badge { background:#fff; color:#057a35; font-weight:900; font-size:.82rem; padding:.2rem .5rem; border-radius:8px; flex-shrink:0; }
   .xb-cta-sub { margin:14px 0 0; font-size:.74rem; opacity:.95; }
 
   /* フローティング（電話＋LINE）バー */
@@ -832,12 +831,12 @@ const strengthsShown = strengths.slice(0, 6);
   .xfloat-btn { display:flex; align-items:center; justify-content:center; gap:.45rem; color:#fff; font-weight:800;
     padding:.74rem .5rem; border-radius:12px; text-decoration:none; box-shadow:0 4px 12px rgba(0,0,0,.2); text-shadow:0 1px 2px rgba(0,0,0,.32); }
   .xfloat-tel { flex:1.9; background:linear-gradient(180deg,#e8590c,#c4150c); }
-  .xfloat-line { flex:1; background:#04a847; }
+  .xfloat-line { flex:1; background:#047d36; }
   .xfloat .xic { width:1.5rem; height:1.5rem; }
   .xfloat-tx { display:flex; flex-direction:column; line-height:1.12; align-items:flex-start; }
   .xfloat-tx b { font-size:.98rem; }
   .xfloat-tx small { font-size:.58rem; font-weight:700; opacity:1; }
-  .xfloat-line-badge { background:#fff; color:#06C755; font-weight:900; font-size:.74rem; padding:.14rem .42rem; border-radius:6px; }
+  .xfloat-line-badge { background:#fff; color:#057a35; font-weight:900; font-size:.74rem; padding:.14rem .42rem; border-radius:6px; }
   @media (min-width:900px){ .xfloat { display:none; } }
 
   /* ===== PC(≥900px)最適化：横幅を使うレイアウト（モバイルは @media 外＝一切不変） ===== */
