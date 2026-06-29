@@ -108,15 +108,15 @@ const strengthsShown = strengths.slice(0, 6);
     <a class="xh-cta" href={company.phoneTelLink} data-cta="hero_tel">
       <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
       <span class="xh-cta-tx">
-        <small class="xh-cta-top">＼今すぐお電話ください！／</small>
+        <small class="xh-cta-top">＼今すぐお電話で不安も駆除／</small>
         <b class="xh-cta-num font-num">{company.phoneDisplay}</b>
-        <small class="xh-cta-bot">今すぐ電話・24時間受付・タップで発信</small>
+        <small class="xh-cta-bot">通話無料・24時間受付・タップで発信</small>
       </span>
     </a>
     <!-- 緑ドット「ただ今受付中」 -->
     <span class="xh-now" aria-hidden="true"><i class="xh-now-dot"></i>ただ今受付中</span>
-    <!-- 金「通話料無料」シール -->
-    <span class="xseal" aria-hidden="true"><span class="xseal-ring"></span><span class="xseal-body"><b class="xseal-l1">通話料</b><b class="xseal-l2">無料</b></span></span>
+    <!-- 赤「電話で10%OFF」クーポンバッジ（CTA右上・旧通話料無料シール跡に配置） -->
+    <span class="xcpn" aria-hidden="true"><span class="xcpn-body"><b class="xcpn-l1">電話で</b><b class="xcpn-l2">10<i>%</i></b><b class="xcpn-l3">OFF</b></span></span>
 
     <!-- L9 信頼4列 -->
     <ul class="xh-trust" aria-hidden="true">
@@ -219,6 +219,19 @@ const strengthsShown = strengths.slice(0, 6);
       <p class="xb-note">※ 写真はイメージです。</p>
     </section>
 
+    <!-- 緊急の資格化：今すぐ電話すべき状況（高単価・緊急客を承認し電話へ誘導） -->
+    <section class="xb-sec" id="urgent" aria-labelledby="s-urgent">
+      <h2 class="xb-h" id="s-urgent"><span>こんな状況は、今すぐお電話を</span></h2>
+      <ul class="xtrouble">
+        <li>蜂に刺された・刺されそうで家族が外に出られない</li>
+        <li>玄関・ベランダなど毎日通る場所に巣がある</li>
+        <li>小さな子ども・お年寄り・ペットがいて危険</li>
+        <li>スズメバチが家のまわりを何匹も飛んでいる</li>
+        <li>とにかく今日中に、この巣をなくしたい</li>
+      </ul>
+      <p class="xb-note xtrouble-cta">ひとつでも当てはまる方は、迷わず<b>お電話ください</b>。最短30分で、プロが駆けつけます。</p>
+    </section>
+
     <!-- こんなお悩み（共感） -->
     <section class="xb-sec" id="trouble" aria-labelledby="s-trouble">
       <h2 class="xb-h" id="s-trouble"><span>こんなお悩みありませんか？</span></h2>
@@ -260,39 +273,40 @@ const strengthsShown = strengths.slice(0, 6);
         ))}
       </div>
       <p class="xb-note">※ 巣のサイズ・高さ・場所により変動。<b>現地で確定見積</b>をお伝えし、ご納得後に作業。事前見積金額からの追加請求はありません。</p>
+      <p class="xb-coupon"><b class="xb-coupon-tag">電話割</b><span>このページをご覧の方が<b>お電話でお申込み</b>いただくと、<b class="xb-coupon-off">通常料金から10%OFF</b>。ご予約時に「ホームページを見た」とお伝えください。</span></p>
       <p class="xpay">お支払い：<b>現金・クレジットカード・PayPay・銀行振込・後払い</b> に対応</p>
     </section>
 
     <CtaDual id="rate_cta" lead="この料金で即日対応。今すぐご相談ください" />
 
-    <!-- 他社見積もり比較（中間マージンゼロ＝価格優位） -->
+    <!-- 仲介を挟まない自社直接＝適正価格・明朗会計（信頼） -->
     <section class="xb-sec xb-sec-tint" id="vs-quote" aria-labelledby="s-vsquote">
-      <h2 class="xb-h" id="s-vsquote"><span>他社のお見積もりから、最大<b class="xvs-off">50%OFF</b>も</span></h2>
-      <p class="xb-lead">紹介サイトや仲介業者を通すと<b>中間マージン</b>が上乗せされます。当社は受付から駆除まで<b>すべて自社で完結</b>。そのぶん<b>価格をおさえられます</b>。</p>
+      <h2 class="xb-h" id="s-vsquote"><span>あとから増えない、<b class="xvs-off">明朗会計</b></span></h2>
+      <p class="xb-lead">紹介サイトや仲介業者を通すと、<b>仲介手数料</b>が上乗せされます。当社は受付から駆除まで<b>すべて自社で完結</b>。だから余分な費用がのらない<b>適正価格</b>で、料金もわかりやすい。</p>
       <div class="xvs">
         <div class="xvs-card xvs-other">
           <span class="xvs-tag">紹介サイト・仲介経由</span>
-          <p class="xvs-pt">受付会社 → 仲介手数料 → 下請け<br /><b>中間マージンが上乗せ</b></p>
+          <p class="xvs-pt">受付会社 → 仲介手数料 → 下請け<br /><b>誰が来るか直前までわからない</b></p>
         </div>
         <div class="xvs-card xvs-ours">
           <span class="xvs-tag xvs-tag-on">当社（自社施工）</span>
-          <p class="xvs-pt">受付も駆除も<b>自社で完結</b><br /><b>中間マージン 0円</b></p>
+          <p class="xvs-pt">受付も駆除も<b>自社のスタッフが対応</b><br /><b>仲介手数料 0円</b></p>
         </div>
       </div>
-      <p class="xvs-lead2"><b>いま、他社のお見積もりで「高いな」と感じていませんか？</b><br />そのお見積もりを、まずは見せてください。安くできるか、その場でお答えします。</p>
-      <CtaDual id="vsquote_cta" lead="他社のお見積もりが高いと感じたら、まずはご相談を" />
-      <p class="xb-note">※ 「最大50%」は、中間マージンをカットした当社価格を他社のお見積もり内容と比較した場合の最大値です。蜂の種類・巣の状況・他社条件により異なり、すべての案件で50%お安くなることを保証するものではありません。</p>
+      <p class="xvs-lead2"><b>現地で確定したお見積りの範囲内で作業します。</b><br />ご納得いただいてから着手し、作業後に金額が増えることは一切ありません。</p>
+      <CtaDual id="vsquote_cta" lead="料金のご相談・ご質問も、お気軽にどうぞ" />
+      <p class="xb-note">※ 料金は蜂の種類・巣の大きさ・場所により変動します。現地調査のうえ確定金額をお伝えし、ご納得後に作業いたします。</p>
     </section>
 
     <!-- 地元の実在企業（差別化＝名古屋拠点・自社直接） -->
     <section class="xb-sec" id="local" aria-labelledby="s-local">
       <h2 class="xb-h" id="s-local"><span>名古屋の地元会社が、自社で直接うかがいます</span></h2>
-      <p class="xb-lead">「全国対応」をうたう紹介サイトの多くは、受付だけで実作業は地域の下請けに手配します。当社は<b>名古屋市中区に拠点を置く実在の会社</b>が、受付から駆除・保証まで<b>自社で一貫対応</b>。中間マージンがないから<b>速く・適正価格</b>でうかがえます。</p>
+      <p class="xb-lead">「全国対応」をうたう紹介サイトの多くは、受付だけで実作業は地域の下請けに手配します。当社は<b>名古屋市中区に拠点を置く実在の会社</b>が、受付から駆除・保証まで<b>自社で一貫対応</b>。仲介を挟まない自社直接だから<b>速く・適正価格</b>でうかがえます。</p>
       <ul class="xlocal-badges" aria-label="地元・自社対応の特長">
         <li><img class="xlb-ic" src={assetPath("images/icons/badge-pin.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />{company.address.city}に拠点</li>
         <li><img class="xlb-ic" src={assetPath("images/icons/badge-wrench.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />自社施工で直接対応</li>
         <li><img class="xlb-ic" src={assetPath("images/icons/badge-clock.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />最短{company.fastestArrival}で出動</li>
-        <li><img class="xlb-ic" src={assetPath("images/icons/badge-coin.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />中間マージン0円</li>
+        <li><img class="xlb-ic" src={assetPath("images/icons/badge-coin.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />仲介手数料0円</li>
         <li><img class="xlb-ic" src={assetPath("images/icons/badge-shield.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />受付〜駆除〜1年保証まで自社完結</li>
       </ul>
       <p class="xb-note xlocal-note">運営会社・代表者などの会社概要は<a href={assetPath("privacy-policy/")}>会社情報ページ</a>に記載しています。</p>
@@ -563,15 +577,16 @@ const strengthsShown = strengths.slice(0, 6);
   <SiteFooter />
 
   <div class="xfloat">
-    <p class="xfloat-msg"><span class="xfm-1">他社のお見積もり、見せてください</span><b class="xfm-2">もっとお得にできるか その場で回答！</b></p>
+    <p class="xfloat-msg"><span class="xfm-1">その蜂の巣、今日中に解決します</span><b class="xfm-2">最短30分でプロが駆けつけます</b></p>
     <div class="xfloat-row">
       <a href={company.phoneTelLink} class="xfloat-btn xfloat-tel" data-cta="float_tel">
+        <span class="xfloat-cpn" aria-hidden="true">電話で<b>10%OFF</b></span>
         <svg class="xic"><use href="#i-phone" /></svg>
-        <span class="xfloat-tx"><b>電話で無料相談</b><small>相談だけOK・通話無料</small></span>
+        <span class="xfloat-tx"><b>今すぐ駆除を頼む</b><small>お電話で10%OFF・通話無料</small></span>
       </a>
       <a href={company.lineUrl} class="xfloat-btn xfloat-line" data-cta="float_line" target="_blank" rel="noopener">
         <span class="xfloat-line-badge">LINE</span>
-        <span class="xfloat-tx"><b>見積相談</b><small>他社見積もりOK</small></span>
+        <span class="xfloat-tx"><b>写真で見積もりだけ</b><small>まず相談したい方はこちら</small></span>
       </a>
     </div>
   </div>
@@ -674,6 +689,17 @@ const strengthsShown = strengths.slice(0, 6);
     animation:xsealring 1.9s cubic-bezier(.22,.61,.36,1) infinite; }
   @keyframes xsealring { 0%{ transform:scale(1); opacity:.6; } 70%{ transform:scale(1.4); opacity:0; } 100%{ opacity:0; } }
   @media (prefers-reduced-motion:reduce){ .xseal-ring,.xh-now-dot { animation:none; } }
+
+  /* 電話10%OFF クーポンバッジ（CTA右上・旧通話料無料シール跡／赤地黄文字） */
+  .xcpn { position:absolute; top:38.6%; left:81.3%; width:15.5%; aspect-ratio:1/1; transform:rotate(8deg); pointer-events:none; z-index:7; }
+  .xcpn-body { position:absolute; inset:0; border-radius:50%;
+    background:radial-gradient(112% 112% at 32% 24%, #ff7a4d 0%, #ef2f12 44%, #bd0a08 100%);
+    box-shadow:0 .6cqw 1.8cqw rgba(80,0,0,.45), inset 0 0 0 .3cqw #fff, inset 0 0 0 .8cqw #ffd23f;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.1cqw; }
+  .xcpn-l1 { font-size:2.5cqw; font-weight:900; color:#fff; line-height:1; letter-spacing:.02em; }
+  .xcpn-l2 { font-size:5.8cqw; font-weight:900; color:#ffe200; line-height:.82; text-shadow:0 .2cqw .2cqw rgba(0,0,0,.25); }
+  .xcpn-l2 i { font-size:.6em; font-style:normal; }
+  .xcpn-l3 { font-size:3.6cqw; font-weight:900; color:#ffe200; line-height:.9; letter-spacing:.08em; }
 
   /* ===== 下半分 共通（ヒーロー基調） ===== */
   .xb { --red:#a60101; --red2:#c81e1e; --ink:#241608; --cream:#fdfcf6; --line:rgba(20,12,4,.10);
@@ -890,7 +916,9 @@ const strengthsShown = strengths.slice(0, 6);
   .xfloat-row { display:flex; gap:8px; }
   .xfloat-btn { display:flex; align-items:center; justify-content:center; gap:.45rem; color:#fff; font-weight:800;
     padding:.74rem .5rem; border-radius:12px; text-decoration:none; box-shadow:0 4px 12px rgba(0,0,0,.2); text-shadow:0 1px 2px rgba(0,0,0,.32); }
-  .xfloat-tel { flex:1.9; background:linear-gradient(180deg,#e8590c,#c4150c); }
+  .xfloat-tel { flex:1.9; background:linear-gradient(180deg,#e8590c,#c4150c); position:relative; overflow:visible; }
+  .xfloat-cpn { position:absolute; top:-9px; left:-5px; z-index:2; background:#ffd23f; color:#bd0a08; font-weight:900; font-size:.6rem; line-height:1; padding:3px 7px; border-radius:9px; box-shadow:0 2px 6px rgba(0,0,0,.3); transform:rotate(-7deg); white-space:nowrap; }
+  .xfloat-cpn b { font-size:.74rem; }
   .xfloat-line { flex:1; background:#047d36; }
   .xfloat .xic { width:1.5rem; height:1.5rem; }
   .xfloat-tx { display:flex; flex-direction:column; line-height:1.12; align-items:flex-start; }
