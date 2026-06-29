@@ -1,0 +1,259 @@
+---
+/**
+ * ArticleLayout — 記事（コラム）レイアウト。デザイン案C（落ち着いたAEO構造）。
+ * 会社情報は src/data/company.ts（配信LPと同一SSOT）から取得しハードコードしない。
+ * 構造化データ: Article + FAQPage + BreadcrumbList。
+ */
+import { company, tracking } from "../data/company";
+import { assetPath } from "../lib/site";
+import SiteFooter from "../components/SiteFooter.astro";
+
+const { entry, headings } = Astro.props as {
+  entry: { id: string; data: any };
+  headings: { depth: number; slug: string; text: string }[];
+};
+const d = entry.data;
+const toc = (headings ?? []).filter((h) => h.depth === 2);
+const pageUrl = new URL(`/column/${entry.id}/`, Astro.site).href;
+const heroUrl = new URL(assetPath(d.heroImage), Astro.site).href;
+const fmt = (dt: Date) =>
+  `${dt.getFullYear()}.${String(dt.getMonth() + 1).padStart(2, "0")}.${String(dt.getDate()).padStart(2, "0")}`;
+
+const articleLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: d.title,
+  description: d.description,
+  image: heroUrl,
+  datePublished: d.publishDate.toISOString(),
+  dateModified: (d.updatedDate ?? d.publishDate).toISOString(),
+  author: { "@type": "Organization", name: company.name },
+  publisher: { "@type": "Organization", name: company.name },
+  mainEntityOfPage: pageUrl,
+};
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: (d.faq ?? []).map((f: any) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "ホーム", item: new URL("/", Astro.site).href },
+    { "@type": "ListItem", position: 2, name: "蜂の知識", item: new URL("/column/", Astro.site).href },
+    { "@type": "ListItem", position: 3, name: d.title, item: pageUrl },
+  ],
+};
+---
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{d.title}｜{company.name}</title>
+<meta name="description" content={d.description} />
+<link rel="canonical" href={pageUrl} />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0f766e" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content={d.title} />
+<meta property="og:description" content={d.description} />
+<meta property="og:url" content={pageUrl} />
+<meta property="og:image" content={heroUrl} />
+<meta property="og:site_name" content={company.name} />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+<script type="application/ld+json" set:html={JSON.stringify(articleLd)} />
+<script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+<!-- 計測（GA4 + Google Ads）。LP方針に合わせ gtag は即時 -->
+<script async src={`https://www.googletagmanager.com/gtag/js?id=${tracking.ga4Id}`}></script>
+<script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${tracking.ga4Id}');gtag('config','${tracking.gadsConversionId}');`} />
+<style>
+:root{
+  --bg:#fbfaf8; --card:#fff; --ink:#1f2328; --sub:#5b6068; --line:#e7e6e2;
+  --teal:#0f766e; --teal-d:#0b5b54; --teal-bg:#e7f3f1; --amber:#b45309;
+  --disp:"Zen Kaku Gothic New",system-ui,sans-serif; --sans:"Noto Sans JP",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.9;font-feature-settings:"palt";-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+.topbar{border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:0;z-index:30}
+.topbar .in{max-width:1140px;margin:0 auto;padding:13px 22px;display:flex;justify-content:space-between;align-items:center}
+.topbar .logo{font-family:var(--disp);font-weight:900;font-size:15px;text-decoration:none;color:var(--ink)}
+.topbar nav{display:flex;gap:18px;font-size:13px;font-weight:700;color:var(--sub)}
+.topbar nav a{text-decoration:none}
+.topbar .pill{font-size:11px;font-weight:700;color:var(--teal);background:var(--teal-bg);padding:4px 10px;border-radius:999px}
+@media(max-width:680px){.topbar nav{display:none}}
+
+.crumb{font-size:11.5px;color:var(--sub);padding:16px 0 4px}
+.crumb a{color:var(--teal);text-decoration:none}
+h1.title{font-family:var(--disp);font-weight:900;font-size:clamp(23px,3.6vw,37px);line-height:1.45;margin:6px 0 10px;letter-spacing:.005em}
+.sub-meta{font-size:12px;color:var(--sub);display:flex;gap:14px;flex-wrap:wrap;font-weight:500;margin-bottom:10px}
+.hero{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:12px 0 6px;background:#fff}
+.hero img{width:100%;height:clamp(190px,30vw,320px);object-fit:cover}
+
+.grid{display:grid;grid-template-columns:260px 1fr;gap:46px;padding:26px 0 40px;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:1fr;gap:0}aside{display:none}}
+
+aside{position:sticky;top:74px}
+.toc-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.toc-card h4{font-family:var(--disp);font-weight:900;font-size:12px;letter-spacing:.16em;color:var(--sub);margin-bottom:10px}
+.toc a{display:block;font-size:13px;color:var(--ink);text-decoration:none;padding:8px 0 8px 12px;border-left:2px solid var(--line);line-height:1.5}
+.toc a:hover{color:var(--teal);border-left-color:var(--teal)}
+.mini-cta{margin-top:14px;background:var(--teal);border-radius:12px;padding:16px;color:#fff;text-align:center}
+.mini-cta .t{font-family:var(--disp);font-weight:900;font-size:17px;line-height:1.3}
+.mini-cta .s{font-size:10.5px;opacity:.92;margin-top:3px}
+.mini-cta a{display:block;margin-top:10px;background:#fff;color:var(--teal);font-weight:900;text-decoration:none;border-radius:8px;padding:9px;font-size:13px}
+
+main{min-width:0}
+.ans{background:var(--teal-bg);border:1px solid #bfe0db;border-left:5px solid var(--teal);border-radius:12px;padding:18px 20px;margin-bottom:18px}
+.ans .h{font-family:var(--disp);font-weight:900;color:var(--teal);font-size:13px;letter-spacing:.1em;margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.ans .h::before{content:"A";background:var(--teal);color:#fff;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px}
+.ans p{font-size:16px;font-weight:500}
+
+.tldr{border:1px dashed #d8d3c8;border-radius:12px;padding:14px 16px;margin:14px 0 8px;background:#fff}
+.tldr h4{font-family:var(--disp);font-weight:900;font-size:12px;color:var(--amber);letter-spacing:.1em;margin-bottom:8px}
+.tldr ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.tldr li{font-size:14px;padding-left:22px;position:relative}
+.tldr li::before{content:"✓";position:absolute;left:0;color:var(--teal);font-weight:900}
+
+/* 本文（Markdown）：案Cスタイル。h2は自動採番 */
+.article-body{counter-reset:sec;font-size:15.5px}
+.article-body h2{font-family:var(--disp);font-weight:900;font-size:21px;margin:34px 0 12px;padding-bottom:10px;border-bottom:2px solid var(--line);scroll-margin-top:80px}
+.article-body h2::before{counter-increment:sec;content:counter(sec,decimal-leading-zero);color:var(--teal);margin-right:10px}
+.article-body h3{font-family:var(--disp);font-weight:700;font-size:17px;margin:24px 0 8px}
+.article-body p{margin:12px 0;color:#33373d}
+.article-body strong{font-weight:700;color:var(--ink)}
+.article-body ul,.article-body ol{margin:12px 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.article-body ol{counter-reset:li}
+.article-body ol>li{position:relative;padding:12px 14px 12px 46px;background:#fff;border:1px solid var(--line);border-radius:10px;font-size:14.5px}
+.article-body ol>li::before{counter-increment:li;content:counter(li);position:absolute;left:12px;top:11px;width:24px;height:24px;border-radius:50%;background:var(--teal);color:#fff;font-family:var(--disp);font-weight:900;display:grid;place-items:center;font-size:13px}
+.article-body ul>li{position:relative;padding-left:22px;font-size:15px;color:#33373d}
+.article-body ul>li::before{content:"●";position:absolute;left:0;color:var(--teal);font-size:10px;top:7px}
+.article-body table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.article-body th,.article-body td{padding:12px 13px;text-align:left;border-bottom:1px solid var(--line)}
+.article-body thead th{background:var(--teal);color:#fff;font-family:var(--disp);font-weight:700;font-size:13px}
+.article-body tbody tr:nth-child(even){background:#f6f8f7}
+.article-body td:nth-child(2){font-weight:700;color:var(--teal-d);white-space:nowrap}
+
+/* FAQ accordion */
+.faq{margin-top:34px}
+.faq>h2{font-family:var(--disp);font-weight:900;font-size:21px;margin:0 0 12px;padding-bottom:10px;border-bottom:2px solid var(--line)}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:10px;margin:8px 0;overflow:hidden}
+.faq summary{cursor:pointer;list-style:none;padding:14px 16px;font-weight:700;font-size:15px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"＋";color:var(--teal);font-weight:900;flex:none}
+.faq details[open] summary::after{content:"−"}
+.faq .a{padding:0 16px 14px;font-size:14px;color:#33373d}
+
+/* CTA */
+.cta{background:linear-gradient(135deg,var(--teal),var(--teal-d));border-radius:16px;padding:28px 22px;margin:34px 0 0;color:#fff;text-align:center}
+.cta .lab{font-family:var(--disp);font-weight:900;font-size:19px}
+.cta .area{font-size:12px;opacity:.9;margin-top:4px}
+.cta .tel{font-family:var(--disp);font-weight:900;font-size:clamp(26px,6vw,34px);margin:12px 0 2px;letter-spacing:.02em;color:#fff;text-decoration:none;display:inline-block}
+.cta .telsub{font-size:12px;opacity:.9}
+.cta .row{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.cta .btn{padding:13px 24px;border-radius:10px;font-weight:900;font-family:var(--disp);text-decoration:none;font-size:15px}
+.cta .btn-tel{background:#fff;color:var(--teal-d)}
+.cta .btn-line{background:#06c755;color:#fff}
+.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0 4px}
+.badge{background:var(--card);border:1px solid var(--line);border-radius:10px;text-align:center;padding:10px 4px}
+.badge b{display:block;font-family:var(--disp);font-weight:900;color:var(--teal);font-size:14px;line-height:1.1}
+.badge span{font-size:10px;color:var(--sub);font-weight:700}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="in">
+  <a class="logo" href="/">{company.name}</a>
+  <nav><a href="/#price">料金</a><a href="/#area">対応エリア</a><a href="/column/">蜂の知識</a><a href="/#contact">お問い合わせ</a></nav>
+  <span class="pill">蜂の知識</span>
+</div></header>
+
+<div class="wrap">
+  <nav class="crumb"><a href="/">ホーム</a> › <a href="/column/">蜂の知識</a> › {d.category}</nav>
+  <h1 class="title">{d.title}</h1>
+  <div class="sub-meta">
+    <span>更新 {fmt(d.updatedDate ?? d.publishDate)}</span>
+    <span>{company.name} 監修</span>
+    <span>{d.readingTime}で読めます</span>
+  </div>
+  <div class="hero"><img src={assetPath(d.heroImage)} alt={d.heroAlt} width="1200" height="500" /></div>
+
+  <div class="grid">
+    <aside>
+      <div class="toc-card">
+        <h4>目次</h4>
+        <nav class="toc">
+          {toc.map((h) => <a href={`#${h.slug}`}>{h.text}</a>)}
+          {d.faq.length > 0 && <a href="#faq">よくある質問</a>}
+        </nav>
+      </div>
+      <div class="mini-cta">
+        <div class="t">写真で無料見積</div>
+        <div class="s">{company.serviceArea}／最短{company.fastestArrival}・追加料金0円</div>
+        <a href={company.phoneTelLink} data-cta="column_side_tel">電話・LINEで相談</a>
+      </div>
+    </aside>
+
+    <main>
+      <div class="ans">
+        <div class="h">結論</div>
+        <p set:html={d.answer} />
+      </div>
+
+      {d.tldr.length > 0 && (
+        <div class="tldr">
+          <h4>30秒まとめ</h4>
+          <ul>{d.tldr.map((t: string) => <li>{t}</li>)}</ul>
+        </div>
+      )}
+
+      <div class="badges">
+        <div class="badge"><b>{company.basicPrice.toLocaleString()}円〜</b><span>基本料金</span></div>
+        <div class="badge"><b>最短{company.fastestArrival}</b><span>で到着</span></div>
+        <div class="badge"><b>0円</b><span>追加料金</span></div>
+        <div class="badge"><b>{company.guaranteeYears}年</b><span>保証</span></div>
+      </div>
+
+      <article class="article-body">
+        <slot />
+      </article>
+
+      {d.faq.length > 0 && (
+        <section class="faq" id="faq">
+          <h2>よくある質問</h2>
+          {d.faq.map((f: any, i: number) => (
+            <details open={i === 0}>
+              <summary>{f.q}</summary>
+              <div class="a">{f.a}</div>
+            </details>
+          ))}
+        </section>
+      )}
+
+      <section class="cta">
+        <div class="lab">お急ぎの方は今すぐ無料見積もり</div>
+        <div class="area">{company.serviceArea}</div>
+        <a class="tel" href={company.phoneTelLink} data-cta="column_cta_tel">☎ {company.phoneDisplay}</a>
+        <div class="telsub">{company.hours}・通話無料／写真を送るだけのLINE概算もOK</div>
+        <div class="row">
+          <a class="btn btn-tel" href={company.phoneTelLink} data-cta="column_cta_tel2">電話で相談する</a>
+          <a class="btn btn-line" href={company.lineUrl} target="_blank" rel="noopener" data-cta="column_cta_line">LINEで写真見積もり</a>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<SiteFooter />
+</body>
+</html>

@@ -22,6 +22,19 @@ import { vsGovernmentRows, subsidyNote } from "../data/vs-government";
 import { faqs } from "../data/faq";
 import CtaDual from "../components/CtaDual.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import { getCollection } from "astro:content";
+
+// LPに載せるコラムカード（記事は content collection から自動取得・優先順で6本）
+const COLUMN_ORDER = [
+  "hachi-kujo-ryokin-soba",
+  "suzumebachi-tokushu",
+  "hachi-su-jibun-de-kujo",
+  "hachi-kujo-shiyakusho-muryo",
+  "gyosha-irai-handan",
+  "hachi-shurui-miwakekata",
+];
+const _columnAll = await getCollection("column");
+const columnPosts = COLUMN_ORDER.map((id) => _columnAll.find((p) => p.id === id)).filter(Boolean);
 
 const title = `名古屋・愛知の蜂の巣駆除なら最短30分｜基本1,680円〜・1年保証｜${company.name}`;
 const description = `蜂の巣駆除を名古屋・愛知＋岐阜・三重の近郊エリアで最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ¥2,680〜・アシナガバチ¥1,680〜。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証。`;
@@ -482,6 +495,53 @@ const strengthsShown = strengths.slice(0, 6);
       </div>
     </section>
 
+    <!-- 蜂の知識コラム（記事への動線） -->
+    <span id="column" class="x-anchor" aria-hidden="true"></span>
+    <section class="xb-sec xb-sec-tint" aria-labelledby="s-column">
+      <h2 class="xb-h" id="s-column"><span>蜂の知識コラム</span></h2>
+      <p class="xb-lead">料金の相場・安全な対処・蜂の見分け方を、駆除のプロが<b>やさしく解説</b>。気になるテーマからご覧ください。</p>
+      <div class="xcol-grid">
+        {columnPosts.map((p) => (
+          <a class="xcol-card" href={`/column/${p.id}/`} data-cta="lp_column_card">
+            <div class="xcol-photo">
+              <img src={assetPath(p.data.heroImage)} width="320" height="180" alt={p.data.heroAlt} loading="lazy" decoding="async" />
+              <span class="xcol-cat">{p.data.category}</span>
+            </div>
+            <div class="xcol-body">
+              <h3 class="xcol-title">{p.data.title}</h3>
+              <p class="xcol-desc">{p.data.description}</p>
+              <span class="xcol-more">詳しく読む →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="xcol-all"><a href="/column/" class="xcol-allbtn" data-cta="lp_column_all">コラムをもっと見る →</a></div>
+    </section>
+    <style>
+      .xcol-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:16px;margin-top:6px}
+      .xcol-card{display:flex;flex-direction:column;background:#fffdf6;border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:var(--ink);box-shadow:0 1px 0 rgba(20,12,4,.04);transition:transform .18s ease,box-shadow .18s ease}
+      .xcol-card:active{transform:translateY(1px)}
+      @media(hover:hover){.xcol-card:hover{transform:translateY(-4px);box-shadow:0 18px 34px -22px rgba(120,40,4,.5)}}
+      .xcol-photo{position:relative;aspect-ratio:16/9;background:#efe7d6}
+      .xcol-photo img{width:100%;height:100%;object-fit:cover;display:block}
+      .xcol-cat{position:absolute;left:10px;top:10px;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:4px 11px;border-radius:999px;letter-spacing:.02em;box-shadow:0 2px 8px rgba(120,10,10,.3)}
+      .xcol-body{display:flex;flex-direction:column;gap:7px;padding:13px 15px 15px;flex:1}
+      .xcol-title{font-size:1rem;font-weight:900;line-height:1.5;margin:0;color:var(--ink)}
+      .xcol-desc{font-size:.78rem;line-height:1.7;color:#6b5d4a;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+      .xcol-more{margin-top:auto;padding-top:4px;font-size:.82rem;font-weight:800;color:var(--red2)}
+      .xcol-all{text-align:center;margin-top:24px}
+      .xcol-allbtn{display:inline-block;border:2px solid var(--red);color:var(--red);font-weight:800;text-decoration:none;border-radius:999px;padding:12px 30px;font-size:.9rem;transition:background .18s,color .18s}
+      @media(hover:hover){.xcol-allbtn:hover{background:var(--red);color:#fff}}
+      /* モバイル〜タブレット：カードを横スクロール（カルーセル）。LPのモバイル版は内容幅が約480px固定でPC化は900px〜のため、900px未満すべてを対象にする。.xb section の左右padding=16pxに合わせて端までbleed */
+      @media (max-width:899px){
+        .xcol-grid{display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;
+          gap:12px;margin-inline:-16px;padding:2px 16px 14px;scroll-padding-left:16px;
+          -webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
+        .xcol-grid::-webkit-scrollbar{display:none}
+        .xcol-card{flex:0 0 80%;scroll-snap-align:start}
+      }
+    </style>
+
     <!-- 最終CTA（電話＋LINE） -->
     <section class="xb-cta-sec" id="contact" aria-label="お問い合わせ">
       <p class="xb-cta-lead">まずはお気軽にご相談ください</p>
@@ -561,10 +621,10 @@ const strengthsShown = strengths.slice(0, 6);
   /* L4/L5 見出し（黒＋白縁・斜体） */
   .xh-h1 { left:0; top:16.1%; width:100%; height:12%; margin:0; display:flex; align-items:center; justify-content:center;
     font-size:15.3cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.05em; transform:skewX(-5deg);
-    -webkit-text-stroke:.75cqw #fff; paint-order:stroke fill; text-shadow:0 0 .6cqw rgba(0,0,0,.95), 0 .55cqw .9cqw rgba(0,0,0,.5); }
+    -webkit-text-stroke:.75cqw #fff; paint-order:stroke fill; text-shadow:0 .55cqw .7cqw rgba(0,0,0,.22); }
   .xh-h2 { left:0; top:27.1%; width:100%; height:7%; margin:0; display:flex; align-items:center; justify-content:center;
     font-size:8.7cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.04em; transform:skewX(-5deg);
-    -webkit-text-stroke:.45cqw #fff; paint-order:stroke fill; text-shadow:0 0 .55cqw rgba(0,0,0,.95), 0 .45cqw .8cqw rgba(0,0,0,.48); }
+    -webkit-text-stroke:.45cqw #fff; paint-order:stroke fill; text-shadow:0 .4cqw .55cqw rgba(0,0,0,.2); }
 
   /* L6 価格行 */
   .xh-price { left:0; top:31.9%; width:100%; height:8.8%; margin:0; display:flex; align-items:center; justify-content:center; gap:2.4cqw; }
