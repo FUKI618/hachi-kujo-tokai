@@ -223,11 +223,11 @@ const strengthsShown = strengths.slice(0, 6);
     <section class="xb-sec" id="urgent" aria-labelledby="s-urgent">
       <h2 class="xb-h" id="s-urgent"><span>こんな状況は、今すぐお電話を</span></h2>
       <ul class="xtrouble">
-        <li>蜂に刺された・刺されそうで家族が外に出られない</li>
-        <li>玄関・ベランダなど毎日通る場所に巣がある</li>
-        <li>小さな子ども・お年寄り・ペットがいて危険</li>
-        <li>スズメバチが家のまわりを何匹も飛んでいる</li>
-        <li>とにかく今日中に、この巣をなくしたい</li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_tel">蜂に刺された・刺されそうで家族が外に出られない</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_tel">玄関・ベランダなど毎日通る場所に巣がある</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_tel">小さな子ども・お年寄り・ペットがいて危険</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_tel">スズメバチが家のまわりを何匹も飛んでいる</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_tel">とにかく今日中に、この巣をなくしたい</a></li>
       </ul>
       <p class="xb-note xtrouble-cta">ひとつでも当てはまる方は、迷わず<b>お電話ください</b>。最短30分で、プロが駆けつけます。</p>
     </section>
@@ -236,12 +236,12 @@ const strengthsShown = strengths.slice(0, 6);
     <section class="xb-sec" id="trouble" aria-labelledby="s-trouble">
       <h2 class="xb-h" id="s-trouble"><span>こんなお悩みありませんか？</span></h2>
       <ul class="xtrouble">
-        <li>家の周りで蜂をよく見かける</li>
-        <li>軒下・ベランダに巣ができている</li>
-        <li>屋根裏や壁の中から羽音がする</li>
-        <li>市販スプレーで駆除したが減らない</li>
-        <li>去年駆除したのに今年もまた出た</li>
-        <li>小さな子ども・ペットがいて不安</li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_tel">家の周りで蜂をよく見かける</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_tel">軒下・ベランダに巣ができている</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_tel">屋根裏や壁の中から羽音がする</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_tel">市販スプレーで駆除したが減らない</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_tel">去年駆除したのに今年もまた出た</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_tel">小さな子ども・ペットがいて不安</a></li>
       </ul>
       <p class="xb-note xtrouble-cta">ひとつでも当てはまれば、無理せず<b>プロにご相談を</b>。最短30分で駆けつけます。</p>
     </section>
@@ -261,7 +261,7 @@ const strengthsShown = strengths.slice(0, 6);
 
       <div class="xrate-card">
         {rates.map((r, i) => (
-          <div class="xrate-row">
+          <a class="xrate-row" href={company.phoneTelLink} data-cta="rate_row_tel" aria-label={`${r.beeType}の駆除を電話で相談する`}>
             <img class="xrate-thumb" src={assetPath(`images/bee-types/${rateImg[r.beeType] ?? "dorobachi"}.webp`)}
               width="74" height="48" alt={`${r.beeType}の蜂の巣駆除`} loading="lazy" decoding="async" />
             <div class="xrate-info">
@@ -269,7 +269,7 @@ const strengthsShown = strengths.slice(0, 6);
               <span class="xrate-cond">{r.workCondition}</span>
             </div>
             <div class="xrate-price"><b>{r.basicPrice}</b><small>税込</small></div>
-          </div>
+          </a>
         ))}
       </div>
       <p class="xb-note">※ 巣のサイズ・高さ・場所により変動。<b>現地で確定見積</b>をお伝えし、ご納得後に作業。事前見積金額からの追加請求はありません。</p>
@@ -509,6 +509,8 @@ const strengthsShown = strengths.slice(0, 6);
       </div>
     </section>
 
+    <CtaDual id="faq_cta" lead="疑問が解けたら、あとは電話一本。最短30分でプロが駆けつけます" />
+
     <!-- 蜂の知識コラム（記事への動線） -->
     <span id="column" class="x-anchor" aria-hidden="true"></span>
     <section class="xb-sec xb-sec-tint" aria-labelledby="s-column">
@@ -617,7 +619,7 @@ const strengthsShown = strengths.slice(0, 6);
   .xh-bname { font-size:3.3cqw; font-weight:900; color:#111; letter-spacing:-.035em; white-space:nowrap; }
   .xh-btag { font-size:1.7cqw; font-weight:700; color:#5a5a5a; }
   .xh-headtel { margin-left:auto; display:flex; align-items:center; gap:1cqw; text-decoration:none; color:#fff;
-    background:linear-gradient(180deg,#f2630e,#d61e01); border-radius:2cqw; padding:1cqw 2cqw; }
+    background:linear-gradient(180deg,#f2630e,#d61e01); border-radius:2cqw; padding:2cqw 2.4cqw; }
   .xh-headtel .xic { width:3.4cqw; height:3.4cqw; }
   .xh-headtel-tx { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; }
   .xh-headtel-tx b { font-size:3.3cqw; font-weight:900; }
@@ -733,7 +735,8 @@ const strengthsShown = strengths.slice(0, 6);
   .xrate-free-z small { font-size:.62rem; margin-left:1px; }
 
   .xrate-card { background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 3px 12px rgba(20,12,4,.06); }
-  .xrate-row { display:flex; align-items:center; gap:.85rem; padding:.95rem .95rem; border-bottom:1px solid var(--line); }
+  .xrate-row { display:flex; align-items:center; gap:.85rem; padding:.95rem .95rem; border-bottom:1px solid var(--line); text-decoration:none; color:inherit; cursor:pointer; -webkit-tap-highlight-color:rgba(226,35,26,.12); }
+  .xrate-row:active { background:#fff6f5; }
   .xrate-row:last-child { border-bottom:0; }
   .xrate-thumb { width:74px; height:48px; border-radius:8px; object-fit:contain; flex-shrink:0; border:1px solid var(--line); background:#fff; padding:2px; }
   .xrate-info { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
@@ -786,7 +789,10 @@ const strengthsShown = strengths.slice(0, 6);
   /* こんなお悩み（共感チェックリスト） */
   .xtrouble { max-width:600px; margin:0 auto; display:grid; gap:8px; list-style:none; padding:0; }
   .xtrouble li { position:relative; background:#fff; border:1px solid var(--line); border-radius:10px; padding:.7rem .8rem .7rem 2.3rem; font-size:.84rem; font-weight:600; color:#3f3526; }
-  .xtrouble li::before { content:"✓"; position:absolute; left:.6rem; top:50%; transform:translateY(-50%); color:#fff; background:var(--red); width:1.25rem; height:1.25rem; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:900; }
+  .xtrouble li::before { content:"✓"; position:absolute; left:.6rem; top:50%; transform:translateY(-50%); color:#fff; background:var(--red); width:1.25rem; height:1.25rem; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:900; z-index:1; }
+  .xtrouble li a { color:inherit; text-decoration:none; display:block; -webkit-tap-highlight-color:rgba(166,1,1,.10); }
+  .xtrouble li a::after { content:""; position:absolute; inset:0; z-index:0; }
+  .xtrouble li:active { background:#fdf3f2; }
   .xtrouble-cta { text-align:center; }
   /* 蜂の巣ができやすい場所 */
   .xspots { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; max-width:680px; margin:14px auto 0; list-style:none; padding:0; }
