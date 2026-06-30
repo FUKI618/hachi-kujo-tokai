@@ -350,6 +350,7 @@ const strengthsShown = strengths.slice(0, 6);
       <div class="xb-cases">
         {casesShown.map((c) => (
           <div class="xb-card xb-case-card">
+            <a class="xcard-tel" href={company.phoneTelLink} data-cta="case_tel" aria-label={`${c.area}の${c.beeType}駆除を電話で相談`}></a>
             <img src={assetPath(`images/cases/${c.imageBase}.webp`)} width="320" height="220"
               alt={`${c.area} ${c.title}`} loading="lazy" decoding="async" />
             <div class="xb-case-body">
@@ -391,6 +392,7 @@ const strengthsShown = strengths.slice(0, 6);
           const d = dangerMap[b.dangerLevel] ?? dangerMap.low;
           return (
             <article class="xbee">
+              <a class="xcard-tel" href={company.phoneTelLink} data-cta="beetype_tel" aria-label={`${b.name}の駆除を電話で相談`}></a>
               <div class="xbee-photo">
                 <img src={assetPath(`images/bee-types/${b.imageBase}.webp`)} width="320" height="200"
                   alt={`${b.name}（${d.label}）`} loading="lazy" decoding="async" />
@@ -832,7 +834,7 @@ const strengthsShown = strengths.slice(0, 6);
 
   /* 蜂種（統一カード） */
   .xbee-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
-  .xbee { display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
+  .xbee { position:relative; display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
     border-radius:14px; overflow:hidden; box-shadow:0 3px 12px rgba(20,12,4,.06); height:100%; }
   .xbee-photo { position:relative; background:#f3efe7; }
   .xbee-photo img { width:100%; height:122px; object-fit:cover; display:block; }
@@ -857,7 +859,8 @@ const strengthsShown = strengths.slice(0, 6);
 
   /* 事例 */
   .xb-cases { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .xb-case-card { overflow:hidden; }
+  .xb-case-card { overflow:hidden; position:relative; }
+  .xcard-tel { position:absolute; inset:0; z-index:4; -webkit-tap-highlight-color:rgba(226,35,26,.10); }
   .xb-case-card img { width:100%; height:120px; object-fit:cover; display:block; }
   .xb-case-body { padding:.55rem .65rem .7rem; }
   .xb-case-tags { display:flex; flex-wrap:wrap; gap:.25rem; margin-bottom:.3rem; }
