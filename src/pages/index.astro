@@ -579,19 +579,31 @@ const strengthsShown = strengths.slice(0, 6);
   <SiteFooter />
 
   <div class="xfloat">
-    <p class="xfloat-msg"><span class="xfm-1">その蜂の巣、今日中に解決します</span><b class="xfm-2">最短30分でプロが駆けつけます</b></p>
     <div class="xfloat-row">
       <a href={company.phoneTelLink} class="xfloat-btn xfloat-tel" data-cta="float_tel">
         <span class="xfloat-cpn" aria-hidden="true">電話で<b>10%OFF</b></span>
         <svg class="xic"><use href="#i-phone" /></svg>
-        <span class="xfloat-tx"><b>今すぐ駆除を頼む</b><small>お電話で10%OFF・通話無料</small></span>
+        <span class="xfloat-tx"><b>今すぐ駆除を頼む</b><small>10%OFF・通話無料</small></span>
       </a>
       <a href={company.lineUrl} class="xfloat-btn xfloat-line" data-cta="float_line" target="_blank" rel="noopener">
         <span class="xfloat-line-badge">LINE</span>
-        <span class="xfloat-tx"><b>写真で見積もりだけ</b><small>まず相談したい方はこちら</small></span>
+        <span class="xfloat-tx"><b>写真で見積り</b><small>相談だけでもOK</small></span>
       </a>
     </div>
   </div>
+
+  <script is:inline>
+    // 最下部のフッター（法的リンク）が見えたら追従CTAを退避し、リンクをタップ可能にする
+    (function () {
+      var floatEl = document.querySelector(".xfloat");
+      var footer = document.querySelector(".xfoot");
+      if (!floatEl || !footer || !("IntersectionObserver" in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        floatEl.classList.toggle("xfloat--hidden", entries[0].isIntersecting);
+      }, { threshold: 0, rootMargin: "0px 0px 20px 0px" });
+      io.observe(footer);
+    })();
+  </script>
 </Layout>
 
 <style is:global>
@@ -913,24 +925,23 @@ const strengthsShown = strengths.slice(0, 6);
   .xb-cta-sub { margin:14px 0 0; font-size:.74rem; opacity:.95; }
 
   /* フローティング（電話＋LINE）バー */
-  .xfloat { position:fixed; left:0; right:0; bottom:0; z-index:60; display:flex; flex-direction:column; gap:6px; padding:7px 8px calc(7px + env(safe-area-inset-bottom,0px));
-    background:#fff; border-top:1px solid rgba(20,12,4,.1); box-shadow:0 -4px 18px rgba(0,0,0,.2); }
-  .xfloat-msg { margin:0; display:flex; flex-direction:column; align-items:center; gap:1px; text-align:center;
-    background:linear-gradient(180deg,#c4150c,#9c0d0b); color:#fff; border-radius:9px; padding:.4rem .5rem; box-shadow:0 2px 8px rgba(150,20,12,.3); }
-  .xfm-1 { font-size:.72rem; font-weight:800; }
-  .xfm-2 { font-size:.84rem; font-weight:900; color:#ffd23f; }
-  .xfloat-row { display:flex; gap:8px; }
-  .xfloat-btn { display:flex; align-items:center; justify-content:center; gap:.45rem; color:#fff; font-weight:800;
-    padding:.74rem .5rem; border-radius:12px; text-decoration:none; box-shadow:0 4px 12px rgba(0,0,0,.2); text-shadow:0 1px 2px rgba(0,0,0,.32); }
-  .xfloat-tel { flex:1.9; background:linear-gradient(180deg,#e8590c,#c4150c); position:relative; overflow:visible; }
+  .xfloat { position:fixed; left:0; right:0; bottom:0; z-index:60; display:flex; padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));
+    background:#fff; border-top:1px solid rgba(20,12,4,.1); box-shadow:0 -4px 18px rgba(0,0,0,.2);
+    transition:transform .28s ease, opacity .28s ease; }
+  /* 最下部（フッターの法的リンク）到達時は退避してリンクをタップ可能に */
+  .xfloat--hidden { transform:translateY(115%); opacity:0; pointer-events:none; }
+  .xfloat-row { display:flex; gap:8px; width:100%; }
+  .xfloat-btn { display:flex; align-items:center; justify-content:center; gap:.4rem; color:#fff; font-weight:800;
+    padding:.72rem .45rem; border-radius:12px; text-decoration:none; box-shadow:0 4px 12px rgba(0,0,0,.2); text-shadow:0 1px 2px rgba(0,0,0,.32); }
+  .xfloat-tel { flex:1.5; background:linear-gradient(180deg,#e8590c,#c4150c); position:relative; overflow:visible; }
   .xfloat-cpn { position:absolute; top:-9px; left:-5px; z-index:2; background:#ffd23f; color:#bd0a08; font-weight:900; font-size:.6rem; line-height:1; padding:3px 7px; border-radius:9px; box-shadow:0 2px 6px rgba(0,0,0,.3); transform:rotate(-7deg); white-space:nowrap; }
   .xfloat-cpn b { font-size:.74rem; }
-  .xfloat-line { flex:1; background:#047d36; }
-  .xfloat .xic { width:1.5rem; height:1.5rem; }
-  .xfloat-tx { display:flex; flex-direction:column; line-height:1.12; align-items:flex-start; }
-  .xfloat-tx b { font-size:.98rem; }
-  .xfloat-tx small { font-size:.58rem; font-weight:700; opacity:1; }
-  .xfloat-line-badge { background:#fff; color:#057a35; font-weight:900; font-size:.74rem; padding:.14rem .42rem; border-radius:6px; }
+  .xfloat-line { flex:1.15; background:#047d36; }
+  .xfloat .xic { width:1.45rem; height:1.45rem; }
+  .xfloat-tx { display:flex; flex-direction:column; line-height:1.16; align-items:flex-start; }
+  .xfloat-tx b { font-size:.94rem; white-space:nowrap; }
+  .xfloat-tx small { font-size:.58rem; font-weight:700; opacity:1; white-space:nowrap; }
+  .xfloat-line-badge { background:#fff; color:#057a35; font-weight:900; font-size:.72rem; padding:.14rem .4rem; border-radius:6px; }
   @media (min-width:900px){ .xfloat { display:none; } }
 
   /* ===== PC(≥900px)最適化：横幅を使うレイアウト（モバイルは @media 外＝一切不変） ===== */
