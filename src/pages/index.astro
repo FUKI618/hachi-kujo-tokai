@@ -344,6 +344,43 @@ const strengthsShown = strengths.slice(0, 6);
       </div>
     </section>
 
+    <!-- 施工事例（社会的証明を上45%へ前倒し） -->
+    <section class="xb-sec xb-sec-tint" id="cases" aria-labelledby="s-case">
+      <h2 class="xb-h" id="s-case"><span>施工事例</span></h2>
+      <div class="xb-cases">
+        {casesShown.map((c) => (
+          <div class="xb-card xb-case-card">
+            <img src={assetPath(`images/cases/${c.imageBase}.webp`)} width="320" height="220"
+              alt={`${c.area} ${c.title}`} loading="lazy" decoding="async" />
+            <div class="xb-case-body">
+              <div class="xb-case-tags"><span class="xb-tag">{c.beeType}</span><span class="xb-tag">{c.area}</span><span class="xb-tag">{c.location}</span></div>
+              <h3>{c.title}</h3>
+              <p class="xb-case-status"><span class="xb-case-check">✓</span>駆除完了・現地確定見積で対応</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- お客様の声（社会的証明を上45%へ前倒し） -->
+    <section class="xb-sec" aria-labelledby="s-voice">
+      <h2 class="xb-h" id="s-voice"><span>お客様の声</span></h2>
+      <div class="xb-voices">
+        {voices.map((v) => (
+          <div class="xb-card xb-voice-card">
+            <div class="xb-voice-head">
+              <span class="xb-avatar">{v.initial}</span>
+              <span class="xb-voice-meta">{v.area}・{v.ageBracket}<small>{v.service}</small></span>
+              <span class="xb-stars" aria-label={`${v.rating}点`}>{"★".repeat(v.rating)}</span>
+            </div>
+            <p>{v.comment}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <CtaDual id="proof_cta" lead="自社施工・1年保証付きで安心。今すぐお気軽にご相談ください" />
+
     <!-- 蜂の種類 -->
     <span id="types" class="x-anchor" aria-hidden="true"></span>
     <section class="xb-sec" id="bee-types" aria-labelledby="s-bee">
@@ -386,43 +423,6 @@ const strengthsShown = strengths.slice(0, 6);
         <li>軒下</li><li>屋根裏・天井裏</li><li>ベランダ</li><li>エアコン室外機</li><li>換気口・換気扇</li><li>壁の中・戸袋</li><li>床下</li><li>庭木・生垣</li><li>物置・倉庫</li><li>土の中</li>
       </ul>
     </section>
-
-    <!-- 施工事例 -->
-    <section class="xb-sec xb-sec-tint" id="cases" aria-labelledby="s-case">
-      <h2 class="xb-h" id="s-case"><span>施工事例</span></h2>
-      <div class="xb-cases">
-        {casesShown.map((c) => (
-          <div class="xb-card xb-case-card">
-            <img src={assetPath(`images/cases/${c.imageBase}.webp`)} width="320" height="220"
-              alt={`${c.area} ${c.title}`} loading="lazy" decoding="async" />
-            <div class="xb-case-body">
-              <div class="xb-case-tags"><span class="xb-tag">{c.beeType}</span><span class="xb-tag">{c.area}</span><span class="xb-tag">{c.location}</span></div>
-              <h3>{c.title}</h3>
-              <p class="xb-case-status"><span class="xb-case-check">✓</span>駆除完了・現地確定見積で対応</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- お客様の声 -->
-    <section class="xb-sec" aria-labelledby="s-voice">
-      <h2 class="xb-h" id="s-voice"><span>お客様の声</span></h2>
-      <div class="xb-voices">
-        {voices.map((v) => (
-          <div class="xb-card xb-voice-card">
-            <div class="xb-voice-head">
-              <span class="xb-avatar">{v.initial}</span>
-              <span class="xb-voice-meta">{v.area}・{v.ageBracket}<small>{v.service}</small></span>
-              <span class="xb-stars" aria-label={`${v.rating}点`}>{"★".repeat(v.rating)}</span>
-            </div>
-            <p>{v.comment}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <CtaDual id="proof_cta" lead="施工実績多数・1年保証付き。お気軽にご相談ください" />
 
     <!-- 他社との比較 -->
     <section class="xb-sec xb-sec-tint" aria-labelledby="s-cmp">
