@@ -1,0 +1,455 @@
+---
+/**
+ * 名古屋専用 集客LP (/nagoya)
+ * AG6-Geo名古屋 の名古屋-地域KWの着地。クエリ⇄LP関連性を最大化しLP体験QSを上げる。
+ * - index.astro は一切改変しない（QS履歴維持のため独立ページ）
+ * - Layout / CtaDual を流用、CSSは global.css トークンで独自軽量実装
+ * - honest厳守：捏造数値なし（実績数/満足度/年数/保険/静岡は出さない）
+ * - noindex：広告専用着地のためdoorway/重複回避（Ad QSはnoindexでも評価される）
+ */
+import Layout from "../layouts/Layout.astro";
+import CtaDual from "../components/CtaDual.astro";
+import { company } from "../data/company";
+import { rates } from "../data/rates";
+import { nagoyaCases, nagoyaVoices, nagoyaWards, nagoyaNearby } from "../data/nagoya";
+import { assetPath, homePath } from "../lib/site";
+
+const title = "名古屋の蜂の巣駆除なら最短30分｜中区拠点・基本1,680円〜｜蜂の巣駆除ファクトリー東海";
+const description =
+  "名古屋市16区の蜂の巣駆除。名古屋・中区丸の内拠点の自社スタッフが最短30分で直接対応。基本1,680円〜・追加請求0円・1年保証・24時間受付。スズメバチ・アシナガバチ・ミツバチ対応。";
+const a = company.address;
+const rateImg: Record<string, string> = {
+  "アシナガバチ": "ashinagabachi",
+  "スズメバチ": "suzumebachi",
+  "ミツバチ": "mitsubachi",
+  "オオスズメバチ": "oosuzumebachi",
+  "クマバチ・その他": "kumabachi",
+};
+const siteUrl = Astro.site ?? new URL(Astro.url.origin);
+const homeUrl = new URL(homePath, siteUrl).toString();
+
+const nagoyaJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "ホーム", item: homeUrl },
+      { "@type": "ListItem", position: 2, name: "名古屋の蜂の巣駆除" },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: "蜂の巣駆除",
+    provider: {
+      "@type": "LocalBusiness",
+      name: company.name,
+      telephone: company.phone,
+      address: {
+        "@type": "PostalAddress",
+        postalCode: a.postal,
+        addressRegion: a.region,
+        addressLocality: a.city,
+        streetAddress: a.street,
+      },
+    },
+    areaServed: nagoyaWards.map((w) => ({ "@type": "City", name: `名古屋市${w}` })),
+    offers: { "@type": "Offer", price: company.basicPrice, priceCurrency: "JPY" },
+  },
+];
+---
+
+<Layout title={title} description={description} noindex={true} extraJsonLd={nagoyaJsonLd}>
+  <!-- sr-only 実h1（名古屋・SEO/QS） -->
+    <h1 class="x-sr">名古屋の蜂の巣駆除｜中区拠点から最短30分で現場到着・基本1,680円〜（税込）・1年保証・追加0円の明朗会計・当日対応98%・24時間365日受付 {company.phoneDisplay}</h1>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+      <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/></symbol>
+    </svg>
+
+    <!-- ===== HERO（元LPの焼込みチラシを流用・名古屋化／2:3固定・%絶対配置） ===== -->
+    <div class="xhero">
+      <img class="xh-photo" src={assetPath("images/generated/hero-mob-photo.webp")} width="1024" height="418"
+        alt="防護手袋のプロが専用工具で軒下のスズメバチの巣を取り除く様子" loading="eager" decoding="async" fetchpriority="high" />
+      <div class="xh-bar" aria-hidden="true">名古屋市16区対応・<b>最短30分</b>で出動</div>
+      <div class="xh-brand">
+        <img class="xh-logo" src={assetPath("images/generated/hero-bee-logo.webp")} width="132" height="120" alt="" aria-hidden="true" />
+        <span class="xh-btext"><b class="xh-bname">{company.name}</b><small class="xh-btag">名古屋の蜂の巣駆除・中区拠点</small></span>
+        <a class="xh-headtel" href={company.phoneTelLink} data-cta="nagoya_header_tel">
+          <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
+          <span class="xh-headtel-tx"><b class="font-num">{company.phoneDisplay}</b><small>24時間受付中</small></span>
+        </a>
+      </div>
+      <div class="xh-banner" aria-hidden="true"><span><em>そのまま放置</em><i>すると</i><b>危険！</b></span></div>
+      <p class="xh-h1" aria-hidden="true">名古屋の蜂駆除</p>
+      <p class="xh-h2" aria-hidden="true">安心・安全・スピード解決</p>
+      <p class="xh-price" aria-hidden="true">
+        <span class="xhp-cell"><small>最短</small><b class="xhp-num">30</b><small>分</small></span>
+        <span class="xhp-div"></span>
+        <span class="xhp-cell"><small>基本</small><b class="xhp-num">¥1,680</b><small class="xhp-tilde">〜</small><i class="xhp-tax">（税込）</i></span>
+      </p>
+      <a class="xh-cta" href={company.phoneTelLink} data-cta="nagoya_hero_tel">
+        <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
+        <span class="xh-cta-tx">
+          <small class="xh-cta-top">＼今すぐお電話で不安も駆除／</small>
+          <b class="xh-cta-num font-num">{company.phoneDisplay}</b>
+          <small class="xh-cta-bot">通話無料・24時間受付・タップで発信</small>
+        </span>
+      </a>
+      <span class="xh-now" aria-hidden="true"><i class="xh-now-dot"></i>ただ今受付中</span>
+      <span class="xcpn" aria-hidden="true"><span class="xcpn-body"><b class="xcpn-l1">電話で</b><b class="xcpn-l2">10<i>%</i></b><b class="xcpn-l3">OFF</b></span></span>
+      <ul class="xh-trust" aria-hidden="true">
+        <li>
+          <svg viewBox="0 0 24 24" class="xht-ic"><circle cx="12" cy="13" r="8"/><path d="M12 13 V9 M12 13 l3 2 M9 3 h6"/></svg>
+          <span><small>最短</small><b>30<em>分</em></b><small>で現場到着</small></span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" class="xht-ic xht-fill"><path d="M12 2 L20 5 V11 C20 16 16 20 12 22 C8 20 4 16 4 11 V5 Z"/><path class="xht-chk" d="M8.5 12 l2.5 2.5 L16 9"/></svg>
+          <span><small>安心の</small><b>1<em>年</em></b><small>保証</small></span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" class="xht-ic"><circle cx="12" cy="12" r="9"/><text x="12" y="15.5" class="xht-y0">¥0</text></svg>
+          <span><small>見積後</small><b>追加0<em>円</em></b><small>明朗会計</small></span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" class="xht-ic xht-fill"><path d="M4 11 L12 4 L20 11 V21 H4 Z"/></svg>
+          <span><small>当日対応</small><b>98<em>%</em></b><small>迅速対応</small></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="ng">
+    <!-- 対応エリア（名古屋固有） -->
+    <section class="ng-sec">
+      <h2 class="ng-h2">名古屋市16区・全域に対応</h2>
+      <p class="ng-note">中区丸の内の拠点から、名古屋市内へ<b>最短30分</b>で出動します。</p>
+      <ul class="ng-wards">
+        {nagoyaWards.map((w) => <li>{w}</li>)}
+      </ul>
+      <p class="ng-nearby">近郊も対応：{nagoyaNearby.join("・")} ほか（名古屋近郊エリア）</p>
+    </section>
+
+    <CtaDual id="nagoya_area_cta" lead="名古屋市16区どこでも急行。今すぐご相談ください・通話無料" />
+
+    <!-- 中区拠点（差別化の核・名古屋固有） -->
+    <section class="ng-sec ng-sec-tint">
+      <h2 class="ng-h2">名古屋・中区の実在拠点が、直接うかがいます</h2>
+      <div class="ng-base">
+        <p class="ng-base-lead">
+          全国の紹介サイトや県外本社を通さず、<b>名古屋・中区丸の内の自社スタッフ</b>が現地対応。
+          だから<b>仲介手数料0円</b>・連絡が早く・料金も明朗です。
+        </p>
+        <dl class="ng-base-info">
+          <div><dt>拠点</dt><dd>〒{a.postal} {a.region}{a.city}{a.street}</dd></div>
+          <div><dt>受付</dt><dd>{company.hours}</dd></div>
+          <div><dt>お支払い</dt><dd>{company.payment.join("・")}</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 料金（共通データ） -->
+    <section class="ng-sec">
+      <h2 class="ng-h2">蜂の巣駆除 料金のご案内</h2>
+      <p class="ng-note">基本<b>1,680円〜</b>。出張費・見積り・キャンセルは<b>0円</b>。現地の確定見積からの追加請求はありません。</p>
+      <div class="xrate-card">
+        {rates.map((r) => (
+          <a class="xrate-row" href={company.phoneTelLink} data-cta="nagoya_rate_row_tel" aria-label={`${r.beeType}の駆除を電話で相談する`}>
+            <img class="xrate-thumb" src={assetPath(`images/bee-types/${rateImg[r.beeType] ?? "dorobachi"}.webp`)}
+              width="74" height="48" alt={`${r.beeType}の蜂の巣駆除`} loading="lazy" decoding="async" />
+            <div class="xrate-info">
+              <b class="xrate-name">{r.beeType}</b>
+              <span class="xrate-cond">{r.workCondition}</span>
+            </div>
+            <div class="xrate-price"><b>{r.basicPrice}</b><small>税込</small></div>
+          </a>
+        ))}
+      </div>
+      <p class="ng-mini">※ 巣のサイズ・高さ・場所により変動。現地で確定見積をお伝えし、ご納得後に作業します。</p>
+    </section>
+
+    <CtaDual id="nagoya_rate_cta" lead="名古屋市内なら最短30分。今すぐお電話ください" />
+
+    <!-- 名古屋の施工事例（生成画像・イメージ表記） -->
+    <section class="ng-sec ng-sec-tint">
+      <h2 class="ng-h2">名古屋市内の施工事例</h2>
+      <div class="ng-cases">
+        {nagoyaCases.map((c) => (
+          <a class="ng-case" href={company.phoneTelLink} data-cta="nagoya_case_tel" aria-label={`${c.area}の${c.beeType}駆除を電話で相談`}>
+            <img src={assetPath(`images/cases/${c.imageBase}.webp`)} width="320" height="210"
+              alt={`${c.area} ${c.title}`} loading="lazy" decoding="async" />
+            <div class="ng-case-b">
+              <div class="ng-tags"><span>{c.beeType}</span><span>{c.area}</span><span>{c.location}</span></div>
+              <h3>{c.title}</h3>
+              <p class="ng-case-price">現地確定見積 <b>{c.priceJpy.toLocaleString()}円</b>（税込）</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="ng-mini">※ 写真はイメージです。金額は巣のサイズ・場所により変動します。</p>
+    </section>
+
+    <CtaDual id="nagoya_proof_cta" lead="今すぐご相談ください・お電話無料。名古屋のプロが最短30分" />
+
+    <!-- 名古屋のお客様の声 -->
+    <section class="ng-sec">
+      <h2 class="ng-h2">名古屋のお客様の声</h2>
+      <div class="ng-voices">
+        {nagoyaVoices.map((v) => (
+          <div class="ng-voice">
+            <div class="ng-voice-h">
+              <span class="ng-av">{v.initial}</span>
+              <span class="ng-voice-m">{v.area}・{v.ageBracket}<small>{v.service}</small></span>
+              <span class="ng-stars" aria-label="5点">{"★".repeat(v.rating)}</span>
+            </div>
+            <p>{v.comment}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 選ばれる理由（簡潔） -->
+    <section class="ng-sec ng-sec-tint">
+      <h2 class="ng-h2">名古屋で選ばれる理由</h2>
+      <ul class="ng-why">
+        <li><b>中区拠点で最短30分</b>名古屋市内へ自社スタッフが直行</li>
+        <li><b>明朗会計・追加0円</b>現地の確定見積からの追加請求なし</li>
+        <li><b>自社直接施工</b>紹介サイトを通さず仲介手数料0円</li>
+        <li><b>1年再発保証</b>駆除後の再発も無料で対応</li>
+        <li><b>24時間365日受付</b>夜間・休日のご相談もお電話で</li>
+        <li><b>防護装備の専門対応</b>危険なスズメバチも安全に駆除</li>
+      </ul>
+    </section>
+
+    <CtaDual id="nagoya_cta" lead="名古屋の蜂の巣、今すぐご相談ください。最短30分で駆けつけます" />
+
+    <!-- フッター -->
+    <footer class="ng-foot">
+      <p class="ng-foot-name">{company.name}</p>
+      <p class="ng-foot-info">{company.legalName}／〒{a.postal} {a.region}{a.city}{a.street}</p>
+      <a class="ng-foot-tel" href={company.phoneTelLink} data-cta="nagoya_footer_tel">☎ {company.phoneDisplay}</a>
+      <p class="ng-foot-note">名古屋市16区・近郊エリア対応｜24時間365日受付</p>
+    </footer>
+
+    <!-- フローティングCTA（モバイル） -->
+    <div class="ng-float" aria-hidden="false">
+      <a class="ng-float-tel" href={company.phoneTelLink} data-cta="nagoya_float_tel">
+        <span class="ng-float-cpn">電話で10%OFF</span>
+        <b>今すぐ電話</b><small>最短30分・通話無料</small>
+      </a>
+      <a class="ng-float-line" href={company.lineUrl} target="_blank" rel="noopener" data-cta="nagoya_float_line">
+        <b>LINE</b><small>写真見積</small>
+      </a>
+    </div>
+  </div>
+
+  <style>
+    /* ===== 元LPの焼込みチラシヒーローを流用（自己完結・container-query cqw） ===== */
+    .x-sr { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+    .xic { display:inline-block; width:1.2em; height:1.2em; flex-shrink:0; vertical-align:middle; }
+    .font-num { font-variant-numeric:tabular-nums; letter-spacing:.01em; }
+    .xhero { position:relative; width:100%; max-width:480px; margin-inline:auto; aspect-ratio:1024/1536;
+      background:#fefdf7; container-type:inline-size; overflow:hidden;
+      font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
+    .xhero > * { position:absolute; }
+    .xh-photo { left:0; top:59.4%; width:100%; height:27.2%; object-fit:cover; object-position:center top; }
+    .xh-bar { left:0; top:0; width:100%; height:3.8%; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(180deg,#b81210,#8e0c0a); color:#fff; font-size:2.95cqw; font-weight:800; letter-spacing:-.01em; white-space:nowrap; }
+    .xh-bar b { color:#ffd23f; font-weight:900; margin:0 .1em; }
+    .xh-brand { left:0; top:3.8%; width:100%; height:9.5%; display:flex; align-items:center; gap:1.5cqw; padding:0 3cqw; }
+    .xh-logo { width:9cqw; height:auto; flex-shrink:0; }
+    .xh-btext { display:flex; flex-direction:column; line-height:1.05; }
+    .xh-bname { font-size:3.3cqw; font-weight:900; color:#111; letter-spacing:-.035em; white-space:nowrap; }
+    .xh-btag { font-size:1.7cqw; font-weight:700; color:#5a5a5a; }
+    .xh-headtel { margin-left:auto; display:flex; align-items:center; gap:1cqw; text-decoration:none; color:#fff;
+      background:linear-gradient(180deg,#f2630e,#d61e01); border-radius:2cqw; padding:2cqw 2.4cqw; }
+    .xh-headtel .xic { width:3.4cqw; height:3.4cqw; }
+    .xh-headtel-tx { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; }
+    .xh-headtel-tx b { font-size:3.3cqw; font-weight:900; }
+    .xh-headtel-tx small { font-size:1.5cqw; font-weight:700; }
+    .xh-banner { left:0; top:13%; width:100%; height:5%; display:flex; align-items:center; justify-content:center; }
+    .xh-banner span { display:inline-flex; align-items:center; gap:.12em; background:linear-gradient(178deg,#cf1512,#9c0d0b);
+      color:#ffd23f; font-size:4.4cqw; font-weight:900; padding:.5cqw 6cqw; letter-spacing:-.02em; transform:skewX(-4deg);
+      clip-path:polygon(2% 0,98% 0,100% 50%,98% 100%,2% 100%,0 50%); box-shadow:0 1cqw 2cqw rgba(0,0,0,.14);
+      text-shadow:0 .2cqw .2cqw rgba(0,0,0,.35); }
+    .xh-banner em { font-style:normal; }
+    .xh-banner i { font-style:normal; color:#fff; font-size:.72em; }
+    .xh-banner b { color:#ffd23f; font-size:1.32em; }
+    .xh-h1 { left:0; top:16.1%; width:100%; height:12%; margin:0; display:flex; align-items:center; justify-content:center;
+      font-size:12cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.05em; transform:skewX(-5deg);
+      -webkit-text-stroke:.7cqw #fff; paint-order:stroke fill; text-shadow:0 .55cqw .7cqw rgba(0,0,0,.22); }
+    .xh-h2 { left:0; top:27.1%; width:100%; height:7%; margin:0; display:flex; align-items:center; justify-content:center;
+      font-size:7.2cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.04em; transform:skewX(-5deg);
+      -webkit-text-stroke:.45cqw #fff; paint-order:stroke fill; text-shadow:0 .4cqw .55cqw rgba(0,0,0,.2); }
+    .xh-price { left:0; top:31.9%; width:100%; height:8.8%; margin:0; display:flex; align-items:center; justify-content:center; gap:2.4cqw; }
+    .xhp-cell { display:flex; align-items:baseline; gap:.4cqw; color:#1a1a1a; font-weight:900; }
+    .xhp-cell small { font-size:3.6cqw; }
+    .xhp-num { font-size:8.6cqw; font-weight:900; color:#d4151c; letter-spacing:-.02em; line-height:1; }
+    .xhp-tilde { font-size:5cqw; color:#d4151c; }
+    .xhp-tax { font-size:2.2cqw; color:#6b6b6b; font-style:normal; font-weight:700; }
+    .xhp-div { width:.4cqw; height:7cqw; background:#cfc7ba; align-self:center; }
+    .xh-cta { left:5%; top:42.6%; width:90%; height:13.4%; display:flex; align-items:center; gap:2cqw;
+      text-decoration:none; color:#fff; background:linear-gradient(180deg,#f06a0c 0%,#e64805 45%,#cd1000 100%);
+      border-radius:3cqw; padding:0 3.5cqw; box-shadow:0 1.4cqw 3cqw rgba(170,30,4,.4), inset 0 .3cqw 0 rgba(255,255,255,.25); }
+    .xh-cta .xic { width:8cqw; height:8cqw; flex-shrink:0; filter:drop-shadow(0 .2cqw .3cqw rgba(0,0,0,.3)); }
+    .xh-cta-tx { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; flex:1; min-width:0; }
+    .xh-cta-top { font-size:2.7cqw; font-weight:900; color:#ffe39a; letter-spacing:.02em; }
+    .xh-cta-num { font-size:7.6cqw; font-weight:900; letter-spacing:0; line-height:1.02; }
+    .xh-cta-bot { font-size:2cqw; font-weight:700; }
+    .xh-now { top:51.2%; left:80%; width:14.5%; height:4.2%; display:flex; align-items:center; justify-content:center; gap:.5cqw; color:#fff; font-size:1.85cqw; font-weight:800; }
+    .xh-now-dot { width:1.6cqw; height:1.6cqw; border-radius:50%; background:#27d24a; box-shadow:0 0 0 .4cqw rgba(255,255,255,.5); }
+    .xh-trust { list-style:none; margin:0; left:0; top:86.7%; width:100%; height:13.3%; padding:0 1.5cqw;
+      display:grid; grid-template-columns:repeat(4,1fr); align-items:center; background:#fefdf7; }
+    .xh-trust li { display:flex; align-items:center; justify-content:center; gap:1cqw; }
+    .xht-ic { width:7.6cqw; height:7.6cqw; flex-shrink:0; fill:none; stroke:#c0151c; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+    .xht-ic.xht-fill { fill:#c0151c; stroke:none; }
+    .xht-chk { stroke:#fff; stroke-width:2.2; fill:none; }
+    .xht-y0 { fill:#c0151c; stroke:none; font-size:9px; font-weight:900; text-anchor:middle; font-family:sans-serif; }
+    .xh-trust span { display:flex; flex-direction:column; line-height:1.05; color:#333; }
+    .xh-trust small { font-size:1.7cqw; font-weight:700; }
+    .xh-trust b { font-size:3.4cqw; font-weight:900; color:#1a1a1a; }
+    .xh-trust b em { color:#c0151c; font-style:normal; font-size:.72em; }
+    .xcpn { position:absolute; top:38.6%; left:81.3%; width:15.5%; aspect-ratio:1/1; transform:rotate(8deg); pointer-events:none; z-index:7; }
+    .xcpn-body { position:absolute; inset:0; border-radius:50%;
+      background:radial-gradient(112% 112% at 32% 24%, #ff7a4d 0%, #ef2f12 44%, #bd0a08 100%);
+      box-shadow:0 .6cqw 1.8cqw rgba(80,0,0,.45), inset 0 0 0 .3cqw #fff, inset 0 0 0 .8cqw #ffd23f;
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.1cqw; }
+    .xcpn-l1 { font-size:2.5cqw; font-weight:900; color:#fff; line-height:1; letter-spacing:.02em; }
+    .xcpn-l2 { font-size:5.8cqw; font-weight:900; color:#ffe200; line-height:.82; text-shadow:0 .2cqw .2cqw rgba(0,0,0,.25); }
+    .xcpn-l2 i { font-size:.6em; font-style:normal; }
+    .xcpn-l3 { font-size:3.6cqw; font-weight:900; color:#ffe200; line-height:.9; letter-spacing:.08em; }
+
+    /* 料金表（元LPと同じ・蜂種画像＋タップで電話） */
+    .xrate-card { --line:rgba(20,12,4,.10); background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 3px 12px rgba(20,12,4,.06); }
+    .xrate-row { display:flex; align-items:center; gap:.85rem; padding:.95rem .95rem; border-bottom:1px solid var(--line); text-decoration:none; color:inherit; cursor:pointer; -webkit-tap-highlight-color:rgba(226,35,26,.12); }
+    .xrate-row:active { background:#fff6f5; }
+    .xrate-row:last-child { border-bottom:0; }
+    .xrate-thumb { width:74px; height:48px; border-radius:8px; object-fit:contain; flex-shrink:0; border:1px solid var(--line); background:#fff; padding:2px; }
+    .xrate-info { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
+    .xrate-card .xrate-name { font-size:1rem; font-weight:900; line-height:1.2; color:#1f2933; }
+    .xrate-cond { font-size:.66rem; color:#6b5d4a; line-height:1.5; }
+    .xrate-price { flex-shrink:0; display:flex; flex-direction:column; align-items:flex-end; line-height:1; }
+    .xrate-card .xrate-price b { font-size:1.3rem; font-weight:900; color:#e2231a; letter-spacing:.01em; font-variant-numeric:tabular-nums; }
+    .xrate-price small { font-size:.58rem; color:#6b5d4a; margin-top:4px; font-weight:700; }
+
+    .ng { color: var(--color-text); font-family: var(--font-sans); background: var(--color-bg); }
+    .ng b { font-weight: 800; }
+    .ng em { font-style: normal; color: var(--color-primary); }
+    .ng .sp { display: none; }
+
+    /* ヘッダー */
+    .ng-head { position: sticky; top: 0; z-index: 40; background: #fff; border-bottom: 1px solid var(--color-border); }
+    .ng-head-in { max-width: 960px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 12px; }
+    .ng-brand { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .ng-brand img { flex-shrink: 0; }
+    .ng-brand-t { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+    .ng-brand-t b { font-size: .82rem; color: #111; letter-spacing: -.02em; white-space: nowrap; }
+    .ng-brand-t small { font-size: .6rem; color: var(--color-muted); }
+    .ng-head-tel { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #fff; background: linear-gradient(180deg, #f2630e, #d61e01); border-radius: 10px; padding: 6px 12px; line-height: 1.1; }
+    .ng-head-num { font-family: var(--font-num); font-weight: 800; font-size: 1.05rem; }
+    .ng-head-sub { font-size: .56rem; }
+
+    /* ヒーロー */
+    .ng-hero { text-align: center; padding: 26px 16px 30px; background: radial-gradient(120% 90% at 50% 0%, #fff 0%, var(--color-bg) 60%); }
+    .ng-eyebrow { display: inline-block; font-size: .72rem; font-weight: 800; color: var(--color-primary-dark); background: var(--color-primary-light); border-radius: var(--radius-pill); padding: 4px 12px; }
+    .ng-h1 { font-size: 1.72rem; font-weight: 900; line-height: 1.3; margin: 14px 0 10px; letter-spacing: -.02em; color: var(--color-dark); }
+    .ng-h1 em { font-size: 1.15em; }
+    .ng-lead { font-size: .95rem; line-height: 1.7; color: #40484f; margin-bottom: 18px; }
+    .ng-lead b { color: var(--color-primary-dark); }
+
+    .ng-hero-cta { display: flex; flex-direction: column; gap: 10px; max-width: 440px; margin: 0 auto; }
+    .ng-tel { position: relative; display: block; text-decoration: none; color: #fff; background: linear-gradient(180deg, #f2630e, #d61e01); border-radius: 14px; padding: 12px 14px 11px; box-shadow: 0 6px 18px rgba(214, 30, 1, .28); }
+    .ng-cpn { position: absolute; top: -10px; right: 12px; background: var(--color-accent); color: #a10a08; font-weight: 900; font-size: .64rem; padding: 3px 9px; border-radius: 9px; transform: rotate(6deg); box-shadow: 0 2px 6px rgba(0, 0, 0, .25); }
+    .ng-cpn b { font-size: .8rem; }
+    .ng-tel-lbl { display: block; font-size: .72rem; font-weight: 700; opacity: .95; }
+    .ng-tel-num { display: block; font-family: var(--font-num); font-weight: 900; font-size: 2.05rem; letter-spacing: .01em; line-height: 1.1; }
+    .ng-tel-sub { display: block; font-size: .66rem; opacity: .95; }
+    .ng-line { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #fff; background: var(--color-line); border-radius: 12px; padding: 9px; line-height: 1.2; }
+    .ng-line small { font-size: .64rem; opacity: .95; }
+
+    .ng-trust { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; max-width: 440px; margin: 18px auto 0; padding: 0; }
+    .ng-trust li { background: #fff; border: 1px solid var(--color-border); border-radius: 10px; padding: 8px 4px; display: flex; flex-direction: column; }
+    .ng-trust b { font-size: .86rem; color: var(--color-primary-dark); }
+    .ng-trust span { font-size: .56rem; color: var(--color-muted); }
+
+    /* セクション共通 */
+    .ng-sec { max-width: 720px; margin: 0 auto; padding: 30px 16px; }
+    .ng-sec-tint { background: var(--color-soft); max-width: none; }
+    .ng-sec-tint > * { max-width: 720px; margin-left: auto; margin-right: auto; }
+    .ng-h2 { font-size: 1.24rem; font-weight: 900; text-align: center; color: var(--color-dark); margin-bottom: 8px; letter-spacing: -.01em; }
+    .ng-h2::after { content: ""; display: block; width: 42px; height: 3px; background: var(--color-primary); border-radius: 2px; margin: 8px auto 0; }
+    .ng-note { text-align: center; font-size: .86rem; color: #40484f; line-height: 1.7; margin-bottom: 14px; }
+    .ng-note b { color: var(--color-primary-dark); }
+    .ng-mini { font-size: .68rem; color: var(--color-muted); margin-top: 10px; text-align: center; }
+
+    /* エリア */
+    .ng-wards { list-style: none; display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; padding: 0; }
+    .ng-wards li { background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius-pill); padding: 5px 13px; font-size: .82rem; font-weight: 700; color: #3f3526; }
+    .ng-nearby { text-align: center; font-size: .78rem; color: var(--color-muted); margin-top: 12px; }
+
+    /* 拠点 */
+    .ng-base-lead { font-size: .9rem; line-height: 1.8; color: #40484f; }
+    .ng-base-lead b { color: var(--color-primary-dark); }
+    .ng-base-info { background: #fff; border: 1px solid var(--color-border); border-radius: 12px; padding: 4px 14px; margin-top: 14px; }
+    .ng-base-info > div { display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--color-border); font-size: .84rem; }
+    .ng-base-info > div:last-child { border-bottom: 0; }
+    .ng-base-info dt { flex-shrink: 0; width: 4.5em; font-weight: 800; color: var(--color-muted); }
+    .ng-base-info dd { margin: 0; font-weight: 600; }
+
+    /* 料金 */
+    .ng-rates { list-style: none; background: #fff; border: 1px solid var(--color-border); border-radius: 14px; overflow: hidden; padding: 0; box-shadow: 0 3px 12px rgba(20, 12, 4, .05); }
+    .ng-rates li { display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; border-bottom: 1px solid var(--color-border); }
+    .ng-rates li:last-child { border-bottom: 0; }
+    .ng-rate-bee { font-weight: 800; font-size: .92rem; }
+    .ng-rate-price { font-family: var(--font-num); font-weight: 900; font-size: 1.2rem; color: var(--color-primary); }
+
+    /* 事例 */
+    .ng-cases { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .ng-case { position: relative; display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; box-shadow: 0 3px 12px rgba(20, 12, 4, .05); -webkit-tap-highlight-color: rgba(200, 30, 30, .1); }
+    .ng-case img { width: 100%; height: auto; display: block; aspect-ratio: 320/210; object-fit: cover; }
+    .ng-case-b { padding: 10px 11px 12px; }
+    .ng-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+    .ng-tags span { font-size: .58rem; font-weight: 700; background: var(--color-primary-light); color: var(--color-primary-dark); border-radius: 5px; padding: 2px 6px; }
+    .ng-case-b h3 { font-size: .82rem; font-weight: 800; line-height: 1.4; color: #2a2118; }
+    .ng-case-price { font-size: .72rem; color: var(--color-muted); margin-top: 6px; }
+    .ng-case-price b { font-family: var(--font-num); color: var(--color-primary); font-size: .92rem; }
+
+    /* 声 */
+    .ng-voices { display: grid; gap: 10px; }
+    .ng-voice { background: #fff; border: 1px solid var(--color-border); border-radius: 12px; padding: 13px 15px; }
+    .ng-voice-h { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; }
+    .ng-av { width: 30px; height: 30px; border-radius: 50%; background: var(--color-primary); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: .84rem; flex-shrink: 0; }
+    .ng-voice-m { display: flex; flex-direction: column; font-size: .76rem; font-weight: 700; color: #40484f; flex: 1; }
+    .ng-voice-m small { font-size: .64rem; color: var(--color-muted); font-weight: 500; }
+    .ng-stars { color: var(--color-accent-dark); font-size: .82rem; letter-spacing: 1px; }
+    .ng-voice p { font-size: .84rem; line-height: 1.7; color: #40484f; }
+
+    /* 選ばれる理由 */
+    .ng-why { list-style: none; display: grid; gap: 8px; padding: 0; }
+    .ng-why li { background: #fff; border: 1px solid var(--color-border); border-radius: 10px; padding: 12px 14px; font-size: .82rem; line-height: 1.6; color: #40484f; }
+    .ng-why b { display: block; color: var(--color-primary-dark); font-size: .9rem; margin-bottom: 2px; }
+
+    /* フッター */
+    .ng-foot { text-align: center; padding: 26px 16px calc(84px + env(safe-area-inset-bottom, 0)); background: var(--color-dark); color: #cfd6de; }
+    .ng-foot-name { font-weight: 800; color: #fff; font-size: .96rem; }
+    .ng-foot-info { font-size: .68rem; margin-top: 6px; }
+    .ng-foot-tel { display: inline-block; margin-top: 12px; font-family: var(--font-num); font-weight: 900; font-size: 1.3rem; color: #fff; text-decoration: none; }
+    .ng-foot-note { font-size: .66rem; margin-top: 8px; color: #97a1ac; }
+
+    /* フローティング */
+    .ng-float { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: flex; gap: 8px; padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0)); background: rgba(255, 255, 255, .82); backdrop-filter: blur(6px); border-top: 1px solid var(--color-border); }
+    .ng-float a { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #fff; border-radius: 11px; padding: 8px; line-height: 1.15; }
+    .ng-float-tel { position: relative; flex: 1.5; background: linear-gradient(180deg, #f2630e, #c4150c); }
+    .ng-float-tel small { font-size: .6rem; opacity: .95; }
+    .ng-float-cpn { position: absolute; top: -9px; left: 8px; background: var(--color-accent); color: #a10a08; font-weight: 900; font-size: .58rem; padding: 2px 7px; border-radius: 8px; transform: rotate(-6deg); }
+    .ng-float-line { flex: 1; background: var(--color-line); }
+    .ng-float-line small { font-size: .6rem; opacity: .95; }
+
+    @media (min-width: 720px) {
+      .ng-h1 { font-size: 2.3rem; }
+      .ng-cases { grid-template-columns: repeat(3, 1fr); }
+      .ng-float { display: none; }
+      .ng-foot { padding-bottom: 26px; }
+      .ng .sp { display: inline; }
+    }
+  </style>
+</Layout>
