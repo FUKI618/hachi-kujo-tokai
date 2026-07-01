@@ -228,6 +228,11 @@ const nagoyaJsonLd = [
       <p class="ng-foot-info">{company.legalName}／〒{a.postal} {a.region}{a.city}{a.street}</p>
       <a class="ng-foot-tel" href={company.phoneTelLink} data-cta="nagoya_footer_tel">☎ {company.phoneDisplay}</a>
       <p class="ng-foot-note">名古屋市16区・近郊エリア対応｜24時間365日受付</p>
+      <p class="ng-foot-legal">
+        <a href={assetPath("legal/")}>特定商取引法に基づく表示</a>
+        <span aria-hidden="true"> ｜ </span>
+        <a href={assetPath("privacy-policy/")}>プライバシーポリシー・会社情報</a>
+      </p>
     </footer>
 
     <!-- フローティングCTA（モバイル） -->
@@ -434,6 +439,9 @@ const nagoyaJsonLd = [
     .ng-foot-info { font-size: .68rem; margin-top: 6px; }
     .ng-foot-tel { display: inline-block; margin-top: 12px; font-family: var(--font-num); font-weight: 900; font-size: 1.3rem; color: #fff; text-decoration: none; }
     .ng-foot-note { font-size: .66rem; margin-top: 8px; color: #97a1ac; }
+    .ng-foot-legal { margin-top: 14px; font-size: .72rem; }
+    .ng-foot-legal a { color: #cfd6de; text-decoration: underline; }
+    .ng-foot-legal span { color: #6b7683; }
 
     /* フローティング */
     .ng-float { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: flex; gap: 8px; padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0)); background: rgba(255, 255, 255, .82); backdrop-filter: blur(6px); border-top: 1px solid var(--color-border); }
