@@ -153,7 +153,7 @@ const nagoyaJsonLd = [
       <p class="ng-note">基本<b>1,680円〜</b>。出張費・見積り・キャンセルは<b>0円</b>。現地の確定見積からの追加請求はありません。</p>
       <div class="xrate-card">
         {rates.map((r) => (
-          <a class="xrate-row" href={company.phoneTelLink} data-cta="nagoya_rate_row_tel" aria-label={`${r.beeType}の駆除を電話で相談する`}>
+          <a class="xrate-row" href={company.phoneTelLink} data-cta="nagoya_rate_row_dial" aria-label={`${r.beeType}の駆除を電話で相談する`}>
             <img class="xrate-thumb" src={assetPath(`images/bee-types/${rateImg[r.beeType] ?? "dorobachi"}.webp`)}
               width="74" height="48" alt={`${r.beeType}の蜂の巣駆除`} loading="lazy" decoding="async" />
             <div class="xrate-info">
@@ -174,7 +174,7 @@ const nagoyaJsonLd = [
       <h2 class="ng-h2">名古屋市内の施工事例</h2>
       <div class="ng-cases">
         {nagoyaCases.map((c) => (
-          <a class="ng-case" href={company.phoneTelLink} data-cta="nagoya_case_tel" aria-label={`${c.area}の${c.beeType}駆除を電話で相談`}>
+          <a class="ng-case" href={company.phoneTelLink} data-cta="nagoya_case_dial" aria-label={`${c.area}の${c.beeType}駆除を電話で相談`}>
             <img src={assetPath(`images/cases/${c.imageBase}.webp`)} width="320" height="210"
               alt={`${c.area} ${c.title}`} loading="lazy" decoding="async" />
             <div class="ng-case-b">

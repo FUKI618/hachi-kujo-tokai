@@ -223,11 +223,11 @@ const strengthsShown = strengths.slice(0, 6);
     <section class="xb-sec" id="urgent" aria-labelledby="s-urgent">
       <h2 class="xb-h" id="s-urgent"><span>こんな状況は、今すぐお電話を</span></h2>
       <ul class="xtrouble">
-        <li><a href={company.phoneTelLink} data-cta="trouble_tel">蜂に刺された・刺されそうで家族が外に出られない</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_tel">玄関・ベランダなど毎日通る場所に巣がある</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_tel">小さな子ども・お年寄り・ペットがいて危険</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_tel">スズメバチが家のまわりを何匹も飛んでいる</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_tel">とにかく今日中に、この巣をなくしたい</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_dial">蜂に刺された・刺されそうで家族が外に出られない</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_dial">玄関・ベランダなど毎日通る場所に巣がある</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_dial">小さな子ども・お年寄り・ペットがいて危険</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_dial">スズメバチが家のまわりを何匹も飛んでいる</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_dial">とにかく今日中に、この巣をなくしたい</a></li>
       </ul>
       <p class="xb-note xtrouble-cta">ひとつでも当てはまる方は、迷わず<b>お電話ください</b>。最短30分で、プロが駆けつけます。</p>
     </section>
@@ -236,12 +236,12 @@ const strengthsShown = strengths.slice(0, 6);
     <section class="xb-sec" id="trouble" aria-labelledby="s-trouble">
       <h2 class="xb-h" id="s-trouble"><span>こんなお悩みありませんか？</span></h2>
       <ul class="xtrouble">
-        <li><a href={company.phoneTelLink} data-cta="trouble_tel">家の周りで蜂をよく見かける</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_tel">軒下・ベランダに巣ができている</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_tel">屋根裏や壁の中から羽音がする</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_tel">市販スプレーで駆除したが減らない</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_tel">去年駆除したのに今年もまた出た</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_tel">小さな子ども・ペットがいて不安</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_dial">家の周りで蜂をよく見かける</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_dial">軒下・ベランダに巣ができている</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_dial">屋根裏や壁の中から羽音がする</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_dial">市販スプレーで駆除したが減らない</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_dial">去年駆除したのに今年もまた出た</a></li>
+        <li><a href={company.phoneTelLink} data-cta="trouble_dial">小さな子ども・ペットがいて不安</a></li>
       </ul>
       <p class="xb-note xtrouble-cta">ひとつでも当てはまれば、無理せず<b>プロにご相談を</b>。最短30分で駆けつけます。</p>
     </section>
@@ -261,7 +261,7 @@ const strengthsShown = strengths.slice(0, 6);
 
       <div class="xrate-card">
         {rates.map((r, i) => (
-          <a class="xrate-row" href={company.phoneTelLink} data-cta="rate_row_tel" aria-label={`${r.beeType}の駆除を電話で相談する`}>
+          <a class="xrate-row" href={company.phoneTelLink} data-cta="rate_row_dial" aria-label={`${r.beeType}の駆除を電話で相談する`}>
             <img class="xrate-thumb" src={assetPath(`images/bee-types/${rateImg[r.beeType] ?? "dorobachi"}.webp`)}
               width="74" height="48" alt={`${r.beeType}の蜂の巣駆除`} loading="lazy" decoding="async" />
             <div class="xrate-info">
@@ -350,7 +350,7 @@ const strengthsShown = strengths.slice(0, 6);
       <div class="xb-cases">
         {casesShown.map((c) => (
           <div class="xb-card xb-case-card">
-            <a class="xcard-tel" href={company.phoneTelLink} data-cta="case_tel" aria-label={`${c.area}の${c.beeType}駆除を電話で相談`}></a>
+            <a class="xcard-tel" href={company.phoneTelLink} data-cta="case_dial" aria-label={`${c.area}の${c.beeType}駆除を電話で相談`}></a>
             <img src={assetPath(`images/cases/${c.imageBase}.webp`)} width="320" height="220"
               alt={`${c.area} ${c.title}`} loading="lazy" decoding="async" />
             <div class="xb-case-body">
@@ -392,7 +392,7 @@ const strengthsShown = strengths.slice(0, 6);
           const d = dangerMap[b.dangerLevel] ?? dangerMap.low;
           return (
             <article class="xbee">
-              <a class="xcard-tel" href={company.phoneTelLink} data-cta="beetype_tel" aria-label={`${b.name}の駆除を電話で相談`}></a>
+              <a class="xcard-tel" href={company.phoneTelLink} data-cta="beetype_dial" aria-label={`${b.name}の駆除を電話で相談`}></a>
               <div class="xbee-photo">
                 <img src={assetPath(`images/bee-types/${b.imageBase}.webp`)} width="320" height="200"
                   alt={`${b.name}（${d.label}）`} loading="lazy" decoding="async" />
