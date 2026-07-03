@@ -250,7 +250,7 @@ const strengthsShown = strengths.slice(0, 6);
     <span id="pricing" class="x-anchor" aria-hidden="true"></span>
     <section class="xb-sec" id="price" aria-labelledby="s-rate">
       <h2 class="xb-h" id="s-rate"><span>蜂の巣駆除 料金のご案内</span></h2>
-      <p class="xb-lead">基本<b>1,680円〜</b>。広告代理店も中間業者も挟まない<b>自社直接対応</b>だから実現できる価格です。</p>
+      <p class="xb-lead">基本<b>1,680円〜</b>。広告代理店も仲介も挟まない<b>自社直接対応</b>だから実現できる価格です。</p>
 
       <ul class="xrate-free" aria-label="無料の項目">
         <li><span class="xrate-free-l">出張費</span><span class="xrate-free-z">0<small>円</small></span></li>
@@ -492,9 +492,25 @@ const strengthsShown = strengths.slice(0, 6);
         {areas.map((a) => (
           <div class="xb-area-block">
             <b class="xb-area-pref">{a.prefecture}</b>
-            <div class="xb-area-cities">{a.cities.map((c) => (<span>{c}</span>))}</div>
+            <div class="xb-area-cities">{a.cities.map((c) => (
+              c.startsWith("名古屋市")
+                ? <a href={assetPath("nagoya/")} data-cta="area_nagoya_link">{c}</a>
+                : <span>{c}</span>
+            ))}</div>
           </div>
         ))}
+      </div>
+      <div class="xb-area-cta">
+        <a class="xb-area-ngy" href={assetPath("nagoya/")} data-cta="area_nagoya_link">
+          <span class="xb-area-ngy-t">名古屋市の方はこちら</span>
+          <span class="xb-area-ngy-s">16区対応・中区拠点・施工事例をまとめた名古屋専用ページへ →</span>
+        </a>
+        <p class="xb-area-note">お住まいの市町村が上にあれば対応できます。掲載のない周辺エリアもお気軽にご相談ください。</p>
+        <a class="xb-area-tel" href={company.phoneTelLink} data-cta="area_tel">
+          <span class="xb-area-tel-lab">今すぐ無料相談・見積り0円</span>
+          <span class="xb-area-tel-num">☎ {company.phoneDisplay}</span>
+          <span class="xb-area-tel-sub">{company.hours}・通話無料</span>
+        </a>
       </div>
     </section>
 
@@ -901,6 +917,18 @@ const strengthsShown = strengths.slice(0, 6);
   .xb-area-pref { display:inline-block; color:var(--red); font-size:.92rem; font-weight:900; margin-bottom:.4rem; }
   .xb-area-cities { display:flex; flex-wrap:wrap; gap:.3rem; }
   .xb-area-cities span { font-size:.68rem; background:#fff; border:1px solid var(--line); border-radius:6px; padding:.18rem .45rem; color:#46402f; }
+  .xb-area-cities a { font-size:.68rem; background:#fff; border:1px solid var(--red); border-radius:6px; padding:.18rem .45rem; color:var(--red); font-weight:800; text-decoration:none; -webkit-tap-highlight-color:rgba(226,35,26,.12); }
+  @media(hover:hover){ .xb-area-cities a:hover { background:var(--red); color:#fff; } }
+  .xb-area-cta { display:flex; flex-direction:column; gap:10px; margin-top:16px; }
+  .xb-area-ngy { display:block; background:#fff; border:2px solid var(--red); border-radius:12px; padding:12px 14px; text-decoration:none; box-shadow:0 3px 12px rgba(20,12,4,.06); }
+  .xb-area-ngy-t { display:block; font-size:.95rem; font-weight:900; color:var(--red); margin-bottom:2px; }
+  .xb-area-ngy-t::before { content:"▶ "; font-size:.72rem; }
+  .xb-area-ngy-s { display:block; font-size:.75rem; font-weight:600; color:#5b5140; }
+  .xb-area-note { font-size:.72rem; color:#5b5140; text-align:center; margin:2px 2px; line-height:1.6; }
+  .xb-area-tel { display:flex; flex-direction:column; align-items:center; gap:1px; background:linear-gradient(180deg,#7d1410,#a8190f); color:#fff; border-radius:12px; padding:12px 14px; text-decoration:none; box-shadow:0 4px 14px rgba(140,10,10,.25); -webkit-tap-highlight-color:rgba(255,255,255,.15); }
+  .xb-area-tel-lab { font-size:.74rem; font-weight:700; opacity:.95; }
+  .xb-area-tel-num { font-size:1.4rem; font-weight:900; letter-spacing:.02em; }
+  .xb-area-tel-sub { font-size:.68rem; opacity:.9; }
 
   /* FAQ */
   .xb-faq { display:flex; flex-direction:column; gap:8px; }
