@@ -8,6 +8,7 @@
  */
 import Layout from "../layouts/Layout.astro";
 import { assetPath } from "../lib/site";
+import StaffCard from "../components/StaffCard.astro";
 import { company } from "../data/company";
 import { rates } from "../data/rates";
 import { strengths } from "../data/strengths";
@@ -37,7 +38,7 @@ const _columnAll = await getCollection("column");
 const columnPosts = COLUMN_ORDER.map((id) => _columnAll.find((p) => p.id === id)).filter(Boolean);
 
 const title = `名古屋・愛知の蜂の巣駆除なら最短30分｜基本1,680円〜・1年保証｜${company.name}`;
-const description = `蜂の巣駆除を名古屋・愛知＋岐阜・三重の近郊エリアで最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ¥2,680〜・アシナガバチ¥1,680〜。24時間365日受付・見積り無料・キャンセル料0円・1年再発保証。`;
+const description = `蜂の巣駆除を名古屋・愛知＋岐阜・三重の近郊エリアで最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ¥2,680〜・アシナガバチ¥1,680〜。受付は電話7時〜21時・LINE24時間。見積り無料・キャンセル料0円・1年再発保証。`;
 
 const beeShown = beeTypes.slice(0, 6);
 const casesShown = cases.slice(0, 4);
@@ -62,7 +63,7 @@ const strengthsShown = strengths.slice(0, 6);
 ---
 
 <Layout title={title} description={description}>
-  <h1 class="x-sr">名古屋・愛知の蜂の巣駆除｜即日スピード解決・最短30分で現場到着・基本1,680円〜（税込）・1年保証・追加0円の明朗会計・当日対応98%・24時間365日受付 {company.phoneDisplay}</h1>
+  <h1 class="x-sr">名古屋・愛知の蜂の巣駆除｜即日スピード解決・最短30分で現場到着・基本1,680円〜（税込）・1年保証・追加0円の明朗会計・当日対応98%・受付は電話7時〜21時／LINE24時間 {company.phoneDisplay}</h1>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
     <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/></symbol>
@@ -78,7 +79,7 @@ const strengthsShown = strengths.slice(0, 6);
       alt="防護手袋のプロが専用工具で軒下のスズメバチの巣を取り除く様子" loading="eager" decoding="async" fetchpriority="high" />
 
     <!-- L1 上部赤バー -->
-    <div class="xh-bar" aria-hidden="true">24時間365日受付・<b>最短30分</b>で出動</div>
+    <div class="xh-bar" aria-hidden="true">受付 7時〜21時・<b>最短30分</b>で出動</div>
 
     <!-- L2 ブランド帯 -->
     <div class="xh-brand">
@@ -86,7 +87,7 @@ const strengthsShown = strengths.slice(0, 6);
       <span class="xh-btext"><b class="xh-bname">{company.name}</b><small class="xh-btag">蜂の巣駆除のプロ集団</small></span>
       <a class="xh-headtel" href={company.phoneTelLink} data-cta="header_tel">
         <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
-        <span class="xh-headtel-tx"><b class="font-num">{company.phoneDisplay}</b><small>24時間受付中</small></span>
+        <span class="xh-headtel-tx"><b class="font-num">{company.phoneDisplay}</b><small>受付7時〜21時</small></span>
       </a>
     </div>
 
@@ -110,7 +111,7 @@ const strengthsShown = strengths.slice(0, 6);
       <span class="xh-cta-tx">
         <small class="xh-cta-top">＼今すぐお電話で不安も駆除／</small>
         <b class="xh-cta-num font-num">{company.phoneDisplay}</b>
-        <small class="xh-cta-bot">通話無料・24時間受付・タップで発信</small>
+        <small class="xh-cta-bot">通話無料・受付7時〜21時・タップで発信</small>
       </span>
     </a>
     <!-- 緑ドット「ただ今受付中」 -->
@@ -148,7 +149,7 @@ const strengthsShown = strengths.slice(0, 6);
 
       <!-- 上部白バー -->
       <div class="xpc-bar" aria-hidden="true">
-        <span class="xpc-bar-sub">24時間365日受付・最短30分で出動</span>
+        <span class="xpc-bar-sub">受付 7時〜21時・最短30分で出動</span>
         <span class="xpc-bar-brand"><img class="xpc-bar-logo" src={assetPath("images/generated/hero-bee-logo.webp")} width="132" height="120" alt="" />{company.name}</span>
       </div>
 
@@ -309,6 +310,7 @@ const strengthsShown = strengths.slice(0, 6);
         <li><img class="xlb-ic" src={assetPath("images/icons/badge-coin.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />仲介手数料0円</li>
         <li><img class="xlb-ic" src={assetPath("images/icons/badge-shield.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />受付〜駆除〜1年保証まで自社完結</li>
       </ul>
+      <StaffCard />
       <p class="xb-note xlocal-note">運営会社・代表者などの会社概要は<a href={assetPath("privacy-policy/")}>会社情報ページ</a>に記載しています。</p>
     </section>
 
@@ -509,7 +511,7 @@ const strengthsShown = strengths.slice(0, 6);
         <a class="xb-area-tel" href={company.phoneTelLink} data-cta="area_tel">
           <span class="xb-area-tel-lab">今すぐ無料相談・見積り0円</span>
           <span class="xb-area-tel-num">☎ {company.phoneDisplay}</span>
-          <span class="xb-area-tel-sub">{company.hours}・通話無料</span>
+          <span class="xb-area-tel-sub">受付 {company.phoneHours}・通話無料</span>
         </a>
       </div>
     </section>
@@ -582,7 +584,7 @@ const strengthsShown = strengths.slice(0, 6);
       <div class="xb-cta-btns">
         <a href={company.phoneTelLink} class="xb-cta-btn xb-cta-tel" data-cta="footer_tel">
           <svg class="xic"><use href="#i-phone" /></svg>
-          <span><b class="font-num">{company.phoneDisplay}</b><small>24時間365日受付・通話無料・タップで発信</small></span>
+          <span><b class="font-num">{company.phoneDisplay}</b><small>受付7時〜21時・通話無料・タップで発信</small></span>
         </a>
         <a href={company.lineUrl} class="xb-cta-btn xb-cta-line" data-cta="footer_line" target="_blank" rel="noopener">
           <span class="xb-cta-line-badge">LINE</span>

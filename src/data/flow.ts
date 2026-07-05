@@ -12,7 +12,7 @@ export const flowSteps: FlowStep[] = [
   {
     num: 1,
     title: "電話・LINE相談",
-    description: "24時間受付。写真添付で見積精度UP。",
+    description: "電話7時〜21時・LINEは24時間受付。写真添付で見積精度UP。",
   },
   {
     num: 2,

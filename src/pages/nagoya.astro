@@ -9,6 +9,7 @@
  */
 import Layout from "../layouts/Layout.astro";
 import CtaDual from "../components/CtaDual.astro";
+import StaffCard from "../components/StaffCard.astro";
 import { company } from "../data/company";
 import { rates } from "../data/rates";
 import { nagoyaCases, nagoyaVoices, nagoyaWards, nagoyaNearby } from "../data/nagoya";
@@ -16,7 +17,7 @@ import { assetPath, homePath } from "../lib/site";
 
 const title = "名古屋の蜂の巣駆除なら最短30分｜中区拠点・基本1,680円〜｜蜂の巣駆除ファクトリー東海";
 const description =
-  "名古屋市16区の蜂の巣駆除。名古屋・中区丸の内拠点の自社スタッフが最短30分で直接対応。基本1,680円〜・追加請求0円・1年保証・24時間受付。スズメバチ・アシナガバチ・ミツバチ対応。";
+  "名古屋市16区の蜂の巣駆除。名古屋・中区丸の内拠点の自社スタッフが最短30分で直接対応。基本1,680円〜・追加請求0円・1年保証。受付は電話7時〜21時・LINE24時間。スズメバチ・アシナガバチ・ミツバチ対応。";
 const a = company.address;
 const rateImg: Record<string, string> = {
   "アシナガバチ": "ashinagabachi",
@@ -61,7 +62,7 @@ const nagoyaJsonLd = [
 
 <Layout title={title} description={description} noindex={true} extraJsonLd={nagoyaJsonLd}>
   <!-- sr-only 実h1（名古屋・SEO/QS） -->
-    <h1 class="x-sr">名古屋の蜂の巣駆除｜中区拠点から最短30分で現場到着・基本1,680円〜（税込）・1年保証・追加0円の明朗会計・当日対応98%・24時間365日受付 {company.phoneDisplay}</h1>
+    <h1 class="x-sr">名古屋の蜂の巣駆除｜中区拠点から最短30分で現場到着・基本1,680円〜（税込）・1年保証・追加0円の明朗会計・当日対応98%・受付は電話7時〜21時／LINE24時間 {company.phoneDisplay}</h1>
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
       <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/></symbol>
@@ -77,7 +78,7 @@ const nagoyaJsonLd = [
         <span class="xh-btext"><b class="xh-bname">{company.name}</b><small class="xh-btag">名古屋の蜂の巣駆除・中区拠点</small></span>
         <a class="xh-headtel" href={company.phoneTelLink} data-cta="nagoya_header_tel">
           <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
-          <span class="xh-headtel-tx"><b class="font-num">{company.phoneDisplay}</b><small>24時間受付中</small></span>
+          <span class="xh-headtel-tx"><b class="font-num">{company.phoneDisplay}</b><small>受付7時〜21時</small></span>
         </a>
       </div>
       <div class="xh-banner" aria-hidden="true"><span><em>そのまま放置</em><i>すると</i><b>危険！</b></span></div>
@@ -93,7 +94,7 @@ const nagoyaJsonLd = [
         <span class="xh-cta-tx">
           <small class="xh-cta-top">＼今すぐお電話で不安も駆除／</small>
           <b class="xh-cta-num font-num">{company.phoneDisplay}</b>
-          <small class="xh-cta-bot">通話無料・24時間受付・タップで発信</small>
+          <small class="xh-cta-bot">通話無料・受付7時〜21時・タップで発信</small>
         </span>
       </a>
       <span class="xh-now" aria-hidden="true"><i class="xh-now-dot"></i>ただ今受付中</span>
@@ -144,6 +145,7 @@ const nagoyaJsonLd = [
           <div><dt>受付</dt><dd>{company.hours}</dd></div>
           <div><dt>お支払い</dt><dd>{company.payment.join("・")}</dd></div>
         </dl>
+        <StaffCard />
       </div>
     </section>
 
@@ -215,7 +217,7 @@ const nagoyaJsonLd = [
         <li><b>明朗会計・追加0円</b>現地の確定見積からの追加請求なし</li>
         <li><b>自社直接施工</b>紹介サイトを通さず仲介手数料0円</li>
         <li><b>1年再発保証</b>駆除後の再発も無料で対応</li>
-        <li><b>24時間365日受付</b>夜間・休日のご相談もお電話で</li>
+        <li><b>年中無休で受付</b>電話7時〜21時・LINEは24時間</li>
         <li><b>防護装備の専門対応</b>危険なスズメバチも安全に駆除</li>
       </ul>
     </section>
@@ -227,7 +229,7 @@ const nagoyaJsonLd = [
       <p class="ng-foot-name">{company.name}</p>
       <p class="ng-foot-info">{company.legalName}／〒{a.postal} {a.region}{a.city}{a.street}</p>
       <a class="ng-foot-tel" href={company.phoneTelLink} data-cta="nagoya_footer_tel">☎ {company.phoneDisplay}</a>
-      <p class="ng-foot-note">名古屋市16区・近郊エリア対応｜24時間365日受付</p>
+      <p class="ng-foot-note">名古屋市16区・近郊エリア対応｜電話7時〜21時・LINE24時間受付</p>
       <p class="ng-foot-legal">
         <a href={assetPath("legal/")}>特定商取引法に基づく表示</a>
         <span aria-hidden="true"> ｜ </span>

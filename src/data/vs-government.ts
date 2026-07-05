@@ -27,7 +27,7 @@ export const vsGovernmentRows: VsGovRow[] = [
   {
     label: "出動速度",
     government: { state: "bad", text: "平日日中のみ・申請から数日〜数週間" },
-    us: { state: "us-ok", text: "最短30分・24時間365日受付" },
+    us: { state: "us-ok", text: "最短30分・土日祝も出動" },
   },
   {
     label: "サービス内容",

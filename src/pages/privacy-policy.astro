@@ -71,7 +71,7 @@ const description = `${company.name}（運営：${company.legalName}）のプラ
             <tr><th>運営会社</th><td>{company.legalName}</td></tr>
             <tr><th>代表者</th><td>{company.representative}</td></tr>
             <tr><th>所在地</th><td>〒{company.address.postal}<br />{company.address.region}{company.address.city} {company.address.street}</td></tr>
-            <tr><th>電話番号</th><td>{company.phoneDisplay}<br /><small>(24時間365日受付)</small></td></tr>
+            <tr><th>電話番号</th><td>{company.phoneDisplay}<br /><small>(受付 7:00〜21:00／LINEは24時間)</small></td></tr>
             <tr><th>事業内容</th><td>{company.businessType}</td></tr>
             <tr><th>対応エリア</th><td>{company.serviceArea}</td></tr>
             <tr><th>支払方法</th><td>{company.payment.join("／")}</td></tr>
@@ -118,7 +118,7 @@ const description = `${company.name}（運営：${company.legalName}）のプラ
         <p class="pp-contact">
           <strong>{company.legalName}（{company.name}）</strong><br />
           〒{company.address.postal} {company.address.region}{company.address.city} {company.address.street}<br />
-          電話：{company.phoneDisplay}（24時間365日受付）
+          電話：{company.phoneDisplay}（受付 7:00〜21:00）
         </p>
 
         <h3>8. プライバシーポリシーの改定</h3>
