@@ -1,0 +1,570 @@
+---
+/**
+ * スズメバチ特化 集客LP (/suzumebachi)
+ * AG7-スズメバチ特化（スズメバチ 駆除 系KW）の着地。クエリ⇄LP関連性を最大化しLP体験QSを上げる。
+ * - index.astro / nagoya.astro / ashinagabachi.astro は一切改変しない（独立ページ）
+ * - Layout / CtaDual / StaffCard を流用、デザインは nagoya/ashinagabachi と同一（.xhero / .ng トークン）
+ * - コンテンツは suzumebachi-tokushu / suzumebachi-kujo-ryokin 記事＋競合専門性調査を凝縮
+ * - 「スズメバチを知り尽くしたプロ」= 4種判別・巣の進化・場所別・施工6手順で専門性を証明
+ * - honest厳守：捏造数値なし。ヒーロー写真は実LPのマーブル巣撤去写真を流用（蜂ゼロ=施工手順どおり）
+ * - noindex：広告専用着地のためdoorway/重複回避
+ */
+import Layout from "../layouts/Layout.astro";
+import CtaDual from "../components/CtaDual.astro";
+import StaffCard from "../components/StaffCard.astro";
+import { company } from "../data/company";
+import { rates } from "../data/rates";
+import {
+  suzumeAreas,
+  suzumeAreaNote,
+  suzumeCases,
+  suzumeVoices,
+  suzumeSpecies,
+  suzumeSteps,
+} from "../data/suzumebachi";
+import { assetPath, homePath } from "../lib/site";
+
+const title = "スズメバチ駆除は最短30分・基本2,680円〜｜追加0円・1年保証｜蜂の巣駆除ファクトリー東海";
+const description =
+  "スズメバチの巣の駆除は東海の自社スタッフが最短30分で直接対応。基本2,680円〜・見積後の追加請求0円・1年保証。オオスズメバチ・キイロスズメバチ・屋根裏・軒下・土の中の巣まで防護装備の専門対応。受付は電話7時〜21時・LINE24時間。愛知・岐阜南部・三重北部対応。";
+const a = company.address;
+const rateImg: Record<string, string> = {
+  "アシナガバチ": "ashinagabachi",
+  "スズメバチ": "suzumebachi",
+  "ミツバチ": "mitsubachi",
+  "オオスズメバチ": "oosuzumebachi",
+  "クマバチ・その他": "kumabachi",
+};
+/** スズメバチLPなのでスズメバチ系を先頭に並べ替え（データは共通SSOT） */
+const rateOrder = ["スズメバチ", "オオスズメバチ", "アシナガバチ", "ミツバチ", "クマバチ・その他"];
+const sortedRates = [...rates].sort((x, y) => rateOrder.indexOf(x.beeType) - rateOrder.indexOf(y.beeType));
+const siteUrl = Astro.site ?? new URL(Astro.url.origin);
+const homeUrl = new URL(homePath, siteUrl).toString();
+
+/** 巣の進化と料金の関係（早いほど安い） */
+const seasons = [
+  { term: "4〜6月", size: "とっくり型・女王1匹", note: "巣は小さく、費用を最も抑えられる時期", tone: "ok" },
+  { term: "7〜9月", size: "マーブル模様の球体へ急成長", note: "働き蜂が急増。巣は最大60cm級に", tone: "warn" },
+  { term: "9〜10月", size: "蜂の数・攻撃性がピーク", note: "刺傷事故が最も多い季節。絶対に近づかない", tone: "danger" },
+];
+
+const faq = [
+  {
+    q: "スズメバチを一匹殺すと仲間が来るというのは本当ですか？",
+    a: "本当です。スズメバチは攻撃時に警報フェロモンを出し、近くの仲間を一斉に呼び寄せます。巣の近くで叩いたり潰したりは絶対に避け、静かにその場を離れてください。飛んでいる蜂を見かけたら、巣が近くにある可能性が高いのでご相談ください。",
+  },
+  {
+    q: "小さい巣なら市販スプレーで自分で駆除できますか？",
+    a: "スズメバチはおすすめしません。初期のとっくり型でも女王蜂は反撃しますし、7月以降の巣は働き蜂が集団で襲ってきます。毒性・攻撃性ともに蜂の中で最も高く、毎年死亡事故が起きているのはほぼスズメバチです。当社なら初期の巣は費用も抑えられます。",
+  },
+  {
+    q: "天井や壁から羽音がします。スズメバチでしょうか？",
+    a: "屋根裏や壁の中はキイロスズメバチ・モンスズメバチがよく巣を作る場所です。閉め切った室内で蜂を見かける場合も屋内側の営巣が疑われます。巣が見えなくても、蜂の出入り口から位置を特定できますので、そのままご相談ください。",
+  },
+  {
+    q: "駆除した後、蜂が戻ってきませんか？",
+    a: "駆除時に外出していた「戻り蜂」が数日間、巣のあった場所に集まることがあります。当社は薬剤処理とトラップで戻り蜂まで対処し、巣跡の処理と侵入口の封鎖も実施。1年以内に同じ場所に再発した場合は無償で対応します。",
+  },
+  {
+    q: "オオスズメバチかもしれません。対応できますか？",
+    a: "対応できます。オオスズメバチは土の中や木の根元に巣を作るため、気づかず踏み込むのが最も危険です。地面から蜂が出入りしている場所には絶対に近づかず、位置だけ覚えてお電話ください。防護装備の専門スタッフが対応します。",
+  },
+];
+
+const suzumeJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "ホーム", item: homeUrl },
+      { "@type": "ListItem", position: 2, name: "スズメバチ駆除" },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: "スズメバチ駆除",
+    provider: {
+      "@type": "LocalBusiness",
+      name: company.name,
+      telephone: company.phone,
+      address: {
+        "@type": "PostalAddress",
+        postalCode: a.postal,
+        addressRegion: a.region,
+        addressLocality: a.city,
+        streetAddress: a.street,
+      },
+    },
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "愛知県" },
+      { "@type": "AdministrativeArea", name: "岐阜県南部" },
+      { "@type": "AdministrativeArea", name: "三重県北部" },
+    ],
+    offers: { "@type": "Offer", price: 2680, priceCurrency: "JPY" },
+  },
+];
+---
+
+<Layout title={title} description={description} noindex={true} extraJsonLd={suzumeJsonLd}>
+  <!-- sr-only 実h1（スズメバチ・QS） -->
+    <h1 class="x-sr">スズメバチ駆除｜東海の自社スタッフが最短30分で現場到着・基本2,680円〜（税込）・1年保証・追加0円の明朗会計・当日対応98%・オオスズメバチ・キイロスズメバチ・屋根裏対応・受付は電話7時〜21時／LINE24時間 {company.phoneDisplay}</h1>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+      <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/></symbol>
+    </svg>
+
+    <!-- ===== HERO（元LPの焼込みチラシを流用・スズメバチ化／2:3固定・%絶対配置） ===== -->
+    <div class="xhero">
+      <img class="xh-photo" src={assetPath("images/generated/hero-mob-photo-suzume.webp")} width="1024" height="418"
+        alt="防護装備のプロが薬剤処理後のスズメバチのマーブル模様の巣を軒下から取り外す様子" loading="eager" decoding="async" fetchpriority="high" />
+      <div class="xh-bar" aria-hidden="true">スズメバチ駆除・東海対応・<b>最短30分</b>で出動</div>
+      <div class="xh-brand">
+        <img class="xh-logo" src={assetPath("images/generated/hero-bee-logo.webp")} width="132" height="120" alt="" aria-hidden="true" />
+        <span class="xh-btext"><b class="xh-bname">{company.name}</b><small class="xh-btag">スズメバチ・蜂の巣駆除の専門対応</small></span>
+        <a class="xh-headtel" href={company.phoneTelLink} data-cta="suzume_header_tel">
+          <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
+          <span class="xh-headtel-tx"><b class="font-num">{company.phoneDisplay}</b><small>受付7時〜21時</small></span>
+        </a>
+      </div>
+      <div class="xh-banner" aria-hidden="true"><span><em>そのまま放置</em><i>すると</i><b>危険！</b></span></div>
+      <p class="xh-h1" aria-hidden="true">スズメバチ駆除</p>
+      <p class="xh-h2" aria-hidden="true">安心・安全・スピード解決</p>
+      <p class="xh-price" aria-hidden="true">
+        <span class="xhp-cell"><small>最短</small><b class="xhp-num">30</b><small>分</small></span>
+        <span class="xhp-div"></span>
+        <span class="xhp-cell"><small>基本</small><b class="xhp-num">¥2,680</b><small class="xhp-tilde">〜</small><i class="xhp-tax">（税込）</i></span>
+      </p>
+      <a class="xh-cta" href={company.phoneTelLink} data-cta="suzume_hero_tel">
+        <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
+        <span class="xh-cta-tx">
+          <small class="xh-cta-top">＼今すぐお電話で不安も駆除／</small>
+          <b class="xh-cta-num font-num">{company.phoneDisplay}</b>
+          <small class="xh-cta-bot">通話無料・受付7時〜21時・タップで発信</small>
+        </span>
+      </a>
+      <span class="xh-now" aria-hidden="true"><i class="xh-now-dot"></i>ただ今受付中</span>
+      <span class="xcpn" aria-hidden="true"><span class="xcpn-body"><b class="xcpn-l1">電話で</b><b class="xcpn-l2">10<i>%</i></b><b class="xcpn-l3">OFF</b></span></span>
+      <ul class="xh-trust" aria-hidden="true">
+        <li>
+          <svg viewBox="0 0 24 24" class="xht-ic"><circle cx="12" cy="13" r="8"/><path d="M12 13 V9 M12 13 l3 2 M9 3 h6"/></svg>
+          <span><small>最短</small><b>30<em>分</em></b><small>で現場到着</small></span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" class="xht-ic xht-fill"><path d="M12 2 L20 5 V11 C20 16 16 20 12 22 C8 20 4 16 4 11 V5 Z"/><path class="xht-chk" d="M8.5 12 l2.5 2.5 L16 9"/></svg>
+          <span><small>安心の</small><b>1<em>年</em></b><small>保証</small></span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" class="xht-ic"><circle cx="12" cy="12" r="9"/><text x="12" y="15.5" class="xht-y0">¥0</text></svg>
+          <span><small>見積後</small><b>追加0<em>円</em></b><small>明朗会計</small></span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" class="xht-ic xht-fill"><path d="M4 11 L12 4 L20 11 V21 H4 Z"/></svg>
+          <span><small>当日対応</small><b>98<em>%</em></b><small>迅速対応</small></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="ng">
+    <!-- スズメバチを知り尽くしたプロ（4種判別・専門性の証明） -->
+    <section class="ng-sec">
+      <h2 class="ng-h2">スズメバチを知り尽くした<br class="spx" />専門チームが対応します</h2>
+      <p class="ng-note">スズメバチは種類で<b>巣の場所も駆除の難易度もまったく違います</b>。当社は種類の特定から始めるので、作業も料金の説明も正確です。</p>
+      <ul class="ag-judge">
+        {suzumeSpecies.map((s) => (
+          <li class={`ag-j ${s.danger >= 4 ? "ag-j--danger" : "ag-j--ok"}`}>
+            <span class="ag-j-badge">危険度{"★".repeat(s.danger)}</span>
+            <span class="ag-j-text"><b>{s.name}</b>（{s.size}）— {s.trait}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="ng-mini">※ 種類が分からなくても大丈夫です。巣の形・場所・蜂の見た目を伺えば、お電話の段階でおおよそ特定できます。</p>
+    </section>
+
+    <CtaDual id="suzume_species_cta" lead="種類が分からなくてもOK。お電話ください" />
+
+    <!-- 巣の進化・時期（早いほど安い） -->
+    <section class="ng-sec ng-sec-tint">
+      <h2 class="ng-h2">スズメバチの巣は<br class="spx" />「とっくり型」から急成長します</h2>
+      <p class="ng-note">初期は<b>とっくりを逆さにした形</b>、夏以降は<b>マーブル模様の球体</b>へ。巣が育つほど危険も費用も増えるため、<b>見つけた日が最も安く駆除できる日</b>です。</p>
+      <ul class="ag-season">
+        {seasons.map((s) => (
+          <li class={`ag-s ag-s--${s.tone}`}>
+            <b class="ag-s-term">{s.term}</b>
+            <span class="ag-s-size">{s.size}</span>
+            <span class="ag-s-note">{s.note}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="ng-note ng-note-follow">巣ができやすいのは<b>軒下・屋根裏・壁の中・土の中・庭木</b>。「天井から羽音がする」「地面から蜂が出入りしている」も営巣のサインです。</p>
+    </section>
+
+    <!-- 料金（共通データ・スズメバチ先頭） -->
+    <section class="ng-sec">
+      <h2 class="ng-h2">スズメバチ駆除 料金のご案内</h2>
+      <p class="ng-note">スズメバチは基本<b>2,680円〜</b>。出張費・見積り・キャンセルは<b>0円</b>。現地の確定見積からの追加請求はありません。</p>
+      <div class="xrate-card">
+        {sortedRates.map((r) => (
+          <a class="xrate-row" href={company.phoneTelLink} data-cta="suzume_rate_row_dial" aria-label={`${r.beeType}の駆除を電話で相談する`}>
+            <img class="xrate-thumb" src={assetPath(`images/bee-types/${rateImg[r.beeType] ?? "dorobachi"}.webp`)}
+              width="74" height="48" alt={`${r.beeType}の蜂の巣駆除`} loading="lazy" decoding="async" />
+            <div class="xrate-info">
+              <b class="xrate-name">{r.beeType}</b>
+              <span class="xrate-cond">{r.workCondition}</span>
+            </div>
+            <div class="xrate-price"><b>{r.basicPrice}</b><small>税込</small></div>
+          </a>
+        ))}
+      </div>
+      <p class="ng-mini">※ 巣のサイズ・高さ・場所により変動。屋根裏・壁の中・土の中は作業工程が増えるため現地見積で加算をご説明します。<br />※ 金額は作業前に確定し、ご納得いただいてから作業します。</p>
+    </section>
+
+    <CtaDual id="suzume_rate_cta" lead="巣が小さい今が最安。写真だけの概算もOK" />
+
+    <!-- プロの施工手順（専門性の核） -->
+    <section class="ng-sec ng-sec-tint">
+      <h2 class="ng-h2">プロの駆除手順（6ステップ）</h2>
+      <p class="ng-note">スズメバチ駆除は「巣を落とす」だけでは終わりません。<b>戻り蜂と再発への対処までがプロの仕事</b>です。</p>
+      <ol class="sz-steps">
+        {suzumeSteps.map((s, i) => (
+          <li class="sz-step">
+            <span class="sz-step-no">{i + 1}</span>
+            <span class="sz-step-tx"><b>{s.step}</b><small>{s.detail}</small></span>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <CtaDual id="suzume_step_cta" lead="危険な巣ほどプロにお任せください・通話無料" />
+
+    <!-- スズメバチの施工事例 -->
+    <section class="ng-sec">
+      <h2 class="ng-h2">スズメバチの施工事例</h2>
+      <div class="ng-cases">
+        {suzumeCases.map((c) => (
+          <a class="ng-case" href={company.phoneTelLink} data-cta="suzume_case_dial" aria-label={`${c.area}の${c.beeType}駆除を電話で相談`}>
+            <img src={assetPath(`images/cases/${c.imageBase}.webp`)} width="320" height="210"
+              alt={`${c.area} ${c.title}`} loading="lazy" decoding="async" />
+            <div class="ng-case-b">
+              <div class="ng-tags"><span>{c.beeType}</span><span>{c.area}</span><span>{c.location}</span></div>
+              <h3>{c.title}</h3>
+              <p class="ng-case-price">現地確定見積 <b>{c.priceJpy.toLocaleString()}円</b>（税込）</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="ng-mini">※ 事例写真は実案件をもとにプライバシー保護のため再現したものです。金額は巣のサイズ・場所により変動します。</p>
+    </section>
+
+    <CtaDual id="suzume_proof_cta" lead="同じような場所に巣がある方は、今すぐご相談ください" />
+
+    <!-- お客様の声 -->
+    <section class="ng-sec ng-sec-tint">
+      <h2 class="ng-h2">スズメバチ駆除のお客様の声</h2>
+      <div class="ng-voices">
+        {suzumeVoices.map((v) => (
+          <div class="ng-voice">
+            <div class="ng-voice-h">
+              <span class="ng-av">{v.initial}</span>
+              <span class="ng-voice-m">{v.area}・{v.ageBracket}<small>{v.service}</small></span>
+              <span class="ng-stars" aria-label="5点">{"★".repeat(v.rating)}</span>
+            </div>
+            <p>{v.comment}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 拠点・スタッフ（信頼） -->
+    <section class="ng-sec">
+      <h2 class="ng-h2">東海の実在拠点から、<br class="spx" />自社スタッフが直接うかがいます</h2>
+      <div class="ng-base">
+        <p class="ng-base-lead">
+          全国の紹介サイトや県外本社を通さず、<b>名古屋・中区丸の内の自社スタッフ</b>が現地対応。
+          だから<b>仲介手数料0円</b>・連絡が早く・料金も明朗です。
+        </p>
+        <dl class="ng-base-info">
+          <div><dt>拠点</dt><dd>〒{a.postal} {a.region}{a.city}{a.street}</dd></div>
+          <div><dt>受付</dt><dd>{company.hours}</dd></div>
+          <div><dt>お支払い</dt><dd>{company.payment.join("・")}</dd></div>
+        </dl>
+        <StaffCard />
+      </div>
+    </section>
+
+    <!-- 対応エリア -->
+    <section class="ng-sec ng-sec-tint">
+      <h2 class="ng-h2">対応エリア</h2>
+      <ul class="ng-wards">
+        {suzumeAreas.map((c) => <li>{c}</li>)}
+      </ul>
+      <p class="ng-nearby">{suzumeAreaNote}</p>
+    </section>
+
+    <!-- 選ばれる理由（簡潔） -->
+    <section class="ng-sec">
+      <h2 class="ng-h2">スズメバチ駆除で選ばれる理由</h2>
+      <ul class="ng-why">
+        <li><b>防護装備の専門対応</b>危険なスズメバチ・オオスズメバチも安全に駆除</li>
+        <li><b>最短30分で現場到着</b>東海の自社スタッフが直行。当日対応98%</li>
+        <li><b>明朗会計・追加0円</b>現地の確定見積からの追加請求なし</li>
+        <li><b>戻り蜂対策・侵入口封鎖まで</b>「落として終わり」にしない施工</li>
+        <li><b>1年再発保証</b>同じ場所の再発は無償対応</li>
+        <li><b>年中無休で受付</b>電話7時〜21時・LINEは24時間</li>
+      </ul>
+    </section>
+
+    <CtaDual id="suzume_cta" lead="そのスズメバチの巣、最短30分で駆けつけます" />
+
+    <!-- よくある質問 -->
+    <section class="ng-sec ng-sec-tint">
+      <h2 class="ng-h2">よくある質問</h2>
+      <div class="ag-faqs">
+        {faq.map((f) => (
+          <div class="ag-faq">
+            <p class="ag-faq-q">{f.q}</p>
+            <p class="ag-faq-a">{f.a}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <CtaDual id="suzume_faq_cta" lead="迷ったらお電話で。相談だけでも大丈夫です" />
+
+    <!-- フッター -->
+    <footer class="ng-foot">
+      <p class="ng-foot-name">{company.name}</p>
+      <p class="ng-foot-info">{company.legalName}／〒{a.postal} {a.region}{a.city}{a.street}</p>
+      <a class="ng-foot-tel" href={company.phoneTelLink} data-cta="suzume_footer_tel">☎ {company.phoneDisplay}</a>
+      <p class="ng-foot-note">愛知県全域・岐阜県南部・三重県北部対応｜電話7時〜21時・LINE24時間受付</p>
+      <p class="ng-foot-legal">
+        <a href={assetPath("legal/")}>特定商取引法に基づく表示</a>
+        <span aria-hidden="true"> ｜ </span>
+        <a href={assetPath("privacy-policy/")}>プライバシーポリシー・会社情報</a>
+      </p>
+    </footer>
+
+    <!-- フローティングCTA（モバイル） -->
+    <div class="ng-float" aria-hidden="false">
+      <a class="ng-float-tel" href={company.phoneTelLink} data-cta="suzume_float_tel">
+        <span class="ng-float-cpn">電話で10%OFF</span>
+        <b>今すぐ電話</b><small>最短30分・通話無料</small>
+      </a>
+      <a class="ng-float-line" href={company.lineUrl} target="_blank" rel="noopener" data-cta="suzume_float_line">
+        <b>LINE</b><small>写真見積</small>
+      </a>
+    </div>
+  </div>
+
+  <style>
+    /* ===== 元LPの焼込みチラシヒーローを流用（自己完結・container-query cqw） ===== */
+    .x-sr { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+    .xic { display:inline-block; width:1.2em; height:1.2em; flex-shrink:0; vertical-align:middle; }
+    .font-num { font-variant-numeric:tabular-nums; letter-spacing:.01em; }
+    .xhero { position:relative; width:100%; max-width:480px; margin-inline:auto; aspect-ratio:1024/1536;
+      background:#fefdf7; container-type:inline-size; overflow:hidden;
+      font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
+    .xhero > * { position:absolute; }
+    .xh-photo { left:0; top:59.4%; width:100%; height:27.2%; object-fit:cover; object-position:center top; }
+    .xh-bar { left:0; top:0; width:100%; height:3.8%; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(180deg,#b81210,#8e0c0a); color:#fff; font-size:2.95cqw; font-weight:800; letter-spacing:-.01em; white-space:nowrap; }
+    .xh-bar b { color:#ffd23f; font-weight:900; margin:0 .1em; }
+    .xh-brand { left:0; top:3.8%; width:100%; height:9.5%; display:flex; align-items:center; gap:1.5cqw; padding:0 3cqw; }
+    .xh-logo { width:9cqw; height:auto; flex-shrink:0; }
+    .xh-btext { display:flex; flex-direction:column; line-height:1.05; }
+    .xh-bname { font-size:3.3cqw; font-weight:900; color:#111; letter-spacing:-.035em; white-space:nowrap; }
+    .xh-btag { font-size:1.7cqw; font-weight:700; color:#5a5a5a; }
+    .xh-headtel { margin-left:auto; display:flex; align-items:center; gap:1cqw; text-decoration:none; color:#fff;
+      background:linear-gradient(180deg,#f2630e,#d61e01); border-radius:2cqw; padding:2cqw 2.4cqw; }
+    .xh-headtel .xic { width:3.4cqw; height:3.4cqw; }
+    .xh-headtel-tx { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; }
+    .xh-headtel-tx b { font-size:3.3cqw; font-weight:900; }
+    .xh-headtel-tx small { font-size:1.5cqw; font-weight:700; }
+    .xh-banner { left:0; top:13%; width:100%; height:5%; display:flex; align-items:center; justify-content:center; }
+    .xh-banner span { display:inline-flex; align-items:center; gap:.12em; background:linear-gradient(178deg,#cf1512,#9c0d0b);
+      color:#ffd23f; font-size:4.4cqw; font-weight:900; padding:.5cqw 6cqw; letter-spacing:-.02em; transform:skewX(-4deg);
+      clip-path:polygon(2% 0,98% 0,100% 50%,98% 100%,2% 100%,0 50%); box-shadow:0 1cqw 2cqw rgba(0,0,0,.14);
+      text-shadow:0 .2cqw .2cqw rgba(0,0,0,.35); }
+    .xh-banner em { font-style:normal; }
+    .xh-banner i { font-style:normal; color:#fff; font-size:.72em; }
+    .xh-h1 { left:0; top:16.1%; width:100%; height:12%; margin:0; display:flex; align-items:center; justify-content:center;
+      font-size:12cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.05em; transform:skewX(-5deg);
+      -webkit-text-stroke:.7cqw #fff; paint-order:stroke fill; text-shadow:0 .55cqw .7cqw rgba(0,0,0,.22); }
+    .xh-h2 { left:0; top:27.1%; width:100%; height:7%; margin:0; display:flex; align-items:center; justify-content:center;
+      font-size:7.2cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.04em; transform:skewX(-5deg);
+      -webkit-text-stroke:.45cqw #fff; paint-order:stroke fill; text-shadow:0 .4cqw .55cqw rgba(0,0,0,.2); }
+    .xh-price { left:0; top:31.9%; width:100%; height:8.8%; margin:0; display:flex; align-items:center; justify-content:center; gap:2.4cqw; }
+    .xhp-cell { display:flex; align-items:baseline; gap:.4cqw; color:#1a1a1a; font-weight:900; }
+    .xhp-cell small { font-size:3.6cqw; }
+    .xhp-num { font-size:8.6cqw; font-weight:900; color:#d4151c; letter-spacing:-.02em; line-height:1; }
+    .xhp-tilde { font-size:5cqw; color:#d4151c; }
+    .xhp-tax { font-size:2.2cqw; color:#6b6b6b; font-style:normal; font-weight:700; }
+    .xhp-div { width:.4cqw; height:7cqw; background:#cfc7ba; align-self:center; }
+    .xh-cta { left:5%; top:42.6%; width:90%; height:13.4%; display:flex; align-items:center; gap:2cqw;
+      text-decoration:none; color:#fff; background:linear-gradient(180deg,#f06a0c 0%,#e64805 45%,#cd1000 100%);
+      border-radius:3cqw; padding:0 3.5cqw; box-shadow:0 1.4cqw 3cqw rgba(170,30,4,.4), inset 0 .3cqw 0 rgba(255,255,255,.25); }
+    .xh-cta .xic { width:8cqw; height:8cqw; flex-shrink:0; filter:drop-shadow(0 .2cqw .3cqw rgba(0,0,0,.3)); }
+    .xh-cta-tx { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; flex:1; min-width:0; }
+    .xh-cta-top { font-size:2.7cqw; font-weight:900; color:#ffe39a; letter-spacing:.02em; }
+    .xh-cta-num { font-size:7.6cqw; font-weight:900; letter-spacing:0; line-height:1.02; }
+    .xh-cta-bot { font-size:2cqw; font-weight:700; }
+    .xh-now { top:51.2%; left:80%; width:14.5%; height:4.2%; display:flex; align-items:center; justify-content:center; gap:.5cqw; color:#fff; font-size:1.85cqw; font-weight:800; }
+    .xh-now-dot { width:1.6cqw; height:1.6cqw; border-radius:50%; background:#27d24a; box-shadow:0 0 0 .4cqw rgba(255,255,255,.5); }
+    .xh-trust { list-style:none; margin:0; left:0; top:86.7%; width:100%; height:13.3%; padding:0 1.5cqw;
+      display:grid; grid-template-columns:repeat(4,1fr); align-items:center; background:#fefdf7; }
+    .xh-trust li { display:flex; align-items:center; justify-content:center; gap:1cqw; }
+    .xht-ic { width:7.6cqw; height:7.6cqw; flex-shrink:0; fill:none; stroke:#c0151c; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+    .xht-ic.xht-fill { fill:#c0151c; stroke:none; }
+    .xht-chk { stroke:#fff; stroke-width:2.2; fill:none; }
+    .xht-y0 { fill:#c0151c; stroke:none; font-size:9px; font-weight:900; text-anchor:middle; font-family:sans-serif; }
+    .xh-trust span { display:flex; flex-direction:column; line-height:1.05; color:#333; }
+    .xh-trust small { font-size:1.7cqw; font-weight:700; }
+    .xh-trust b { font-size:3.4cqw; font-weight:900; color:#1a1a1a; }
+    .xh-trust b em { color:#c0151c; font-style:normal; font-size:.72em; }
+    .xcpn { position:absolute; top:38.6%; left:81.3%; width:15.5%; aspect-ratio:1/1; transform:rotate(8deg); pointer-events:none; z-index:7; }
+    .xcpn-body { position:absolute; inset:0; border-radius:50%;
+      background:radial-gradient(112% 112% at 32% 24%, #ff7a4d 0%, #ef2f12 44%, #bd0a08 100%);
+      box-shadow:0 .6cqw 1.8cqw rgba(80,0,0,.45), inset 0 0 0 .3cqw #fff, inset 0 0 0 .8cqw #ffd23f;
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.1cqw; }
+    .xcpn-l1 { font-size:2.5cqw; font-weight:900; color:#fff; line-height:1; letter-spacing:.02em; }
+    .xcpn-l2 { font-size:5.8cqw; font-weight:900; color:#ffe200; line-height:.82; text-shadow:0 .2cqw .2cqw rgba(0,0,0,.25); }
+    .xcpn-l2 i { font-size:.6em; font-style:normal; }
+    .xcpn-l3 { font-size:3.6cqw; font-weight:900; color:#ffe200; line-height:.9; letter-spacing:.08em; }
+
+    /* 料金表（元LPと同じ・蜂種画像＋タップで電話） */
+    .xrate-card { --line:rgba(20,12,4,.10); background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 3px 12px rgba(20,12,4,.06); }
+    .xrate-row { display:flex; align-items:center; gap:.85rem; padding:.95rem .95rem; border-bottom:1px solid var(--line); text-decoration:none; color:inherit; cursor:pointer; -webkit-tap-highlight-color:rgba(226,35,26,.12); }
+    .xrate-row:active { background:#fff6f5; }
+    .xrate-row:last-child { border-bottom:0; }
+    .xrate-thumb { width:74px; height:48px; border-radius:8px; object-fit:contain; flex-shrink:0; border:1px solid var(--line); background:#fff; padding:2px; }
+    .xrate-info { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
+    .xrate-card .xrate-name { font-size:1rem; font-weight:900; line-height:1.2; color:#1f2933; }
+    .xrate-cond { font-size:.66rem; color:#6b5d4a; line-height:1.5; }
+    .xrate-price { flex-shrink:0; display:flex; flex-direction:column; align-items:flex-end; line-height:1; }
+    .xrate-card .xrate-price b { font-size:1.3rem; font-weight:900; color:#e2231a; letter-spacing:.01em; font-variant-numeric:tabular-nums; }
+    .xrate-price small { font-size:.58rem; color:#6b5d4a; margin-top:4px; font-weight:700; }
+
+    .ng { color: var(--color-text); font-family: var(--font-sans); background: var(--color-bg); }
+    .ng b { font-weight: 800; }
+    .ng em { font-style: normal; color: var(--color-primary); }
+    .ng .sp { display: none; }
+    .spx { display: inline; }
+
+    /* セクション共通 */
+    .ng-sec { max-width: 720px; margin: 0 auto; padding: 30px 16px; }
+    .ng-sec-tint { background: var(--color-soft); max-width: none; }
+    .ng-sec-tint > * { max-width: 720px; margin-left: auto; margin-right: auto; }
+    .ng-h2 { font-size: 1.24rem; font-weight: 900; text-align: center; color: var(--color-dark); margin-bottom: 8px; letter-spacing: -.01em; }
+    .ng-h2::after { content: ""; display: block; width: 42px; height: 3px; background: var(--color-primary); border-radius: 2px; margin: 8px auto 0; }
+    .ng-note { text-align: center; font-size: .86rem; color: #40484f; line-height: 1.7; margin-bottom: 14px; }
+    .ng-note b { color: var(--color-primary-dark); }
+    .ng-note-follow { margin-top: 14px; margin-bottom: 0; }
+    .ng-mini { font-size: .68rem; color: var(--color-muted); margin-top: 10px; text-align: center; }
+
+    /* 種類判別リスト（スズメバチ固有・ashinagabachi の判断カードと同デザイン） */
+    .ag-judge { list-style: none; display: grid; gap: 8px; padding: 0; }
+    .ag-j { display: flex; align-items: flex-start; gap: 10px; background: #fff; border: 1px solid var(--color-border); border-radius: 10px; padding: 12px 14px; font-size: .84rem; line-height: 1.6; color: #40484f; }
+    .ag-j-badge { flex-shrink: 0; font-size: .64rem; font-weight: 900; border-radius: var(--radius-pill); padding: 3px 10px; white-space: nowrap; margin-top: 1px; }
+    .ag-j--danger .ag-j-badge { background: #fdeceb; color: #c0151c; }
+    .ag-j--ok .ag-j-badge { background: var(--color-primary-light); color: var(--color-primary-dark); }
+    .ag-j-text b { color: var(--color-dark); }
+
+    /* 時期カード */
+    .ag-season { list-style: none; display: grid; gap: 8px; padding: 0; }
+    .ag-s { display: grid; grid-template-columns: 5.2em 1fr; grid-template-rows: auto auto; column-gap: 12px; background: #fff; border: 1px solid var(--color-border); border-radius: 10px; padding: 11px 14px; }
+    .ag-s-term { grid-row: 1 / 3; align-self: center; font-size: .95rem; font-weight: 900; text-align: center; border-radius: 8px; padding: 8px 4px; }
+    .ag-s--ok .ag-s-term { background: var(--color-primary-light); color: var(--color-primary-dark); }
+    .ag-s--warn .ag-s-term { background: #fff4e0; color: #b45a00; }
+    .ag-s--danger .ag-s-term { background: #fdeceb; color: #c0151c; }
+    .ag-s-size { font-size: .82rem; font-weight: 800; color: #2a2118; }
+    .ag-s-note { font-size: .74rem; color: var(--color-muted); line-height: 1.5; }
+
+    /* 施工手順（スズメバチ固有・番号ステップ） */
+    .sz-steps { list-style: none; display: grid; gap: 8px; padding: 0; counter-reset: step; }
+    .sz-step { display: flex; align-items: flex-start; gap: 12px; background: #fff; border: 1px solid var(--color-border); border-radius: 10px; padding: 12px 14px; }
+    .sz-step-no { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--color-primary); color: #fff; font-weight: 900; font-size: .84rem; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+    .sz-step-tx { display: flex; flex-direction: column; gap: 2px; }
+    .sz-step-tx b { font-size: .88rem; color: var(--color-dark); }
+    .sz-step-tx small { font-size: .76rem; color: #40484f; line-height: 1.6; }
+
+    /* 拠点 */
+    .ng-base-lead { font-size: .9rem; line-height: 1.8; color: #40484f; }
+    .ng-base-lead b { color: var(--color-primary-dark); }
+    .ng-base-info { background: #fff; border: 1px solid var(--color-border); border-radius: 12px; padding: 4px 14px; margin-top: 14px; }
+    .ng-base-info > div { display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--color-border); font-size: .84rem; }
+    .ng-base-info > div:last-child { border-bottom: 0; }
+    .ng-base-info dt { flex-shrink: 0; width: 4.5em; font-weight: 800; color: var(--color-muted); }
+    .ng-base-info dd { margin: 0; font-weight: 600; }
+
+    /* エリア */
+    .ng-wards { list-style: none; display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; padding: 0; }
+    .ng-wards li { background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius-pill); padding: 5px 13px; font-size: .82rem; font-weight: 700; color: #3f3526; }
+    .ng-nearby { text-align: center; font-size: .78rem; color: var(--color-muted); margin-top: 12px; }
+
+    /* 事例 */
+    .ng-cases { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .ng-case { position: relative; display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; box-shadow: 0 3px 12px rgba(20, 12, 4, .05); -webkit-tap-highlight-color: rgba(200, 30, 30, .1); }
+    .ng-case img { width: 100%; height: auto; display: block; aspect-ratio: 320/210; object-fit: cover; }
+    .ng-case-b { padding: 10px 11px 12px; }
+    .ng-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+    .ng-tags span { font-size: .58rem; font-weight: 700; background: var(--color-primary-light); color: var(--color-primary-dark); border-radius: 5px; padding: 2px 6px; }
+    .ng-case-b h3 { font-size: .82rem; font-weight: 800; line-height: 1.4; color: #2a2118; }
+    .ng-case-price { font-size: .72rem; color: var(--color-muted); margin-top: 6px; }
+    .ng-case-price b { font-family: var(--font-num); color: var(--color-primary); font-size: .92rem; }
+
+    /* 声 */
+    .ng-voices { display: grid; gap: 10px; }
+    .ng-voice { background: #fff; border: 1px solid var(--color-border); border-radius: 12px; padding: 13px 15px; }
+    .ng-voice-h { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; }
+    .ng-av { width: 30px; height: 30px; border-radius: 50%; background: var(--color-primary); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: .84rem; flex-shrink: 0; }
+    .ng-voice-m { display: flex; flex-direction: column; font-size: .76rem; font-weight: 700; color: #40484f; flex: 1; }
+    .ng-voice-m small { font-size: .64rem; color: var(--color-muted); font-weight: 500; }
+    .ng-stars { color: var(--color-accent-dark); font-size: .82rem; letter-spacing: 1px; }
+    .ng-voice p { font-size: .84rem; line-height: 1.7; color: #40484f; }
+
+    /* 選ばれる理由 */
+    .ng-why { list-style: none; display: grid; gap: 8px; padding: 0; }
+    .ng-why li { background: #fff; border: 1px solid var(--color-border); border-radius: 10px; padding: 12px 14px; font-size: .82rem; line-height: 1.6; color: #40484f; }
+    .ng-why b { display: block; color: var(--color-primary-dark); font-size: .9rem; margin-bottom: 2px; }
+
+    /* FAQ */
+    .ag-faqs { display: grid; gap: 10px; }
+    .ag-faq { background: #fff; border: 1px solid var(--color-border); border-radius: 12px; padding: 13px 15px; }
+    .ag-faq-q { font-size: .86rem; font-weight: 800; color: var(--color-dark); line-height: 1.55; margin-bottom: 6px; }
+    .ag-faq-q::before { content: "Q."; color: var(--color-primary); font-weight: 900; margin-right: 6px; }
+    .ag-faq-a { font-size: .82rem; line-height: 1.7; color: #40484f; }
+    .ag-faq-a::before { content: "A."; color: var(--color-primary-dark); font-weight: 900; margin-right: 6px; }
+
+    /* フッター */
+    .ng-foot { text-align: center; padding: 26px 16px calc(84px + env(safe-area-inset-bottom, 0)); background: var(--color-dark); color: #cfd6de; }
+    .ng-foot-name { font-weight: 800; color: #fff; font-size: .96rem; }
+    .ng-foot-info { font-size: .68rem; margin-top: 6px; }
+    .ng-foot-tel { display: inline-block; margin-top: 12px; font-family: var(--font-num); font-weight: 900; font-size: 1.3rem; color: #fff; text-decoration: none; }
+    .ng-foot-note { font-size: .66rem; margin-top: 8px; color: #97a1ac; }
+    .ng-foot-legal { margin-top: 14px; font-size: .72rem; }
+    .ng-foot-legal a { color: #cfd6de; text-decoration: underline; }
+    .ng-foot-legal span { color: #6b7683; }
+
+    /* フローティング */
+    .ng-float { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: flex; gap: 8px; padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0)); background: rgba(255, 255, 255, .82); backdrop-filter: blur(6px); border-top: 1px solid var(--color-border); }
+    .ng-float a { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #fff; border-radius: 11px; padding: 8px; line-height: 1.15; }
+    .ng-float-tel { position: relative; flex: 1.5; background: linear-gradient(180deg, #f2630e, #c4150c); }
+    .ng-float-tel small { font-size: .6rem; opacity: .95; }
+    .ng-float-cpn { position: absolute; top: -9px; left: 8px; background: var(--color-accent); color: #a10a08; font-weight: 900; font-size: .58rem; padding: 2px 7px; border-radius: 8px; transform: rotate(-6deg); }
+    .ng-float-line { flex: 1; background: var(--color-line); }
+    .ng-float-line small { font-size: .6rem; opacity: .95; }
+
+    /* 320px級の狭幅で見出しの1文字孤立wrapを防止 */
+    @media (max-width: 350px) {
+      .ng-h2 { font-size: 1.1rem; }
+    }
+
+    @media (min-width: 720px) {
+      .ng-cases { grid-template-columns: repeat(4, 1fr); }
+      .ng-float { display: none; }
+      .ng-foot { padding-bottom: 26px; }
+      .ng .sp { display: inline; }
+      .spx { display: none; }
+    }
+  </style>
+</Layout>
