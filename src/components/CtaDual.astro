@@ -8,7 +8,7 @@ import { company } from "../data/company";
 interface Props { id: string; lead?: string; }
 const { id, lead = "お急ぎはお電話、写真でのお見積りはLINEが便利です" } = Astro.props;
 ---
-<div class="xcta">
+<div class="xcta" id={id}>
   <p class="xcta-lead">{lead}</p>
   <div class="xcta-btns">
     <a href={company.phoneTelLink} class="xcta-btn xcta-tel" data-cta={`${id}_tel`}>
@@ -24,7 +24,7 @@ const { id, lead = "お急ぎはお電話、写真でのお見積りはLINEが�
   <p class="xcta-flow">お電話 → <b>最短30分</b>で到着 → その場で<b>確定見積</b> → ご納得後に作業</p>
 </div>
 <style>
-  .xcta { max-width:480px; margin-inline:auto; padding:20px 16px; }
+  .xcta { max-width:480px; margin-inline:auto; padding:20px 16px; scroll-margin-top:74px; }
   .xcta-lead { text-align:center; font-weight:800; font-size:.84rem; color:#a60101; margin:0 0 11px; line-height:1.5; }
   .xcta-btns { display:flex; flex-direction:column; gap:10px; }
   .xcta-btn { display:flex; align-items:center; justify-content:center; gap:.6rem; padding:.82rem 1rem; border-radius:14px;

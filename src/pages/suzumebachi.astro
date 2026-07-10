@@ -263,14 +263,14 @@ const suzumeJsonLd = [
       <h2 class="ng-h2">スズメバチ駆除のお客様の声</h2>
       <div class="ng-voices">
         {suzumeVoices.map((v) => (
-          <div class="ng-voice">
+          <a class="ng-voice" href="#suzume_cta" data-cta="suzume_voice_scroll" aria-label="お客様の声を読んで無料相談する">
             <div class="ng-voice-h">
               <span class="ng-av">{v.initial}</span>
               <span class="ng-voice-m">{v.area}・{v.ageBracket}<small>{v.service}</small></span>
               <span class="ng-stars" aria-label="5点">{"★".repeat(v.rating)}</span>
             </div>
             <p>{v.comment}</p>
-          </div>
+          </a>
         ))}
       </div>
     </section>
@@ -514,7 +514,8 @@ const suzumeJsonLd = [
 
     /* 声 */
     .ng-voices { display: grid; gap: 10px; }
-    .ng-voice { background: #fff; border: 1px solid var(--color-border); border-radius: 12px; padding: 13px 15px; }
+    @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+    .ng-voice { background: #fff; border: 1px solid var(--color-border); border-radius: 12px; padding: 13px 15px; display:block; text-decoration:none; color:inherit; cursor:pointer; }
     .ng-voice-h { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; }
     .ng-av { width: 30px; height: 30px; border-radius: 50%; background: var(--color-primary); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: .84rem; flex-shrink: 0; }
     .ng-voice-m { display: flex; flex-direction: column; font-size: .76rem; font-weight: 700; color: #40484f; flex: 1; }
