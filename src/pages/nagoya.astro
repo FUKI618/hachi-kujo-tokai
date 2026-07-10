@@ -58,6 +58,34 @@ const nagoyaJsonLd = [
     offers: { "@type": "Offer", price: company.basicPrice, priceCurrency: "JPY" },
   },
 ];
+
+/** よくあるご質問（決断直前の不安を解消＝CRO）。会社情報の実値に準拠 */
+const nagoyaFaq = [
+  {
+    q: "見積もりのあとに追加料金はかかりませんか？",
+    a: "かかりません。現地でお伝えする確定見積もり以外の追加請求は一切ありません。出張費・見積もり・キャンセルもすべて0円です。金額にご納得いただいてから作業を始めます。",
+  },
+  {
+    q: "電話してから、どのくらいで来てもらえますか？",
+    a: "中区丸の内の拠点から名古屋市内へ最短30分でうかがいます。当日対応率は98%です。混み合う時期は、お電話で到着のおおよその目安をその場でお伝えします。",
+  },
+  {
+    q: "夜間や早朝でも相談できますか？",
+    a: "お電話は7時〜21時、LINEは24時間受け付けています。夜間はLINEに蜂の巣の写真を送っていただければ、翌朝いちばんにお返事します。急ぎの場合は受付時間内にお電話ください。",
+  },
+  {
+    q: "蜂の種類がわからなくても大丈夫ですか？",
+    a: "大丈夫です。LINEで写真を送っていただくか、お電話で状況を教えていただければ種類と危険度を判断します。ご自身では絶対に巣へ近づかないでください。",
+  },
+  {
+    q: "賃貸に住んでいますが、自分で頼んでいいですか？",
+    a: "まずは管理会社・大家さんにご連絡ください。共用部（廊下・外壁など）は管理側の負担になることが多く、費用トラブルを避けられます。専有部やベランダは入居者負担が原則です。判断に迷う場合もお気軽にご相談ください。",
+  },
+  {
+    q: "支払い方法は何が使えますか？",
+    a: "現金・銀行振込・クレジットカード・PayPay・後払いに対応しています。ご都合に合わせてお選びいただけます。",
+  },
+];
 ---
 
 <Layout title={title} description={description} noindex={true} extraJsonLd={nagoyaJsonLd}>
@@ -220,6 +248,19 @@ const nagoyaJsonLd = [
         <li><b>年中無休で受付</b>電話7時〜21時・LINEは24時間</li>
         <li><b>防護装備の専門対応</b>危険なスズメバチも安全に駆除</li>
       </ul>
+    </section>
+
+    <!-- よくあるご質問（決断直前の不安を解消＝CRO） -->
+    <section class="ng-sec">
+      <h2 class="ng-h2">よくあるご質問</h2>
+      <div class="ng-faqs">
+        {nagoyaFaq.map((f) => (
+          <div class="ng-faq">
+            <p class="ng-faq-q">{f.q}</p>
+            <p class="ng-faq-a">{f.a}</p>
+          </div>
+        ))}
+      </div>
     </section>
 
     <CtaDual id="nagoya_cta" lead="名古屋の蜂の巣、今すぐご相談ください。最短30分で駆けつけます" />
@@ -430,6 +471,13 @@ const nagoyaJsonLd = [
     .ng-voice-m small { font-size: .64rem; color: var(--color-muted); font-weight: 500; }
     .ng-stars { color: var(--color-accent-dark); font-size: .82rem; letter-spacing: 1px; }
     .ng-voice p { font-size: .84rem; line-height: 1.7; color: #40484f; }
+    /* よくあるご質問 */
+    .ng-faqs { display: grid; gap: 10px; }
+    .ng-faq { background: #fff; border: 1px solid var(--color-border, #e7e6e2); border-radius: 12px; padding: 13px 15px; }
+    .ng-faq-q { font-size: .86rem; font-weight: 800; color: var(--color-dark, #1f2328); line-height: 1.55; margin-bottom: 6px; }
+    .ng-faq-q::before { content: "Q."; color: var(--color-primary, #0f766e); font-weight: 900; margin-right: 6px; }
+    .ng-faq-a { font-size: .82rem; line-height: 1.7; color: #40484f; }
+    .ng-faq-a::before { content: "A."; color: var(--color-primary-dark, #0b5a54); font-weight: 900; margin-right: 6px; }
 
     /* 選ばれる理由 */
     .ng-why { list-style: none; display: grid; gap: 8px; padding: 0; }
