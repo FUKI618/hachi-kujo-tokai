@@ -469,6 +469,14 @@ const allJsonLd = [
       ["scroll", "click", "touchstart", "keydown"].forEach(function (ev) {
         window.addEventListener(ev, loadHeavyTags, { once: true, passive: true });
       });
+
+      // 受付バッジ: 電話受付(7〜21時)は「ただ今受付中」、夜間はLINE表記へ切替（深夜の不正確表示を是正＋夜間はLINE誘導）
+      document.addEventListener("DOMContentLoaded", function () {
+        var h = new Date().getHours();
+        var txt = h >= 7 && h < 21 ? "ただ今受付中" : "LINE受付中";
+        var els = document.querySelectorAll(".xh-now-tx");
+        for (var i = 0; i < els.length; i++) els[i].textContent = txt;
+      });
     </script>
 
     <!-- JSON-LD: 構造化データ6種（LocalBusiness/Organization/HowTo/BreadcrumbList/FAQPage/OfferCatalog内蔵） -->
