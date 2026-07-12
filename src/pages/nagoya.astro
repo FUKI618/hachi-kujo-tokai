@@ -10,6 +10,7 @@
 import Layout from "../layouts/Layout.astro";
 import CtaDual from "../components/CtaDual.astro";
 import StaffCard from "../components/StaffCard.astro";
+import LocationCard from "../components/LocationCard.astro";
 import { company } from "../data/company";
 import { rates } from "../data/rates";
 import { nagoyaCases, nagoyaVoices, nagoyaWards, nagoyaNearby } from "../data/nagoya";
@@ -174,6 +175,7 @@ const nagoyaFaq = [
           <div><dt>お支払い</dt><dd>{company.payment.join("・")}</dd></div>
         </dl>
         <StaffCard />
+        <LocationCard />
       </div>
     </section>
 
@@ -245,8 +247,8 @@ const nagoyaFaq = [
         <li><b>明朗会計・追加0円</b>現地の確定見積からの追加請求なし</li>
         <li><b>自社直接施工</b>紹介サイトを通さず仲介手数料0円</li>
         <li><b>1年再発保証</b>駆除後の再発も無料で対応</li>
-        <li><b>年中無休で受付</b>電話7時〜21時・LINEは24時間</li>
-        <li><b>防護装備の専門対応</b>危険なスズメバチも安全に駆除</li>
+        <li><b>毎日受付</b>電話7時〜21時・LINEは24時間</li>
+        <li><b>防護装備の専門対応</b>軒下・ベランダ・エアコン室外機まわりの危険なスズメバチの巣も安全に駆除</li>
       </ul>
     </section>
 

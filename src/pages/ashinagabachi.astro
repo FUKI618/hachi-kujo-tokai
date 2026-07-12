@@ -11,6 +11,7 @@
 import Layout from "../layouts/Layout.astro";
 import CtaDual from "../components/CtaDual.astro";
 import StaffCard from "../components/StaffCard.astro";
+import LocationCard from "../components/LocationCard.astro";
 import { company } from "../data/company";
 import { rates } from "../data/rates";
 import {
@@ -69,7 +70,11 @@ const faq = [
   },
   {
     q: "駆除した後、蜂が戻ってきませんか？",
-    a: "駆除時に外出していた「戻り蜂」が数日残ることがありますが、巣がなければやがていなくなります。当社は戻り蜂対策と再発防止処理まで実施し、保証期間内に同じ場所に再発した場合は無償で対応します。",
+    a: "駆除時に外出していた「戻り蜂」が数日残ることがありますが、巣がなければやがていなくなります。市販スプレーは表面の成虫だけになりがちで、巣や幼虫が残ると再び営巣します。当社は巣ごと撤去し戻り蜂まで確認するので、再発しにくいのが違いです。保証期間内に同じ場所に再発したら、無料でもう一度うかがいます。",
+  },
+  {
+    q: "賃貸・アパートのベランダに巣ができました。相談できますか？",
+    a: "はい、そのままご相談ください。賃貸・アパートのベランダや共用部の巣も対応します。大家さん・管理会社への説明が必要な場合も、どう伝えればよいかからお手伝いします。",
   },
 ];
 
@@ -275,6 +280,7 @@ const ashinagaJsonLd = [
           <div><dt>お支払い</dt><dd>{company.payment.join("・")}</dd></div>
         </dl>
         <StaffCard />
+        <LocationCard />
       </div>
     </section>
 
@@ -294,9 +300,9 @@ const ashinagaJsonLd = [
         <li><b>最短30分で現場到着</b>東海の自社スタッフが直行。当日対応98%</li>
         <li><b>明朗会計・追加0円</b>現地の確定見積からの追加請求なし</li>
         <li><b>自社直接施工</b>紹介サイトを通さず仲介手数料0円</li>
-        <li><b>1年再発保証</b>再発防止処理つき。同じ場所の再発は無償対応</li>
+        <li><b>1年再発保証</b>再発防止処理つき。同じ場所に再発したら無料でもう一度うかがいます</li>
         <li><b>「駆除すべきか」から相談OK</b>益虫かどうか迷う巣も、場所を見て正直にご案内</li>
-        <li><b>年中無休で受付</b>電話7時〜21時・LINEは24時間</li>
+        <li><b>毎日受付</b>電話7時〜21時・LINEは24時間</li>
       </ul>
     </section>
 

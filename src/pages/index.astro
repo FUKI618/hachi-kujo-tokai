@@ -9,6 +9,7 @@
 import Layout from "../layouts/Layout.astro";
 import { assetPath } from "../lib/site";
 import StaffCard from "../components/StaffCard.astro";
+import LocationCard from "../components/LocationCard.astro";
 import { company } from "../data/company";
 import { rates } from "../data/rates";
 import { strengths } from "../data/strengths";
@@ -201,6 +202,20 @@ const strengthsShown = strengths.slice(0, 6);
   <!-- ===== 下半分（実HTML / 実データ / ヒーロー基調） ===== -->
   <div class="xb">
 
+    <!-- 安心のお約束バー（広告v2のリスクリバーサルを本文冒頭で回収） -->
+    <div class="xb-assure" aria-label="安心のお約束">
+      <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>見積・出張・キャンセル 0円</span>
+      <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>お断りでも費用は一切なし</span>
+      <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>その場契約は迫りません</span>
+      <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>名古屋・中区の自社施工</span>
+    </div>
+    <style>
+      .xb-assure{display:flex;flex-wrap:wrap;justify-content:center;gap:7px 14px;margin:0 auto;max-width:520px;padding:13px 16px 0}
+      .xb-assure span{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;font-weight:800;color:#3a2c17}
+      .xb-assure-ic{width:1.05em;height:1.05em;color:#0a7d28;flex:none}
+      @media(min-width:900px){.xb-assure{max-width:820px;padding-top:20px;gap:9px 22px}.xb-assure span{font-size:.86rem}}
+    </style>
+
     <!-- 放置の危険（問題提起） -->
     <section class="xb-sec xb-sec-tint" id="danger" aria-labelledby="s-danger">
       <h2 class="xb-h" id="s-danger"><span>その蜂、放置は危険です</span></h2>
@@ -274,7 +289,7 @@ const strengthsShown = strengths.slice(0, 6);
         ))}
       </div>
       <p class="xb-note">※ 巣のサイズ・高さ・場所により変動。<b>現地で確定見積</b>をお伝えし、ご納得後に作業。事前見積金額からの追加請求はありません。</p>
-      <p class="xb-coupon"><b class="xb-coupon-tag">電話割</b><span>このページをご覧の方が<b>お電話でお申込み</b>いただくと、<b class="xb-coupon-off">通常料金から10%OFF</b>。ご予約時に「ホームページを見た」とお伝えください。</span></p>
+      <p class="xb-coupon"><b class="xb-coupon-tag">電話割</b><span>このページをご覧の方が<b>お電話でお申込み</b>いただくと、<b class="xb-coupon-off">現地で確定したお見積り金額から10%OFF</b>。ご予約時に「ホームページを見た」とお伝えください。</span></p>
       <p class="xpay">お支払い：<b>現金・クレジットカード・PayPay・銀行振込・後払い</b> に対応</p>
     </section>
 
@@ -311,6 +326,7 @@ const strengthsShown = strengths.slice(0, 6);
         <li><img class="xlb-ic" src={assetPath("images/icons/badge-shield.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />受付〜駆除〜1年保証まで自社完結</li>
       </ul>
       <StaffCard />
+      <LocationCard />
       <p class="xb-note xlocal-note">運営会社・代表者などの会社概要は<a href={assetPath("privacy-policy/")}>会社情報ページ</a>に記載しています。</p>
     </section>
 

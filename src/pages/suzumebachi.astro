@@ -12,6 +12,7 @@
 import Layout from "../layouts/Layout.astro";
 import CtaDual from "../components/CtaDual.astro";
 import StaffCard from "../components/StaffCard.astro";
+import LocationCard from "../components/LocationCard.astro";
 import { company } from "../data/company";
 import { rates } from "../data/rates";
 import {
@@ -166,6 +167,14 @@ const suzumeJsonLd = [
     </div>
 
     <div class="ng">
+    <!-- 夜間導線（深夜客の離脱対策・honest: 電話7時〜21時／LINE24時間） -->
+    <div class="ng-night-wrap">
+      <p class="ng-night">
+        <svg class="ng-night-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5Z"/></svg>
+        <span>夜間・深夜も<b>LINEで受付</b>。今夜が難しくても、<b>翌朝いちばん</b>で伺います。</span>
+      </p>
+    </div>
+
     <!-- スズメバチを知り尽くしたプロ（4種判別・専門性の証明） -->
     <section class="ng-sec">
       <h2 class="ng-h2">スズメバチを知り尽くした<br class="spx" />専門チームが対応します</h2>
@@ -196,7 +205,7 @@ const suzumeJsonLd = [
           </li>
         ))}
       </ul>
-      <p class="ng-note ng-note-follow">巣ができやすいのは<b>軒下・屋根裏・壁の中・土の中・庭木</b>。「天井から羽音がする」「地面から蜂が出入りしている」も営巣のサインです。</p>
+      <p class="ng-note ng-note-follow">巣ができやすいのは<b>軒下・屋根裏・壁の中・土の中・庭木・エアコン室外機</b>。「天井から羽音がする」「地面から蜂が出入りしている」も営巣のサインです。</p>
     </section>
 
     <!-- 料金（共通データ・スズメバチ先頭） -->
@@ -289,6 +298,7 @@ const suzumeJsonLd = [
           <div><dt>お支払い</dt><dd>{company.payment.join("・")}</dd></div>
         </dl>
         <StaffCard />
+        <LocationCard />
       </div>
     </section>
 
@@ -310,7 +320,7 @@ const suzumeJsonLd = [
         <li><b>明朗会計・追加0円</b>現地の確定見積からの追加請求なし</li>
         <li><b>戻り蜂対策・侵入口封鎖まで</b>「落として終わり」にしない施工</li>
         <li><b>1年再発保証</b>同じ場所の再発は無償対応</li>
-        <li><b>年中無休で受付</b>電話7時〜21時・LINEは24時間</li>
+        <li><b>毎日受付</b>電話7時〜21時・LINEは24時間</li>
       </ul>
     </section>
 
@@ -460,6 +470,12 @@ const suzumeJsonLd = [
     .ng-note b { color: var(--color-primary-dark); }
     .ng-note-follow { margin-top: 14px; margin-bottom: 0; }
     .ng-mini { font-size: .68rem; color: var(--color-muted); margin-top: 10px; text-align: center; }
+
+    /* 夜間導線バンド（深夜客の離脱対策・LINE24時間の安心／既存の暖色クリーム意匠に合わせる） */
+    .ng-night-wrap { padding: 16px 16px 0; }
+    .ng-night { max-width: 720px; margin: 0 auto; display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid #eadfce; border-left: 4px solid var(--color-line, #06c755); border-radius: 10px; padding: 11px 14px; box-shadow: 0 2px 10px rgba(60, 40, 10, .06); font-size: .8rem; line-height: 1.6; color: #40484f; }
+    .ng-night-ic { flex: none; width: 20px; height: 20px; fill: none; stroke: #b3541e; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .ng-night b { color: var(--color-primary-dark); }
 
     /* 種類判別リスト（スズメバチ固有・ashinagabachi の判断カードと同デザイン） */
     .ag-judge { list-style: none; display: grid; gap: 8px; padding: 0; }

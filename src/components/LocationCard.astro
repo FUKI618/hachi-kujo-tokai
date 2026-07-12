@@ -1,0 +1,72 @@
+---
+/**
+ * LocationCard — 実在性の証拠ブロック（拠点・運営会社）
+ * 記載は事実のみ: 会社名・法人名・番地・代表者・受付・施工体制は company.ts の確定値。
+ * 地図は CSP(frame-src=td.doubleclick.net のみ)により iframe 埋め込み不可 →
+ *   「Googleマップで見る」外部リンク方式（リンクは CSP 非対象・軽量・honest）。
+ * 意匠は StaffCard に合わせた暖色クリーム系（#fff / #eadfce / 影 rgba(60,40,10,.06)）。
+ */
+import { company } from "../data/company";
+const { postal, region, city, street } = company.address;
+const fullAddress = `${region}${city}${street}`;
+const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
+---
+
+<section class="xloc" aria-label="運営会社・拠点情報">
+  <div class="xloc-head">
+    <span class="xloc-pin" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11Z" /><circle cx="12" cy="10" r="2.6" />
+      </svg>
+    </span>
+    <div class="xloc-htx">
+      <p class="xloc-eyebrow">運営会社・拠点</p>
+      <p class="xloc-name">{company.name}<small>（{company.legalName}）</small></p>
+    </div>
+  </div>
+
+  <dl class="xloc-dl">
+    <div><dt>所在地</dt><dd>〒{postal}　{fullAddress}</dd></div>
+    <div><dt>代表者</dt><dd>{company.representative}</dd></div>
+    <div><dt>受付</dt><dd>お電話 {company.phoneHours}／LINE 24時間</dd></div>
+    <div><dt>施工体制</dt><dd>受付から施工まで<b>自社一貫</b>（紹介・下請けなし）</dd></div>
+  </dl>
+
+  <a class="xloc-map" href={mapHref} target="_blank" rel="noopener" data-cta="location_map">
+    <svg class="xloc-map-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4Z" /><path d="M9 4v13M15 6.5v13" />
+    </svg>
+    Googleマップで所在地を確認する
+    <span class="xloc-map-arw" aria-hidden="true">→</span>
+  </a>
+
+  <p class="xloc-foot">番地・代表者・地図を公開している、名古屋の<b>実在する会社</b>です。</p>
+</section>
+
+<style>
+  .xloc { background: #fff; border: 1px solid #eadfce; border-radius: 14px; padding: 16px 16px 14px; margin-top: 14px; box-shadow: 0 2px 10px rgba(60, 40, 10, .06); }
+  .xloc-head { display: flex; align-items: center; gap: 11px; }
+  .xloc-pin { flex: none; width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; color: #fff; background: linear-gradient(160deg, #e8590c, #c4150c); box-shadow: 0 3px 9px rgba(196, 21, 12, .28); }
+  .xloc-pin svg { width: 22px; height: 22px; }
+  .xloc-eyebrow { font-size: 11px; color: #8a6d3b; letter-spacing: .08em; margin: 0 0 2px; font-weight: 700; }
+  .xloc-name { font-size: 16px; font-weight: 900; margin: 0; line-height: 1.3; color: #2a2118; }
+  .xloc-name small { font-size: 11px; font-weight: 700; color: #8a7c66; margin-left: 3px; }
+  .xloc-dl { margin: 13px 0 0; display: grid; gap: 1px; background: #eadfce; border: 1px solid #eadfce; border-radius: 10px; overflow: hidden; }
+  .xloc-dl > div { display: grid; grid-template-columns: 74px 1fr; gap: 10px; background: #fffdf8; padding: 9px 12px; }
+  .xloc-dl dt { font-size: 11px; font-weight: 800; color: #8a6d3b; letter-spacing: .04em; align-self: center; }
+  .xloc-dl dd { font-size: 13px; margin: 0; color: #33291c; line-height: 1.5; font-variant-numeric: tabular-nums; }
+  .xloc-dl dd b { color: #b3541e; }
+  .xloc-map { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; padding: 11px 14px; border-radius: 11px;
+    border: 1.5px solid #d8b48c; background: linear-gradient(180deg, #fffaf2, #fbf1e2); color: #a2400f; font-weight: 800; font-size: 13.5px; text-decoration: none; }
+  .xloc-map:active { transform: translateY(1px); }
+  .xloc-map-ic { width: 18px; height: 18px; flex: none; }
+  .xloc-map-arw { font-weight: 900; }
+  .xloc-foot { font-size: 11.5px; color: #8a7c66; margin: 10px 2px 0; text-align: center; line-height: 1.6; }
+  .xloc-foot b { color: #b3541e; font-weight: 800; }
+  @media (hover: hover) { .xloc-map:hover { background: linear-gradient(180deg, #fff4e6, #f6e6cf); border-color: #c9974e; } }
+  @media (min-width: 560px) {
+    .xloc { padding: 20px 22px 16px; }
+    .xloc-dl > div { grid-template-columns: 84px 1fr; }
+    .xloc-name { font-size: 17px; }
+  }
+</style>
