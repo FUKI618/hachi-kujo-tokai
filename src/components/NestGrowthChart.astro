@@ -1,0 +1,65 @@
+---
+/**
+ * NestGrowthChart — 巣の大きさ×料金の視覚図（早い＝小さい＝安い・安全）
+ * 相場の裏取り: 生活110番 名古屋実測ほか。巣サイズ→加算は業界共通構造。
+ * honest: 具体額は「相場帯＋上限」。上限は必ず守れる額に。特殊ケースは別途見積を注記側で明示。
+ */
+interface Stage {
+  term: string;   // 時期
+  size: string;   // 巣の状態・サイズ
+  price: string;  // 価格帯
+  tone: "ok" | "warn" | "danger";
+  dot: number;    // 巣の視覚サイズ(px)
+}
+interface Props { stages: Stage[]; cap: string; }
+const { stages, cap } = Astro.props;
+---
+
+<figure class="ngc">
+  <figcaption class="ngc-scale" aria-hidden="true">
+    <span class="ngc-scale-l">今なら小さい＝安い・安全</span>
+    <span class="ngc-scale-r">育つほど高い・危険 →</span>
+  </figcaption>
+  <div class="ngc-track">
+    {stages.map((s) => (
+      <div class={`ngc-st ngc-${s.tone}`}>
+        <div class="ngc-nestbox">
+          <span class="ngc-nest" style={`width:${s.dot}px;height:${s.dot}px`} aria-hidden="true"></span>
+        </div>
+        <b class="ngc-term">{s.term}</b>
+        <span class="ngc-size">{s.size}</span>
+        <span class="ngc-price">{s.price}</span>
+      </div>
+    ))}
+  </div>
+  <p class="ngc-cap">{cap}</p>
+</figure>
+
+<style>
+  .ngc { margin: 4px 0 0; }
+  .ngc-scale { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #8a6d3b; margin: 0 2px 8px; letter-spacing: .01em; }
+  .ngc-scale-l { color: #2f8f52; } .ngc-scale-r { color: #c8321f; }
+  .ngc-track { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 14px 8px 4px; border-radius: 14px;
+    background: linear-gradient(90deg, #eaf6ee 0%, #fdf2df 50%, #fbeae6 100%); border: 1px solid #eadfce; }
+  .ngc-st { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 3px; padding: 2px 4px 8px; }
+  .ngc-nestbox { height: 92px; display: flex; align-items: flex-end; justify-content: center; }
+  .ngc-nest { display: block; border-radius: 52% 48% 50% 50% / 46% 46% 54% 54%; position: relative;
+    background:
+      radial-gradient(60% 45% at 42% 34%, rgba(255,255,255,.75), rgba(255,255,255,0) 60%),
+      repeating-radial-gradient(circle at 50% 42%, #d9c3a0 0 3px, #c7ac82 3px 6px);
+    box-shadow: inset 0 -6px 12px rgba(90,60,20,.28), 0 4px 10px rgba(90,60,20,.22); }
+  .ngc-ok .ngc-nest { outline: 3px solid #4bbf7b; outline-offset: 2px; }
+  .ngc-warn .ngc-nest { outline: 3px solid #e6a52e; outline-offset: 2px; }
+  .ngc-danger .ngc-nest { outline: 3px solid #db4a2f; outline-offset: 2px; }
+  .ngc-term { font-size: 12.5px; font-weight: 900; color: #33291c; margin-top: 4px; }
+  .ngc-size { font-size: 10.5px; color: #6b5d4a; line-height: 1.4; min-height: 2.6em; }
+  .ngc-price { font-size: 14px; font-weight: 900; letter-spacing: -.01em; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .ngc-ok .ngc-price { color: #2f8f52; } .ngc-warn .ngc-price { color: #c07a12; } .ngc-danger .ngc-price { color: #c8321f; }
+  .ngc-cap { font-size: 12.5px; font-weight: 700; color: #5c4a22; background: #fffdf8; border: 1px solid #eadfce; border-left: 4px solid #c8321f;
+    border-radius: 10px; padding: 11px 14px; margin: 12px 0 0; line-height: 1.7; }
+  @media (max-width: 400px) {
+    .ngc-nestbox { height: 78px; }
+    .ngc-size { font-size: 10px; }
+    .ngc-price { font-size: 13px; }
+  }
+</style>

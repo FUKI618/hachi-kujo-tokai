@@ -12,6 +12,7 @@ import Layout from "../layouts/Layout.astro";
 import CtaDual from "../components/CtaDual.astro";
 import StaffCard from "../components/StaffCard.astro";
 import LocationCard from "../components/LocationCard.astro";
+import NestGrowthChart from "../components/NestGrowthChart.astro";
 import { company } from "../data/company";
 import { rates } from "../data/rates";
 import {
@@ -22,9 +23,9 @@ import {
 } from "../data/ashinagabachi";
 import { assetPath, homePath } from "../lib/site";
 
-const title = "アシナガバチ駆除は最短30分・基本1,680円〜｜追加0円・1年保証｜蜂の巣駆除ファクトリー東海";
+const title = "アシナガバチ駆除は名古屋の自社施工が最短30分｜追加0円・1年保証｜蜂の巣駆除ファクトリー東海";
 const description =
-  "アシナガバチの巣の駆除は東海の自社スタッフが最短30分で直接対応。基本1,680円〜・見積後の追加請求0円・1年保証。玄関・ベランダ・軒下・室外機の巣、駆除すべきかの相談だけでもOK。受付は電話7時〜21時・LINE24時間。愛知・岐阜南部・三重北部対応。";
+  "アシナガバチの巣の駆除は東海の自社スタッフが最短30分で直接対応。名古屋の相場8,000〜20,000円が中心、上限つきの明朗会計・見積後の追加請求0円・1年保証。玄関・ベランダ・軒下・室外機の巣、駆除すべきかの相談だけでもOK。受付は電話7時〜21時・LINE24時間。";
 const a = company.address;
 const rateImg: Record<string, string> = {
   "アシナガバチ": "ashinagabachi",
@@ -44,11 +45,11 @@ const judge = [
   { level: "様子見も可", tone: "ok", text: "開け閉めしない窓の外や、人がほとんど近づかない場所に巣がある" },
 ];
 
-/** 巣の成長と料金の関係（早いほど安い） */
-const seasons = [
-  { term: "4〜6月", size: "巣1〜5cm・女王1匹", note: "1年で最も安全・安価に駆除できる時期", tone: "ok" },
-  { term: "7〜8月", size: "巣10cm超・働き蜂数十匹", note: "防衛本能が強まり、費用も上がりやすい", tone: "warn" },
-  { term: "9月以降", size: "蜂の数がピーク", note: "刺傷事故が最も多い季節。無理は禁物", tone: "danger" },
+/** 巣の大きさ×料金の視覚図（早い＝小さい＝安い）。相場: 名古屋8,000〜20,000中心・巣は最大20cm前後 */
+const ashinagaStages = [
+  { term: "5〜6月", size: "小さな初期巣・〜8cm", price: "基本料金のみ", tone: "ok" as const, dot: 32 },
+  { term: "7〜8月", size: "握りこぶし大・10〜15cm", price: "目安 +4,000〜5,000円", tone: "warn" as const, dot: 52 },
+  { term: "9月〜", size: "最大級・〜20cm", price: "上限19,800円まで", tone: "danger" as const, dot: 66 },
 ];
 
 const faq = [
@@ -108,14 +109,14 @@ const ashinagaJsonLd = [
       { "@type": "AdministrativeArea", name: "岐阜県南部" },
       { "@type": "AdministrativeArea", name: "三重県北部" },
     ],
-    offers: { "@type": "Offer", price: company.basicPrice, priceCurrency: "JPY" },
+    offers: { "@type": "Offer", price: 8000, priceCurrency: "JPY" },
   },
 ];
 ---
 
 <Layout title={title} description={description} noindex={true} extraJsonLd={ashinagaJsonLd}>
   <!-- sr-only 実h1（アシナガバチ・QS） -->
-    <h1 class="x-sr">アシナガバチ駆除｜東海の自社スタッフが最短30分で現場到着・基本1,680円〜（税込）・1年保証・追加0円の明朗会計・当日対応98%・受付は電話7時〜21時／LINE24時間 {company.phoneDisplay}</h1>
+    <h1 class="x-sr">アシナガバチ駆除｜東海の自社スタッフが最短30分で現場到着・名古屋の相場8,000〜20,000円が中心・上限つきの明朗会計・追加0円・1年保証・当日対応98%・受付は電話7時〜21時／LINE24時間 {company.phoneDisplay}</h1>
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
       <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/></symbol>
@@ -194,39 +195,68 @@ const ashinagaJsonLd = [
     <section class="ng-sec ng-sec-tint">
       <h2 class="ng-h2">アシナガバチの巣は<br class="spx" />「早いほど安全・安価」</h2>
       <p class="ng-note">シャワーヘッド型で<b>六角形の巣穴がむき出し</b>ならアシナガバチの巣。巣は夏に向けて急成長し、<b>駆除の手間も費用も上がっていきます</b>。</p>
-      <ul class="ag-season">
-        {seasons.map((s) => (
-          <li class={`ag-s ag-s--${s.tone}`}>
-            <b class="ag-s-term">{s.term}</b>
-            <span class="ag-s-size">{s.size}</span>
-            <span class="ag-s-note">{s.note}</span>
-          </li>
-        ))}
-      </ul>
+      <NestGrowthChart stages={ashinagaStages} cap="巣は夏に向けて急成長します。8cm前後の“今”なら基本料金のみ、10〜15cmで目安+4,000〜5,000円と、手間も費用も増えていきます（金額は目安）。早く呼ぶほど、費用も危険も抑えられます。" />
       <p class="ng-note ng-note-follow">巣ができやすいのは<b>軒下・ベランダ・室外機まわり・窓のシャッターボックス・庭木</b>。「同じ場所で毎日蜂を見かける」は巣作りのサインです。</p>
     </section>
 
-    <!-- 料金（共通データ） -->
+    <!-- 料金（アシナガバチのみ・上限つきレンジ） -->
     <section class="ng-sec">
       <h2 class="ng-h2">アシナガバチ駆除 料金のご案内</h2>
-      <p class="ng-note">アシナガバチは基本<b>1,680円〜</b>と、蜂の中でも安価に駆除できる部類です。出張費・見積り・キャンセルは<b>0円</b>。現地の確定見積からの追加請求はありません。</p>
-      <div class="xrate-card">
-        {rates.map((r) => (
-          <a class="xrate-row" href={company.phoneTelLink} data-cta="ashinaga_rate_row_dial" aria-label={`${r.beeType}の駆除を電話で相談する`}>
-            <img class="xrate-thumb" src={assetPath(`images/bee-types/${rateImg[r.beeType] ?? "dorobachi"}.webp`)}
-              width="74" height="48" alt={`${r.beeType}の蜂の巣駆除`} loading="lazy" decoding="async" />
-            <div class="xrate-info">
-              <b class="xrate-name">{r.beeType}</b>
-              <span class="xrate-cond">{r.workCondition}</span>
-            </div>
-            <div class="xrate-price"><b>{r.basicPrice}</b><small>税込</small></div>
-          </a>
-        ))}
+      <p class="ng-note">アシナガバチは巣が小さく（最大20cm前後）、蜂の中でも<b>安価に駆除できる部類</b>。名古屋の相場は<b>8,000〜20,000円</b>が中心です。当社は標準ケースの<b>上限をはっきり決めて青天井にしません</b>。ご予算のご相談も承ります。出張費・見積り・キャンセルは<b>0円</b>です。</p>
+      <div class="ng-rate2">
+        <div class="ng-rate2-row">
+          <span class="ng-rate2-name">アシナガバチ<small>キアシナガ・セグロアシナガほか</small></span>
+          <span class="ng-rate2-price"><small>標準ケース上限</small><b>19,800円</b></span>
+          <span class="ng-rate2-cap">青天井なし</span>
+        </div>
       </div>
-      <p class="ng-mini">※ 巣のサイズ・高さ・場所により変動。現地で確定見積をお伝えし、ご納得後に作業します。<br />※ スズメバチの巣だった場合もそのまま対応できます（見分けがつかなくても大丈夫です）。</p>
+      <div class="ng-incl">
+        <div class="ng-incl-col ng-incl-in">
+          <b class="ng-incl-h">この料金に含まれるもの</b>
+          <ul>
+            <li>出張費・見積り・キャンセル 0円</li>
+            <li>蜂の駆除・巣の完全撤去</li>
+            <li>戻り蜂対策・巣跡の処理</li>
+            <li>1年再発保証（同じ場所への再営巣に無償で再訪問）</li>
+          </ul>
+        </div>
+        <div class="ng-incl-col ng-incl-add">
+          <b class="ng-incl-h">現場によって加算されるもの</b>
+          <ul>
+            <li>巣の大きさ（10cm未満は基本のみ／育つほど加算）</li>
+            <li>高さ・難所（ベランダ・室外機・シャッター内）</li>
+            <li>殺菌・消毒の程度</li>
+            <li>再発防止剤（追加の薬剤）</li>
+          </ul>
+        </div>
+      </div>
+      <p class="ng-mini"><b>お電話で概算 → 現地で総額を確定 → ご納得のうえで作業。確定後の追加請求はありません。</b><br />※ 一般的な軒下・ベランダの巣や戻り蜂の対応は、<b>上限19,800円の範囲内</b>です。上限の対象外になるのは〈高所作業車が必要・別建物や別箇所の複数施工〉などの特殊なケースのみで、その場合はお電話の概算時に先にお伝えします。<br />※ 保証の「同じ場所」＝施工箇所とおおむね同一部位への再営巣を指します。<br />※ スズメバチの巣だった場合もそのまま対応できます（見分けがつかなくても大丈夫です）。</p>
+    </section>
+    <style>
+      .ng-rate2{border:1px solid #eadfce;border-radius:14px;overflow:hidden;background:#fff;margin:12px 0 0;box-shadow:0 2px 10px rgba(60,40,10,.06)}
+      .ng-rate2-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid #f0e8da}
+      .ng-rate2-row:last-child{border-bottom:none}
+      .ng-rate2-name{font-weight:900;font-size:14.5px;color:#2a2118;display:flex;flex-direction:column}
+      .ng-rate2-name small{font-size:10.5px;font-weight:700;color:#8a7c66;margin-top:2px}
+      .ng-rate2-price{text-align:right;white-space:nowrap;line-height:1.15}
+      .ng-rate2-price small{display:block;font-size:9.5px;color:#8a7c66;font-weight:700}
+      .ng-rate2-price b{font-size:20px;font-weight:900;color:#c8321f;font-variant-numeric:tabular-nums}
+      .ng-rate2-cap{font-size:11px;font-weight:800;color:#2f8f52;background:#eaf6ee;border-radius:999px;padding:4px 10px;white-space:nowrap}
+      .ng-incl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 0}
+      .ng-incl-col{border:1px solid #eadfce;border-radius:12px;padding:12px 14px;background:#fff}
+      .ng-incl-in{border-left:4px solid #2f8f52} .ng-incl-add{border-left:4px solid #d98a1a}
+      .ng-incl-h{display:block;font-size:12.5px;font-weight:900;margin-bottom:7px}
+      .ng-incl-in .ng-incl-h{color:#2f8f52} .ng-incl-add .ng-incl-h{color:#c07a12}
+      .ng-incl-col ul{margin:0;padding:0;list-style:none}
+      .ng-incl-col li{font-size:12px;color:#4a3f2e;line-height:1.55;margin:4px 0;padding-left:16px;position:relative}
+      .ng-incl-in li::before{content:"✓";position:absolute;left:0;color:#2f8f52;font-weight:900}
+      .ng-incl-add li::before{content:"＋";position:absolute;left:0;color:#c07a12;font-weight:900}
+      @media(max-width:520px){.ng-incl{grid-template-columns:1fr}}
+      @media(max-width:400px){.ng-rate2-row{grid-template-columns:1fr auto;row-gap:4px}.ng-rate2-cap{grid-column:2;justify-self:end}}
+    </style>
     </section>
 
-    <CtaDual id="ashinaga_rate_cta" lead="巣が小さい今が最安。写真だけの概算もOK" />
+    <CtaDual id="ashinaga_rate_cta" lead="早く呼ぶほど、安く・安全に終わります。写真だけの概算もOK" />
 
     <!-- アシナガバチの施工事例 -->
     <section class="ng-sec ng-sec-tint">
