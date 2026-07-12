@@ -38,10 +38,12 @@ const COLUMN_ORDER = [
 const _columnAll = await getCollection("column");
 const columnPosts = COLUMN_ORDER.map((id) => _columnAll.find((p) => p.id === id)).filter(Boolean);
 
-const title = `名古屋・愛知の蜂の巣駆除なら最短30分｜基本1,680円〜・1年保証｜${company.name}`;
-const description = `蜂の巣駆除を名古屋・愛知＋岐阜・三重の近郊エリアで最短30分。事前見積金額からの追加請求なしのハチ駆除専門【${company.name}】。スズメバチ¥2,680〜・アシナガバチ¥1,680〜。受付は電話7時〜21時・LINE24時間。見積り無料・キャンセル料0円・1年再発保証。`;
+const title = `名古屋・愛知の蜂の巣駆除なら最短30分｜上限つき明朗会計・追加0円・1年保証｜${company.name}`;
+const description = `蜂の巣駆除を名古屋・愛知＋岐阜・三重の近郊エリアで最短30分。相場はアシナガバチ8,000〜20,000円・スズメバチ15,000〜30,000円が中心、標準ケース上限つき（アシナガ19,800円/スズメ29,800円・青天井なし）で追加請求なしのハチ駆除専門【${company.name}】。受付は電話7時〜21時・LINE24時間。見積り無料・キャンセル料0円・1年再発保証。`;
 
-const beeShown = beeTypes.slice(0, 6);
+// 対応蜂の並び＝ご相談件数順（アシナガ9割→スズメ1-2割→その他）
+const beeOrder = ["ashinagabachi", "suzumebachi", "oosuzumebachi", "mitsubachi", "kumabachi", "dorobachi"];
+const beeShown = beeOrder.map((id) => beeTypes.find((b) => b.id === id)).filter(Boolean) as typeof beeTypes;
 const casesShown = cases.slice(0, 4);
 
 // 危険度を全レベルで統一表記＋色に正規化（data の dangerLevel: high/highest/medium/low に対応）
@@ -64,7 +66,7 @@ const strengthsShown = strengths.slice(0, 6);
 ---
 
 <Layout title={title} description={description}>
-  <h1 class="x-sr">名古屋・愛知の蜂の巣駆除｜即日スピード解決・最短30分で現場到着・基本1,680円〜（税込）・1年保証・追加0円の明朗会計・当日対応98%・受付は電話7時〜21時／LINE24時間 {company.phoneDisplay}</h1>
+  <h1 class="x-sr">名古屋・愛知の蜂の巣駆除｜即日スピード解決・最短30分で現場到着・標準ケース上限つき（アシナガ19,800円・スズメ29,800円）・追加0円の明朗会計・当日対応98%・受付は電話7時〜21時／LINE24時間 {company.phoneDisplay}</h1>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
     <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/></symbol>
@@ -142,7 +144,7 @@ const strengthsShown = strengths.slice(0, 6);
   </div>
 
   <!-- ===== PC専用ヒーロー（≥900pxで表示・チラシを実HTMLで再現／16:9固定キャンバス・%絶対配置） ===== -->
-  <section class="xhero-pc" aria-label="蜂の巣駆除 即日スピード解決｜最短30分・基本1,680円〜">
+  <section class="xhero-pc" aria-label="蜂の巣駆除 即日スピード解決｜最短30分・上限つき明朗会計">
     <div class="xpc">
       <!-- 背景：スタッフ＋空（文字なしクリーン下地・原画相当） -->
       <img class="xpc-bg" src={assetPath("images/generated/hero-pc-bg.webp")} width="1376" height="768"
@@ -182,7 +184,7 @@ const strengthsShown = strengths.slice(0, 6);
 
       <!-- 価格バブル -->
       <div class="xpc-price" aria-hidden="true">
-        <span class="xpc-price-1">基本<b>¥1,680〜</b><i>（税込）</i> /</span>
+        <span class="xpc-price-1"><b>上限つき</b><i>明朗会計</i> /</span>
         <span class="xpc-price-2">見積・出張・キャンセル<b>0円</b></span>
       </div>
 
@@ -266,31 +268,77 @@ const strengthsShown = strengths.slice(0, 6);
     <span id="pricing" class="x-anchor" aria-hidden="true"></span>
     <section class="xb-sec" id="price" aria-labelledby="s-rate">
       <h2 class="xb-h" id="s-rate"><span>蜂の巣駆除 料金のご案内</span></h2>
-      <p class="xb-lead">基本<b>1,680円〜</b>。広告代理店も仲介も挟まない<b>自社直接対応</b>だから実現できる価格です。</p>
+      <p class="xb-lead">名古屋の相場はアシナガバチ<b>8,000〜20,000円</b>・スズメバチ<b>15,000〜30,000円</b>が中心です（当社調べ）。当社は標準ケースの<b>上限をはっきり決めて青天井にしません</b>。ご予算のご相談も承ります。出張費・見積り・キャンセルは<b>0円</b>、確定後の追加請求もありません。</p>
 
-      <ul class="xrate-free" aria-label="無料の項目">
-        <li><span class="xrate-free-l">出張費</span><span class="xrate-free-z">0<small>円</small></span></li>
-        <li><span class="xrate-free-l">見積り</span><span class="xrate-free-z">0<small>円</small></span></li>
-        <li><span class="xrate-free-l">キャンセル</span><span class="xrate-free-z">0<small>円</small></span></li>
-        <li><span class="xrate-free-l">追加請求</span><span class="xrate-free-z">0<small>円</small></span></li>
-      </ul>
-
-      <div class="xrate-card">
-        {rates.map((r, i) => (
-          <a class="xrate-row" href={company.phoneTelLink} data-cta="rate_row_dial" aria-label={`${r.beeType}の駆除を電話で相談する`}>
-            <img class="xrate-thumb" src={assetPath(`images/bee-types/${rateImg[r.beeType] ?? "dorobachi"}.webp`)}
-              width="74" height="48" alt={`${r.beeType}の蜂の巣駆除`} loading="lazy" decoding="async" />
-            <div class="xrate-info">
-              <b class="xrate-name">{r.beeType}</b>
-              <span class="xrate-cond">{r.workCondition}</span>
-            </div>
-            <div class="xrate-price"><b>{r.basicPrice}</b><small>税込</small></div>
-          </a>
-        ))}
+      <div class="ng-rate2">
+        <a class="ng-rate2-row" href={assetPath("ashinagabachi/")} data-cta="rate_ashinaga_link">
+          <span class="ng-rate2-name">アシナガバチ<small>ご相談が最も多い蜂／軒下・ベランダ</small></span>
+          <span class="ng-rate2-price"><small>標準ケース上限</small><b>19,800円</b></span>
+          <span class="ng-rate2-cap">青天井なし</span>
+        </a>
+        <a class="ng-rate2-row" href={assetPath("suzumebachi/")} data-cta="rate_suzume_link">
+          <span class="ng-rate2-name">スズメバチ<small>危険・早めの対応を／屋根裏・軒下</small></span>
+          <span class="ng-rate2-price"><small>標準ケース上限</small><b>29,800円</b></span>
+          <span class="ng-rate2-cap">青天井なし</span>
+        </a>
+        <div class="ng-rate2-row ng-rate2-other">
+          <span class="ng-rate2-name">その他の蜂<small>ミツバチ・オオスズメバチ・クマバチ 等</small></span>
+          <span class="ng-rate2-price"><b>現地見積</b></span>
+          <span class="ng-rate2-cap">対応可</span>
+        </div>
       </div>
-      <p class="xb-note">※ 巣のサイズ・高さ・場所により変動。<b>現地で確定見積</b>をお伝えし、ご納得後に作業。事前見積金額からの追加請求はありません。</p>
-      <p class="xb-coupon"><b class="xb-coupon-tag">電話割</b><span>このページをご覧の方が<b>お電話でお申込み</b>いただくと、<b class="xb-coupon-off">現地で確定したお見積り金額から10%OFF</b>。ご予約時に「ホームページを見た」とお伝えください。</span></p>
+
+      <div class="ng-incl">
+        <div class="ng-incl-col ng-incl-in">
+          <b class="ng-incl-h">この料金に含まれるもの</b>
+          <ul>
+            <li>出張費・見積り・キャンセル 0円</li>
+            <li>蜂の駆除・巣の完全撤去</li>
+            <li>戻り蜂対策・巣跡の処理・侵入口の封鎖</li>
+            <li>1年再発保証（同じ場所への再営巣に無償で再訪問）</li>
+          </ul>
+        </div>
+        <div class="ng-incl-col ng-incl-add">
+          <b class="ng-incl-h">現場によって加算されるもの</b>
+          <ul>
+            <li>巣の大きさ（10cm未満は基本のみ／育つほど加算）</li>
+            <li>高さ・作業のしにくさ（脚立を要する高所・2階の軒下・室外機まわり など）</li>
+            <li>殺菌・消毒の程度</li>
+            <li>再発防止剤（追加の薬剤）</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="xb-note"><b>お電話で概算 → 現地で総額を確定 → ご納得のうえで作業。確定後の追加請求はありません。</b>一般的な軒下・ベランダ・屋根裏の巣や戻り蜂の対応は上限の範囲内です。上限の対象外になるのは〈点検口から届かない屋根裏の奥・壁内の解体・高所作業車が必要・別建物や別箇所の複数施工〉などの特殊なケースのみで、その場合はお電話の概算時に先にお伝えします。オオスズメバチの土中・樹洞・難所は上限外・現地見積です。</p>
+      <p class="xb-note xb-principle">早く呼ぶほど費用を抑えられます。巣は育つほど駆除費も危険も上がるため、小さいうちの早めのご相談が、安く・安全に終わります。<a href={assetPath("ashinagabachi/")}>アシナガバチ</a>・<a href={assetPath("suzumebachi/")}>スズメバチ</a>の専用ページに、巣の大きさ→料金の目安図があります。</p>
+      <p class="xb-coupon"><b class="xb-coupon-tag">電話割</b><span>このページをご覧の方が<b>お電話でお申込み</b>いただくと、<b class="xb-coupon-off">現地で確定したお見積り金額から10%OFF</b>（上限額からの割引ではありません）。ご予約時に「ホームページを見た」とお伝えください。</span></p>
       <p class="xpay">お支払い：<b>現金・クレジットカード・PayPay・銀行振込・後払い</b> に対応</p>
+      <style>
+        .ng-rate2{border:1px solid #eadfce;border-radius:14px;overflow:hidden;background:#fff;margin:4px 0 0;box-shadow:0 2px 10px rgba(60,40,10,.06)}
+        .ng-rate2-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid #f0e8da;text-decoration:none;color:inherit}
+        .ng-rate2-row:last-child{border-bottom:none}
+        .ng-rate2-row:active{background:#fff6f5}
+        .ng-rate2-name{font-weight:900;font-size:14.5px;color:#2a2118;display:flex;flex-direction:column}
+        .ng-rate2-name small{font-size:10.5px;font-weight:700;color:#8a7c66;margin-top:2px}
+        .ng-rate2-price{text-align:right;white-space:nowrap;line-height:1.15}
+        .ng-rate2-price small{display:block;font-size:9.5px;color:#8a7c66;font-weight:700}
+        .ng-rate2-price b{font-size:20px;font-weight:900;color:#c8321f;font-variant-numeric:tabular-nums}
+        .ng-rate2-cap{font-size:11px;font-weight:800;color:#2f8f52;background:#eaf6ee;border-radius:999px;padding:4px 10px;white-space:nowrap}
+        .ng-rate2-other .ng-rate2-cap{color:#8a6d3b;background:#f6f1e7}
+        .ng-incl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 0}
+        .ng-incl-col{border:1px solid #eadfce;border-radius:12px;padding:12px 14px;background:#fff}
+        .ng-incl-in{border-left:4px solid #2f8f52}.ng-incl-add{border-left:4px solid #d98a1a}
+        .ng-incl-h{display:block;font-size:12.5px;font-weight:900;margin-bottom:7px}
+        .ng-incl-in .ng-incl-h{color:#2f8f52}.ng-incl-add .ng-incl-h{color:#c07a12}
+        .ng-incl-col ul{margin:0;padding:0;list-style:none}
+        .ng-incl-col li{font-size:12px;color:#4a3f2e;line-height:1.55;margin:4px 0;padding-left:16px;position:relative}
+        .ng-incl-in li::before{content:"✓";position:absolute;left:0;color:#2f8f52;font-weight:900}
+        .ng-incl-add li::before{content:"＋";position:absolute;left:0;color:#c07a12;font-weight:900}
+        .xb-principle{background:#fffdf8;border:1px solid #eadfce;border-left:4px solid #c8321f;border-radius:10px;padding:11px 14px;font-weight:700}
+        .xb-principle a{color:#c4150c;font-weight:800}
+        @media(max-width:520px){.ng-incl{grid-template-columns:1fr}}
+        @media(max-width:400px){.ng-rate2-row{grid-template-columns:1fr auto;row-gap:4px}.ng-rate2-cap{grid-column:2;justify-self:end}}
+      </style>
     </section>
 
     <CtaDual id="rate_cta" lead="この料金で即日対応。今すぐご相談ください" />
@@ -396,6 +444,7 @@ const strengthsShown = strengths.slice(0, 6);
           </a>
         ))}
       </div>
+      <p class="xb-note">※ お客様の声は当社の施工事例をもとにした体験イメージです。同意取得済みの実際のご感想は順次掲載します。</p>
     </section>
 
     <CtaDual id="proof_cta" lead="自社施工・1年保証付きで安心。今すぐお気軽にご相談ください" />
@@ -404,7 +453,7 @@ const strengthsShown = strengths.slice(0, 6);
     <span id="types" class="x-anchor" aria-hidden="true"></span>
     <section class="xb-sec" id="bee-types" aria-labelledby="s-bee">
       <h2 class="xb-h" id="s-bee"><span>対応する蜂の種類</span></h2>
-      <p class="xb-lead">それぞれ危険度・営巣場所が異なります。<b>種類が分からなくても</b>現地で判別から承ります。</p>
+      <p class="xb-lead">ご相談で最も多いのが<b>アシナガバチ</b>、次いで<b>スズメバチ</b>です。この2種をメインに、その他の蜂も対応します。<b>種類が分からなくても</b>現地で判別から承ります。（並びはご相談の多い順です。危険度は各カードのメーターをご覧ください）</p>
       <div class="xbee-grid">
         {beeShown.map((b) => {
           const d = dangerMap[b.dangerLevel] ?? dangerMap.low;

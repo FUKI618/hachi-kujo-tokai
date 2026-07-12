@@ -54,6 +54,8 @@ export const company = {
   liabilityCoverage: "",
   guaranteeYears: 1,
   fastestArrival: "30分",
+  // JSON-LDフォールバック/内部参照専用（下限額¥1,680）。可視コピーで下限を主役化しない。
+  // 現行モデル=標準ケース上限つき（アシナガ19,800円・スズメ29,800円）。相場: アシナガ8,000〜20,000円/スズメ15,000〜30,000円が中心（当社調べ）。
   basicPrice: 1680,
   geo: {
     lat: 35.1798,

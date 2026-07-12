@@ -2,11 +2,13 @@
  * 料金表 SSOT
  * 5種類×（基本料金 / 想定価格帯 / 作業条件）
  *
- * 価格戦略（2026-06-01改定）:
- * - 基本料金 ¥1,680〜（中間業者を挟まない自社直接価格のフロント表示）
- * - スズメバチ・オオスズメバチ ¥2,680〜 / それ以外のハチ ¥1,680〜
- * - 上限(MAX)は表示せず「現地見積で確定」で不透明感を打ち消す方針。
- *   rangePrice は「現地確認後の確定見積でご提示」に統一（具体上限額は出さない）。
+ * 価格戦略（2026-07改定・標準ケース上限つきモデル）:
+ * - 料金相場（当社調べ）: アシナガバチ 8,000〜20,000円 / スズメバチ 15,000〜30,000円が中心。
+ * - 標準ケース上限: アシナガ 19,800円 / スズメ 29,800円（その他・難所は現地見積で確定）。
+ * - 確定見積の範囲内で作業し追加請求なし。下限のみを主役化した釣り表示はしない方針。
+ *   rangePrice は「現地確認後の確定見積でご提示」に統一（可視コピーで下限を主役化しない）。
+ * - basicPrice/basicPriceNum は JSON-LD Offer 用の「標準ケース上限」（アシナガ19,800/スズメ29,800）。
+ *   下限額（¥1,680/¥2,680）は撤去。可視コピーも機械層も上限主役。その他・難所は現地見積。
  */
 
 export type Rate = {
@@ -22,37 +24,37 @@ const QUOTE_NOTE = "現地で確定見積";
 export const rates: Rate[] = [
   {
     beeType: "アシナガバチ",
-    basicPrice: "¥1,680〜",
-    basicPriceNum: 1680,
+    basicPrice: "上限19,800円",
+    basicPriceNum: 19800,
     rangePrice: QUOTE_NOTE,
-    workCondition: "巣のサイズ・高さ・場所により変動／現地で確定見積",
+    workCondition: "標準ケース上限19,800円／巣のサイズ・場所により変動・現地で確定見積",
   },
   {
     beeType: "スズメバチ",
-    basicPrice: "¥2,680〜",
-    basicPriceNum: 2680,
+    basicPrice: "上限29,800円",
+    basicPriceNum: 29800,
     rangePrice: QUOTE_NOTE,
-    workCondition: "巣のサイズ・高さ・場所により変動／現地で確定見積",
+    workCondition: "標準ケース上限29,800円／巣のサイズ・場所により変動・現地で確定見積",
   },
   {
     beeType: "ミツバチ",
-    basicPrice: "¥1,680〜",
-    basicPriceNum: 1680,
+    basicPrice: "現地見積",
+    basicPriceNum: 29800,
     rangePrice: QUOTE_NOTE,
-    workCondition: "取り出し難度・蜜量により変動／現地で確定見積",
+    workCondition: "屋根裏・壁内の大規模巣は現地見積／確定見積の範囲内で作業",
   },
   {
     beeType: "オオスズメバチ",
-    basicPrice: "¥2,680〜",
-    basicPriceNum: 2680,
+    basicPrice: "現地見積",
+    basicPriceNum: 29800,
     rangePrice: QUOTE_NOTE,
-    workCondition: "土中・樹洞・難所は要現地調査／現地で確定見積",
+    workCondition: "土中・樹洞・難所は上限外・現地見積／確定見積の範囲内で作業",
   },
   {
     beeType: "クマバチ・その他",
-    basicPrice: "¥1,680〜",
-    basicPriceNum: 1680,
+    basicPrice: "現地見積",
+    basicPriceNum: 19800,
     rangePrice: QUOTE_NOTE,
-    workCondition: "巣のサイズ・場所により変動／現地で確定見積",
+    workCondition: "種類・巣の場所により変動／現地で確定見積",
   },
 ];
