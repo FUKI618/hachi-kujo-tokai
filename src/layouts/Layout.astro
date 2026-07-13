@@ -45,7 +45,7 @@ const localBusinessJsonLd = {
     height: 360,
     caption: `${company.name} ロゴ`,
   },
-  priceRange: "¥8,000〜¥29,800",
+  priceRange: "¥5,980〜¥29,800",
   knowsAbout: [
     "スズメバチ駆除",
     "オオスズメバチ駆除",
@@ -124,19 +124,28 @@ const localBusinessJsonLd = {
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "蜂駆除サービスメニュー",
-    itemListElement: rates.map((r) => ({
-      "@type": "Offer",
-      itemOffered: {
-        "@type": "Service",
-        name: `${r.beeType}駆除`,
-        description: `${r.rangePrice}（巣の大きさ・場所により変動）。事前見積金額の範囲内で作業し、追加請求なし（範囲変更時は事前確認）。`,
-        provider: { "@id": `${homeUrl}#localbusiness` },
-        areaServed: "愛知県・名古屋近郊（岐阜県南部・三重県北部）",
-      },
-      priceCurrency: "JPY",
-      price: r.basicPriceNum,
-      url: `${homeUrl}#price`,
-    })),
+    itemListElement: rates.map((r) => {
+      // アシナガ/スズメは標準ケース上限（19,800/29,800）を確定priceとして出力。
+      // ミツバチ/オオスズメバチ/クマバチ等（basicPrice==='現地見積'）は確定額を持たないため
+      // price を出さない（青天井ではなく現地確定＝虚偽の確定額表示を避ける）。
+      const hasFixedPrice = r.basicPrice !== "現地見積";
+      const offer: Record<string, unknown> = {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: `${r.beeType}駆除`,
+          description: `${r.rangePrice}（巣の大きさ・場所により変動）。事前見積金額の範囲内で作業し、追加請求なし（範囲変更時は事前確認）。`,
+          provider: { "@id": `${homeUrl}#localbusiness` },
+          areaServed: "愛知県・名古屋近郊（岐阜県南部・三重県北部）",
+        },
+        url: `${homeUrl}#price`,
+      };
+      if (hasFixedPrice) {
+        offer.priceCurrency = "JPY";
+        offer.price = r.basicPriceNum;
+      }
+      return offer;
+    }),
   },
 };
 

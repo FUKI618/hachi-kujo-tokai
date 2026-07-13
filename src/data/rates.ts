@@ -14,7 +14,7 @@
 export type Rate = {
   beeType: string;
   basicPrice: string;
-  basicPriceNum: number; // JSON-LD Offer price 用の数値（種別の下限額）
+  basicPriceNum: number; // JSON-LD Offer price 用の数値（種別の標準ケース上限額）
   rangePrice: string;
   workCondition: string;
 };
