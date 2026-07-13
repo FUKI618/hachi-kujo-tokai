@@ -268,17 +268,17 @@ const strengthsShown = strengths.slice(0, 6);
     <span id="pricing" class="x-anchor" aria-hidden="true"></span>
     <section class="xb-sec" id="price" aria-labelledby="s-rate">
       <h2 class="xb-h" id="s-rate"><span>蜂の巣駆除 料金のご案内</span></h2>
-      <p class="xb-lead">名古屋の相場はアシナガバチ<b>8,000〜20,000円</b>・スズメバチ<b>15,000〜30,000円</b>が中心です（当社調べ）。当社は標準ケースの<b>上限をはっきり決めて青天井にしません</b>。ご予算のご相談も承ります。出張費・見積り・キャンセルは<b>0円</b>、確定後の追加請求もありません。</p>
+      <p class="xb-lead">名古屋の相場はアシナガバチ<b>8,000〜20,000円</b>・スズメバチ<b>15,000〜30,000円</b>が中心です（各社の公開料金・当社調べ）。当社は<b>相場の上限より低い金額で標準ケースの上限を決め、青天井にしません</b>。ご予算のご相談も承ります。出張費・見積り・キャンセルは<b>0円</b>、確定後の追加請求もありません。</p>
 
       <div class="ng-rate2">
         <a class="ng-rate2-row" href={assetPath("ashinagabachi/")} data-cta="rate_ashinaga_link">
           <span class="ng-rate2-name">アシナガバチ<small>ご相談が最も多い蜂／軒下・ベランダ</small></span>
-          <span class="ng-rate2-price"><small>標準ケース上限</small><b>19,800円</b></span>
+          <span class="ng-rate2-price"><small>標準ケースは</small><b>19,800円<i>まで</i></b></span>
           <span class="ng-rate2-cap">青天井なし</span>
         </a>
         <a class="ng-rate2-row" href={assetPath("suzumebachi/")} data-cta="rate_suzume_link">
           <span class="ng-rate2-name">スズメバチ<small>危険・早めの対応を／屋根裏・軒下</small></span>
-          <span class="ng-rate2-price"><small>標準ケース上限</small><b>29,800円</b></span>
+          <span class="ng-rate2-price"><small>標準ケースは</small><b>29,800円<i>まで</i></b></span>
           <span class="ng-rate2-cap">青天井なし</span>
         </a>
         <div class="ng-rate2-row ng-rate2-other">
@@ -287,6 +287,8 @@ const strengthsShown = strengths.slice(0, 6);
           <span class="ng-rate2-cap">対応可</span>
         </div>
       </div>
+
+      <p class="ng-within"><b>屋根裏・軒下・室外機・大きくなった巣も、この上限の範囲内です。</b>上限を超えるのは〈壁内の解体・高所作業車が必要・別建物や複数箇所の施工〉など特殊なケースだけで、その場合は必ずお電話の概算時に先にお伝えします。</p>
 
       <div class="ng-incl">
         <div class="ng-incl-col ng-incl-in">
@@ -325,6 +327,9 @@ const strengthsShown = strengths.slice(0, 6);
         .ng-rate2-price b{font-size:20px;font-weight:900;color:#c8321f;font-variant-numeric:tabular-nums}
         .ng-rate2-cap{font-size:11px;font-weight:800;color:#2f8f52;background:#eaf6ee;border-radius:999px;padding:4px 10px;white-space:nowrap}
         .ng-rate2-other .ng-rate2-cap{color:#8a6d3b;background:#f6f1e7}
+        .ng-rate2-price b i{font-size:12px;font-weight:800;font-style:normal;color:#8a6d3b;margin-left:1px}
+        .ng-within{margin:10px 0 0;padding:11px 14px;background:#eaf6ee;border:1px solid #cfe9d8;border-radius:11px;font-size:12.5px;line-height:1.72;color:#2a2118}
+        .ng-within b{color:#2f7d4f}
         .ng-incl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 0}
         .ng-incl-col{border:1px solid #eadfce;border-radius:12px;padding:12px 14px;background:#fff}
         .ng-incl-in{border-left:4px solid #2f8f52}.ng-incl-add{border-left:4px solid #d98a1a}
