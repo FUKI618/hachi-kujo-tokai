@@ -65,7 +65,7 @@ const strengthsShown = strengths.slice(0, 6);
 // FAQPage 構造化データは Layout（faqsToJsonLd）が注入するため、ここでは重複させない。
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lcpMobileImage="images/generated/hero-action.webp">
   <h1 class="x-sr">名古屋・愛知の蜂の巣駆除｜即日スピード解決・最短30分で現場到着・標準ケース上限つき（アシナガ19,800円・スズメ29,800円）・追加0円の明朗会計・当日対応98%・受付は電話7時〜21時／LINE24時間 {company.phoneDisplay}</h1>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
@@ -82,7 +82,7 @@ const strengthsShown = strengths.slice(0, 6);
       alt="防護服のプロが専用の道具でスズメバチの巣を駆除する様子" loading="eager" decoding="async" fetchpriority="high" />
 
     <!-- L1 上部赤バー -->
-    <div class="xh-bar" aria-hidden="true">受付 7時〜21時・<b>最短30分</b>で出動</div>
+    <div class="xh-bar" aria-hidden="true">名古屋の自社スタッフが<b>最短30分</b>で出動</div>
 
     <!-- L2 ブランド帯 -->
     <div class="xh-brand">
@@ -112,7 +112,7 @@ const strengthsShown = strengths.slice(0, 6);
     <a class="xh-cta" href={company.phoneTelLink} data-cta="hero_tel">
       <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
       <span class="xh-cta-tx">
-        <small class="xh-cta-top">＼今すぐお電話で不安も駆除／</small>
+        <small class="xh-cta-top">＼その場でお断りOK・相談だけでも／</small>
         <b class="xh-cta-num font-num">{company.phoneDisplay}</b>
         <small class="xh-cta-bot">通話無料・受付7時〜21時・タップで発信</small>
       </span>
@@ -209,7 +209,7 @@ const strengthsShown = strengths.slice(0, 6);
       <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>見積・出張・キャンセル 0円</span>
       <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>お断りでも費用は一切なし</span>
       <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>その場契約は迫りません</span>
-      <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>名古屋・中区の自社施工</span>
+      <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>名古屋・中区の自社スタッフが対応</span>
     </div>
     <style>
       .xb-assure{display:flex;flex-wrap:wrap;justify-content:center;gap:7px 14px;margin:0 auto;max-width:520px;padding:13px 16px 0}
