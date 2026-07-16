@@ -25,14 +25,14 @@ const { id, lead = "お急ぎはお電話、写真でのお見積りはLINEが�
 </div>
 <style>
   .xcta { max-width:480px; margin-inline:auto; padding:20px 16px; scroll-margin-top:74px; }
-  .xcta-lead { text-align:center; font-weight:800; font-size:.84rem; color:#a60101; margin:0 0 11px; line-height:1.5; }
+  .xcta-lead { text-align:center; font-weight:900; font-size:.92rem; color:#a60101; margin:0 0 11px; line-height:1.5; }
   .xcta-btns { display:flex; flex-direction:column; gap:10px; }
-  .xcta-btn { display:flex; align-items:center; justify-content:center; gap:.6rem; padding:.82rem 1rem; border-radius:14px;
+  .xcta-btn { display:flex; align-items:center; justify-content:center; gap:.6rem; min-height:64px; padding:.82rem 1rem; border-radius:14px;
     text-decoration:none; color:#fff; box-shadow:0 6px 16px rgba(0,0,0,.16); text-shadow:0 1px 2px rgba(0,0,0,.32); }
   .xcta-btn:active { transform:translateY(1px); }
   .xcta-ic { width:1.7rem; height:1.7rem; flex-shrink:0; }
   .xcta-t { display:flex; flex-direction:column; line-height:1.12; align-items:flex-start; }
-  .xcta-t small { font-size:.6rem; opacity:1; margin-top:2px; font-weight:700; }
+  .xcta-t small { font-size:.68rem; opacity:1; margin-top:3px; font-weight:800; }
   .xcta-tel { background:linear-gradient(180deg,#e8590c,#c4150c); }
   .xcta-tel .num { font-size:1.5rem; font-weight:900; letter-spacing:.01em; font-variant-numeric:tabular-nums; }
   /* 電話を主・LINEを従に：LINEは一段細く */
@@ -40,10 +40,10 @@ const { id, lead = "お急ぎはお電話、写真でのお見積りはLINEが�
   .xcta-line b { font-size:1rem; font-weight:900; }
   .xcta-badge { background:#fff; color:#057a35; font-weight:900; font-size:.8rem; padding:.18rem .48rem; border-radius:8px; flex-shrink:0; }
   /* 電話不安の解消＋押した後の道筋 */
-  .xcta-rea { display:flex; flex-wrap:wrap; justify-content:center; gap:.25rem .7rem; margin:.75rem 0 0; padding:0; }
-  .xcta-rea span { font-size:.7rem; font-weight:800; color:#0a7d28; }
+  .xcta-rea { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:.78rem 0 0; padding:0; }
+  .xcta-rea span { display:flex; align-items:center; justify-content:center; min-height:34px; text-align:center; background:#fff; border:1px solid #d8ecd4; border-radius:8px; padding:5px 4px; font-size:.68rem; line-height:1.25; font-weight:900; color:#0a7d28; }
   .xcta-rea span::before { content:"✓ "; }
-  .xcta-flow { text-align:center; font-size:.66rem; font-weight:700; color:#6b5d4a; margin:.45rem 0 0; line-height:1.55; }
+  .xcta-flow { text-align:center; font-size:.74rem; font-weight:800; color:#6b5d4a; margin:.55rem 0 0; line-height:1.55; }
   .xcta-flow b { color:#c4150c; }
   /* PC: 横並び＋幅拡大（モバイル不変） */
   @media (min-width:900px){
