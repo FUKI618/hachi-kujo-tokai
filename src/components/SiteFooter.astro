@@ -12,6 +12,8 @@ const year = 2026;
   <div class="xfoot-inner">
     <p class="xfoot-brand">{company.name}</p>
     <p class="xfoot-sub">{company.serviceArea}のハチ駆除専門</p>
+    <p class="xfoot-address">運営：{company.legalName}／〒{company.address.postal} {company.address.region}{company.address.city}{company.address.street}</p>
+    <p class="xfoot-address">電話受付 {company.phoneHours}・受付から施工まで自社一貫対応</p>
     <nav class="xfoot-links" aria-label="コラム・会社情報・法的情報">
       <a href={assetPath("column/")}>蜂の知識コラム</a>
       <a href={assetPath("privacy-policy/")}>プライバシーポリシー・会社情報</a>
@@ -25,6 +27,8 @@ const year = 2026;
   .xfoot-inner { max-width:480px; margin:0 auto; padding:26px 18px 30px; }
   .xfoot-brand { color:#fff; font-weight:900; font-size:.98rem; margin:0 0 4px; }
   .xfoot-sub { margin:0 0 16px; font-size:.7rem; color:#9a8c74; }
+  .xfoot-address { margin:0 0 6px; font-size:.72rem; line-height:1.6; color:#d9cbb6; }
+  .xfoot-address + .xfoot-links { margin-top:12px; }
   .xfoot-links { display:flex; flex-wrap:wrap; gap:.5rem 1.2rem; margin:0 0 14px; }
   .xfoot-links a { color:#f0e6d4; text-decoration:underline; font-weight:700; font-size:.78rem; }
   .xfoot-copy { margin:0; color:#b3a489; font-size:.66rem; }

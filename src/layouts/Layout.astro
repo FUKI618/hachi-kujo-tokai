@@ -32,8 +32,8 @@ const localBusinessJsonLd = {
   "@id": `${homeUrl}#localbusiness`,
   name: company.name,
   legalName: company.legalName,
-  alternateName: "Tokai Hachi Kyukyutai",
-  slogan: "蜂の巣、今すぐ救急出動。",
+  alternateName: "蜂の巣駆除ファクトリー東海",
+  slogan: "名古屋・愛知の蜂の巣駆除を、自社施工と明朗会計で即日対応。",
   description:
     "愛知県全域・名古屋近郊（岐阜県南部・三重県北部）でアシナガバチ・スズメバチ（オオスズメバチ含む）の駆除に年中無休で対応（電話受付7:00〜21:00・LINEは24時間）。ご相談が最も多いアシナガバチと、危険なスズメバチをメインに、その他の蜂も対応。最短30分で緊急出動、標準ケースは上限つき（アシナガ19,800円・スズメ29,800円）で事前見積金額厳守・追加請求なし、1年再発保証。",
   telephone: company.phone,
@@ -47,7 +47,7 @@ const localBusinessJsonLd = {
     height: 360,
     caption: `${company.name} ロゴ`,
   },
-  priceRange: "¥5,980〜¥29,800",
+  priceRange: "標準ケース上限: アシナガバチ¥19,800・スズメバチ¥29,800",
   knowsAbout: [
     "スズメバチ駆除",
     "オオスズメバチ駆除",
@@ -409,13 +409,13 @@ const allJsonLd = [
         var target = e.target.closest("[data-cta]");
         if (!target) return;
         var ctaId = target.getAttribute("data-cta");
-        var isTel = ctaId.indexOf("tel") !== -1;
+        var href = target.getAttribute("href");
+        var isTel = href && href.indexOf("tel:") === 0;
         var eventName = isTel ? "phone_click"
                       : ctaId.indexOf("line") !== -1 ? "line_click"
                       : "cta_click";
 
         // tel: のみ: CV ping を遷移前に保証しつつ、発信は fail-safe で必ず実行する
-        var href = target.getAttribute("href");
         if (isTel && href && href.indexOf("tel:") === 0) {
           e.preventDefault();
           // gtag は上部で eager ロード済み。ここでの先読みは不要。
@@ -483,10 +483,25 @@ const allJsonLd = [
 
       // 受付バッジ: 電話受付(7〜21時)は「ただ今受付中」、夜間はLINE表記へ切替（深夜の不正確表示を是正＋夜間はLINE誘導）
       document.addEventListener("DOMContentLoaded", function () {
-        var h = new Date().getHours();
-        var txt = h >= 7 && h < 21 ? "ただ今受付中" : "LINE受付中";
+        var now = new Date();
+        var jst = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
+        var h = jst.getHours();
+        var inPhoneHours = h >= 7 && h < 21;
+        var txt = inPhoneHours ? "ただ今受付中" : "LINE受付中";
         var els = document.querySelectorAll(".xh-now-tx");
         for (var i = 0; i < els.length; i++) els[i].textContent = txt;
+        if (!inPhoneHours) {
+          var floatEl = document.querySelector(".xfloat");
+          if (floatEl) floatEl.classList.add("xfloat-night");
+          var telMain = document.querySelector(".xfloat-tel .xfloat-tx b");
+          var telSub = document.querySelector(".xfloat-tel .xfloat-tx small");
+          var lineMain = document.querySelector(".xfloat-line .xfloat-tx b");
+          var lineSub = document.querySelector(".xfloat-line .xfloat-tx small");
+          if (lineMain) lineMain.textContent = "LINEで写真見積り";
+          if (lineSub) lineSub.textContent = "24時間受付";
+          if (telMain) telMain.textContent = "朝7時から電話受付";
+          if (telSub) telSub.textContent = "番号を保存";
+        }
       });
     </script>
 
