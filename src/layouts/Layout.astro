@@ -390,6 +390,14 @@ const allJsonLd = [
             form_submit: tracking.gadsConversionLabels.formSubmit,
           };
           var label = labelMap[eventName];
+          // 受動要素（data-cta が *_dial）は探索タップであり発信意図の証明にならないため
+          // Ads CV には送らない（GA4 へは上で送信済み）。明示 CTA のみが Ads CV 対象。
+          if (label && params.cta_id && params.cta_id.indexOf("_dial") !== -1) {
+            if (typeof params.event_callback === "function") {
+              params.event_callback(); // Ads ping なし → 発信を待たせない
+            }
+            label = null;
+          }
           if (label) {
             window.gtag("event", "conversion", {
               send_to: tracking.gadsConversionId + "/" + label,

@@ -32,6 +32,8 @@ jobs:
           PUBLIC_SITE_ORIGIN: https://hachi-factory.jp
           PUBLIC_SITE_BASE: ""
         run: bun run build
+      - name: Pre-deploy guard
+        run: bash scripts/predeploy_check.sh
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
