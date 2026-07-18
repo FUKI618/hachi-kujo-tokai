@@ -273,17 +273,17 @@ const strengthsShown = strengths.slice(0, 6);
 
       <div class="ng-rate2">
         <a class="ng-rate2-row" href={assetPath("ashinagabachi/")} data-cta="rate_ashinaga_link">
-          <span class="ng-rate2-name">アシナガバチ<small>ご相談が最も多い蜂／軒下・ベランダ</small></span>
+          <span class="ng-rate2-name"><img class="ng-rate2-thumb" src={assetPath("images/bee-types/ashinagabachi.webp")} width="48" height="48" alt="アシナガバチ" loading="lazy" decoding="async" /><span class="ng-rate2-txt">アシナガバチ<small>ご相談が最も多い蜂／軒下・ベランダ</small></span></span>
           <span class="ng-rate2-price"><small>標準ケースは</small><b>19,800円<i>まで</i></b></span>
           <span class="ng-rate2-cap">青天井なし</span>
         </a>
         <a class="ng-rate2-row" href={assetPath("suzumebachi/")} data-cta="rate_suzume_link">
-          <span class="ng-rate2-name">スズメバチ<small>危険・早めの対応を／屋根裏・軒下</small></span>
+          <span class="ng-rate2-name"><img class="ng-rate2-thumb" src={assetPath("images/bee-types/suzumebachi.webp")} width="48" height="48" alt="スズメバチ" loading="lazy" decoding="async" /><span class="ng-rate2-txt">スズメバチ<small>危険・早めの対応を／屋根裏・軒下</small></span></span>
           <span class="ng-rate2-price"><small>標準ケースは</small><b>29,800円<i>まで</i></b></span>
           <span class="ng-rate2-cap">青天井なし</span>
         </a>
         <div class="ng-rate2-row ng-rate2-other">
-          <span class="ng-rate2-name">その他の蜂<small>ミツバチ・オオスズメバチ・クマバチ 等</small></span>
+          <span class="ng-rate2-name"><span class="ng-rate2-thumb ng-rate2-thumb-none" aria-hidden="true"></span><span class="ng-rate2-txt">その他の蜂<small>ミツバチ・オオスズメバチ・クマバチ 等</small></span></span>
           <span class="ng-rate2-price"><b>現地見積</b></span>
           <span class="ng-rate2-cap">対応可</span>
         </div>
@@ -321,7 +321,10 @@ const strengthsShown = strengths.slice(0, 6);
         .ng-rate2-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid #f0e8da;text-decoration:none;color:inherit}
         .ng-rate2-row:last-child{border-bottom:none}
         .ng-rate2-row:active{background:#fff6f5}
-        .ng-rate2-name{font-weight:900;font-size:14.5px;color:#2a2118;display:flex;flex-direction:column}
+        .ng-rate2-name{font-weight:900;font-size:14.5px;color:#2a2118;display:flex;flex-direction:row;align-items:center;gap:11px;min-width:0}
+        .ng-rate2-txt{display:flex;flex-direction:column;min-width:0}
+        .ng-rate2-thumb{width:48px;height:48px;border-radius:9px;object-fit:cover;object-position:center;flex:none;border:1px solid #eadfce;background:#f6f1e7}
+        .ng-rate2-thumb-none{border-color:transparent;background:transparent}
         .ng-rate2-name small{font-size:11.5px;font-weight:700;color:#8a7c66;margin-top:2px}
         .ng-rate2-price{text-align:right;white-space:nowrap;line-height:1.15}
         .ng-rate2-price small{display:block;font-size:10.5px;color:#8a7c66;font-weight:700}
