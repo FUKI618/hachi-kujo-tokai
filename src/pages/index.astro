@@ -99,7 +99,7 @@ const strengthsShown = strengths.slice(0, 6);
 
     <!-- L4/L5 見出し -->
     <p class="xh-h1" aria-hidden="true">蜂の巣駆除</p>
-    <p class="xh-h2" aria-hidden="true">今日中に安全駆除</p>
+    <p class="xh-h2" aria-hidden="true">来るのは中区の自社スタッフ</p>
 
     <!-- L6 価格行 -->
     <p class="xh-price" aria-hidden="true">
@@ -114,14 +114,12 @@ const strengthsShown = strengths.slice(0, 6);
       <span class="xh-cta-tx">
         <small class="xh-cta-top">＼その場でお断りOK・相談だけでも／</small>
         <b class="xh-cta-num font-num">{company.phoneDisplay}</b>
-        <small class="xh-cta-bot">受付7時〜21時・「HPを見た」で10%OFF</small>
+        <small class="xh-cta-bot">通話無料・受付7時〜21時</small>
       </span>
     </a>
     <!-- 緑ドット「ただ今受付中」 -->
     <span class="xh-now" aria-hidden="true"><i class="xh-now-dot"></i><span class="xh-now-tx">ただ今受付中</span></span>
-    <!-- 赤「電話で10%OFF」クーポンバッジ（CTA右上・旧通話料無料シール跡に配置） -->
-    <span class="xcpn" aria-hidden="true"><span class="xcpn-body"><b class="xcpn-l1">電話で</b><b class="xcpn-l2">10<i>%</i></b><b class="xcpn-l3">OFF</b></span></span>
-    <p class="xh-proof" aria-hidden="true">自社施工・所在地公開｜標準ケース上限つき明朗会計</p>
+    <p class="xh-proof" aria-hidden="true">委託なし・自社施工・所在地公開｜多くはその日のうちに解決</p>
 
     <!-- L9 信頼4列 -->
     <ul class="xh-trust" aria-hidden="true">
@@ -162,7 +160,7 @@ const strengthsShown = strengths.slice(0, 6);
 
       <!-- 見出し -->
       <p class="xpc-h1" aria-hidden="true"><span class="xpc-h1-box">蜂の巣</span><span class="xpc-h1-out">駆除</span></p>
-      <p class="xpc-h2" aria-hidden="true">今日中に安全駆除</p>
+      <p class="xpc-h2" aria-hidden="true">来るのは中区の自社スタッフ</p>
 
       <!-- チェック -->
       <ul class="xpc-checks" aria-hidden="true">
@@ -212,7 +210,25 @@ const strengthsShown = strengths.slice(0, 6);
       <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>その場契約は迫りません</span>
       <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>名古屋市中区丸の内3丁目6-11の自社拠点</span>
     </div>
+    <!-- 誰が来るかの即答（不安解除の最上段・非タップの信頼ストリップ） -->
+    <div class="xb-staffline">
+      <img class="xb-staffline-ph" src={assetPath("images/staff/takimoto.webp")} width="640" height="640"
+        alt="専用防護服を着用した現場スタッフの瀧本" loading="lazy" decoding="async" />
+      <span class="xb-staffline-tx">
+        <b>伺うのは、この自社スタッフです</b>
+        <small>瀧本（蜂駆除歴5年）｜委託業者は使いません</small>
+        <small>拠点: 名古屋市中区丸の内3丁目6-11</small>
+      </span>
+    </div>
     <style>
+      .xb-staffline{display:flex;align-items:center;gap:12px;margin:10px auto 0;max-width:520px;padding:10px 12px;background:#fff;border:1px solid #eadfce;border-radius:12px;box-shadow:0 2px 8px rgba(40,24,8,.05)}
+      .xb-staffline{margin-left:16px;margin-right:16px}
+      @media(min-width:552px){.xb-staffline{margin-left:auto;margin-right:auto}}
+      .xb-staffline-ph{width:56px;height:56px;border-radius:10px;object-fit:cover;flex:none}
+      .xb-staffline-tx{display:flex;flex-direction:column;min-width:0}
+      .xb-staffline-tx b{font-size:.86rem;font-weight:900;color:#2a2118;line-height:1.4}
+      .xb-staffline-tx small{font-size:.72rem;font-weight:700;color:#8a7c66;line-height:1.5;margin-top:2px}
+      @media(min-width:900px){.xb-staffline{max-width:820px}.xb-staffline-tx b{font-size:.95rem}}
       .xb-assure{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 auto;max-width:520px;padding:12px 16px 0}
       .xb-assure span{display:flex;align-items:center;gap:6px;min-height:42px;background:#fff;border:1px solid #eadfce;border-radius:10px;padding:8px 10px;font-size:.76rem;line-height:1.35;font-weight:900;color:#3a2c17;box-shadow:0 2px 8px rgba(40,24,8,.05)}
       .xb-assure-ic{width:1.05em;height:1.05em;color:#0a7d28;flex:none}
@@ -269,16 +285,20 @@ const strengthsShown = strengths.slice(0, 6);
     <span id="pricing" class="x-anchor" aria-hidden="true"></span>
     <section class="xb-sec" id="price" aria-labelledby="s-rate">
       <h2 class="xb-h" id="s-rate"><span>蜂の巣駆除 料金のご案内</span></h2>
-      <p class="xb-lead">名古屋の相場はアシナガバチ<b>8,000〜20,000円</b>・スズメバチ<b>15,000〜30,000円</b>が中心です（各社の公開料金・当社調べ）。当社は<b>標準ケースの上限をはっきり決めて青天井にせず、多くのケースは上限より安く収まります</b>。ご予算のご相談も承ります。出張費・見積り・キャンセルは<b>0円</b>、確定後の追加請求もありません。</p>
+      <p class="xb-lead"><b>お会計は、事前にお伝えする上限額まで（標準ケース）。確定後の追加請求は0円です。</b>上限の対象外となる特殊なケースは、お電話の概算時に必ず先にご案内します。出張費・見積り・キャンセルは<b>0円</b>です。</p>
+      <details class="ng-souba">
+        <summary>名古屋の相場と比べる</summary>
+        <p>名古屋の相場はアシナガバチ<b>8,000〜20,000円</b>・スズメバチ<b>15,000〜30,000円</b>が中心です（各社の公開料金・当社調べ）。当社は<b>標準ケースの上限をはっきり決めて青天井にせず、多くのケースは上限より安く収まります</b>。ご予算のご相談も承ります。</p>
+      </details>
 
       <div class="ng-rate2">
         <a class="ng-rate2-row" href={assetPath("ashinagabachi/")} data-cta="rate_ashinaga_link">
-          <span class="ng-rate2-name"><img class="ng-rate2-thumb" src={assetPath("images/bee-types/ashinagabachi.webp")} width="48" height="48" alt="アシナガバチ" loading="lazy" decoding="async" /><span class="ng-rate2-txt">アシナガバチ<small>ご相談が最も多い蜂／軒下・ベランダ</small></span></span>
+          <span class="ng-rate2-name"><img class="ng-rate2-thumb" src={assetPath("images/bee-types/ashinagabachi.webp")} width="64" height="40" alt="アシナガバチ" loading="lazy" decoding="async" /><span class="ng-rate2-txt">アシナガバチ<small>ご相談が最も多い蜂／軒下・ベランダ</small></span></span>
           <span class="ng-rate2-price"><small>標準ケースは</small><b>19,800円<i>まで</i></b></span>
           <span class="ng-rate2-cap">青天井なし</span>
         </a>
         <a class="ng-rate2-row" href={assetPath("suzumebachi/")} data-cta="rate_suzume_link">
-          <span class="ng-rate2-name"><img class="ng-rate2-thumb" src={assetPath("images/bee-types/suzumebachi.webp")} width="48" height="48" alt="スズメバチ" loading="lazy" decoding="async" /><span class="ng-rate2-txt">スズメバチ<small>危険・早めの対応を／屋根裏・軒下</small></span></span>
+          <span class="ng-rate2-name"><img class="ng-rate2-thumb" src={assetPath("images/bee-types/suzumebachi.webp")} width="64" height="40" alt="スズメバチ" loading="lazy" decoding="async" /><span class="ng-rate2-txt">スズメバチ<small>危険・早めの対応を／屋根裏・軒下</small></span></span>
           <span class="ng-rate2-price"><small>標準ケースは</small><b>29,800円<i>まで</i></b></span>
           <span class="ng-rate2-cap">青天井なし</span>
         </a>
@@ -322,16 +342,20 @@ const strengthsShown = strengths.slice(0, 6);
         .ng-rate2-row:last-child{border-bottom:none}
         .ng-rate2-row:active{background:#fff6f5}
         .ng-rate2-name{font-weight:900;font-size:14.5px;color:#2a2118;display:flex;flex-direction:row;align-items:center;gap:11px;min-width:0}
-        .ng-rate2-txt{display:flex;flex-direction:column;min-width:0}
-        .ng-rate2-thumb{width:48px;height:48px;border-radius:9px;object-fit:cover;object-position:center;flex:none;border:1px solid #eadfce;background:#f6f1e7}
+        .ng-rate2-txt{display:flex;flex-direction:column;min-width:0;white-space:nowrap}
+        .ng-rate2-thumb{width:64px;height:40px;border-radius:8px;object-fit:cover;object-position:center;flex:none;border:1px solid #eadfce;background:#f6f1e7}
         .ng-rate2-thumb-none{border-color:transparent;background:transparent}
-        .ng-rate2-name small{font-size:11.5px;font-weight:700;color:#8a7c66;margin-top:2px}
+        .ng-rate2-name small{font-size:11.5px;font-weight:700;color:#8a7c66;margin-top:2px;white-space:normal}
         .ng-rate2-price{text-align:right;white-space:nowrap;line-height:1.15}
         .ng-rate2-price small{display:block;font-size:10.5px;color:#8a7c66;font-weight:700}
         .ng-rate2-price b{font-size:20px;font-weight:900;color:#c8321f;font-variant-numeric:tabular-nums}
         .ng-rate2-cap{font-size:11px;font-weight:800;color:#2f8f52;background:#eaf6ee;border-radius:999px;padding:4px 10px;white-space:nowrap}
         .ng-rate2-other .ng-rate2-cap{color:#8a6d3b;background:#f6f1e7}
         .ng-rate2-price b i{font-size:12px;font-weight:800;font-style:normal;color:#8a6d3b;margin-left:1px}
+        .ng-souba{margin:8px 0 10px;border:1px solid #eadfce;border-radius:11px;background:#fff}
+        .ng-souba summary{cursor:pointer;padding:10px 14px;font-size:13px;font-weight:800;color:#8a6d3b;list-style-position:inside}
+        .ng-souba[open] summary{border-bottom:1px solid #f0e8da}
+        .ng-souba p{margin:0;padding:10px 14px;font-size:13px;line-height:1.72;color:#4a3f2e}
         .ng-within{margin:10px 0 0;padding:11px 14px;background:#eaf6ee;border:1px solid #cfe9d8;border-radius:11px;font-size:13px;line-height:1.72;color:#2a2118}
         .ng-within b{color:#2f7d4f}
         .ng-incl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 0}
@@ -765,7 +789,7 @@ const strengthsShown = strengths.slice(0, 6);
     font-size:15.3cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.05em; transform:skewX(-5deg);
     -webkit-text-stroke:.75cqw #fff; paint-order:stroke fill; text-shadow:0 .55cqw .7cqw rgba(0,0,0,.22); }
   .xh-h2 { left:0; top:27.1%; width:100%; height:7%; margin:0; display:flex; align-items:center; justify-content:center;
-    font-size:8.7cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.04em; transform:skewX(-5deg);
+    font-size:6.8cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.04em; transform:skewX(-5deg);
     -webkit-text-stroke:.45cqw #fff; paint-order:stroke fill; text-shadow:0 .4cqw .55cqw rgba(0,0,0,.2); }
 
   /* L6 価格行 */
@@ -1112,7 +1136,7 @@ const strengthsShown = strengths.slice(0, 6);
     .xpc-h1 { left:16%; top:26%; width:50%; height:19%; margin:0; display:flex; align-items:flex-start; gap:.6cqw; }
     .xpc-h1-box { font-size:8.6cqw; font-weight:900; color:#1a1a1a; background:#ffe200; border:.5cqw solid #1a1a1a; border-radius:1.6cqw; padding:0 1cqw; line-height:1.05; letter-spacing:-.04em; }
     .xpc-h1-out { font-size:8.6cqw; font-weight:900; color:#fff; -webkit-text-stroke:.65cqw #1a1a1a; paint-order:stroke fill; letter-spacing:-.04em; line-height:1.05; }
-    .xpc-h2 { left:16%; top:45.5%; width:52%; height:11%; margin:0; display:flex; align-items:flex-start; font-size:5cqw; font-weight:900; color:#1a3f6b; letter-spacing:-.02em; line-height:1; -webkit-text-stroke:.35cqw #fff; paint-order:stroke fill; text-shadow:0 0 .6cqw #fff,0 .15cqw .3cqw rgba(255,255,255,.9); }
+    .xpc-h2 { left:16%; top:45.5%; width:52%; height:11%; margin:0; display:flex; align-items:flex-start; font-size:3.5cqw; font-weight:900; color:#1a3f6b; letter-spacing:-.02em; line-height:1; -webkit-text-stroke:.35cqw #fff; paint-order:stroke fill; text-shadow:0 0 .6cqw #fff,0 .15cqw .3cqw rgba(255,255,255,.9); }
     .xpc-checks { list-style:none; margin:0; left:33%; top:56.5%; width:36%; height:13%; padding:0; display:flex; flex-direction:column; justify-content:center; gap:.7cqw; }
     .xpc-checks li { display:flex; align-items:center; gap:.7cqw; font-size:1.85cqw; font-weight:800; color:#222; white-space:nowrap; text-shadow:0 0 .5cqw #fff,0 0 .5cqw #fff; }
     .xpc-chk { width:2.7cqw; height:2.7cqw; flex-shrink:0; fill:none; stroke:#1a5fa5; stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round; }
