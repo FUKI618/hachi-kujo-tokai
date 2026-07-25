@@ -1,1190 +1,977 @@
 ---
-/**
- * /pro/ — 蜂の巣駆除ファクトリー東海｜緊急・電話ファースト集客LP
- * ヒーロー(モバイル): 承認チラシを実HTML/CSSで99%再現（2:3固定キャンバス・%絶対配置・cqwフォント）。実写真は hero-mob-photo（Gemini生成・人物の顔なし）。
- *   見出し/価格/電話は実テキスト（QS/SEO/AEO）。電話＝実 tel: リンク（data-cta で CV 自動発火）。PC(≥900px)は承認画像 hero-pc-chirashi を継続使用。
- * 下半分: 実HTML（実データSSOT）でSEO/AEO対策。配色はヒーロー基調（赤#a60101 / 橙CTA / クリーム#fdfcf6）。
- *   画像は実写真（cases / bee-types / generated）のみ。FAQは FAQPage 構造化データを併設。
- */
 import Layout from "../layouts/Layout.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import { assetPath } from "../lib/site";
-import StaffCard from "../components/StaffCard.astro";
-import LocationCard from "../components/LocationCard.astro";
 import { company } from "../data/company";
 import { rates } from "../data/rates";
-import { strengths } from "../data/strengths";
-import { promiseCards } from "../data/scam-warning";
-import { beeTypes } from "../data/bee-types";
 import { cases } from "../data/cases";
-import { voices } from "../data/voices";
-import { compareRows } from "../data/compare";
-import { flowSteps } from "../data/flow";
 import { areas } from "../data/areas";
-import { vsGovernmentRows, subsidyNote } from "../data/vs-government";
+import { flowSteps } from "../data/flow";
 import { faqs } from "../data/faq";
-import CtaDual from "../components/CtaDual.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import { getCollection } from "astro:content";
-
-// LPに載せるコラムカード（記事は content collection から自動取得・優先順で6本）
-const COLUMN_ORDER = [
-  "hachi-kujo-ryokin-soba",
-  "suzumebachi-tokushu",
-  "hachi-su-jibun-de-kujo",
-  "hachi-kujo-shiyakusho-muryo",
-  "gyosha-irai-handan",
-  "hachi-shurui-miwakekata",
-];
-const _columnAll = await getCollection("column");
-const columnPosts = COLUMN_ORDER.map((id) => _columnAll.find((p) => p.id === id)).filter(Boolean);
 
 const title = `名古屋・愛知の蜂の巣駆除なら最短30分｜上限つき明朗会計・追加0円・1年保証｜${company.name}`;
-const description = `蜂の巣駆除を名古屋・愛知＋岐阜・三重の近郊エリアで最短30分。相場はアシナガバチ8,000〜20,000円・スズメバチ15,000〜30,000円が中心、標準ケース上限つき（アシナガ19,800円/スズメ29,800円・青天井なし）で追加請求なしのハチ駆除専門【${company.name}】。受付は電話7時〜21時・LINE24時間。見積り無料・キャンセル料0円・1年再発保証。`;
+const description = `蜂の巣駆除を名古屋・愛知＋岐阜・三重の近郊エリアで最短30分。標準ケース上限つき（アシナガ19,800円/スズメ29,800円）で追加請求なしのハチ駆除専門【${company.name}】。受付は電話7時〜21時・LINE24時間。見積り無料・キャンセル料0円・1年再発保証。`;
 
-// 対応蜂の並び＝ご相談件数順（アシナガ9割→スズメ1-2割→その他）
-const beeOrder = ["ashinagabachi", "suzumebachi", "oosuzumebachi", "mitsubachi", "kumabachi", "dorobachi"];
-const beeShown = beeOrder.map((id) => beeTypes.find((b) => b.id === id)).filter(Boolean) as typeof beeTypes;
-const casesShown = cases.slice(0, 6);
+const heroImage = "images/generated/hero-bright-team.webp";
+const clerkImage = "images/generated/reception-clerk-photo.webp";
+const mainRates = rates.slice(0, 2);
+const otherRates = rates.slice(2);
+const caseCards = cases.slice(0, 5);
+const faqShown = faqs.slice(0, 6);
 
-// 危険度を全レベルで統一表記＋色に正規化（data の dangerLevel: high/highest/medium/low に対応）
-const dangerMap: Record<string, { label: string; cls: string }> = {
-  highest: { label: "攻撃性 最大", cls: "max" },
-  high: { label: "攻撃性 大", cls: "high" },
-  medium: { label: "攻撃性 中", cls: "mid" },
-  low: { label: "攻撃性 小", cls: "low" },
+// 料金カード表示用（rates.ts SSOT の上限モデルに準拠）
+const priceCards = [
+  {
+    rate: mainRates[0],
+    img: "images/bee-types/ashinagabachi.webp",
+    tone: "gold",
+    items: ["軒下・ベランダ・庭木などの一般的な巣", "高さ3m程度までの作業", "巣の撤去・処分まで対応"],
+  },
+  {
+    rate: mainRates[1],
+    img: "images/bee-types/suzumebachi.webp",
+    tone: "red",
+    items: ["屋根裏・生垣・地中などの一般的な巣", "高さ3m程度までの作業", "巣の撤去・処分まで対応"],
+  },
+];
+
+const urgentCards = [
+  { img: "images/danger/hornet-menace.webp", title: "蜂が家の周りを\n飛び回っている", note: "攻撃性が高まり危険です" },
+  { img: "images/generated/emergency-nest-eaves.webp", title: "軒下・ベランダ・庭木に\n巣を見つけた", note: "放置すると大きくなり危険" },
+  { img: "images/danger/resident-flee.webp", title: "子どもや高齢者が\n近くにいる", note: "刺されるリスクが高まります" },
+];
+
+const zeroCards = [
+  { icon: "ic-truck", label: "出張費", note: "名古屋市中区から\n最短30分で駆けつけ" },
+  { icon: "ic-doc", label: "お見積り", note: "現地での見積りは\nもちろん無料" },
+  { icon: "ic-cancel", label: "キャンセル", note: "見積り後のキャンセルも\n費用は一切かかりません" },
+];
+
+const growthSteps = [
+  { img: "images/generated/nest-growth-1.webp", w: 476, h: 590, scale: 50, term: "初期（5〜6月）", note: "女王バチが巣作りを開始" },
+  { img: "images/generated/nest-growth-2.webp", w: 620, h: 650, scale: 76, term: "中期（7〜8月）", note: "働き蜂が増え急成長" },
+  { img: "images/generated/nest-growth-3.webp", w: 664, h: 680, scale: 100, term: "後期（9〜10月）", note: "攻撃性が高まり危険！" },
+];
+
+
+// 比較表: compare.ts / vs-government.ts の記載内容に準拠（断定は当社列のみ・他社系はぼかし表現を維持）
+const compareTable = {
+  heads: ["市役所・公的機関", "大手仲介サイト", "他社業者", company.name],
+  rows: [
+    { label: "対応スピード", cells: ["相談のみ・数日〜", "受付後に手配・翌日以降", "業者により異なる", "最短30分"] },
+    { label: "出張費・見積り", cells: ["駆除は対象外が多い", "有料の場合あり", "業者により異なる", "無料"] },
+    { label: "料金のわかりやすさ", cells: ["—", "仲介手数料で不透明", "追加費用の可能性", "明朗会計・追加0円"] },
+    { label: "対応の専門性", cells: ["紹介先による", "加盟店により差", "業者により差", "蜂駆除の専門スタッフが対応"] },
+    { label: "保証", cells: ["原則なし", "業者により異なる", "業者により異なる", "1年保証"] },
+    { label: "アフターフォロー", cells: ["—", "業者により異なる", "基本的になし", "再発時も相談OK"] },
+  ],
 };
-// 料金行に添える蜂サムネ（rate.beeType 名 → bee-types 画像）
-const rateImg: Record<string, string> = {
-  "アシナガバチ": "ashinagabachi",
-  "スズメバチ": "suzumebachi",
-  "ミツバチ": "mitsubachi",
-  "オオスズメバチ": "oosuzumebachi",
-  "クマバチ・その他": "kumabachi",
-};
-const strengthsShown = strengths.slice(0, 6);
-// FAQPage 構造化データは Layout（faqsToJsonLd）が注入するため、ここでは重複させない。
+
+const aichiCities = areas[0].cities;
+const nagoyaWards = aichiCities.filter((c) => c.startsWith("名古屋市"));
+const aichiOthers = aichiCities.filter((c) => !c.startsWith("名古屋市")).slice(0, 14);
+const gifuCities = areas[1]?.cities.slice(0, 8) ?? [];
+const mieCities = areas[2]?.cities.slice(0, 6) ?? [];
 ---
 
-<Layout title={title} description={description} lcpMobileImage="images/generated/hero-action.webp">
-  <h1 class="x-sr">名古屋・愛知の蜂の巣駆除｜今日中に安全駆除・中区拠点の自社スタッフが最短30分で現場到着・標準ケース上限つき（アシナガ19,800円・スズメ29,800円）・追加0円の明朗会計・受付は電話7時〜21時／LINE24時間 {company.phoneDisplay}</h1>
+<Layout
+  title={title}
+  description={description}
+  lcpMobileImage={heroImage}
+  lcpDesktopImage={heroImage}
+>
+  <h1 class="sr-only">名古屋・愛知の蜂の巣駆除なら最短30分。上限つき明朗会計・追加0円・1年保証の{company.name}</h1>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
-    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/></symbol>
-    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 L9.5 18 L20 6"/></symbol>
+    <symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3l2 5-2.4 1.8c1.2 2.4 3 4.2 5.6 5.6L15 14l5 2v3c0 1.1-.9 2-2 2C10.3 21 4 14.7 4 7c0-1.1.9-2 1-3Z"/></symbol>
+    <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6"/></symbol>
+    <symbol id="ic-line" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.1 8.1 7.8.3.1.7.2.8.5.1.3.1.6 0 .9l-.1.8c0 .3.2.5.5.4 3.2-1.4 5.9-3.2 7.8-5.4 1.8-1.7 2.9-3.5 2.9-5C22 6.6 17.5 3 12 3Z"/></symbol>
+    <symbol id="ic-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2.5"/></symbol>
+    <symbol id="ic-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 5.8v5.4c0 4.4 3 8.1 7 9.8 4-1.7 7-5.4 7-9.8V5.8L12 3Z"/><path d="m8.8 12 2.3 2.4L15.4 10"/></symbol>
+    <symbol id="ic-yen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 4l5 7 5-7M12 11v9M8 13.5h8M8 17h8"/></symbol>
+    <symbol id="ic-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h11v9H2zM13 10h4l3 3v3h-7z"/><circle cx="6.5" cy="17.5" r="1.7"/><circle cx="16.5" cy="17.5" r="1.7"/></symbol>
+    <symbol id="ic-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></symbol>
+    <symbol id="ic-cancel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 8.5 7 7M15.5 8.5l-7 7"/></symbol>
+    <symbol id="ic-thumb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11v9H4v-9zM7 11l4-7c1.3 0 2.2 1 2.2 2.2L12.6 10H19c1 0 1.8.9 1.6 1.9l-1.2 6.4c-.2 1-1 1.7-2 1.7H7"/></symbol>
+    <symbol id="ic-warn" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 1.5 21h21L12 2Zm1 14.5h-2V18h2v-1.5Zm0-7h-2V15h2V9.5Z"/></symbol>
+    <symbol id="ic-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
   </svg>
 
-  <!-- HERO＋本文を1枚のカードに（PCで中央に浮かせる／モバイルは無スタイル＝不変） -->
-  <main class="lp-card">
-  <!-- ===== HERO（焼込みチラシを実HTMLで99%再現／2:3固定キャンバス・%絶対配置） ===== -->
-  <div class="xhero">
-    <!-- L8 実写真（原画から切出し・背面） -->
-    <img class="xh-photo" src={assetPath("images/generated/hero-action.webp")} width="900" height="600"
-      alt="防護服のプロが専用の道具でスズメバチの巣を駆除する様子" loading="eager" decoding="async" fetchpriority="high" />
-
-    <!-- L1 上部赤バー -->
-    <div class="xh-bar" aria-hidden="true">名古屋・愛知全域対応｜中区拠点から<b>最短30分</b></div>
-
-    <!-- L2 ブランド帯 -->
-    <div class="xh-brand">
-      <img class="xh-logo" src={assetPath("images/generated/hero-bee-logo.webp")} width="132" height="120" alt="" aria-hidden="true" />
-      <span class="xh-btext"><b class="xh-bname">{company.name}</b><small class="xh-btag">蜂の巣駆除のプロ集団</small></span>
-      <a class="xh-headtel" href={company.phoneTelLink} data-cta="header_tel">
-        <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
-        <span class="xh-headtel-tx"><b class="font-num">{company.phoneDisplay}</b><small>受付7時〜21時</small></span>
-      </a>
-    </div>
-
-    <!-- L3 赤リボンバナー -->
-    <div class="xh-banner" aria-hidden="true"><span><em>そのまま放置</em><i>すると</i><b>危険！</b></span></div>
-
-    <!-- L4/L5 見出し -->
-    <p class="xh-h1" aria-hidden="true">蜂の巣駆除</p>
-    <p class="xh-h2" aria-hidden="true">来るのは中区の自社スタッフ</p>
-
-    <!-- L6 価格行 -->
-    <p class="xh-price" aria-hidden="true">
-      <span class="xhp-cell"><small>最短</small><b class="xhp-num">30</b><small>分</small></span>
-      <span class="xhp-div"></span>
-      <span class="xhp-cell"><small>追加</small><b class="xhp-num">0</b><small>円</small></span>
-    </p>
-
-    <!-- L7 電話CTA帯 -->
-    <a class="xh-cta" href={company.phoneTelLink} data-cta="hero_tel">
-      <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
-      <span class="xh-cta-tx">
-        <small class="xh-cta-top">＼その場でお断りOK・相談だけでも／</small>
-        <b class="xh-cta-num font-num">{company.phoneDisplay}</b>
-        <small class="xh-cta-bot">通話無料・受付7時〜21時</small>
-      </span>
-    </a>
-    <!-- 緑ドット「ただ今受付中」 -->
-    <span class="xh-now" aria-hidden="true"><i class="xh-now-dot"></i><span class="xh-now-tx">ただ今受付中</span></span>
-    <p class="xh-proof" aria-hidden="true">委託なし・自社施工・所在地公開｜多くはその日のうちに解決</p>
-
-    <!-- L9 信頼4列 -->
-    <ul class="xh-trust" aria-hidden="true">
-      <li>
-        <svg viewBox="0 0 24 24" class="xht-ic"><circle cx="12" cy="13" r="8"/><path d="M12 13 V9 M12 13 l3 2 M9 3 h6"/></svg>
-        <span><small>最短</small><b>30<em>分</em></b><small>で現場到着</small></span>
-      </li>
-      <li>
-        <svg viewBox="0 0 24 24" class="xht-ic xht-fill"><path d="M12 2 L20 5 V11 C20 16 16 20 12 22 C8 20 4 16 4 11 V5 Z"/><path class="xht-chk" d="M8.5 12 l2.5 2.5 L16 9"/></svg>
-        <span><small>安心の</small><b>1<em>年</em></b><small>保証</small></span>
-      </li>
-      <li>
-        <svg viewBox="0 0 24 24" class="xht-ic"><circle cx="12" cy="12" r="9"/><text x="12" y="15.5" class="xht-y0">¥0</text></svg>
-        <span><small>見積後</small><b>追加0<em>円</em></b><small>明朗会計</small></span>
-      </li>
-      <li>
-        <svg viewBox="0 0 24 24" class="xht-ic xht-fill"><path d="M4 11 L12 4 L20 11 V21 H4 Z"/></svg>
-        <span><small>中区拠点</small><b>自社</b><small>直接施工</small></span>
-      </li>
-    </ul>
-  </div>
-
-  <!-- ===== PC専用ヒーロー（≥900pxで表示・チラシを実HTMLで再現／16:9固定キャンバス・%絶対配置） ===== -->
-  <section class="xhero-pc" aria-label="蜂の巣駆除 即日スピード解決｜最短30分・上限つき明朗会計">
-    <div class="xpc">
-      <!-- 背景：スタッフ＋空（文字なしクリーン下地・原画相当） -->
-      <img class="xpc-bg" src={assetPath("images/generated/hero-pc-bg.webp")} width="1376" height="768"
-        alt="蜂の巣駆除に対応する防護服のプロスタッフ2名" loading="eager" decoding="async" fetchpriority="high" />
-
-      <!-- 上部白バー -->
-      <div class="xpc-bar" aria-hidden="true">
-        <span class="xpc-bar-sub">名古屋・愛知全域対応｜受付 7時〜21時・最短30分で出動</span>
-        <span class="xpc-bar-brand"><img class="xpc-bar-logo" src={assetPath("images/generated/hero-bee-logo.webp")} width="132" height="120" alt="" />{company.name}</span>
-      </div>
-
-      <!-- リボン -->
-      <div class="xpc-ribbon" aria-hidden="true"><span>【高額請求なし・自社施工で即日対応】</span></div>
-
-      <!-- 見出し -->
-      <p class="xpc-h1" aria-hidden="true"><span class="xpc-h1-box">蜂の巣</span><span class="xpc-h1-out">駆除</span></p>
-      <p class="xpc-h2" aria-hidden="true">来るのは中区の自社スタッフ</p>
-
-      <!-- チェック -->
-      <ul class="xpc-checks" aria-hidden="true">
-        <li><svg viewBox="0 0 24 24" class="xpc-chk"><path d="M4 12.5 L9.5 18 L20 6"/></svg>名古屋市中区の自社スタッフが対応</li>
-        <li><svg viewBox="0 0 24 24" class="xpc-chk"><path d="M4 12.5 L9.5 18 L20 6"/></svg>作業前に総額を確定・追加請求なし</li>
-      </ul>
-
-      <!-- 最短30分 -->
-      <div class="xpc-min" aria-hidden="true">
-        <svg viewBox="0 0 24 24" class="xpc-min-ic"><circle cx="12" cy="13" r="8"/><path d="M12 13 V9 M12 13 l3 2 M9 3 h6"/></svg>
-        最短<b>30分</b>で到着
-      </div>
-
-      <!-- 丸バッジ3つ -->
-      <ul class="xpc-seals" aria-hidden="true">
-        <li><b>即日</b><b>対応</b></li>
-        <li><b>1年</b><b>保証</b></li>
-        <li><small>相談・</small><small>調査・見積</small><b>無料</b></li>
-      </ul>
-
-      <!-- 価格バブル -->
-      <div class="xpc-price" aria-hidden="true">
-        <span class="xpc-price-1"><b>標準ケース上限</b><i>青天井なし</i></span>
-        <span class="xpc-price-2">アシナガ<b>19,800円</b> / スズメ<b>29,800円</b></span>
-      </div>
-
-      <!-- 電話CTA -->
-      <a class="xpc-tel" href={company.phoneTelLink} data-cta="hero_tel">
-        <svg class="xic" aria-hidden="true"><use href="#i-phone" /></svg>
-        <span class="xpc-tel-tx"><b class="font-num">{company.phoneDisplay}</b><small>今すぐお電話ください</small></span>
-      </a>
-
-      <!-- LINE -->
-      <a class="xpc-line" href={company.lineUrl} data-cta="hero_line" target="_blank" rel="noopener">
-        <span class="xpc-line-badge">LINE</span>写真を送るだけで無料見積
-      </a>
-    </div>
-  </section>
-
-  <!-- ===== 下半分（実HTML / 実データ / ヒーロー基調） ===== -->
-  <div class="xb">
-
-    <!-- 安心のお約束バー（広告v2のリスクリバーサルを本文冒頭で回収） -->
-    <div class="xb-assure" aria-label="安心のお約束">
-      <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>見積・出張・キャンセル 0円</span>
-      <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>お断りでも費用は一切なし</span>
-      <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>その場契約は迫りません</span>
-      <span><svg class="xb-assure-ic"><use href="#i-check" /></svg>名古屋市中区丸の内3丁目6-11の自社拠点</span>
-    </div>
-    <!-- 誰が来るかの即答（不安解除の最上段・非タップの信頼ストリップ） -->
-    <div class="xb-staffline">
-      <img class="xb-staffline-ph" src={assetPath("images/staff/takimoto.webp")} width="640" height="640"
-        alt="専用防護服を着用した現場スタッフの瀧本" loading="lazy" decoding="async" />
-      <span class="xb-staffline-tx">
-        <b>伺うのは、この自社スタッフです</b>
-        <small>瀧本（蜂駆除歴5年）｜委託業者は使いません</small>
-        <small>拠点: 名古屋市中区丸の内3丁目6-11</small>
-      </span>
-    </div>
-    <style>
-      .xb-staffline{display:flex;align-items:center;gap:12px;margin:10px auto 0;max-width:520px;padding:10px 12px;background:#fff;border:1px solid #eadfce;border-radius:12px;box-shadow:0 2px 8px rgba(40,24,8,.05)}
-      .xb-staffline{margin-left:16px;margin-right:16px}
-      @media(min-width:552px){.xb-staffline{margin-left:auto;margin-right:auto}}
-      .xb-staffline-ph{width:56px;height:56px;border-radius:10px;object-fit:cover;flex:none}
-      .xb-staffline-tx{display:flex;flex-direction:column;min-width:0}
-      .xb-staffline-tx b{font-size:.86rem;font-weight:900;color:#2a2118;line-height:1.4}
-      .xb-staffline-tx small{font-size:.72rem;font-weight:700;color:#8a7c66;line-height:1.5;margin-top:2px}
-      @media(min-width:900px){.xb-staffline{max-width:820px}.xb-staffline-tx b{font-size:.95rem}}
-      .xb-assure{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 auto;max-width:520px;padding:12px 16px 0}
-      .xb-assure span{display:flex;align-items:center;gap:6px;min-height:42px;background:#fff;border:1px solid #eadfce;border-radius:10px;padding:8px 10px;font-size:.76rem;line-height:1.35;font-weight:900;color:#3a2c17;box-shadow:0 2px 8px rgba(40,24,8,.05)}
-      .xb-assure-ic{width:1.05em;height:1.05em;color:#0a7d28;flex:none}
-      @media(min-width:900px){.xb-assure{max-width:820px;padding-top:20px;gap:9px 22px}.xb-assure span{font-size:.86rem}}
-    </style>
-
-    <!-- 放置の危険（問題提起） -->
-    <section class="xb-sec xb-sec-tint" id="danger" aria-labelledby="s-danger">
-      <h2 class="xb-h" id="s-danger"><span>その蜂、放置は危険です</span></h2>
-      <p class="xb-lead">スズメバチは巣に近づくだけで突然襲ってくることがあり、日本では毎年<b>15〜21人</b>が蜂刺されで亡くなっています（厚労省人口動態統計）。<b>見つけても近づかず、すぐにご相談ください。</b></p>
-      <div class="xdanger-grid">
-        <figure class="xb-card xdanger">
-          <img src={assetPath("images/danger/hornet-menace.webp")} width="1200" height="1200"
-            alt="今にも襲いかかるスズメバチ（イメージ）" loading="lazy" decoding="async" />
-          <figcaption class="xdanger-cap">刺激しなくても、巣に近づくだけで攻撃してくることがあります。</figcaption>
-        </figure>
-        <figure class="xb-card xdanger">
-          <img src={assetPath("images/danger/resident-flee.webp")} width="1200" height="1200"
-            alt="蜂に驚いて逃げる住人（イメージ）" loading="lazy" decoding="async" />
-          <figcaption class="xdanger-cap">巣が大きくなる前の早期対応が、いちばん安全で確実です。</figcaption>
-        </figure>
-      </div>
-      <p class="xb-note">※ 写真はイメージです。</p>
-    </section>
-
-    <!-- 緊急の資格化：今すぐ電話すべき状況（高単価・緊急客を承認し電話へ誘導） -->
-    <section class="xb-sec" id="urgent" aria-labelledby="s-urgent">
-      <h2 class="xb-h" id="s-urgent"><span>こんな状況は、今すぐお電話を</span></h2>
-      <ul class="xtrouble">
-        <li><a href={company.phoneTelLink} data-cta="trouble_dial">蜂に刺された・刺されそうで家族が外に出られない</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_dial">玄関・ベランダなど毎日通る場所に巣がある</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_dial">小さな子ども・お年寄り・ペットがいて危険</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_dial">スズメバチが家のまわりを何匹も飛んでいる</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_dial">とにかく今日中に、この巣をなくしたい</a></li>
-      </ul>
-      <p class="xb-note xtrouble-cta">ひとつでも当てはまる方は、迷わず<b>お電話ください</b>。最短30分で、プロが駆けつけます。</p>
-    </section>
-
-    <!-- こんなお悩み（共感） -->
-    <section class="xb-sec" id="trouble" aria-labelledby="s-trouble">
-      <h2 class="xb-h" id="s-trouble"><span>こんなお悩みありませんか？</span></h2>
-      <ul class="xtrouble">
-        <li><a href={company.phoneTelLink} data-cta="trouble_dial">家の周りで蜂をよく見かける</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_dial">軒下・ベランダに巣ができている</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_dial">屋根裏や壁の中から羽音がする</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_dial">市販スプレーで駆除したが減らない</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_dial">去年駆除したのに今年もまた出た</a></li>
-        <li><a href={company.phoneTelLink} data-cta="trouble_dial">小さな子ども・ペットがいて不安</a></li>
-      </ul>
-      <p class="xb-note xtrouble-cta">ひとつでも当てはまれば、無理せず<b>プロにご相談を</b>。最短30分で駆けつけます。</p>
-    </section>
-
-    <!-- 料金 -->
-    <span id="pricing" class="x-anchor" aria-hidden="true"></span>
-    <section class="xb-sec" id="price" aria-labelledby="s-rate">
-      <h2 class="xb-h" id="s-rate"><span>蜂の巣駆除 料金のご案内</span></h2>
-      <p class="xb-lead"><b>お会計は、事前にお伝えする上限額まで（標準ケース）。確定後の追加請求は0円です。</b>上限の対象外となる特殊なケースは、お電話の概算時に必ず先にご案内します。出張費・見積り・キャンセルは<b>0円</b>です。</p>
-      <details class="ng-souba">
-        <summary>名古屋の相場と比べる</summary>
-        <p>名古屋の相場はアシナガバチ<b>8,000〜20,000円</b>・スズメバチ<b>15,000〜30,000円</b>が中心です（各社の公開料金・当社調べ）。当社は<b>標準ケースの上限をはっきり決めて青天井にせず、多くのケースは上限より安く収まります</b>。ご予算のご相談も承ります。</p>
-      </details>
-
-      <div class="ng-rate2">
-        <a class="ng-rate2-row" href={assetPath("ashinagabachi/")} data-cta="rate_ashinaga_link">
-          <span class="ng-rate2-name"><img class="ng-rate2-thumb" src={assetPath("images/bee-types/ashinagabachi.webp")} width="64" height="40" alt="アシナガバチ" loading="lazy" decoding="async" /><span class="ng-rate2-txt">アシナガバチ<small>ご相談が最も多い蜂／軒下・ベランダ</small></span></span>
-          <span class="ng-rate2-price"><small>標準ケースは</small><b>19,800円<i>まで</i></b></span>
-          <span class="ng-rate2-cap">青天井なし</span>
+  <main class="plp">
+    <!-- ============ ヘッダー ============ -->
+    <header class="plp-head">
+      <div class="plp-head__in">
+        <a class="plp-brand" href={assetPath("")} aria-label={company.name}>
+          <img src={assetPath("images/generated/hero-bee-logo.webp")} width="132" height="120" alt="" aria-hidden="true" />
+          <span><b>蜂の巣駆除<br class="plp-brand__br" />ファクトリー東海</b><small>名古屋・愛知の蜂の巣駆除専門</small></span>
         </a>
-        <a class="ng-rate2-row" href={assetPath("suzumebachi/")} data-cta="rate_suzume_link">
-          <span class="ng-rate2-name"><img class="ng-rate2-thumb" src={assetPath("images/bee-types/suzumebachi.webp")} width="64" height="40" alt="スズメバチ" loading="lazy" decoding="async" /><span class="ng-rate2-txt">スズメバチ<small>危険・早めの対応を／屋根裏・軒下</small></span></span>
-          <span class="ng-rate2-price"><small>標準ケースは</small><b>29,800円<i>まで</i></b></span>
-          <span class="ng-rate2-cap">青天井なし</span>
-        </a>
-        <div class="ng-rate2-row ng-rate2-other">
-          <span class="ng-rate2-name"><span class="ng-rate2-thumb ng-rate2-thumb-none" aria-hidden="true"></span><span class="ng-rate2-txt">その他の蜂<small>ミツバチ・オオスズメバチ・クマバチ 等</small></span></span>
-          <span class="ng-rate2-price"><b>現地見積</b></span>
-          <span class="ng-rate2-cap">対応可</span>
+        <div class="plp-head__mid">
+          <p class="plp-head__area">名古屋市中区拠点！愛知・岐阜南部・三重北部 対応</p>
+          <p class="plp-head__tel"><svg><use href="#ic-phone" /></svg>お電話1本で最短30分で駆けつけ！<span>受付 {company.phoneHours} 年中無休</span></p>
         </div>
-      </div>
-
-      <p class="ng-within"><b>軒下・ベランダ・室外機・一般的な（手の届く）屋根裏の巣は、大きくなっても上限の範囲内です。</b>上限を超えるのは〈点検口から届かない屋根裏の奥・壁内の解体・高所作業車が必要・別建物や複数箇所の施工〉など特殊なケースだけで、必ずお電話の概算時に先にお伝えします。</p>
-
-      <div class="ng-incl">
-        <div class="ng-incl-col ng-incl-in">
-          <b class="ng-incl-h">この料金に含まれるもの</b>
-          <ul>
-            <li>出張費・見積り・キャンセル 0円</li>
-            <li>蜂の駆除・巣の完全撤去</li>
-            <li>戻り蜂対策・巣跡の処理・侵入口の封鎖</li>
-            <li>1年再発保証（同じ場所への再営巣に無償で再訪問）</li>
-          </ul>
-        </div>
-        <div class="ng-incl-col ng-incl-add">
-          <b class="ng-incl-h">現場によって加算されるもの</b>
-          <ul>
-            <li>巣の大きさ（10cm未満は基本のみ／育つほど加算）</li>
-            <li>高さ・作業のしにくさ（脚立を要する高所・2階の軒下・室外機まわり など）</li>
-            <li>殺菌・消毒の程度</li>
-            <li>再発防止剤（追加の薬剤）</li>
-          </ul>
-        </div>
-      </div>
-
-      <p class="xb-note"><b>お電話で概算 → 現地で総額を確定 → ご納得のうえで作業。確定後の追加請求はありません。</b>一般的な軒下・ベランダ・屋根裏の巣や戻り蜂の対応は上限の範囲内です。上限の対象外になるのは〈点検口から届かない屋根裏の奥・壁内の解体・高所作業車が必要・別建物や別箇所の複数施工〉などの特殊なケースのみで、その場合はお電話の概算時に先にお伝えします。オオスズメバチの土中・樹洞・難所は上限外・現地見積です。</p>
-      <p class="xb-note xb-principle">早く呼ぶほど費用を抑えられます。巣は育つほど駆除費も危険も上がるため、小さいうちの早めのご相談が、安く・安全に終わります。<a href={assetPath("ashinagabachi/")}>アシナガバチ</a>・<a href={assetPath("suzumebachi/")}>スズメバチ</a>の専用ページに、巣の大きさ→料金の目安図があります。</p>
-      <p class="xb-coupon"><b class="xb-coupon-tag">電話割</b><span>このページをご覧の方が<b>お電話でお申込み</b>いただくと、<b class="xb-coupon-off">現地で確定したお見積り金額から10%OFF</b>（上限額からの割引ではありません）。ご予約時に「ホームページを見た」とお伝えください。</span></p>
-      <p class="xpay">お支払い：<b>現金・クレジットカード・PayPay・銀行振込・後払い</b> に対応</p>
-      <style>
-        .ng-rate2{border:1px solid #eadfce;border-radius:14px;overflow:hidden;background:#fff;margin:4px 0 0;box-shadow:0 2px 10px rgba(60,40,10,.06)}
-        .ng-rate2-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid #f0e8da;text-decoration:none;color:inherit}
-        .ng-rate2-row:last-child{border-bottom:none}
-        .ng-rate2-row:active{background:#fff6f5}
-        .ng-rate2-name{font-weight:900;font-size:14.5px;color:#2a2118;display:flex;flex-direction:row;align-items:center;gap:11px;min-width:0}
-        .ng-rate2-txt{display:flex;flex-direction:column;min-width:0;white-space:nowrap}
-        .ng-rate2-thumb{width:64px;height:40px;border-radius:8px;object-fit:cover;object-position:center;flex:none;border:1px solid #eadfce;background:#f6f1e7}
-        .ng-rate2-thumb-none{border-color:transparent;background:transparent}
-        .ng-rate2-name small{font-size:11.5px;font-weight:700;color:#8a7c66;margin-top:2px;white-space:normal}
-        .ng-rate2-price{text-align:right;white-space:nowrap;line-height:1.15}
-        .ng-rate2-price small{display:block;font-size:10.5px;color:#8a7c66;font-weight:700}
-        .ng-rate2-price b{font-size:20px;font-weight:900;color:#c8321f;font-variant-numeric:tabular-nums}
-        .ng-rate2-cap{font-size:11px;font-weight:800;color:#2f8f52;background:#eaf6ee;border-radius:999px;padding:4px 10px;white-space:nowrap}
-        .ng-rate2-other .ng-rate2-cap{color:#8a6d3b;background:#f6f1e7}
-        .ng-rate2-price b i{font-size:12px;font-weight:800;font-style:normal;color:#8a6d3b;margin-left:1px}
-        .ng-souba{margin:8px 0 10px;border:1px solid #eadfce;border-radius:11px;background:#fff}
-        .ng-souba summary{cursor:pointer;padding:10px 14px;font-size:13px;font-weight:800;color:#8a6d3b;list-style-position:inside}
-        .ng-souba[open] summary{border-bottom:1px solid #f0e8da}
-        .ng-souba p{margin:0;padding:10px 14px;font-size:13px;line-height:1.72;color:#4a3f2e}
-        .ng-within{margin:10px 0 0;padding:11px 14px;background:#eaf6ee;border:1px solid #cfe9d8;border-radius:11px;font-size:13px;line-height:1.72;color:#2a2118}
-        .ng-within b{color:#2f7d4f}
-        .ng-incl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 0}
-        .ng-incl-col{border:1px solid #eadfce;border-radius:12px;padding:12px 14px;background:#fff}
-        .ng-incl-in{border-left:4px solid #2f8f52}.ng-incl-add{border-left:4px solid #d98a1a}
-        .ng-incl-h{display:block;font-size:12.5px;font-weight:900;margin-bottom:7px}
-        .ng-incl-in .ng-incl-h{color:#2f8f52}.ng-incl-add .ng-incl-h{color:#c07a12}
-        .ng-incl-col ul{margin:0;padding:0;list-style:none}
-        .ng-incl-col li{font-size:12.5px;color:#4a3f2e;line-height:1.6;margin:4px 0;padding-left:16px;position:relative}
-        .ng-incl-in li::before{content:"✓";position:absolute;left:0;color:#2f8f52;font-weight:900}
-        .ng-incl-add li::before{content:"＋";position:absolute;left:0;color:#c07a12;font-weight:900}
-        .xb-principle{background:#fffdf8;border:1px solid #eadfce;border-left:4px solid #c8321f;border-radius:10px;padding:11px 14px;font-weight:700}
-        .xb-principle a{color:#c4150c;font-weight:800}
-        @media(max-width:520px){.ng-incl{grid-template-columns:1fr}}
-        @media(max-width:400px){.ng-rate2-row{grid-template-columns:1fr auto;row-gap:4px}.ng-rate2-cap{grid-column:2;justify-self:end}}
-      </style>
-    </section>
-
-    <CtaDual id="rate_cta" lead="この料金で即日対応。今すぐご相談ください" />
-
-    <section class="xb-sec xb-sec-calm xb-quickfaq" aria-labelledby="s-quickfaq">
-      <h2 class="xb-h" id="s-quickfaq"><span>迷う前に、先に答えます</span></h2>
-      <div class="xqf-grid">
-        <details class="xb-card xqf-item" open>
-          <summary>本当に今日来られますか？</summary>
-          <p>受付時間内なら最短30分で出動します。名古屋市内・愛知県内は当日対応を優先し、難しい場合は電話で到着目安を先にお伝えします。</p>
-        </details>
-        <details class="xb-card xqf-item">
-          <summary>市役所なら無料ですか？</summary>
-          <p>多くの自治体は業者紹介や防護服貸出が中心で、駆除作業は自己負担です。危険な場所・今日中の撤去は専門業者への相談が現実的です。</p>
-        </details>
-        <details class="xb-card xqf-item">
-          <summary>見積後に高くなりませんか？</summary>
-          <p>作業前に総額を確定し、ご納得後に着手します。確定後の追加請求はありません。お断りの場合も見積・出張・キャンセルは0円です。</p>
-        </details>
-      </div>
-    </section>
-
-    <!-- 仲介を挟まない自社直接＝適正価格・明朗会計（信頼） -->
-    <section class="xb-sec xb-sec-tint" id="vs-quote" aria-labelledby="s-vsquote">
-      <h2 class="xb-h" id="s-vsquote"><span>あとから増えない、<b class="xvs-off">明朗会計</b></span></h2>
-      <p class="xb-lead">紹介サイトや仲介業者を通すと、<b>仲介手数料</b>が上乗せされます。当社は受付から駆除まで<b>すべて自社で完結</b>。だから余分な費用がのらない<b>適正価格</b>で、料金もわかりやすい。</p>
-      <div class="xvs">
-        <div class="xvs-card xvs-other">
-          <span class="xvs-tag">紹介サイト・仲介経由</span>
-          <p class="xvs-pt">受付会社 → 仲介手数料 → 下請け<br /><b>誰が来るか直前までわからない</b></p>
-        </div>
-        <div class="xvs-card xvs-ours">
-          <span class="xvs-tag xvs-tag-on">当社（自社施工）</span>
-          <p class="xvs-pt">受付も駆除も<b>自社のスタッフが対応</b><br /><b>仲介手数料 0円</b></p>
-        </div>
-      </div>
-      <p class="xvs-lead2"><b>現地で確定したお見積りの範囲内で作業します。</b><br />ご納得いただいてから着手し、作業後に金額が増えることは一切ありません。</p>
-      <CtaDual id="vsquote_cta" lead="料金のご相談・ご質問も、お気軽にどうぞ" />
-      <p class="xb-note">※ 料金は蜂の種類・巣の大きさ・場所により変動します。現地調査のうえ確定金額をお伝えし、ご納得後に作業いたします。</p>
-    </section>
-
-    <!-- 地元の実在企業（差別化＝名古屋拠点・自社直接） -->
-    <section class="xb-sec" id="local" aria-labelledby="s-local">
-      <h2 class="xb-h" id="s-local"><span>名古屋の地元会社が、自社で直接うかがいます</span></h2>
-      <p class="xb-lead">「全国対応」をうたう紹介サイトの多くは、受付だけで実作業は地域の下請けに手配します。当社は<b>名古屋市中区に拠点を置く実在の会社</b>が、受付から駆除・保証まで<b>自社で一貫対応</b>。仲介を挟まない自社直接だから<b>速く・適正価格</b>でうかがえます。</p>
-      <ul class="xlocal-badges" aria-label="地元・自社対応の特長">
-        <li><img class="xlb-ic" src={assetPath("images/icons/badge-pin.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />{company.address.city}に拠点</li>
-        <li><img class="xlb-ic" src={assetPath("images/icons/badge-wrench.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />自社施工で直接対応</li>
-        <li><img class="xlb-ic" src={assetPath("images/icons/badge-clock.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />最短{company.fastestArrival}で出動</li>
-        <li><img class="xlb-ic" src={assetPath("images/icons/badge-coin.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />仲介手数料0円</li>
-        <li><img class="xlb-ic" src={assetPath("images/icons/badge-shield.webp")} width="256" height="256" alt="" aria-hidden="true" loading="lazy" decoding="async" />受付〜駆除〜1年保証まで自社完結</li>
-      </ul>
-      <StaffCard />
-      <LocationCard />
-      <p class="xb-note xlocal-note">運営会社・代表者などの会社概要は<a href={assetPath("privacy-policy/")}>会社情報ページ</a>に記載しています。</p>
-    </section>
-
-    <!-- 選ばれる理由 -->
-    <section class="xb-sec xb-sec-tint" id="scam-warning" aria-labelledby="s-why">
-      <h2 class="xb-h" id="s-why"><span>選ばれる理由</span></h2>
-      <div class="xb-why">
-        {strengthsShown.map((s) => (
-          <div class="xb-card xb-why-card">
-            <span class="xb-num">{s.num}</span>
-            <div class="xb-why-body">
-              <h3 set:html={s.title}></h3>
-              <p>{s.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- 安心の3つのお約束 -->
-    <section class="xb-sec" id="promise" aria-labelledby="s-promise">
-      <h2 class="xb-h" id="s-promise"><span>安心の3つのお約束</span></h2>
-      <div class="xpromise">
-        {promiseCards.map((p) => (
-          <div class="xb-card xpromise-card">
-            <span class="xpromise-ic" aria-hidden="true">✓</span>
-            <div class="xpromise-body">
-              <h3>{p.label}</h3>
-              <p>{p.body}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- 施工事例（社会的証明を上45%へ前倒し） -->
-    <section class="xb-sec xb-sec-tint" id="cases" aria-labelledby="s-case">
-      <h2 class="xb-h" id="s-case"><span>対応事例</span></h2>
-      <div class="xb-cases">
-        {casesShown.map((c) => (
-          <div class="xb-card xb-case-card">
-            <a class="xcard-tel" href={company.phoneTelLink} data-cta="case_dial" aria-label={`${c.area}の${c.beeType}駆除を電話で相談`}></a>
-            <img src={assetPath(`images/cases/${c.imageBase}.webp`)} width="320" height="220"
-              alt={`${c.area} ${c.title}`} loading="lazy" decoding="async" />
-            <div class="xb-case-body">
-              <div class="xb-case-tags"><span class="xb-tag">{c.beeType}</span><span class="xb-tag">{c.area}</span><span class="xb-tag">{c.location}</span></div>
-              <h3>{c.title}</h3>
-              <p class="xb-case-status"><span class="xb-case-check">✓</span>実際の対応写真・現地確認で対応</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      <p class="xb-note">※ 写真は実際の蜂駆除現場のものです。個人情報・所在地が特定されないよう、掲載用にトリミング・明るさ調整を行っています。</p>
-    </section>
-
-    <!-- お客様の声（社会的証明を上45%へ前倒し） -->
-    <section class="xb-sec" aria-labelledby="s-voice">
-      <h2 class="xb-h" id="s-voice"><span>自社調べ：ご相談前の不安と解消例</span></h2>
-      <div class="xb-voices">
-        {voices.map((v) => (
-          <a class="xb-card xb-voice-card" href="#proof_cta" data-cta="lp_voice_scroll" aria-label="ご相談前の不安と解消例を読んで無料相談する">
-            <div class="xb-voice-head">
-              <span class="xb-avatar">{v.initial}</span>
-              <span class="xb-voice-meta">{v.area}・{v.ageBracket}<small>{v.service}</small></span>
-              <span class="xb-voice-label">自社調べ</span>
-            </div>
-            <p>{v.comment}</p>
+        <nav class="plp-head__cta" aria-label="お問い合わせ">
+          <a class="plp-hbtn plp-hbtn--tel" href={company.phoneTelLink} data-cta="header_tel">
+            <svg><use href="#ic-phone" /></svg>
+            <span class="plp-hbtn__pc">今すぐ電話する</span>
+            <span class="plp-hbtn__sp"><b>{company.phoneDisplay}</b><small>受付 {company.phoneHours} 年中無休</small></span>
           </a>
-        ))}
+          <a class="plp-hbtn plp-hbtn--line" href={company.lineUrl} data-cta="header_line" target="_blank" rel="noopener">
+            <svg><use href="#ic-line" /></svg><span class="plp-hbtn__pc">LINEで写真相談<small>写真を送るだけ</small></span>
+          </a>
+        </nav>
       </div>
-      <p class="xb-note">※ 内容は施工事例をもとにした体験イメージです。実際の口コミ・ご感想は許諾取得後に掲載します。</p>
+    </header>
+
+    <!-- ============ ヒーロー ============ -->
+    <section class="plp-hero" aria-labelledby="hero-title">
+      <p class="plp-locbar"><svg><use href="#ic-pin" /></svg><span>名古屋市中区の拠点から<b>最短30分</b>でお伺い</span><span class="plp-locbar__area">愛知・岐阜南部・三重北部 対応</span></p>
+      <div class="plp-hero__media">
+        <img src={assetPath(heroImage)} width="1376" height="768" alt="名古屋・愛知の蜂の巣駆除に対応する専門スタッフ" loading="eager" decoding="async" fetchpriority="high" />
+        <div class="plp-hero__scrim" aria-hidden="true"></div>
+        <div class="plp-hero__overlay">
+          <p class="plp-kicker">名古屋・愛知の蜂の巣駆除専門</p>
+          <h2 id="hero-title">蜂の巣を見つけたら、<br /><em>すぐお電話</em>を！</h2>
+          <ul class="plp-hero__checks">
+            <li><svg><use href="#ic-check" /></svg>作業前に総額を確定・追加請求なし</li>
+            <li><svg><use href="#ic-check" /></svg>お断りOK・相談だけでも大丈夫です</li>
+          </ul>
+        </div>
+      </div>
+      <ul class="plp-hexbadges" aria-label="選ばれる理由">
+        <li><span class="plp-hex plp-hex--red"><svg><use href="#ic-clock" /></svg><b>30分</b><small>最短で到着</small></span></li>
+        <li><span class="plp-hex plp-hex--red"><svg><use href="#ic-yen" /></svg><b>0円</b><small>追加料金なし</small></span></li>
+        <li><span class="plp-hex"><svg><use href="#ic-shield" /></svg><b>1年</b><small>安心の保証</small></span></li>
+        <li><span class="plp-hex"><svg><use href="#ic-thumb" /></svg><b>OK</b><small>相談だけでも</small></span></li>
+      </ul>
+      <div class="plp-hero__ctawrap">
+        <p class="plp-cta-lead">受付スタッフが丁寧に対応します</p>
+        <div class="plp-callrow">
+          <figure class="plp-clerk">
+            <img src={assetPath(clerkImage)} width="958" height="724" alt="" aria-hidden="true" loading="eager" decoding="async" />
+          </figure>
+          <a class="plp-call" href={company.phoneTelLink} data-cta="hero_tel">
+            <span><small>今すぐお電話ください！</small><b>{company.phoneDisplay}</b><em>受付 {company.phoneHours} 年中無休・通話無料</em></span>
+          </a>
+        </div>
+        <a class="plp-linebtn" href={company.lineUrl} data-cta="hero_line" target="_blank" rel="noopener">
+          <span class="plp-linebtn__badge"><svg><use href="#ic-line" /></svg>LINE</span>
+          <span><b>LINEで写真相談</b><small>写真を送るだけ・24時間受付</small></span>
+        </a>
+      </div>
     </section>
 
-    <CtaDual id="proof_cta" lead="自社施工・1年保証付きで安心。今すぐお気軽にご相談ください" />
-
-    <!-- 蜂の種類 -->
-    <span id="types" class="x-anchor" aria-hidden="true"></span>
-    <section class="xb-sec xb-sec-calm" id="bee-types" aria-labelledby="s-bee">
-      <h2 class="xb-h" id="s-bee"><span>対応する蜂の種類</span></h2>
-      <p class="xb-lead">ご相談で最も多いのが<b>アシナガバチ</b>、次いで<b>スズメバチ</b>です。この2種をメインに、その他の蜂も対応します。<b>種類が分からなくても</b>現地で判別から承ります。（並びはご相談の多い順です。危険度は各カードのメーターをご覧ください）</p>
-      <div class="xbee-grid">
-        {beeShown.map((b) => {
-          const d = dangerMap[b.dangerLevel] ?? dangerMap.low;
-          return (
-            <article class="xbee">
-              <a class="xcard-tel" href={company.phoneTelLink} data-cta="beetype_dial" aria-label={`${b.name}の駆除を電話で相談`}></a>
-              <div class="xbee-photo">
-                <img src={assetPath(`images/bee-types/${b.imageBase}.webp`)} width="320" height="200"
-                  alt={`${b.name}（${d.label}）`} loading="lazy" decoding="async" />
-                <span class={`xbee-badge xbee-badge-${d.cls}`}>{d.label}</span>
-              </div>
-              <div class="xbee-body">
-                <h3 class="xbee-name">{b.name}</h3>
-                <div class="xbee-meter" role="img" aria-label={`危険度 ${b.dangerBars} / 5`}>
-                  {[1,2,3,4,5].map((i) => (
-                    <i class={i <= b.dangerBars ? `on on-${d.cls}` : ""}></i>
-                  ))}
-                </div>
-                <p class="xbee-desc">{b.description}</p>
-                <dl class="xbee-meta">
-                  <div><dt>活動</dt><dd>{b.activeMonths}</dd></div>
-                  <div><dt>営巣</dt><dd>{b.nestLocation}</dd></div>
-                </dl>
+    <!-- ============ 緊急度チェック ============ -->
+    <section class="plp-sec" aria-labelledby="urgent-title">
+      <div class="plp-in">
+        <div class="plp-h">
+          <h2 id="urgent-title">こんな時はすぐにお電話ください</h2>
+          <p>すぐに駆除が必要な危険な状況です</p>
+        </div>
+        <div class="plp-urgent">
+          {urgentCards.map((c) => (
+            <article class="plp-urgent__card">
+              <img src={assetPath(c.img)} width="480" height="300" alt="" loading="lazy" decoding="async" />
+              <div>
+                <span class="plp-urgent__mark"><svg><use href="#ic-warn" /></svg></span>
+                <h3>{c.title.split("\n").map((line, i) => <>{i > 0 && <br />}{line}</>)}</h3>
+                <p>{c.note}</p>
               </div>
             </article>
-          );
-        })}
+          ))}
+        </div>
+        <a class="plp-secbtn" href={company.phoneTelLink} data-cta="urgent_tel"><svg><use href="#ic-phone" /></svg>電話で状況を伝える（相談だけでもOK）</a>
       </div>
     </section>
 
-    <!-- 蜂の巣ができやすい場所 -->
-    <section class="xb-sec xb-sec-tint xb-sec-calm" id="spots" aria-labelledby="s-spots">
-      <h2 class="xb-h" id="s-spots"><span>蜂の巣ができやすい場所</span></h2>
-      <p class="xb-lead">下記のような場所にも対応します。<b>高所・狭所・屋根裏・土の中</b>など、自力では危険な場所こそプロにお任せください。場所が分からなくても現地で調査します。</p>
-      <ul class="xspots">
-        <li>軒下</li><li>屋根裏・天井裏</li><li>ベランダ</li><li>エアコン室外機</li><li>換気口・換気扇</li><li>壁の中・戸袋</li><li>床下</li><li>庭木・生垣</li><li>物置・倉庫</li><li>土の中</li>
-      </ul>
+    <!-- ============ 0円対応 ============ -->
+    <section class="plp-sec plp-sec--cream" aria-labelledby="zero-title">
+      <div class="plp-in">
+        <div class="plp-h">
+          <h2 id="zero-title">安心の<em>0円</em>対応</h2>
+          <p>ご納得いただいてから作業します</p>
+        </div>
+        <div class="plp-zero">
+          {zeroCards.map((c) => (
+            <article>
+              <svg class="plp-zero__ic"><use href={`#${c.icon}`} /></svg>
+              <b>{c.label}</b>
+              <em>0円</em>
+              <p>{c.note.split("\n").map((line, i) => <>{i > 0 && <br />}{line}</>)}</p>
+            </article>
+          ))}
+          <article>
+            <svg class="plp-zero__ic"><use href="#ic-thumb" /></svg>
+            <b>断ってもOK</b>
+            <em class="plp-zero__ok">追加費用なし</em>
+            <p>他社と比較してから<br />ご検討いただけます</p>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <!-- 他社との比較 -->
-    <section class="xb-sec xb-sec-tint xb-sec-calm" aria-labelledby="s-cmp">
-      <h2 class="xb-h" id="s-cmp"><span>他社との違い</span></h2>
-      <div class="xb-card xb-cmp">
-        <table>
-          <thead><tr><th></th><th class="xb-cmp-us">当社</th><th>一般業者</th><th>仲介サイト</th></tr></thead>
-          <tbody>
-            {compareRows.map((row) => (
-              <tr>
-                <th scope="row">{row.label}</th>
-                <td class="xb-cmp-us"><span class={`xb-st xb-st-${row.us.state}`}>{row.us.text}</span></td>
-                <td><span class={`xb-st xb-st-${row.general.state}`}>{row.general.text}</span></td>
-                <td><span class={`xb-st xb-st-${row.intermediary.state}`}>{row.intermediary.text}</span></td>
-              </tr>
+    <!-- ============ 料金 ============ -->
+    <section class="plp-sec" id="price" aria-labelledby="price-title">
+      <div class="plp-in">
+        <div class="plp-h">
+          <h2 id="price-title">標準ケース上限価格<span class="plp-h__sub">（追加費用なし）</span></h2>
+          <p>作業前に総額を確定し、確定見積の範囲内で追加請求なく作業します</p>
+        </div>
+        <div class="plp-price">
+          {priceCards.map((card) => (
+            <article class={`plp-pcard plp-pcard--${card.tone}`}>
+              <header>{card.rate.beeType}の巣</header>
+              <div class="plp-pcard__body">
+                <img src={assetPath(card.img)} width="320" height="200" alt={card.rate.beeType} loading="lazy" decoding="async" />
+                <p><small>標準ケース上限</small><b>{card.rate.basicPrice.replace("上限", "")}</b><span>（税込）</span></p>
+              </div>
+              <ul>
+                {card.items.map((item) => <li><svg><use href="#ic-check" /></svg>{item}</li>)}
+              </ul>
+              <footer>安心の1年保証つき</footer>
+            </article>
+          ))}
+        </div>
+        <p class="plp-price__note">※蜂の大きさ・場所・状況によって上記金額以内で作業します。特殊な高所作業や大規模な巣は事前にご案内します。</p>
+        <div class="plp-ptable">
+          <table>
+            <thead><tr><th>その他の蜂</th><th>料金</th><th>作業条件</th></tr></thead>
+            <tbody>
+              {otherRates.map((rate) => (
+                <tr><th>{rate.beeType}</th><td>{rate.rangePrice}</td><td>{rate.workCondition}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 地域対応 + 運営 ============ -->
+    <section class="plp-sec plp-sec--cream" aria-labelledby="local-title">
+      <div class="plp-in plp-local">
+        <div class="plp-local__panel">
+          <h2 id="local-title">名古屋・愛知の<br />蜂の巣駆除に対応</h2>
+          <ul>
+            <li><svg><use href="#ic-check" /></svg>経験豊富な専門スタッフが対応</li>
+            <li><svg><use href="#ic-check" /></svg>名古屋市中区の拠点から出動</li>
+            <li><svg><use href="#ic-check" /></svg>受付から保証まで一貫サポート</li>
+            <li><svg><use href="#ic-check" /></svg>お断りOK・相談だけでも歓迎</li>
+          </ul>
+          <p class="plp-local__addr">運営：{company.legalName}（{company.name}）<br />〒{company.address.postal} {company.address.region}{company.address.city}{company.address.street}</p>
+        </div>
+        <div class="plp-local__photos">
+          <figure>
+            <img class="plp-local__img" src={assetPath("images/generated/service-inspect.webp")} width="1408" height="768" alt="現地調査で蜂の巣を確認するスタッフ" style="object-position:64% 32%" loading="lazy" decoding="async" />
+            <figcaption><b>無料の現地調査・見積り</b><span>作業前に総額をご提示</span></figcaption>
+          </figure>
+          <figure>
+            <img class="plp-local__img" src={assetPath("images/staff/takimoto.webp")} width="640" height="640" alt="防護装備を着用した駆除スタッフ" loading="lazy" decoding="async" />
+            <figcaption><b>防護装備で安全に駆除</b><span>危険な蜂も確実に対応</span></figcaption>
+          </figure>
+          <figure>
+            <img class="plp-local__img" src={assetPath("images/generated/service-remove.webp")} width="1408" height="768" alt="撤去した蜂の巣を処分するスタッフ" style="object-position:44% 44%" loading="lazy" decoding="async" />
+            <figcaption><b>巣の撤去・処分・清掃</b><span>再発防止までしっかり</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 施工事例 ============ -->
+    <section class="plp-sec" aria-labelledby="case-title">
+      <div class="plp-in">
+        <div class="plp-h plp-h--row">
+          <div>
+            <h2 id="case-title">施工事例</h2>
+            <p>すべて専門スタッフが対応。写真は実際の対応現場です</p>
+          </div>
+          <a class="plp-mini" href={company.phoneTelLink} data-cta="cases_tel"><svg><use href="#ic-phone" /></svg>同じ状況を電話で相談</a>
+        </div>
+        <div class="plp-cases">
+          {caseCards.map((c) => (
+            <article class="plp-case">
+              <div class="plp-case__imgwrap">
+                <span>{c.beeType}</span>
+                <img src={assetPath(`images/cases/${c.imageBase}.webp`)} width="320" height="220" alt={c.title} loading="lazy" decoding="async" />
+              </div>
+              <div class="plp-case__body">
+                <h3>{c.title}</h3>
+                <p>{c.location}</p>
+                <ul>{c.priceBreakdown.slice(1, 4).map((tag) => <li>{tag}</li>)}</ul>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 放置リスク ============ -->
+    <section class="plp-sec plp-sec--sand" aria-labelledby="danger-title">
+      <div class="plp-in plp-danger">
+        <div class="plp-danger__left">
+          <h2 id="danger-title">蜂の巣を放置するのは<br />とても危険です</h2>
+          <ul>
+            <li><svg><use href="#ic-check" /></svg>刺されるリスクが高まる</li>
+            <li><svg><use href="#ic-check" /></svg>巣はどんどん大きくなる</li>
+            <li><svg><use href="#ic-check" /></svg>蜂の数が増えて被害拡大</li>
+            <li><svg><use href="#ic-check" /></svg>お子様やペットにも危険</li>
+          </ul>
+        </div>
+        <div class="plp-growth" aria-label="巣の成長イメージ（スズメバチの例）">
+          <h3>巣の成長イメージ<span>（スズメバチの例）</span></h3>
+          <div class="plp-growth__steps">
+            {growthSteps.map((s, i) => (
+              <>
+                {i > 0 && <span class="plp-growth__arrow" aria-hidden="true">▶</span>}
+                <figure>
+                  <span class="plp-growth__nest"><img src={assetPath(s.img)} width={s.w} height={s.h} alt={`${s.term}の蜂の巣`} style={`height:${s.scale}%`} loading="lazy" decoding="async" /></span>
+                  <figcaption><b>{s.term}</b><span>{s.note}</span></figcaption>
+                </figure>
+              </>
             ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- 市役所では無料？（vs 行政） -->
-    <section class="xb-sec xb-sec-tint xb-sec-calm" id="vs-government" aria-labelledby="s-vsgov">
-      <h2 class="xb-h" id="s-vsgov"><span>市役所では無料で駆除してもらえる？</span></h2>
-      <p class="xb-lead">「市役所＝無料」と思われがちですが、<b>原則は自己負担</b>で、駆除作業そのものは行わない自治体が大半です。当社との違いをまとめました。</p>
-      <div class="xgov">
-        <div class="xgov-head"><span class="xgov-label">&nbsp;</span><span>市役所・行政</span><span class="xgov-h-us">当社</span></div>
-        {vsGovernmentRows.map((r) => (
-          <div class="xgov-row">
-            <span class="xgov-label">{r.label}</span>
-            <span class={`xgov-cell xgov-${r.government.state}`}>{r.government.text}</span>
-            <span class={`xgov-cell xgov-${r.us.state}`}>{r.us.text}</span>
           </div>
-        ))}
-      </div>
-      <div class="xgov-note">
-        <b>{subsidyNote.text}</b>
-        <ul>{subsidyNote.bullets.map((b) => (<li>{b}</li>))}</ul>
-      </div>
-    </section>
-
-    <!-- 駆除の流れ -->
-    <section class="xb-sec xb-sec-calm" aria-labelledby="s-flow">
-      <h2 class="xb-h" id="s-flow"><span>ご相談から駆除完了までの流れ</span></h2>
-      <ol class="xb-flow">
-        {flowSteps.map((st) => (
-          <li class="xb-card xb-flow-step">
-            <span class="xb-num">{st.num}</span>
-            <div><h3>{st.title}</h3><p>{st.description}</p></div>
-          </li>
-        ))}
-      </ol>
-    </section>
-
-    <!-- 戻り蜂・再発防止 -->
-    <section class="xb-sec xb-sec-calm" id="prevention" aria-labelledby="s-prevention">
-      <h2 class="xb-h" id="s-prevention"><span>戻り蜂対策・再発防止まで</span></h2>
-      <p class="xb-lead">巣を撤去しても、エサ採りに出ていた<b>戻り蜂</b>や、同じ場所への再営巣が起こることがあります。当社は撤去後に<b>忌避処理・侵入経路の対策</b>まで行い、<b>1年間の再発保証</b>をお付けします（保証条件は作業時にご説明します）。</p>
-    </section>
-
-    <!-- 対応エリア -->
-    <section class="xb-sec xb-sec-tint xb-sec-calm" id="area" aria-labelledby="s-area">
-      <h2 class="xb-h" id="s-area"><span>対応エリア</span></h2>
-      <div class="xb-areas">
-        {areas.map((a) => (
-          <div class="xb-area-block">
-            <b class="xb-area-pref">{a.prefecture}</b>
-            <div class="xb-area-cities">{a.cities.map((c) => (
-              c.startsWith("名古屋市")
-                ? <a href={assetPath("nagoya/")} data-cta="area_nagoya_link">{c}</a>
-                : <span>{c}</span>
-            ))}</div>
+        </div>
+        <aside class="plp-notouch">
+          <div class="plp-notouch__head">
+            <span class="plp-notouch__badge">
+              <svg class="plp-notouch__tri" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3.6c.63 0 1.2.34 1.52.88l8 13.86A1.75 1.75 0 0 1 20 21H4a1.75 1.75 0 0 1-1.52-2.66l8-13.86c.32-.54.89-.88 1.52-.88Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="rgba(242,179,78,.16)"/>
+                <path d="M12 9.4v4.3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+                <circle cx="12" cy="16.7" r="1.02" fill="currentColor"/>
+              </svg>危険
+            </span>
+            <span class="plp-notouch__code" aria-hidden="true">SAFETY NOTICE</span>
           </div>
-        ))}
-      </div>
-      <div class="xb-area-cta">
-        <a class="xb-area-ngy" href={assetPath("nagoya/")} data-cta="area_nagoya_link">
-          <span class="xb-area-ngy-t">名古屋市の方はこちら</span>
-          <span class="xb-area-ngy-s">16区対応・中区拠点・施工事例をまとめた名古屋専用ページへ →</span>
-        </a>
-        <p class="xb-area-note">お住まいの市町村が上にあれば対応できます。掲載のない周辺エリアもお気軽にご相談ください。</p>
-        <a class="xb-area-tel" href={company.phoneTelLink} data-cta="area_tel">
-          <span class="xb-area-tel-lab">今すぐ無料相談・見積り0円</span>
-          <span class="xb-area-tel-num">☎ {company.phoneDisplay}</span>
-          <span class="xb-area-tel-sub">受付 {company.phoneHours}・通話無料</span>
-        </a>
+          <h3>絶対に近づかないでください</h3>
+          <ul class="plp-notouch__list">
+            <li>
+              <span class="plp-notouch__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9.4" y="5.6" width="5.2" height="12.8" rx="1.6"/><path d="M6 9c-1.3 1.9-1.3 4.1 0 6"/><path d="M18 9c1.3 1.9 1.3 4.1 0 6"/><path d="M3.4 7.2c-2 3-2 6.6 0 9.6"/><path d="M20.6 7.2c2 3 2 6.6 0 9.6"/></svg></span>
+              <span class="plp-notouch__label">振動を与えない</span>
+              <span class="plp-notouch__x">✕</span>
+            </li>
+            <li>
+              <span class="plp-notouch__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.3h3.1L11 6v12l-3.9-3.3H4z"/><path d="M14.4 9.2c1.4 1.9 1.4 3.7 0 5.6"/><path d="M16.8 7.2c2.2 3 2.2 6.6 0 9.6"/></svg></span>
+              <span class="plp-notouch__label">大きな音を出さない</span>
+              <span class="plp-notouch__x">✕</span>
+            </li>
+            <li>
+              <span class="plp-notouch__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7.6" y="8.4" width="6.8" height="11.4" rx="1.5"/><path d="M9.2 8.4V6.4h3.6v2"/><path d="M11 6.4V4.8"/><circle cx="17" cy="6" r=".7" fill="currentColor" stroke="none"/><circle cx="19.2" cy="4.6" r=".7" fill="currentColor" stroke="none"/><circle cx="18.8" cy="8" r=".7" fill="currentColor" stroke="none"/></svg></span>
+              <span class="plp-notouch__label">殺虫剤をかけない</span>
+              <span class="plp-notouch__x">✕</span>
+            </li>
+            <li>
+              <span class="plp-notouch__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.1"/><path d="M5.8 19.6c.4-3.4 3-5.6 6.2-5.6s5.8 2.2 6.2 5.6"/></svg></span>
+              <span class="plp-notouch__label">自分での駆除はNG</span>
+              <span class="plp-notouch__x">✕</span>
+            </li>
+          </ul>
+          <div class="plp-notouch__specimen" aria-hidden="true">
+            <img class="plp-notouch__bee" src={assetPath("images/generated/hornet-real.webp")} width="1376" height="768" alt="" loading="lazy" decoding="async" />
+          </div>
+        </aside>
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="xb-sec xb-sec-calm" aria-labelledby="s-faq">
-      <h2 class="xb-h" id="s-faq"><span>よくあるご質問</span></h2>
-      <div class="xb-faq">
-        {faqs.map((f) => (
-          <details class="xb-card xb-faq-item">
-            <summary>{f.q}</summary>
-            <p>{f.a}</p>
-          </details>
-        ))}
+    <!-- ============ 比較 + FAQ ============ -->
+    <section class="plp-sec" aria-labelledby="compare-title">
+      <div class="plp-in plp-vs">
+        <div class="plp-vs__main">
+          <div class="plp-h plp-h--left">
+            <h2 id="compare-title">他社と比べてください！</h2>
+            <p>対応スピードと価格の透明性が違います</p>
+          </div>
+          <div class="plp-vs__scroll">
+            <table>
+              <thead>
+                <tr><th>比較項目</th>{compareTable.heads.map((h, i) => <th class={i === 3 ? "is-us" : ""}>{h}</th>)}</tr>
+              </thead>
+              <tbody>
+                {compareTable.rows.map((row) => (
+                  <tr>
+                    <th>{row.label}</th>
+                    {row.cells.map((cell, i) => <td class={i === 3 ? "is-us" : ""}>{cell}</td>)}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <aside class="plp-faq">
+          <h3>よくあるご質問</h3>
+          {faqShown.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </aside>
       </div>
     </section>
 
-    <CtaDual id="faq_cta" lead="疑問が解けたら、あとは電話一本。最短30分でプロが駆けつけます" />
-
-    <!-- 蜂の知識コラム（記事への動線） -->
-    <span id="column" class="x-anchor" aria-hidden="true"></span>
-    <section class="xb-sec xb-sec-tint xb-sec-calm" aria-labelledby="s-column">
-      <h2 class="xb-h" id="s-column"><span>蜂の知識コラム</span></h2>
-      <p class="xb-lead">料金の相場・安全な対処・蜂の見分け方を、駆除のプロが<b>やさしく解説</b>。気になるテーマからご覧ください。</p>
-      <div class="xcol-grid">
-        {columnPosts.map((p) => (
-          <a class="xcol-card" href={`/column/${p.id}/`} data-cta="lp_column_card">
-            <div class="xcol-photo">
-              <img src={assetPath(p.data.heroImage)} width="320" height="180" alt={p.data.heroAlt} loading="lazy" decoding="async" />
-              <span class="xcol-cat">{p.data.category}</span>
-            </div>
-            <div class="xcol-body">
-              <h3 class="xcol-title">{p.data.title}</h3>
-              <p class="xcol-desc">{p.data.description}</p>
-              <span class="xcol-more">詳しく読む →</span>
-            </div>
-          </a>
-        ))}
+    <!-- ============ 流れ ============ -->
+    <section class="plp-sec plp-sec--cream" aria-labelledby="flow-title">
+      <div class="plp-in">
+        <div class="plp-h">
+          <h2 id="flow-title">駆除の流れ<span class="plp-h__sub">　簡単5ステップ</span></h2>
+        </div>
+        <ol class="plp-flow">
+          {flowSteps.map((step) => (
+            <li>
+              <span>{step.num}</span>
+              <b>{step.title}</b>
+              <small>{step.description}</small>
+            </li>
+          ))}
+        </ol>
       </div>
-      <div class="xcol-all"><a href="/column/" class="xcol-allbtn" data-cta="lp_column_all">コラムをもっと見る →</a></div>
     </section>
-    <style>
-      .xcol-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:16px;margin-top:6px}
-      .xcol-card{display:flex;flex-direction:column;background:#fffdf6;border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:var(--ink);box-shadow:0 1px 0 rgba(20,12,4,.04);transition:transform .18s ease,box-shadow .18s ease}
-      .xcol-card:active{transform:translateY(1px)}
-      @media(hover:hover){.xcol-card:hover{transform:translateY(-4px);box-shadow:0 18px 34px -22px rgba(120,40,4,.5)}}
-      .xcol-photo{position:relative;aspect-ratio:16/9;background:#efe7d6}
-      .xcol-photo img{width:100%;height:100%;object-fit:cover;display:block}
-      .xcol-cat{position:absolute;left:10px;top:10px;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:4px 11px;border-radius:999px;letter-spacing:.02em;box-shadow:0 2px 8px rgba(120,10,10,.3)}
-      .xcol-body{display:flex;flex-direction:column;gap:7px;padding:13px 15px 15px;flex:1}
-      .xcol-title{font-size:1rem;font-weight:900;line-height:1.5;margin:0;color:var(--ink)}
-      .xcol-desc{font-size:.78rem;line-height:1.7;color:#6b5d4a;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-      .xcol-more{margin-top:auto;padding-top:4px;font-size:.82rem;font-weight:800;color:var(--red2)}
-      .xcol-all{text-align:center;margin-top:24px}
-      .xcol-allbtn{display:inline-block;border:2px solid var(--red);color:var(--red);font-weight:800;text-decoration:none;border-radius:999px;padding:12px 30px;font-size:.9rem;transition:background .18s,color .18s}
-      @media(hover:hover){.xcol-allbtn:hover{background:var(--red);color:#fff}}
-      /* モバイル〜タブレット：カードを横スクロール（カルーセル）。LPのモバイル版は内容幅が約480px固定でPC化は900px〜のため、900px未満すべてを対象にする。.xb section の左右padding=16pxに合わせて端までbleed */
-      @media (max-width:899px){
-        .xcol-grid{display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;
-          gap:12px;margin-inline:-16px;padding:2px 16px 14px;scroll-padding-left:16px;
-          -webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
-        .xcol-grid::-webkit-scrollbar{display:none}
-        .xcol-card{flex:0 0 80%;scroll-snap-align:start}
-      }
-    </style>
 
-    <!-- 最終CTA（電話＋LINE） -->
-    <section class="xb-cta-sec" id="contact" aria-label="お問い合わせ">
-      <p class="xb-cta-lead">まずはお気軽にご相談ください</p>
-      <div class="xb-cta-btns">
-        <a href={company.phoneTelLink} class="xb-cta-btn xb-cta-tel" data-cta="footer_tel">
-          <svg class="xic"><use href="#i-phone" /></svg>
-          <span><b class="font-num">{company.phoneDisplay}</b><small>受付7時〜21時・通話無料・タップで発信</small></span>
+    <!-- ============ 対応エリア ============ -->
+    <section class="plp-sec" aria-labelledby="area-title">
+      <div class="plp-in">
+        <div class="plp-h plp-h--left">
+          <h2 id="area-title">対応エリア</h2>
+          <p>{company.serviceArea}。{company.address.city}の拠点から最短{company.fastestArrival}で出動します。</p>
+        </div>
+        <div class="plp-area">
+          <div class="plp-area__nagoya">
+            <b>名古屋市 全16区対応</b>
+            <div>{nagoyaWards.map((c) => <span>{c.replace("名古屋市", "")}</span>)}</div>
+          </div>
+          <div class="plp-area__cols">
+            <div><b>愛知県</b><p>{aichiOthers.join("・")} ほか全域</p></div>
+            <div><b>岐阜県（南部）</b><p>{gifuCities.join("・")} など</p></div>
+            <div><b>三重県（北部）</b><p>{mieCities.join("・")} など</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ お役立ちコラム ============ -->
+    <section class="plp-sec plp-sec--cream" aria-labelledby="cols-title">
+      <div class="plp-in">
+        <div class="plp-h">
+          <h2 id="cols-title">蜂の巣駆除の<em>お役立ち情報</em></h2>
+          <p>費用相場・自分でできる対処・種類の見分け方まで、専門スタッフが解説</p>
+        </div>
+        <ul class="plp-cols">
+          <li><a href={assetPath("column/hachi-kujo-ryokin-soba/")}>蜂の巣駆除の料金相場はいくら？</a></li>
+          <li><a href={assetPath("column/hachi-kujo-shiyakusho-muryo/")}>市役所は無料で駆除してくれる？</a></li>
+          <li><a href={assetPath("column/hachi-su-jibun-de-kujo/")}>蜂の巣を自分で駆除する危険性</a></li>
+          <li><a href={assetPath("column/hachinosu-basho-betsu-kujo/")}>場所別・蜂の巣駆除のポイント</a></li>
+          <li><a href={assetPath("column/suzumebachi-kujo-ryokin/")}>スズメバチ駆除の料金と注意点</a></li>
+          <li><a href={assetPath("column/hachi-shurui-miwakekata/")}>蜂の種類の見分け方</a></li>
+          <li><a href={assetPath("column/hachi-ie-no-naka-oidashi/")}>家の中に入った蜂の追い出し方</a></li>
+          <li><a href={assetPath("column/gyosha-irai-handan/")}>失敗しない駆除業者の選び方</a></li>
+        </ul>
+        <a class="plp-mini plp-cols__all" href={assetPath("column/")}><svg><use href="#ic-doc" /></svg>コラムをすべて見る</a>
+      </div>
+    </section>
+
+    <!-- ============ 最終CTA ============ -->
+    <section class="plp-final" aria-labelledby="final-title">
+      <h2 id="final-title" class="sr-only">お問い合わせ</h2>
+      <div class="plp-in plp-final__box">
+        <span class="plp-final__pill"><svg><use href="#ic-clock" /></svg>最短30分で到着・相談だけでもOK</span>
+        <p class="plp-final__lead">蜂の巣を見つけたら、迷わずお電話ください！</p>
+        <a class="plp-final__num" href={company.phoneTelLink} data-cta="final_tel">
+          <svg><use href="#ic-phone" /></svg><b>{company.phoneDisplay}</b>
         </a>
-        <a href={company.lineUrl} class="xb-cta-btn xb-cta-line" data-cta="footer_line" target="_blank" rel="noopener">
-          <span class="xb-cta-line-badge">LINE</span>
-          <span><b>LINEで相談する</b><small>写真を送るだけで無料見積</small></span>
-        </a>
+        <p class="plp-final__hours">受付 {company.phoneHours} 年中無休・通話無料</p>
       </div>
-      <p class="xb-cta-sub">見積り・出張・キャンセル料すべて0円／最短30分で現場到着</p>
+      <a class="plp-final__line" href={company.lineUrl} data-cta="final_line" target="_blank" rel="noopener">
+        <span class="plp-final__lineic"><svg><use href="#ic-line" /></svg></span>
+        <span><b>LINEで写真を送るだけ・気軽に相談</b><small>24時間受付中・簡単1分・相談だけでもOK</small></span>
+      </a>
     </section>
-  </div>
-  </main><!-- /.lp-card -->
+
+    <!-- ============ モバイル固定CTA ============ -->
+    <div class="plp-float" aria-label="固定お問い合わせ">
+      <a class="plp-float__tel" href={company.phoneTelLink} data-cta="float_tel"><svg><use href="#ic-phone" /></svg><span><b>今すぐ電話する</b><small>{company.phoneDisplay}</small></span></a>
+      <a class="plp-float__line" href={company.lineUrl} data-cta="float_line" target="_blank" rel="noopener"><svg><use href="#ic-line" /></svg><span><b>LINEで相談</b><small>写真を送るだけ</small></span></a>
+    </div>
+
+    <!-- 夜間(21時〜7時)はフロートCTAの文言を実態に合わせる（電話受付7〜21時・LINE24時間） -->
+    <script is:inline>
+      (function () {
+        var jst = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
+        var h = jst.getHours();
+        if (h >= 7 && h < 21) return;
+        var tb = document.querySelector(".plp-float__tel b");
+        var ts = document.querySelector(".plp-float__tel small");
+        var lb = document.querySelector(".plp-float__line b");
+        var ls = document.querySelector(".plp-float__line small");
+        if (tb) tb.textContent = "電話は朝7時から";
+        if (ts) ts.textContent = "番号を保存できます";
+        if (lb) lb.textContent = "LINEは24時間受付";
+        if (ls) ls.textContent = "写真を送って相談";
+      })();
+    </script>
+
+    <!-- premium motion: scroll reveal (reduced-motion では無効・JS無しでも全表示) -->
+    <script is:inline>
+      (function () {
+        if (!('IntersectionObserver' in window)) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var groups = [
+          { sel: '.plp-h,.plp-urgent__card,.plp-zero article,.plp-pcard,.plp-ptable,.plp-local__panel,.plp-local__photos figure,.plp-case,.plp-danger__left,.plp-growth,.plp-notouch,.plp-vs__main,.plp-faq,.plp-flow li,.plp-area__nagoya,.plp-area__cols,.plp-cols li,.plp-secbtn,.plp-final__box', cls: 'rv' },
+          { sel: '.plp-hexbadges li', cls: 'rv-pop' }
+        ];
+        var all = [];
+        groups.forEach(function (g) {
+          [].forEach.call(document.querySelectorAll(g.sel), function (el) {
+            el.classList.add(g.cls);
+            var p = el.parentElement, idx = [].indexOf.call(p.children, el);
+            el.style.transitionDelay = Math.min(idx, 6) * 55 + 'ms';
+            all.push(el);
+          });
+        });
+        function reveal(el) { el.classList.add('rv-in'); }
+        var io = new IntersectionObserver(function (ents) {
+          ents.forEach(function (e) { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } });
+        }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+        all.forEach(function (el) { io.observe(el); });
+        function sweep() { all.forEach(function (el) { if (!el.classList.contains('rv-in') && el.getBoundingClientRect().top < window.innerHeight * 0.92) reveal(el); }); }
+        window.addEventListener('scroll', sweep, { passive: true });
+        sweep();
+        setTimeout(function () { all.forEach(reveal); }, 6000);
+      })();
+    </script>
+  </main>
 
   <SiteFooter />
-
-  <div class="xfloat">
-    <div class="xfloat-row">
-      <a href={company.phoneTelLink} class="xfloat-btn xfloat-tel" data-cta="float_tel">
-        <span class="xfloat-cpn" aria-hidden="true">電話で<b>10%OFF</b></span>
-        <svg class="xic"><use href="#i-phone" /></svg>
-        <span class="xfloat-tx"><b>今すぐ駆除を頼む</b><small>10%OFF・通話無料</small></span>
-      </a>
-      <a href={company.lineUrl} class="xfloat-btn xfloat-line" data-cta="float_line" target="_blank" rel="noopener">
-        <span class="xfloat-line-badge">LINE</span>
-        <span class="xfloat-tx"><b>写真で見積り</b><small>相談だけでもOK</small></span>
-      </a>
-    </div>
-  </div>
-
-  <script is:inline>
-    // 最下部のフッター（法的リンク）が見えたら追従CTAを退避し、リンクをタップ可能にする
-    (function () {
-      var floatEl = document.querySelector(".xfloat");
-      var footer = document.querySelector(".xfoot");
-      if (!floatEl || !footer || !("IntersectionObserver" in window)) return;
-      var io = new IntersectionObserver(function (entries) {
-        floatEl.classList.toggle("xfloat--hidden", entries[0].isIntersecting);
-      }, { threshold: 0, rootMargin: "0px 0px 20px 0px" });
-      io.observe(footer);
-    })();
-  </script>
 </Layout>
 
-<style is:global>
-  .x-sr { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
-  .xic { display:inline-block; width:1.2em; height:1.2em; flex-shrink:0; vertical-align:middle; }
+<style>
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .plp{--red:#d71920;--red-d:#b80f16;--ink:#1a1a1a;--black:#0b0b0b;--gold:#c98710;--gold2:#e39a12;--green:#06b451;--green-d:#00a640;--paper:#f7f5f0;--line:#e5ded2;--muted:#666;
+    font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;color:var(--ink);background:#fff;font-feature-settings:"palt"}
+  .plp *{box-sizing:border-box}
+  .plp a{text-decoration:none;color:inherit}
+  .plp svg{width:1.15em;height:1.15em;flex:none}
+  .plp-in{width:min(1140px,calc(100% - 40px));margin-inline:auto}
 
-  /* ===== HERO（焼込みチラシの実HTML再現／2:3固定キャンバス・%絶対配置・cqwフォント） ===== */
-  .xhero { position:relative; width:100%; max-width:480px; margin-inline:auto; aspect-ratio:1024/1536;
-    background:#fefdf7; container-type:inline-size; overflow:hidden;
-    font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
-  .xhero > * { position:absolute; }
+  /* ---------- header ---------- */
+  .plp-head{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.06)}
+  .plp-head__in{width:min(1220px,calc(100% - 24px));margin-inline:auto;min-height:74px;display:flex;align-items:center;gap:16px}
+  .plp-brand{display:flex;align-items:center;gap:9px;min-width:0}
+  .plp-brand img{width:46px;height:46px;object-fit:contain}
+  .plp-brand b{display:block;font-size:19px;font-weight:900;line-height:1.15;color:#111}
+  .plp-brand .plp-brand__br{display:none}
+  .plp-brand small{display:block;font-size:11px;font-weight:800;color:#7a6a52;margin-top:2px}
+  .plp-head__mid{margin-inline:auto;text-align:center}
+  .plp-head__area{margin:0;font-size:12.5px;font-weight:900;color:#333}
+  .plp-head__tel{margin:2px 0 0;display:flex;align-items:center;justify-content:center;gap:5px;font-size:15px;font-weight:900;color:#111}
+  .plp-head__tel svg{color:var(--red)}
+  .plp-head__tel span{font-size:12px;font-weight:800;color:#555;margin-left:4px}
+  .plp-head__cta{display:flex;gap:8px}
+  .plp-hbtn{display:flex;align-items:center;justify-content:center;gap:7px;border-radius:8px;padding:11px 16px;font-weight:900;color:#fff;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,.16)}
+  .plp-hbtn--tel{background:linear-gradient(180deg,#ef2b24,var(--red-d))}
+  .plp-hbtn--line{background:linear-gradient(180deg,#0dbf5b,var(--green-d))}
+  .plp-hbtn--line .plp-hbtn__pc{display:flex;flex-direction:column;line-height:1.15}
+  .plp-hbtn--line small{font-size:10px;font-weight:800;color:#eafff2}
+  .plp-hbtn__sp{display:none}
 
-  /* L8 写真（背面・原画切出し） */
-  .xh-photo { left:0; top:59.4%; width:100%; height:27.2%; object-fit:cover; object-position:center top; }
+  /* ---------- location bar ---------- */
+  .plp-locbar{margin:0;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:linear-gradient(90deg,#16294a,#0e1d34);color:#fff;font-size:13px;font-weight:800;padding:10px 16px;text-align:center;line-height:1.4}
+  .plp-locbar svg{width:17px;height:17px;color:#ffcf5a;flex:none}
+  .plp-locbar b{color:#ffd86b;font-weight:900}
+  .plp-locbar__area{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:3px 13px;font-size:12px;font-weight:800;color:#ffe6ad;white-space:nowrap}
 
-  /* L1 上部赤バー */
-  .xh-bar { left:0; top:0; width:100%; height:3.8%; display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(180deg,#b81210,#8e0c0a); color:#fff; font-size:2.95cqw; font-weight:800; letter-spacing:-.01em; white-space:nowrap; }
-  .xh-bar b { color:#ffd23f; font-weight:900; margin:0 .1em; }
+  /* ---------- hero ---------- */
+  .plp-hero{background:#fff}
+  .plp-hero__media{position:relative;width:100%;aspect-ratio:1376/620;max-height:480px;overflow:hidden}
+  .plp-hero__media>img{width:100%;height:100%;object-fit:cover;object-position:58% 42%;display:block}
+  .plp-hero__scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.9) 0%,rgba(255,255,255,.62) 28%,rgba(255,255,255,.1) 52%,transparent 70%)}
+  .plp-hero__overlay{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;justify-content:center;width:min(1180px,100%);padding:0 clamp(20px,4.4vw,60px)}
+  .plp-kicker{display:inline-flex;align-self:flex-start;margin:0 0 13px;padding:7px 14px;background:linear-gradient(180deg,var(--red),var(--red-d));color:#fff;border-radius:5px;font-size:clamp(12px,1.5vw,16px);font-weight:900;letter-spacing:.02em;box-shadow:0 4px 14px rgba(215,25,32,.3)}
+  .plp-hero h2{margin:0;font-size:clamp(28px,5.1vw,54px);line-height:1.18;font-weight:900;letter-spacing:.01em;color:#12233d;text-shadow:0 2px 14px rgba(255,255,255,.9),0 1px 3px rgba(255,255,255,.95)}
+  .plp-hero h2 em{font-style:normal;color:var(--red);font-size:1.14em}
+  .plp-hero__checks{list-style:none;margin:15px 0 0;padding:0;display:grid;gap:7px}
+  .plp-hero__checks li{display:flex;align-items:center;gap:8px;font-size:clamp(13px,1.55vw,17px);font-weight:900;color:#22344e;text-shadow:0 1px 6px rgba(255,255,255,.95)}
+  .plp-hero__checks svg{color:var(--red);width:1.1em;height:1.1em;flex:none}
 
-  /* L2 ブランド帯 */
-  .xh-brand { left:0; top:3.8%; width:100%; height:9.5%; display:flex; align-items:center; gap:1.5cqw; padding:0 3cqw; }
-  .xh-logo { width:9cqw; height:auto; flex-shrink:0; }
-  .xh-btext { display:flex; flex-direction:column; line-height:1.05; }
-  .xh-bname { font-size:3.3cqw; font-weight:900; color:#111; letter-spacing:-.035em; white-space:nowrap; }
-  .xh-btag { font-size:1.7cqw; font-weight:700; color:#5a5a5a; }
-  .xh-headtel { margin-left:auto; display:flex; align-items:center; gap:1cqw; text-decoration:none; color:#fff;
-    background:linear-gradient(180deg,#f2630e,#d61e01); border-radius:2cqw; padding:2cqw 2.4cqw; }
-  .xh-headtel .xic { width:3.4cqw; height:3.4cqw; }
-  .xh-headtel-tx { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; }
-  .xh-headtel-tx b { font-size:3.3cqw; font-weight:900; }
-  .xh-headtel-tx small { font-size:1.5cqw; font-weight:700; }
+  /* ---------- hexagon badges ---------- */
+  .plp-hexbadges{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,1.7vw,16px);width:min(760px,calc(100% - 24px));margin:clamp(-40px,-4.2vw,-26px) auto 0;padding:0;position:relative;z-index:3}
+  .plp-hexbadges li{filter:drop-shadow(0 8px 16px rgba(20,15,0,.18))}
+  .plp-hex{display:flex;flex-direction:column;align-items:center;justify-content:center;aspect-ratio:1/1.14;background:#fff;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);text-align:center;padding:6px 4px}
+  .plp-hex svg{width:clamp(16px,3.9vw,23px);height:clamp(16px,3.9vw,23px);color:var(--gold);margin-bottom:4px}
+  .plp-hex--red svg{color:var(--red)}
+  .plp-hex b{display:block;font-size:clamp(15px,4.3vw,23px);font-weight:900;color:#161310;line-height:1;letter-spacing:0}
+  .plp-hex--red b{color:var(--red)}
+  .plp-hex small{display:block;margin-top:3px;font-size:clamp(8px,2.15vw,10.5px);font-weight:800;color:#6b5a41;line-height:1.15}
 
-  /* L3 赤リボンバナー */
-  .xh-banner { left:0; top:13%; width:100%; height:5%; display:flex; align-items:center; justify-content:center; }
-  .xh-banner span { display:inline-flex; align-items:center; gap:.12em; background:linear-gradient(178deg,#cf1512,#9c0d0b);
-    color:#ffd23f; font-size:4.4cqw; font-weight:900; padding:.5cqw 6cqw; letter-spacing:-.02em; transform:skewX(-4deg);
-    clip-path:polygon(2% 0,98% 0,100% 50%,98% 100%,2% 100%,0 50%); box-shadow:0 1cqw 2cqw rgba(0,0,0,.14);
-    text-shadow:0 .2cqw .2cqw rgba(0,0,0,.35); }
-  .xh-banner em { font-style:normal; }
-  .xh-banner i { font-style:normal; color:#fff; font-size:.72em; }
-  .xh-banner b { color:#ffd23f; font-size:1.32em; }
+  /* ---------- hero CTA + clerk ---------- */
+  .plp-hero__ctawrap{display:flex;flex-direction:column;gap:10px;width:min(520px,calc(100% - 24px));margin:58px auto 0}
+  .plp-callrow{position:relative}
+  .plp-cta-lead{margin:0 0 8px;padding-left:clamp(126px,17vw,158px);text-align:center;font-size:clamp(12px,1.5vw,14px);font-weight:800;color:#3a2f22}
+  .plp-cta-lead b{color:var(--red);font-weight:900}
+  .plp-clerk{position:absolute;left:-4px;bottom:0;width:clamp(150px,16.5vw,196px);margin:0;z-index:4;pointer-events:none}
+  .plp-clerk>img{width:100%;height:auto;display:block;filter:drop-shadow(0 6px 12px rgba(0,0,0,.28))}
+  .plp-call{display:flex;align-items:center;justify-content:center;min-height:100px;padding:12px 18px 12px clamp(126px,17vw,158px);background:linear-gradient(180deg,#ef2b24,var(--red-d));border-radius:12px;box-shadow:0 8px 22px rgba(215,25,32,.4)}
+  .plp-call span{display:flex;flex-direction:column;align-items:center;text-align:center;line-height:1.16;color:#fff}
+  .plp-call small{font-size:13px;font-weight:900;color:#ffe9b8}
+  .plp-call b{font-size:clamp(28px,3.3vw,38px);font-weight:900;letter-spacing:.01em}
+  .plp-call em{font-style:normal;font-size:11.5px;font-weight:800;margin-top:3px;color:#ffd9d6}
+  .plp-linebtn{display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,#0dbf5b,var(--green-d));border-radius:10px;padding:11px 18px;color:#fff;box-shadow:0 6px 18px rgba(6,180,81,.35)}
+  .plp-linebtn__badge{display:flex;align-items:center;gap:5px;font-weight:900;font-size:15px}
+  .plp-linebtn__badge svg{width:26px;height:26px}
+  .plp-linebtn span:not(.plp-linebtn__badge){display:flex;flex-direction:column;line-height:1.2}
+  .plp-linebtn b{font-size:19px;font-weight:900}
+  .plp-linebtn small{font-size:11.5px;font-weight:800;color:#eafff2}
 
-  /* L4/L5 見出し（黒＋白縁・斜体） */
-  .xh-h1 { left:0; top:16.1%; width:100%; height:12%; margin:0; display:flex; align-items:center; justify-content:center;
-    font-size:15.3cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.05em; transform:skewX(-5deg);
-    -webkit-text-stroke:.75cqw #fff; paint-order:stroke fill; text-shadow:0 .55cqw .7cqw rgba(0,0,0,.22); }
-  .xh-h2 { left:0; top:27.1%; width:100%; height:7%; margin:0; display:flex; align-items:center; justify-content:center;
-    font-size:6.8cqw; font-weight:900; color:#1a1a1a; letter-spacing:-.04em; transform:skewX(-5deg);
-    -webkit-text-stroke:.45cqw #fff; paint-order:stroke fill; text-shadow:0 .4cqw .55cqw rgba(0,0,0,.2); }
+  /* ---------- sections common ---------- */
+  .plp-sec{padding:32px 0}
+  .plp-sec--cream{background:var(--paper)}
+  .plp-sec--sand{background:#f4efe6}
+  .plp-h{text-align:center;margin-bottom:18px}
+  .plp-h--left{text-align:left}
+  .plp-h h2{margin:0;font-size:clamp(24px,2.8vw,34px);font-weight:900;line-height:1.3;letter-spacing:.01em;padding-bottom:12px;position:relative;display:inline-block}
+  .plp-h h2::after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:56px;height:4px;border-radius:2px;background:var(--red)}
+  .plp-h--left h2::after{left:0;transform:none}
+  .plp-h h2 em{font-style:normal;color:var(--red);font-size:1.25em}
+  .plp-h__sub{font-size:.62em;font-weight:800;color:#6d5f4b}
+  .plp-h p{margin:10px 0 0;color:var(--muted);font-size:15px;font-weight:700}
+  .plp-h--row{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;text-align:left}
+  .plp-h--row h2::after{left:0;transform:none}
+  .plp-mini{display:inline-flex;align-items:center;gap:7px;border:2px solid var(--red);color:var(--red);border-radius:8px;padding:11px 16px;font-weight:900;white-space:nowrap}
+  .plp-secbtn{display:flex;align-items:center;justify-content:center;gap:9px;max-width:460px;margin:24px auto 0;min-height:58px;border-radius:10px;background:linear-gradient(180deg,#ef2b24,var(--red-d));color:#fff;font-size:17px;font-weight:900;box-shadow:0 6px 18px rgba(215,25,32,.3)}
 
-  /* L6 価格行 */
-  .xh-price { left:0; top:31.9%; width:100%; height:8.8%; margin:0; display:flex; align-items:center; justify-content:center; gap:2.4cqw; }
-  .xhp-cell { display:flex; align-items:baseline; gap:.4cqw; color:#1a1a1a; font-weight:900; }
-  .xhp-cell small { font-size:3.6cqw; }
-  .xhp-num { font-size:8.6cqw; font-weight:900; color:#d4151c; letter-spacing:-.02em; line-height:1; }
-  .xhp-tilde { font-size:5cqw; color:#d4151c; }
-  .xhp-tax { font-size:2.2cqw; color:#6b6b6b; font-style:normal; font-weight:700; }
-  .xhp-div { width:.4cqw; height:7cqw; background:#cfc7ba; align-self:center; }
+  /* ---------- urgent ---------- */
+  .plp-urgent{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .plp-urgent__card{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(40,25,0,.08)}
+  .plp-urgent__card img{width:100%;height:170px;object-fit:cover;display:block}
+  .plp-urgent__card>div{position:relative;padding:16px 16px 16px 54px}
+  .plp-urgent__mark{position:absolute;left:14px;top:16px;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff}
+  .plp-urgent__mark svg{width:16px;height:16px}
+  .plp-urgent__card h3{margin:0;font-size:17px;font-weight:900;line-height:1.4}
+  .plp-urgent__card p{margin:7px 0 0;font-size:13px;font-weight:700;color:var(--muted)}
 
-  /* L7 電話CTA帯 */
-  .xh-cta { left:5%; top:42.6%; width:90%; height:13.4%; display:flex; align-items:center; gap:2cqw;
-    text-decoration:none; color:#fff; background:linear-gradient(180deg,#f06a0c 0%,#e64805 45%,#cd1000 100%);
-    border-radius:3cqw; padding:0 3.5cqw; box-shadow:0 1.4cqw 3cqw rgba(170,30,4,.4), inset 0 .3cqw 0 rgba(255,255,255,.25); }
-  .xh-cta .xic { width:8cqw; height:8cqw; flex-shrink:0; filter:drop-shadow(0 .2cqw .3cqw rgba(0,0,0,.3)); }
-  .xh-cta-tx { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; flex:1; min-width:0; }
-  .xh-cta-top { font-size:2.7cqw; font-weight:900; color:#ffe39a; letter-spacing:.02em; }
-  .xh-cta-num { font-size:7.6cqw; font-weight:900; letter-spacing:0; line-height:1.02; }
-  .xh-cta-bot { font-size:2cqw; font-weight:700; }
+  /* ---------- zero ---------- */
+  .plp-zero{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .plp-zero article{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px 14px;text-align:center;box-shadow:0 4px 14px rgba(40,25,0,.06)}
+  .plp-zero__ic{width:40px;height:40px;color:#3f3428;margin-bottom:8px}
+  .plp-zero b{display:block;font-size:16.5px;font-weight:900}
+  .plp-zero em{font-style:normal;display:block;color:var(--red);font-size:44px;line-height:1.1;font-weight:900;margin:4px 0 6px}
+  .plp-zero__ok{font-size:22px !important;padding:11px 0}
+  .plp-zero p{margin:0;font-size:12.5px;font-weight:700;color:var(--muted);line-height:1.65}
 
-  /* 緑ドット ただ今受付中 */
-  .xh-now { top:51.2%; left:80%; width:14.5%; height:4.2%; display:flex; align-items:center; justify-content:center; gap:.5cqw; color:#fff; font-size:1.85cqw; font-weight:800; }
-  .xh-now-dot { width:1.6cqw; height:1.6cqw; border-radius:50%; background:#27d24a; box-shadow:0 0 0 .4cqw rgba(255,255,255,.5); }
-  .xh-proof { left:5%; top:56.4%; width:90%; height:3.2%; margin:0; display:flex; align-items:center; justify-content:center;
-    color:#3a2c17; background:rgba(255,250,235,.93); border:.2cqw solid rgba(120,70,20,.18); border-radius:999px;
-    font-size:2.25cqw; font-weight:900; letter-spacing:0; box-shadow:0 .25cqw .9cqw rgba(60,30,0,.12); }
+  /* ---------- price ---------- */
+  .plp-price{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .plp-pcard{background:#fff;border-radius:12px;overflow:hidden;border:2px solid var(--line);box-shadow:0 6px 20px rgba(40,25,0,.08);display:flex;flex-direction:column}
+  .plp-pcard--gold{border-color:#e5b45c}
+  .plp-pcard--red{border-color:#e26a63}
+  .plp-pcard header{padding:11px 16px;color:#fff;font-size:19px;font-weight:900;letter-spacing:.02em}
+  .plp-pcard--gold header{background:linear-gradient(90deg,var(--gold2),var(--gold))}
+  .plp-pcard--red header{background:linear-gradient(90deg,#e02d25,var(--red-d))}
+  .plp-pcard__body{display:flex;align-items:center;gap:14px;padding:18px 18px 6px}
+  .plp-pcard__body img{width:132px;height:92px;object-fit:cover;border-radius:8px;background:var(--paper)}
+  .plp-pcard__body p{margin:0;flex:1;text-align:center}
+  .plp-pcard__body small{display:block;font-size:13.5px;font-weight:900;color:#5c4c33}
+  .plp-pcard__body b{font-size:clamp(38px,3.4vw,48px);line-height:1.1;color:var(--red);font-weight:900;letter-spacing:0}
+  .plp-pcard__body span{font-size:13px;font-weight:900;color:#5c4c33}
+  .plp-pcard ul{list-style:none;margin:10px 18px 14px;padding:12px 0 0;border-top:1px dashed var(--line);display:grid;gap:7px}
+  .plp-pcard li{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:800;color:#33291c}
+  .plp-pcard li svg{color:var(--red);width:1em;height:1em}
+  .plp-pcard footer{margin-top:auto;text-align:center;padding:10px;color:#fff;font-size:15px;font-weight:900}
+  .plp-pcard--gold footer{background:var(--gold)}
+  .plp-pcard--red footer{background:var(--red)}
+  .plp-price__note{margin:14px 0 0;font-size:12.5px;font-weight:700;color:var(--muted);text-align:center}
+  .plp-ptable{margin-top:18px;overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
+  .plp-ptable table{width:100%;border-collapse:collapse;min-width:560px}
+  .plp-ptable th,.plp-ptable td{border-bottom:1px solid var(--line);padding:11px 14px;font-size:13.5px;text-align:left;line-height:1.6}
+  .plp-ptable thead th{background:#211c15;color:#fff;font-weight:900}
+  .plp-ptable tbody th{font-weight:900;white-space:nowrap}
+  .plp-ptable tr:last-child th,.plp-ptable tr:last-child td{border-bottom:0}
 
-  /* L9 信頼4列 */
-  .xh-trust { list-style:none; margin:0; left:0; top:86.7%; width:100%; height:13.3%; padding:0 1.5cqw;
-    display:grid; grid-template-columns:repeat(4,1fr); align-items:center; background:#fefdf7; }
-  .xh-trust li { display:flex; align-items:center; justify-content:center; gap:1cqw; }
-  .xht-ic { width:7.6cqw; height:7.6cqw; flex-shrink:0; fill:none; stroke:#c0151c; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
-  .xht-ic.xht-fill { fill:#c0151c; stroke:none; }
-  .xht-chk { stroke:#fff; stroke-width:2.2; fill:none; }
-  .xht-y0 { fill:#c0151c; stroke:none; font-size:9px; font-weight:900; text-anchor:middle; font-family:sans-serif; }
-  .xh-trust span { display:flex; flex-direction:column; line-height:1.05; color:#333; }
-  .xh-trust small { font-size:1.7cqw; font-weight:700; }
-  .xh-trust b { font-size:3.4cqw; font-weight:900; color:#1a1a1a; }
-  .xh-trust b em { color:#c0151c; font-style:normal; font-size:.72em; }
+  /* ---------- local ---------- */
+  .plp-local{display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:stretch}
+  .plp-local__panel{background:linear-gradient(160deg,#132a4d,#0d1c33);color:#fff;border-radius:12px;padding:30px 28px;display:flex;flex-direction:column;justify-content:center}
+  .plp-local__panel h2{margin:0 0 18px;font-size:clamp(22px,2.4vw,29px);font-weight:900;line-height:1.4}
+  .plp-local__panel ul{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+  .plp-local__panel li{display:flex;align-items:center;gap:9px;font-size:15.5px;font-weight:800}
+  .plp-local__panel svg{color:#ffcf5a;width:1.05em;height:1.05em}
+  .plp-local__addr{margin:18px 0 0;font-size:12.5px;font-weight:700;color:#b9c6da}
+  .plp-local__photos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .plp-local__photos figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 4px 14px rgba(40,25,0,.07);display:flex;flex-direction:column}
+  .plp-local__img{width:100%;height:150px;object-fit:cover;display:block}
+  .plp-local__photos figcaption{padding:12px 13px 14px}
+  .plp-local__photos b{display:block;font-size:14.5px;font-weight:900}
+  .plp-local__photos span{display:block;margin-top:4px;font-size:12px;font-weight:700;color:var(--muted);line-height:1.6}
 
-  /* 通話無料 金シール（CTA右上・cqw） */
-  .xseal { top:39.6%; left:82.5%; width:13.5%; aspect-ratio:1/1; transform:rotate(-8deg); pointer-events:none; z-index:6; }
-  .xseal-body { position:absolute; inset:0; border-radius:50%;
-    background:radial-gradient(110% 110% at 32% 24%, #fdf0c2 0%, #f7d785 34%, #eab63f 64%, #cf9220 100%);
-    box-shadow:0 .6cqw 1.8cqw rgba(60,30,0,.42), inset 0 0 0 .3cqw #fff7e0, inset 0 0 0 .7cqw #b9831a;
-    display:flex; flex-direction:column; align-items:center; justify-content:center; }
-  .xseal-l1 { font-size:2.4cqw; font-weight:900; color:#7a1208; line-height:1; letter-spacing:.04em; }
-  .xseal-l2 { font-size:5.6cqw; font-weight:900; color:#a60101; line-height:.9; }
-  .xseal-ring { position:absolute; inset:0; border-radius:50%; border:.4cqw solid #f2c14e; opacity:0;
-    animation:xsealring 1.9s cubic-bezier(.22,.61,.36,1) infinite; }
-  @keyframes xsealring { 0%{ transform:scale(1); opacity:.6; } 70%{ transform:scale(1.4); opacity:0; } 100%{ opacity:0; } }
-  @media (prefers-reduced-motion:reduce){ .xseal-ring,.xh-now-dot { animation:none; } }
+  /* ---------- cases ---------- */
+  .plp-cases{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .plp-case{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 4px 14px rgba(40,25,0,.07)}
+  .plp-case__imgwrap{position:relative}
+  .plp-case__imgwrap span{position:absolute;left:0;top:0;background:var(--red);color:#fff;font-size:11.5px;font-weight:900;padding:5px 9px;border-radius:0 0 6px 0}
+  .plp-case__imgwrap img{width:100%;height:130px;object-fit:cover;display:block}
+  .plp-case__body{padding:11px 12px 13px}
+  .plp-case__body h3{margin:0;font-size:13.5px;font-weight:900;line-height:1.45}
+  .plp-case__body p{margin:5px 0 8px;font-size:11.5px;font-weight:800;color:var(--red)}
+  .plp-case__body ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px}
+  .plp-case__body li{font-size:10.5px;font-weight:800;color:#7a4c13;background:#fdf1da;border-radius:4px;padding:3px 6px}
 
-  /* 電話10%OFF クーポンバッジ（CTA右上・旧通話料無料シール跡／赤地黄文字） */
-  .xcpn { position:absolute; top:38.6%; left:81.3%; width:15.5%; aspect-ratio:1/1; transform:rotate(8deg); pointer-events:none; z-index:7; }
-  .xcpn-body { position:absolute; inset:0; border-radius:50%;
-    background:radial-gradient(112% 112% at 32% 24%, #ff7a4d 0%, #ef2f12 44%, #bd0a08 100%);
-    box-shadow:0 .6cqw 1.8cqw rgba(80,0,0,.45), inset 0 0 0 .3cqw #fff, inset 0 0 0 .8cqw #ffd23f;
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.1cqw; }
-  .xcpn-l1 { font-size:2.5cqw; font-weight:900; color:#fff; line-height:1; letter-spacing:.02em; }
-  .xcpn-l2 { font-size:5.8cqw; font-weight:900; color:#ffe200; line-height:.82; text-shadow:0 .2cqw .2cqw rgba(0,0,0,.25); }
-  .xcpn-l2 i { font-size:.6em; font-style:normal; }
-  .xcpn-l3 { font-size:3.6cqw; font-weight:900; color:#ffe200; line-height:.9; letter-spacing:.08em; }
+  /* ---------- danger ---------- */
+  .plp-danger{display:grid;grid-template-columns:.72fr 1.28fr;gap:20px;align-items:stretch}
+  .plp-danger__left h2{margin:0 0 16px;font-size:clamp(21px,2.3vw,27px);font-weight:900;line-height:1.45}
+  .plp-danger__left ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+  .plp-danger__left li{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:800}
+  .plp-danger__left svg{color:var(--red);width:1.05em;height:1.05em}
+  .plp-growth{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:0 4px 14px rgba(40,25,0,.06)}
+  .plp-growth h3{margin:0 0 14px;text-align:center;font-size:17.5px;font-weight:900}
+  .plp-growth h3 span{font-size:12px;font-weight:800;color:var(--muted)}
+  .plp-growth__steps{display:flex;align-items:flex-end;gap:6px;justify-content:space-between}
+  .plp-growth__steps figure{margin:0;flex:1;text-align:center;min-width:0;display:flex;flex-direction:column;align-items:center}
+  .plp-growth__nest{display:flex;align-items:flex-end;justify-content:center;height:clamp(78px,20vw,104px);width:100%;padding:0 2px}
+  .plp-growth__nest img{width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 5px 7px rgba(0,0,0,.14))}
+  .plp-growth__steps figcaption b{display:block;margin-top:10px;font-size:13px;font-weight:900}
+  .plp-growth__steps figcaption span{display:block;margin-top:3px;font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.5}
+  .plp-growth__arrow{color:#2faf5b;font-size:18px;flex:none;align-self:flex-end;margin-bottom:34px}
+  .plp-danger .plp-notouch{display:block;grid-column:auto}
+  .plp-danger{grid-template-columns:.72fr 1fr .62fr}
+  .plp-notouch{grid-column:auto;position:relative;overflow:hidden;display:none;isolation:isolate;padding:19px 16px 16px 20px;border-radius:16px;color:#ece0d6;background:radial-gradient(120% 82% at 86% 0%,rgba(226,161,60,.10),transparent 58%),linear-gradient(168deg,#191512 0%,#131009 52%,#0d0b08 100%);border:1px solid rgba(214,150,74,.20);box-shadow:0 22px 46px -16px rgba(0,0,0,.62),0 6px 16px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,224,178,.10),inset 0 0 0 1px rgba(0,0,0,.30)}
+  .plp-notouch::before{content:"";position:absolute;top:0;bottom:0;left:0;width:4px;z-index:3;background:repeating-linear-gradient(-45deg,#e0972f 0 7px,#241a10 7px 14px);opacity:.92;box-shadow:1px 0 0 rgba(0,0,0,.45),inset -1px 0 1px rgba(0,0,0,.5)}
+  .plp-notouch__head{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+  .plp-notouch__badge{display:inline-flex;align-items:center;gap:6px;padding:5px 11px 5px 8px;border-radius:8px;font-weight:900;font-size:12.5px;letter-spacing:.10em;line-height:1;color:#f7e6cf;background:linear-gradient(160deg,rgba(226,161,60,.22),rgba(226,161,60,.07));border:1px solid rgba(226,161,60,.42);box-shadow:inset 0 1px 0 rgba(255,224,178,.22),0 1px 2px rgba(0,0,0,.4)}
+  .plp-notouch__tri{width:15px;height:15px;color:#f2b34e;flex:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.4))}
+  .plp-notouch__code{font-size:9.5px;font-weight:800;letter-spacing:.24em;color:rgba(228,182,132,.55);white-space:nowrap}
+  .plp-notouch h3{margin:0 0 13px;color:#fdf8f2;font-weight:900;font-size:clamp(15.5px,1.15vw,17px);line-height:1.4;letter-spacing:-.01em;text-wrap:balance}
+  .plp-notouch__list{list-style:none;margin:0 0 2px;padding:4px 11px;position:relative;z-index:2;background:linear-gradient(180deg,#100d0a,#0c0a08);border:1px solid rgba(255,255,255,.055);border-radius:11px;box-shadow:inset 0 1px 2px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.02)}
+  .plp-notouch__list li{display:flex;align-items:center;gap:10px;padding:11px 2px;font-weight:800;font-size:14px;color:#eaded3;border-top:1px solid rgba(255,255,255,.055);box-shadow:inset 0 1px 0 rgba(0,0,0,.45)}
+  .plp-notouch__list li:first-child{border-top:0;box-shadow:none}
+  .plp-notouch__ic{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:8px;color:#ecb768;background:linear-gradient(158deg,#241c13,#17120d);border:1px solid rgba(230,166,70,.30);box-shadow:inset 0 1px 0 rgba(255,214,150,.16),0 1px 2px rgba(0,0,0,.45)}
+  .plp-notouch__ic svg{width:17px;height:17px;display:block}
+  .plp-notouch__label{flex:1;min-width:0;line-height:1.35;letter-spacing:.01em;overflow-wrap:anywhere}
+  .plp-notouch__x{flex:none;display:grid;place-items:center;width:20px;height:20px;border-radius:6px;font-size:11px;font-weight:900;color:#f0745a;background:rgba(216,84,60,.12);border:1px solid rgba(216,84,60,.42);box-shadow:inset 0 1px 0 rgba(255,150,120,.12)}
+  .plp-notouch__specimen{position:relative;margin:14px -16px -16px -20px;overflow:hidden;border-radius:0 0 15px 15px}
+  .plp-notouch__specimen::before{content:"";position:absolute;inset:0 0 auto;height:62%;z-index:1;pointer-events:none;background:linear-gradient(180deg,#15120c 3%,rgba(21,18,12,.42) 56%,rgba(21,18,12,0))}
+  .plp-notouch__bee{display:block;width:100%;height:clamp(126px,21vw,166px);object-fit:cover;object-position:47% 40%}
+  @media (prefers-reduced-motion:no-preference){.plp-notouch__bee{animation:plpNtGlow 10s ease-in-out infinite alternate}}
+  @keyframes plpNtGlow{from{transform:scale(1.03)}to{transform:scale(1.09)}}
 
-  /* ===== 下半分 共通（ヒーロー基調） ===== */
-  .xb { --red:#a60101; --red2:#c81e1e; --ink:#241608; --cream:#fdfcf6; --line:rgba(20,12,4,.10);
-    max-width:480px; margin-inline:auto; background:var(--cream); color:var(--ink);
-    font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
-  .xb section { padding:26px 16px; }
-  .xb-sec-tint { background:#fff6ec; }
-  .xb-h { display:flex; justify-content:center; margin:0 0 16px; }
-  .xb-h span { display:inline-block; background:linear-gradient(180deg,#b81810,#8c1108); color:#fff;
-    font-size:1.06rem; font-weight:900; letter-spacing:.01em; padding:.62rem 1.5rem; border-radius:16px;
-    line-height:1.45; text-align:center; text-wrap:balance; word-break:auto-phrase; max-width:90%;
-    box-shadow:0 4px 12px rgba(150,20,12,.28); }
-  .xb-sec-calm .xb-h span { background:transparent; color:#3a2a17; border-radius:0; padding:.25rem 0 .38rem;
-    border-bottom:3px solid #d7b06c; box-shadow:none; max-width:100%; }
-  /* 全体テキスト監査：日本語の文節折返しで途中改行・不格好を解消 */
-  .xb h3 { text-wrap:balance; word-break:auto-phrase; }
-  .xb p, .xb li, .xb figcaption, .xb dd, .xb dt { word-break:auto-phrase; text-wrap:pretty; }
-  .xb-lead { font-size:.93rem; line-height:1.78; margin:0 0 14px; word-break:auto-phrase; text-wrap:pretty; }
-  .xb-lead b, .xb-note b { color:var(--red); font-weight:900; }
-  .xb-note { font-size:.78rem; color:#6b5d4a; line-height:1.65; margin:12px 2px 0; word-break:auto-phrase; text-wrap:pretty; }
-  .xb-card { background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 3px 12px rgba(20,12,4,.06); }
-  .xb-chip { background:linear-gradient(180deg,#ff7a1a,#e2231a); color:#fff; font-weight:900;
-    padding:.28rem .7rem; border-radius:9999px; font-size:.96rem; white-space:nowrap; box-shadow:0 2px 6px rgba(200,40,10,.25); }
-  .xb-chip-sm { font-size:.78rem; padding:.18rem .55rem; }
-  .font-num { font-variant-numeric:tabular-nums; letter-spacing:.01em; }
+  /* ---------- compare + faq ---------- */
+  .plp-vs{display:grid;grid-template-columns:1.55fr .45fr;gap:20px;align-items:start}
+  .plp-vs__main,.plp-faq{min-width:0}
+  .plp-vs__scroll{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:10px;background:#fff}
+  .plp-vs__scroll table{width:100%;border-collapse:collapse;min-width:680px}
+  .plp-vs__scroll th,.plp-vs__scroll td{border-bottom:1px solid var(--line);padding:12px 10px;font-size:13px;line-height:1.55;text-align:center}
+  .plp-vs__scroll thead th{background:#211c15;color:#fff;font-weight:900;font-size:12.5px}
+  .plp-vs__scroll thead th.is-us{background:var(--red);font-size:13px}
+  .plp-vs__scroll tbody th{background:#faf6ee;text-align:left;font-weight:900;white-space:nowrap}
+  .plp-vs__scroll td.is-us{background:#fff2f1;color:var(--red);font-weight:900}
+  .plp-vs__scroll tr:last-child th,.plp-vs__scroll tr:last-child td{border-bottom:0}
+  .plp-faq{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 16px 8px;box-shadow:0 4px 14px rgba(40,25,0,.05)}
+  .plp-faq h3{margin:0 0 8px;font-size:18px;font-weight:900}
+  .plp-faq details{border-top:1px solid var(--line)}
+  .plp-faq summary{cursor:pointer;list-style:none;position:relative;padding:12px 22px 12px 0;font-size:13.5px;font-weight:900;line-height:1.5}
+  .plp-faq summary::after{content:"＋";position:absolute;right:0;top:12px;color:var(--red);font-weight:900}
+  .plp-faq details[open] summary::after{content:"−"}
+  .plp-faq details p{margin:0 0 12px;font-size:12.5px;font-weight:700;color:var(--muted);line-height:1.75}
 
-  /* 料金（作り込み版） */
-  .xrate-free { list-style:none; margin:0 0 14px; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
-  .xrate-free li { display:flex; flex-direction:column; align-items:center; gap:2px; background:#fff; border:1px solid var(--line);
-    border-radius:12px; padding:.55rem .2rem .5rem; box-shadow:0 2px 8px rgba(20,12,4,.05); }
-  .xrate-free-l { font-size:.6rem; font-weight:800; color:#5b4f3d; }
-  .xrate-free-z { font-size:1.45rem; font-weight:900; color:#0a7d28; line-height:1; }
-  .xrate-free-z small { font-size:.62rem; margin-left:1px; }
+  /* ---------- flow ---------- */
+  .plp-flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .plp-flow li{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px 14px;text-align:center;box-shadow:0 4px 14px rgba(40,25,0,.06)}
+  .plp-flow span{display:grid;place-items:center;width:38px;height:38px;margin:0 auto 10px;border-radius:50%;background:var(--red);color:#fff;font-weight:900;font-size:17px}
+  .plp-flow b{display:block;font-size:15.5px;font-weight:900}
+  .plp-flow small{display:block;margin-top:8px;font-size:12px;font-weight:700;color:var(--muted);line-height:1.7;text-align:left}
 
-  .xrate-card { background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 3px 12px rgba(20,12,4,.06); }
-  .xrate-row { display:flex; align-items:center; gap:.85rem; padding:.95rem .95rem; border-bottom:1px solid var(--line); text-decoration:none; color:inherit; cursor:pointer; -webkit-tap-highlight-color:rgba(226,35,26,.12); }
-  .xrate-row:active { background:#fff6f5; }
-  .xrate-row:last-child { border-bottom:0; }
-  .xrate-thumb { width:74px; height:48px; border-radius:8px; object-fit:contain; flex-shrink:0; border:1px solid var(--line); background:#fff; padding:2px; }
-  .xrate-info { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
-  .xrate-name { font-size:1rem; font-weight:900; line-height:1.2; }
-  .xrate-cond { font-size:.66rem; color:#6b5d4a; line-height:1.5; }
-  .xrate-price { flex-shrink:0; display:flex; flex-direction:column; align-items:flex-end; line-height:1; }
-  .xrate-price b { font-size:1.3rem; font-weight:900; color:#e2231a; letter-spacing:.01em; font-variant-numeric:tabular-nums; }
-  .xrate-price small { font-size:.58rem; color:#6b5d4a; margin-top:4px; font-weight:700; }
+  /* ---------- area ---------- */
+  .plp-area{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  .plp-area__nagoya{background:#fff;border:2px solid #e5b45c;border-radius:12px;padding:20px;box-shadow:0 4px 14px rgba(40,25,0,.06)}
+  .plp-area__nagoya>b{display:block;font-size:18px;font-weight:900;margin-bottom:12px;color:#161310}
+  .plp-area__nagoya div{display:flex;flex-wrap:wrap;gap:7px}
+  .plp-area__nagoya span{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:800}
+  .plp-area__cols{display:grid;gap:12px}
+  .plp-area__cols>div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .plp-area__cols b{display:block;font-size:14.5px;font-weight:900;color:var(--red);margin-bottom:5px}
+  .plp-area__cols p{margin:0;font-size:12.5px;font-weight:700;color:#443929;line-height:1.8}
 
-  /* 選ばれる理由 / 流れ 共通 num */
-  .xb-num { flex-shrink:0; width:2.1rem; height:2.1rem; border-radius:50%; display:grid; place-items:center;
-    background:linear-gradient(180deg,#e8392c,#a60101); color:#fff; font-weight:900; font-size:.95rem; box-shadow:0 3px 8px rgba(166,1,1,.3); }
-  .xb-why { display:flex; flex-direction:column; gap:10px; }
-  .xb-why-card { display:flex; gap:.7rem; padding:.85rem .9rem; align-items:flex-start; }
-  .xb-why-body h3 { margin:.1rem 0 .25rem; font-size:.96rem; font-weight:900; line-height:1.35; }
-  .xb-why-body h3 hl { color:var(--red); }
-  .xb-why-body p { margin:0; font-size:.8rem; line-height:1.65; color:#3f3526; }
+  /* ---------- columns links ---------- */
+  .plp-cols{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .plp-cols a{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:13px 15px;font-size:13.5px;font-weight:800;color:#2a2118;box-shadow:0 3px 10px rgba(40,25,0,.05);line-height:1.5}
+  .plp-cols a::before{content:"›";color:var(--red);font-weight:900;font-size:17px;flex:none;line-height:1}
+  .plp-cols__all{display:flex;width:fit-content;margin:16px auto 0}
 
-  /* 放置の危険（問題提起・2カラム） */
-  .xdanger-grid { display:grid; grid-template-columns:1fr; gap:12px; align-items:stretch; }
-  .xdanger { margin:0; overflow:hidden; display:flex; flex-direction:column; }
-  .xdanger img { width:100%; height:112px; object-fit:cover; display:block; }
-  .xdanger-cap { margin:0; padding:.58rem .62rem .65rem; font-size:.74rem; line-height:1.55; color:#46402f; font-weight:700; }
+  /* ---------- final ---------- */
+  .plp-final{background:linear-gradient(180deg,#e0212a,#9d0a10);padding:32px 0 0;color:#fff}
+  .plp-final__box{display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:28px}
+  .plp-final__pill{display:inline-flex;align-items:center;gap:6px;background:#ffcf3d;color:#7a1500;font-size:13px;font-weight:900;border-radius:999px;padding:6px 16px;margin-bottom:14px}
+  .plp-final__pill svg{width:16px;height:16px}
+  .plp-final__lead{margin:0 0 10px;font-size:clamp(16px,2vw,22px);font-weight:900}
+  .plp-final__num{display:inline-flex;align-items:center;justify-content:center;gap:12px;max-width:100%;background:#fff;border-radius:14px;padding:12px clamp(20px,3vw,34px);box-shadow:0 12px 30px rgba(90,0,0,.3)}
+  .plp-final__num svg{width:clamp(30px,4vw,42px);height:clamp(30px,4vw,42px);flex:none;color:var(--red)}
+  .plp-final__num b{font-size:clamp(32px,5.2vw,56px);font-weight:900;letter-spacing:.01em;line-height:1;white-space:nowrap;color:#c00d15}
+  .plp-final__hours{margin:10px 0 0;font-size:13px;font-weight:800;color:#ffdedb}
+  .plp-final__line{display:flex;align-items:center;justify-content:center;gap:14px;background:linear-gradient(180deg,#0dbf5b,#029343);padding:18px 16px calc(18px + env(safe-area-inset-bottom)*0);color:#fff}
+  .plp-final__lineic{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#fff;color:#06b451}
+  .plp-final__lineic svg{width:30px;height:30px}
+  .plp-final__line span:not(.plp-final__lineic){display:flex;flex-direction:column;line-height:1.25}
+  .plp-final__line b{font-size:clamp(17px,2vw,21px);font-weight:900}
+  .plp-final__line small{font-size:12.5px;font-weight:800;color:#dcffe9}
 
-  /* 他社見積もり比較セクション */
-  .xvs-off { color:#ffd23f; font-size:1.22em; font-weight:900; text-shadow:0 1px 2px rgba(80,6,4,.55); }
-  .xvs { display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:880px; margin:14px auto 0; }
-  .xvs-card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:.9rem .7rem; text-align:center; }
-  .xvs-ours { border-color:var(--red); box-shadow:0 4px 14px rgba(226,35,26,.12); }
-  .xvs-tag { display:inline-block; font-size:.72rem; font-weight:800; color:#6b5d4a; background:#f1ece3; border-radius:999px; padding:.25rem .7rem; }
-  .xvs-tag-on { color:#fff; background:var(--red); }
-  .xvs-pt { margin:.6rem 0 0; font-size:.78rem; line-height:1.65; color:#3f3526; word-break:auto-phrase; text-wrap:pretty; }
-  .xvs-lead2 { text-align:center; font-size:.84rem; line-height:1.7; color:#46402f; margin:1rem auto 0; max-width:780px; font-weight:600; word-break:auto-phrase; text-wrap:pretty; }
+  /* ---------- float ---------- */
+  .plp-float{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:8px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(0,0,0,.1)}
+  .plp-float a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;border-radius:10px;color:#fff}
+  .plp-float svg{width:24px;height:24px}
+  .plp-float span{display:flex;flex-direction:column;line-height:1.15;text-align:left}
+  .plp-float b{font-size:15.5px;font-weight:900}
+  .plp-float small{font-size:10.5px;font-weight:800}
+  .plp-float__tel{flex:1.15;background:linear-gradient(180deg,#ef2b24,var(--red-d))}
+  .plp-float__line{flex:.85;background:linear-gradient(180deg,#0dbf5b,var(--green-d))}
 
-  /* 料金直後の不安先回りFAQ */
-  .xb-quickfaq { padding-top:18px; }
-  .xqf-grid { display:grid; gap:9px; max-width:760px; margin-inline:auto; }
-  .xqf-item { overflow:hidden; }
-  .xqf-item summary { list-style:none; cursor:pointer; padding:.86rem 2.1rem .86rem .95rem; font-size:.9rem; font-weight:900; line-height:1.5; position:relative; }
-  .xqf-item summary::-webkit-details-marker { display:none; }
-  .xqf-item summary::after { content:"＋"; position:absolute; right:.95rem; top:.82rem; color:#a60101; font-weight:900; }
-  .xqf-item[open] summary::after { content:"−"; }
-  .xqf-item p { margin:0; border-top:1px solid var(--line); padding:.75rem .95rem .9rem; font-size:.84rem; line-height:1.75; color:#3f3526; }
+  /* ============ mobile (≤899px) ============ */
+  @media (max-width: 899px) {
+    .plp-in{width:min(100% - 24px,1140px)}
+    .plp-head__in{min-height:60px;gap:8px}
+    .plp-head__mid{display:none}
+    .plp-brand img{width:36px;height:36px}
+    .plp-brand b{font-size:13.5px;line-height:1.2}
+    .plp-brand .plp-brand__br{display:inline}
+    .plp-brand small{display:none}
+    .plp-head__cta{margin-left:auto;gap:6px}
+    .plp-hbtn{padding:7px 10px;border-radius:7px}
+    .plp-hbtn--tel{background:#fff;box-shadow:0 2px 8px rgba(215,25,32,.16);color:var(--red);padding:6px 11px;border:1.6px solid var(--red);border-radius:9px}
+    .plp-hbtn--tel svg{width:19px;height:19px}
+    .plp-hbtn__pc{display:none}
+    .plp-hbtn--tel .plp-hbtn__sp{display:flex;flex-direction:column;line-height:1.05;text-align:left}
+    .plp-hbtn__sp b{font-size:19px;font-weight:900;letter-spacing:0}
+    .plp-hbtn__sp small{font-size:9px;font-weight:800;color:#555;margin-top:2px}
+    .plp-hbtn--line{display:none}
 
-  /* 地元の実在企業（差別化トラストバッジ） */
-  .xlocal-badges { list-style:none; margin:14px auto 0; padding:0; max-width:680px; display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
-  .xlocal-badges li { display:flex; align-items:center; gap:.4rem; background:#fff; border:1px solid var(--line); border-radius:9999px;
-    padding:.5rem .9rem; font-size:.82rem; font-weight:800; color:#3f3526; box-shadow:0 2px 8px rgba(20,12,4,.05); }
-  .xlb-ic { width:1.35rem; height:1.35rem; flex-shrink:0; }
-  .xlocal-note { text-align:center; }
-  .xlocal-note a { color:var(--red); font-weight:800; text-decoration:underline; }
+    .plp-locbar{font-size:11.5px;padding:8px 12px;gap:8px}
+    .plp-locbar svg{width:15px;height:15px}
+    .plp-locbar__area{font-size:10.5px;padding:2px 10px}
 
-  /* 安心の3つのお約束 */
-  .xpromise { display:grid; grid-template-columns:1fr; gap:12px; max-width:880px; margin-inline:auto; }
-  .xpromise-card { display:flex; gap:.7rem; align-items:flex-start; padding:1rem .9rem; }
-  .xpromise-ic { flex-shrink:0; width:1.9rem; height:1.9rem; border-radius:50%; background:var(--red); color:#fff; font-weight:900; display:flex; align-items:center; justify-content:center; font-size:1.05rem; line-height:1; }
-  .xpromise-body h3 { margin:0 0 .3rem; font-size:.92rem; font-weight:800; color:#2a2113; }
-  .xpromise-body p { margin:0; font-size:.8rem; line-height:1.7; color:#3f3526; }
+    .plp-hero__media{aspect-ratio:auto;height:min(80vw,410px);min-height:300px}
+    .plp-hero__media>img{object-position:62% 40%}
+    .plp-hero__scrim{background:linear-gradient(0deg,rgba(255,255,255,.95) 3%,rgba(255,255,255,.58) 30%,rgba(255,255,255,.08) 60%,transparent 78%)}
+    .plp-hero__overlay{justify-content:flex-end;width:100%;padding:0 16px 32px}
+    .plp-kicker{margin-bottom:9px}
+    .plp-hero h2{line-height:1.24}
+    .plp-hero__checks{margin-top:9px;gap:5px}
 
-  /* こんなお悩み（共感チェックリスト） */
-  .xtrouble { max-width:600px; margin:0 auto; display:grid; gap:8px; list-style:none; padding:0; }
-  .xtrouble li { position:relative; background:#fff; border:1px solid var(--line); border-radius:10px; padding:.76rem .85rem .76rem 2.35rem; font-size:.9rem; font-weight:700; color:#3f3526; }
-  .xtrouble li::before { content:"✓"; position:absolute; left:.6rem; top:50%; transform:translateY(-50%); color:#fff; background:var(--red); width:1.25rem; height:1.25rem; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:900; z-index:1; }
-  .xtrouble li::after { content:"☎"; position:absolute; right:.78rem; top:50%; transform:translateY(-50%); color:#a60101; font-size:.92rem; font-weight:900; opacity:.58; }
-  .xtrouble li a { color:inherit; text-decoration:none; display:block; padding-right:1.8rem; -webkit-tap-highlight-color:rgba(166,1,1,.10); }
-  .xtrouble li a::after { content:""; position:absolute; inset:0; z-index:0; }
-  .xtrouble li:active { background:#fdf3f2; }
-  .xtrouble-cta { text-align:center; }
-  /* 蜂の巣ができやすい場所 */
-  .xspots { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; max-width:680px; margin:14px auto 0; list-style:none; padding:0; }
-  .xspots li { background:#fff; border:1px solid var(--line); border-radius:9999px; padding:.45rem .9rem; font-size:.82rem; font-weight:700; color:#46402f; box-shadow:0 2px 6px rgba(20,12,4,.05); }
-  /* 決済手段 */
-  .xpay { text-align:center; font-size:.76rem; color:#6b5d4a; margin:10px 2px 0; }
-  .xpay b { color:#3f3526; font-weight:800; }
-  /* 別名アンカー（サイトリンク飛び先一致用） */
-  .x-anchor { display:block; height:0; overflow:hidden; scroll-margin-top:8px; }
-  /* 市役所 vs 当社 */
-  .xgov { max-width:680px; margin:14px auto 0; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff; box-shadow:0 3px 12px rgba(20,12,4,.06); }
-  .xgov-head, .xgov-row { display:grid; grid-template-columns:.85fr 1.35fr 1.35fr; }
-  .xgov-head { background:#f1ece3; font-weight:800; font-size:.74rem; text-align:center; }
-  .xgov-head span, .xgov-row span { padding:.6rem .55rem; border-bottom:1px solid var(--line); }
-  .xgov-head .xgov-h-us { background:#fff1e8; color:var(--red); }
-  .xgov-row:last-child span { border-bottom:0; }
-  .xgov-label { font-weight:800; font-size:.72rem; color:#46402f; background:#faf6ef; display:flex; align-items:center; }
-  .xgov-cell { font-size:.72rem; line-height:1.55; }
-  .xgov-us-ok { color:#0a7d28; font-weight:700; }
-  .xgov-warn { color:#8a5e00; }
-  .xgov-bad { color:#b3261e; }
-  .xgov-note { max-width:680px; margin:14px auto 0; font-size:.74rem; color:#5b4f3d; line-height:1.6; }
-  .xgov-note ul { margin:.4rem 0 0; padding-left:1.1rem; }
-  .xgov-note li { margin-bottom:.2rem; }
+    .plp-hexbadges{gap:6px;width:calc(100% - 20px);margin-top:-14px}
+    .plp-hero__ctawrap{width:calc(100% - 20px);margin-top:42px;gap:9px}
+    .plp-clerk{width:clamp(120px,32vw,152px);left:-3px}
+    .plp-cta-lead{padding-left:clamp(102px,29vw,130px);font-size:11.5px}
+    .plp-call{min-height:92px;padding:12px 12px 12px clamp(102px,29vw,130px);justify-content:center}
+    .plp-call small{font-size:12.5px}
+    .plp-call b{font-size:clamp(25px,7.4vw,33px)}
+    .plp-call em{font-size:10.5px}
+    .plp-linebtn{justify-content:center;padding:11px 14px}
+    .plp-linebtn b{font-size:17px}
 
-  /* 蜂種（統一カード） */
-  .xbee-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
-  .xbee { position:relative; display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
-    border-radius:14px; overflow:hidden; box-shadow:0 3px 12px rgba(20,12,4,.06); height:100%; }
-  .xbee-photo { position:relative; background:#f3efe7; }
-  .xbee-photo img { width:100%; height:122px; object-fit:cover; display:block; }
-  .xbee-badge { position:absolute; top:8px; right:8px; color:#fff; font-size:.6rem; font-weight:800;
-    padding:.16rem .46rem; border-radius:6px; box-shadow:0 2px 5px rgba(0,0,0,.25); white-space:nowrap; }
-  .xbee-badge-max  { background:#7e0c0c; }
-  .xbee-badge-high { background:#c81e1e; }
-  .xbee-badge-mid  { background:#a85400; }
-  .xbee-badge-low  { background:#2f7a2f; }
-  .xbee-body { display:flex; flex-direction:column; gap:.4rem; padding:.7rem .8rem .85rem; flex:1; }
-  .xbee-name { margin:0; font-size:.98rem; font-weight:900; line-height:1.2; }
-  .xbee-meter { display:flex; gap:3px; }
-  .xbee-meter i { width:14px; height:5px; border-radius:3px; background:#e7e0d4; }
-  .xbee-meter i.on-max { background:#7e0c0c; } .xbee-meter i.on-high { background:#c81e1e; }
-  .xbee-meter i.on-mid { background:#e07a18; } .xbee-meter i.on-low { background:#3a8a3a; }
-  .xbee-desc { margin:0; font-size:.72rem; line-height:1.6; color:#46402f;
-    display:-webkit-box; -webkit-line-clamp:3; line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
-  .xbee-meta { margin:auto 0 0; display:flex; flex-direction:column; gap:2px; font-size:.64rem; color:#7a6c58; padding-top:.2rem; }
-  .xbee-meta div { display:flex; gap:.4rem; }
-  .xbee-meta dt { margin:0; font-weight:800; color:#6b5d4a; min-width:2.4em; flex-shrink:0; }
-  .xbee-meta dd { margin:0; }
+    .plp-sec{padding:22px 0}
+    .plp-h{margin-bottom:14px}
+    .plp-cols{grid-template-columns:repeat(2,1fr);gap:8px}
+    .plp-cols a{padding:11px 11px;font-size:12px}
+    .plp-h p{font-size:13px}
+    .plp-h--row{display:block}
+    .plp-mini{margin-top:12px}
 
-  /* 事例 */
-  .xb-cases { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .xb-case-card { overflow:hidden; position:relative; }
-  .xcard-tel { position:absolute; inset:0; z-index:4; -webkit-tap-highlight-color:rgba(226,35,26,.10); }
-  .xb-case-card img { width:100%; height:120px; object-fit:cover; display:block; }
-  .xb-case-body { padding:.55rem .65rem .7rem; }
-  .xb-case-tags { display:flex; flex-wrap:wrap; gap:.25rem; margin-bottom:.3rem; }
-  .xb-tag { font-size:.6rem; background:#fbe6df; color:#a02414; padding:.08rem .4rem; border-radius:5px; font-weight:700; }
-  .xb-case-body h3 { margin:.1rem 0 .35rem; font-size:.82rem; font-weight:800; line-height:1.45; }
-  .xb-case-status { margin:0; font-size:.74rem; font-weight:800; color:#0a7d28; display:flex; align-items:center; gap:.25rem; line-height:1.45; }
-  .xb-case-check { display:inline-grid; place-items:center; width:1rem; height:1rem; border-radius:50%; background:#0a7d28; color:#fff; font-size:.62rem; flex-shrink:0; }
+    .plp-urgent{grid-template-columns:1fr;gap:9px}
+    .plp-urgent__card{display:flex;align-items:stretch}
+    .plp-urgent__card img{width:36%;height:auto;min-height:94px;flex:none}
+    .plp-urgent__card>div{flex:1;padding:11px 12px 11px 42px}
+    .plp-urgent__mark{left:11px;top:12px;width:25px;height:25px}
+    .plp-urgent__card h3{font-size:14.5px;line-height:1.35}
+    .plp-urgent__card p{font-size:12px;margin-top:5px}
+    .plp-secbtn{font-size:15.5px;min-height:52px}
 
-  /* 声 */
-  .xb-voices { display:flex; flex-direction:column; gap:10px; }
-  @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-  .xb-voice-card { padding:.8rem .9rem; display:block; text-decoration:none; color:inherit; cursor:pointer; }
-  .xb-voice-head { display:flex; align-items:center; gap:.55rem; margin-bottom:.4rem; }
-  .xb-avatar { width:2.1rem; height:2.1rem; border-radius:50%; background:#f0d9a8; color:#7a5a14; display:grid; place-items:center; font-weight:900; flex-shrink:0; }
-  .xb-voice-meta { display:flex; flex-direction:column; font-size:.78rem; font-weight:800; line-height:1.2; }
-  .xb-voice-meta small { font-size:.64rem; color:#7a6c58; font-weight:600; }
-  .xb-voice-label { margin-left:auto; color:#8a5e00; background:#fff3d6; border:1px solid #f1d08a; border-radius:999px; padding:.14rem .5rem; font-size:.68rem; font-weight:900; white-space:nowrap; }
-  .xb-voice-card p { margin:0; font-size:.86rem; line-height:1.72; color:#3f3526; }
+    .plp-zero{grid-template-columns:repeat(2,1fr);gap:9px}
+    .plp-zero article{padding:13px 6px}
+    .plp-zero__ic{width:32px;height:32px}
+    .plp-zero b{font-size:14.5px}
+    .plp-zero em{font-size:30px}
+    .plp-zero__ok{font-size:17px !important;padding:10px 0}
+    .plp-zero p{font-size:11px}
 
-  /* 比較表 */
-  .xb-cmp { overflow:hidden; }
-  .xb-cmp table { width:100%; border-collapse:collapse; font-size:.7rem; }
-  .xb-cmp th, .xb-cmp td { padding:.5rem .35rem; text-align:center; border-bottom:1px solid var(--line); vertical-align:middle; }
-  .xb-cmp thead th { background:#3a2410; color:#fff; font-weight:800; }
-  .xb-cmp thead th.xb-cmp-us { background:var(--red); }
-  .xb-cmp tbody th { text-align:left; font-weight:800; background:#fff8ef; font-size:.68rem; }
-  .xb-cmp td.xb-cmp-us { background:#fff3ee; }
-  .xb-st { font-weight:700; }
-  .xb-st-us-ok { color:#0a7d28; font-weight:900; } .xb-st-warn { color:#9a6a00; } .xb-st-bad { color:#b02414; }
+    .plp-price{grid-template-columns:1fr;gap:14px}
+    .plp-pcard header{font-size:17px}
+    .plp-pcard__body img{width:104px;height:74px}
+    .plp-pcard__body b{font-size:40px}
+    .plp-ptable th,.plp-ptable td{font-size:12px;padding:9px 10px}
 
-  /* 流れ */
-  .xb-flow { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
-  .xb-flow-step { display:flex; gap:.7rem; align-items:center; padding:.7rem .9rem; }
-  .xb-flow-step h3 { margin:0 0 .15rem; font-size:.92rem; font-weight:900; }
-  .xb-flow-step p { margin:0; font-size:.78rem; color:#3f3526; line-height:1.55; }
+    .plp-local{grid-template-columns:1fr;gap:14px}
+    .plp-local__panel{padding:22px 18px}
+    .plp-local__photos{grid-template-columns:repeat(3,1fr);gap:8px}
+    .plp-local__img{height:86px}
+    .plp-local__photos figcaption{padding:8px 8px 10px}
+    .plp-local__photos b{font-size:11px}
+    .plp-local__photos span{font-size:9.5px;margin-top:2px}
 
-  /* エリア */
-  .xb-areas { display:flex; flex-direction:column; gap:12px; }
-  .xb-area-pref { display:inline-block; color:var(--red); font-size:.92rem; font-weight:900; margin-bottom:.4rem; }
-  .xb-area-cities { display:flex; flex-wrap:wrap; gap:.3rem; }
-  .xb-area-cities span { font-size:.68rem; background:#fff; border:1px solid var(--line); border-radius:6px; padding:.18rem .45rem; color:#46402f; }
-  .xb-area-cities a { font-size:.68rem; background:#fff; border:1px solid var(--red); border-radius:6px; padding:.18rem .45rem; color:var(--red); font-weight:800; text-decoration:none; -webkit-tap-highlight-color:rgba(226,35,26,.12); }
-  @media(hover:hover){ .xb-area-cities a:hover { background:var(--red); color:#fff; } }
-  .xb-area-cta { display:flex; flex-direction:column; gap:10px; margin-top:16px; }
-  .xb-area-ngy { display:block; background:#fff; border:2px solid var(--red); border-radius:12px; padding:12px 14px; text-decoration:none; box-shadow:0 3px 12px rgba(20,12,4,.06); }
-  .xb-area-ngy-t { display:block; font-size:.95rem; font-weight:900; color:var(--red); margin-bottom:2px; }
-  .xb-area-ngy-t::before { content:"▶ "; font-size:.72rem; }
-  .xb-area-ngy-s { display:block; font-size:.75rem; font-weight:600; color:#5b5140; }
-  .xb-area-note { font-size:.72rem; color:#5b5140; text-align:center; margin:2px 2px; line-height:1.6; }
-  .xb-area-tel { display:flex; flex-direction:column; align-items:center; gap:1px; background:linear-gradient(180deg,#7d1410,#a8190f); color:#fff; border-radius:12px; padding:12px 14px; text-decoration:none; box-shadow:0 4px 14px rgba(140,10,10,.25); -webkit-tap-highlight-color:rgba(255,255,255,.15); }
-  .xb-area-tel-lab { font-size:.74rem; font-weight:700; opacity:.95; }
-  .xb-area-tel-num { font-size:1.4rem; font-weight:900; letter-spacing:.02em; }
-  .xb-area-tel-sub { font-size:.68rem; opacity:.9; }
+    .plp-cases{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+    .plp-case{min-width:66%;scroll-snap-align:start}
+    .plp-case__imgwrap img{height:150px}
 
-  /* FAQ */
-  .xb-faq { display:flex; flex-direction:column; gap:8px; }
-  .xb-faq-item { padding:0; overflow:hidden; }
-  .xb-faq-item summary { list-style:none; cursor:pointer; padding:.8rem 2rem .8rem .9rem; font-weight:800; font-size:.84rem; line-height:1.5; position:relative; }
-  .xb-faq-item summary::-webkit-details-marker { display:none; }
-  .xb-faq-item summary::after { content:"＋"; position:absolute; right:.85rem; top:.7rem; color:var(--red); font-weight:900; }
-  .xb-faq-item[open] summary::after { content:"−"; }
-  .xb-faq-item p { margin:0; padding:0 .9rem .85rem; font-size:.78rem; line-height:1.7; color:#3f3526; border-top:1px solid var(--line); padding-top:.7rem; }
+    .plp-danger{grid-template-columns:1fr;gap:14px}
+    .plp-growth__steps{gap:5px}
+    .plp-growth__nest{height:74px}
+    .plp-growth__arrow{margin-bottom:30px}
+    .plp-growth__steps figcaption b{font-size:11.5px}
+    .plp-growth__steps figcaption span{font-size:10px}
+    .plp-growth__arrow{font-size:15px}
+    .plp-notouch{padding:22px 20px 20px 24px;border-radius:18px}
+    .plp-notouch__head{gap:10px;margin-bottom:14px}
+    .plp-notouch h3{font-size:18px;margin-bottom:15px}
+    .plp-notouch__list{padding:6px 14px}
+    .plp-notouch__list li{padding:13px 2px;font-size:15px}
+    .plp-notouch__ic{width:32px;height:32px}
+    .plp-notouch__ic svg{width:18px;height:18px}
+    .plp-notouch__x{width:22px;height:22px}
+    .plp-notouch__specimen{margin:16px -20px -20px -24px}
+    .plp-notouch__bee{height:clamp(150px,42vw,208px)}
 
-  /* 最終CTA（電話＋LINE） */
-  .xb-cta-sec { background:linear-gradient(180deg,#7d1410,#a8190f); color:#fff; text-align:center; padding:28px 16px 34px; }
-  .xb-cta-lead { margin:0 0 14px; font-weight:900; font-size:1rem; }
-  .xb-cta-btns { display:flex; flex-direction:column; gap:10px; max-width:360px; margin:0 auto; }
-  .xb-cta-btn { display:flex; align-items:center; justify-content:center; gap:.6rem; color:#fff;
-    padding:.78rem 1rem; border-radius:14px; box-shadow:0 8px 20px rgba(0,0,0,.28); text-decoration:none; text-shadow:0 1px 2px rgba(0,0,0,.32); }
-  .xb-cta-btn span { display:flex; flex-direction:column; align-items:flex-start; line-height:1.12; }
-  .xb-cta-btn small { font-size:.6rem; opacity:1; margin-top:2px; font-weight:700; }
-  .xb-cta-tel { background:linear-gradient(180deg,#e8590c,#c4150c); }
-  .xb-cta-tel .xic { width:1.7rem; height:1.7rem; }
-  .xb-cta-tel b { font-size:1.5rem; line-height:1; letter-spacing:.01em; }
-  .xb-cta-line { background:#047d36; }
-  .xb-cta-line b { font-size:1.05rem; font-weight:900; }
-  .xb-cta-line-badge { background:#fff; color:#057a35; font-weight:900; font-size:.82rem; padding:.2rem .5rem; border-radius:8px; flex-shrink:0; }
-  .xb-cta-sub { margin:14px 0 0; font-size:.74rem; opacity:.95; }
+    .plp-vs{grid-template-columns:1fr;gap:14px}
+    .plp-vs__scroll th,.plp-vs__scroll td{font-size:11.5px;padding:9px 8px}
 
-  /* フローティング（電話＋LINE）バー */
-  .xfloat { position:fixed; left:0; right:0; bottom:0; z-index:60; display:flex; padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));
-    background:#fff; border-top:1px solid rgba(20,12,4,.1); box-shadow:0 -4px 18px rgba(0,0,0,.2);
-    transition:transform .28s ease, opacity .28s ease; }
-  /* 最下部（フッターの法的リンク）到達時は退避してリンクをタップ可能に */
-  .xfloat--hidden { transform:translateY(115%); opacity:0; pointer-events:none; }
-  .xfloat-row { display:flex; gap:8px; width:100%; }
-  .xfloat-btn { display:flex; align-items:center; justify-content:center; gap:.4rem; color:#fff; font-weight:800;
-    padding:.72rem .45rem; border-radius:12px; text-decoration:none; box-shadow:0 4px 12px rgba(0,0,0,.2); text-shadow:0 1px 2px rgba(0,0,0,.32); }
-  .xfloat-tel { flex:1.5; background:linear-gradient(180deg,#e8590c,#c4150c); position:relative; overflow:visible; }
-  .xfloat-cpn { position:absolute; top:-9px; left:-5px; z-index:2; background:#ffd23f; color:#bd0a08; font-weight:900; font-size:.6rem; line-height:1; padding:3px 7px; border-radius:9px; box-shadow:0 2px 6px rgba(0,0,0,.3); transform:rotate(-7deg); white-space:nowrap; }
-  .xfloat-cpn b { font-size:.74rem; }
-  .xfloat-line { flex:1.15; background:#047d36; }
-  .xfloat-night .xfloat-row { flex-direction:row-reverse; }
-  .xfloat-night .xfloat-line { flex:1.5; }
-  .xfloat-night .xfloat-tel { flex:1.05; background:#695545; }
-  .xfloat-night .xfloat-cpn { display:none; }
-  .xfloat .xic { width:1.45rem; height:1.45rem; }
-  .xfloat-tx { display:flex; flex-direction:column; line-height:1.16; align-items:flex-start; }
-  .xfloat-tx b { font-size:.94rem; white-space:nowrap; }
-  .xfloat-tx small { font-size:.64rem; font-weight:800; opacity:1; white-space:nowrap; }
-  .xfloat-line-badge { background:#fff; color:#057a35; font-weight:900; font-size:.72rem; padding:.14rem .4rem; border-radius:6px; }
-  @media (min-width:900px){ .xfloat { display:none; } }
+    .plp-flow{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:9px;padding-bottom:6px}
+    .plp-flow li{min-width:168px;scroll-snap-align:start;padding:16px 12px}
 
-  /* ===== PC(≥900px)最適化：横幅を使うレイアウト（モバイルは @media 外＝一切不変） ===== */
-  .xhero-pc { display:none; }
-  @media (min-width:900px){
-    .xhero { display:none; }                       /* モバイル焼込み画像はPCで隠す */
+    .plp-area{grid-template-columns:1fr;gap:12px}
 
-    /* === PC専用ヒーロー（チラシを実HTML再現／16:9固定キャンバス・%絶対配置・cqwフォント） === */
-    .xhero-pc { display:block; }
-    .xpc { position:relative; width:100%; max-width:1320px; margin:0 auto; aspect-ratio:1376/768; container-type:inline-size; overflow:hidden;
-      font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
-    .xpc > * { position:absolute; }
-    .xpc-bg { inset:0; width:100%; height:100%; object-fit:cover; background:linear-gradient(180deg,#a7d8f9,#eef8ff); }
-    .xpc-bar { left:0; top:0; width:100%; height:12.5%; background:#fff; display:flex; flex-direction:column; justify-content:center; padding:0 2.5cqw; gap:.4cqw; }
-    .xpc-bar-sub { display:inline-block; background:#2a2a2a; color:#fff; font-size:1.5cqw; font-weight:800; padding:.25cqw 1cqw; border-radius:.4cqw; width:fit-content; letter-spacing:.02em; }
-    .xpc-bar-brand { display:flex; align-items:center; gap:.7cqw; font-size:2.8cqw; font-weight:900; color:#1a3f6b; letter-spacing:-.01em; }
-    .xpc-bar-logo { width:3.1cqw; height:auto; }
-    .xpc-ribbon { left:17%; top:14%; width:51%; height:10%; display:flex; align-items:center; justify-content:center; }
-    .xpc-ribbon span { display:flex; align-items:center; justify-content:center; width:100%; height:80%; background:linear-gradient(180deg,#f5821f,#e8590c); color:#fff; font-size:3cqw; font-weight:900; letter-spacing:.02em;
-      clip-path:polygon(4% 0,96% 0,100% 30%,93% 50%,100% 70%,96% 100%,4% 100%,0 70%,7% 50%,0 30%); box-shadow:0 .5cqw 1cqw rgba(0,0,0,.18); line-height:1; }
-    .xpc-h1 { left:16%; top:26%; width:50%; height:19%; margin:0; display:flex; align-items:flex-start; gap:.6cqw; }
-    .xpc-h1-box { font-size:8.6cqw; font-weight:900; color:#1a1a1a; background:#ffe200; border:.5cqw solid #1a1a1a; border-radius:1.6cqw; padding:0 1cqw; line-height:1.05; letter-spacing:-.04em; }
-    .xpc-h1-out { font-size:8.6cqw; font-weight:900; color:#fff; -webkit-text-stroke:.65cqw #1a1a1a; paint-order:stroke fill; letter-spacing:-.04em; line-height:1.05; }
-    .xpc-h2 { left:16%; top:45.5%; width:52%; height:11%; margin:0; display:flex; align-items:flex-start; font-size:3.5cqw; font-weight:900; color:#1a3f6b; letter-spacing:-.02em; line-height:1; -webkit-text-stroke:.35cqw #fff; paint-order:stroke fill; text-shadow:0 0 .6cqw #fff,0 .15cqw .3cqw rgba(255,255,255,.9); }
-    .xpc-checks { list-style:none; margin:0; left:33%; top:56.5%; width:36%; height:13%; padding:0; display:flex; flex-direction:column; justify-content:center; gap:.7cqw; }
-    .xpc-checks li { display:flex; align-items:center; gap:.7cqw; font-size:1.85cqw; font-weight:800; color:#222; white-space:nowrap; text-shadow:0 0 .5cqw #fff,0 0 .5cqw #fff; }
-    .xpc-chk { width:2.7cqw; height:2.7cqw; flex-shrink:0; fill:none; stroke:#1a5fa5; stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round; }
-    .xpc-min { left:34%; top:69%; width:28%; height:12.5%; display:flex; align-items:center; justify-content:center; gap:1cqw;
-      background:linear-gradient(180deg,#f5821f,#e8590c); color:#fff; border-radius:9999px; font-size:2.5cqw; font-weight:900; white-space:nowrap; }
-    .xpc-min b { font-size:1.3em; color:#ffe200; margin:0 .1em; }
-    .xpc-min-ic { width:2.8cqw; height:2.8cqw; fill:none; stroke:#fff; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-    .xpc-seals { list-style:none; margin:0; left:36%; top:83.5%; width:26%; height:15%; padding:0; display:flex; justify-content:space-between; align-items:center; }
-    .xpc-seals li { width:30%; aspect-ratio:1/1; border-radius:50%; background:linear-gradient(180deg,#f5821f,#e8590c); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 0 0 .4cqw #fff,0 0 0 .8cqw #e8590c; text-align:center; line-height:1.08; }
-    .xpc-seals b { font-size:2.6cqw; font-weight:900; }
-    .xpc-seals small { font-size:1.55cqw; font-weight:800; line-height:1.15; }
-    .xpc-seals li:last-child small { font-size:1.1cqw; }
-    .xpc-seals li:last-child b { font-size:2.4cqw; margin-top:.15cqw; }
-    .xpc-price { left:65%; top:35%; width:33.5%; height:21%; background:#fff; border:.45cqw solid #e8590c; border-radius:2cqw; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:.6cqw; padding:0 1.6cqw; filter:drop-shadow(0 .6cqw 1cqw rgba(0,0,0,.12)); }
-    .xpc-price span { display:flex; align-items:baseline; justify-content:center; font-size:1.75cqw; font-weight:900; color:#1a1a1a; white-space:nowrap; line-height:1.15; }
-    .xpc-price b { color:#e8590c; font-size:1.28em; }
-    .xpc-price i { font-size:.62em; font-style:normal; color:#555; }
-    .xpc-price-2 b { font-size:1.32em; }
-    .xpc-price::after { content:""; position:absolute; left:30%; bottom:-2.3cqw; border:1.2cqw solid transparent; border-top-color:#e8590c; }
-    .xpc-tel { left:62%; top:69%; width:36.5%; height:12.5%; display:flex; align-items:center; gap:1.5cqw; text-decoration:none; color:#fff;
-      background:linear-gradient(180deg,#f5821f,#e8590c); border-radius:9999px; padding:0 2.5cqw; box-shadow:0 .6cqw 1.4cqw rgba(180,60,6,.3); }
-    .xpc-tel .xic { width:4cqw; height:4cqw; flex-shrink:0; }
-    .xpc-tel-tx { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; }
-    .xpc-tel-tx b { font-size:3.5cqw; font-weight:900; letter-spacing:0; }
-    .xpc-tel-tx small { font-size:1.7cqw; font-weight:700; }
-    .xpc-line { left:64.5%; top:85%; width:34%; height:9%; display:flex; align-items:center; gap:1.2cqw; text-decoration:none; color:#fff;
-      background:#06C755; border-radius:1.5cqw; padding:0 1.6cqw; font-size:2.1cqw; font-weight:900; white-space:nowrap; }
-    .xpc-line-badge { background:#fff; color:#06C755; font-weight:900; font-size:.85em; padding:.2cqw .7cqw; border-radius:.5cqw; }
+    .plp-final{padding-top:26px}
+    .plp-final__box{padding-bottom:24px}
+    .plp-final__num{padding:11px 18px}
+    .plp-final__num b{font-size:clamp(27px,7.6vw,40px)}
+    .plp-final__pill{font-size:12px;padding:5px 13px}
+    .plp-final__line{margin-bottom:0}
+    .plp-final__line b{font-size:15.5px}
+    .plp-final__line small{font-size:11px}
 
-    /* 下半分：横幅を使う多段グリッド */
-    .xb { max-width:1080px; }
-    .xb section { padding:46px 30px; }
-    .xb-lead, .xb-note { text-align:center; max-width:780px; margin-inline:auto; }
-    .xrate-free { max-width:760px; margin-inline:auto; }
-    .xrate-card { max-width:760px; margin-inline:auto; }
-    .xb-why { display:grid; grid-template-columns:repeat(3,1fr); align-items:stretch; }
-    .xdanger-grid { grid-template-columns:1fr 1fr; max-width:880px; margin-inline:auto; gap:20px; }
-    .xdanger img { height:300px; }
-    .xpromise { grid-template-columns:repeat(3,1fr); }
-    .xbee-grid { grid-template-columns:repeat(3,1fr); }
-    .xb-cases { grid-template-columns:repeat(4,1fr); }
-    .xb-voices { display:grid; grid-template-columns:repeat(3,1fr); align-items:start; }
-    .xb-flow { flex-direction:row; align-items:stretch; }
-    .xb-flow-step { flex:1; flex-direction:column; align-items:center; text-align:center; }
-    .xb-areas { display:grid; grid-template-columns:repeat(3,1fr); }
-    .xb-faq { display:block; column-count:2; column-gap:14px; }
-    .xb-faq-item { break-inside:avoid; margin-bottom:8px; }
-    .xb-cta-btns { flex-direction:row; max-width:720px; }
-    .xb-cta-btn { flex:1; }
+    .plp-float{display:flex}
+    .plp-final__line{padding-bottom:18px}
+    main.plp{padding-bottom:74px}
+  }
+
+  /* 極小幅（〜374px）の保険 */
+  @media (max-width: 374px) {
+    .plp-brand b{font-size:11.5px;white-space:nowrap}
+    .plp-brand img{width:30px;height:30px}
+    .plp-hbtn__sp b{font-size:16.5px}
+    .plp-hero h2{font-size:25px}
+    .plp-call b{font-size:28px}
+    .plp-hexbadges{gap:5px}
+    .plp-hex b{font-size:15px}
+    .plp-hex small{font-size:8px}
+    .plp-zero em{font-size:31px}
+    .plp-final__num b{font-size:29px}
+  }
+
+  /* ============ premium motion layer (prefers-reduced-motion 尊重) ============ */
+  @media (prefers-reduced-motion: no-preference) {
+    .rv{opacity:0;transform:translateY(24px)}
+    .rv.rv-in{opacity:1;transform:none;transition:opacity .7s ease,transform .75s cubic-bezier(.16,.72,.29,1)}
+    .rv-pop{opacity:0;transform:translateY(14px) scale(.84)}
+    .rv-pop.rv-in{opacity:1;transform:none;transition:opacity .5s ease,transform .6s cubic-bezier(.2,1.25,.4,1)}
+
+    .plp-hero__media>img{animation:kenburns 26s ease-in-out infinite alternate;will-change:transform}
+    @keyframes kenburns{from{transform:scale(1.03)}to{transform:scale(1.09)}}
+
+    .plp-call,.plp-secbtn{position:relative;overflow:hidden}
+    .plp-call::after,.plp-secbtn::after{content:"";position:absolute;top:-25%;left:-75%;width:48%;height:150%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-18deg);pointer-events:none;animation:sheen 5.2s ease-in-out infinite}
+    .plp-secbtn::after{animation-delay:1s}
+    @keyframes sheen{0%{left:-75%}20%{left:135%}100%{left:135%}}
+
+    .plp-hexbadges::before{content:"";position:absolute;inset:-22px 0 -8px;background:radial-gradient(60% 120% at 50% 42%,rgba(201,135,16,.16),transparent 72%);z-index:-1;animation:aura 5.5s ease-in-out infinite}
+    @keyframes aura{0%,100%{opacity:.55;transform:scale(.97)}50%{opacity:1;transform:scale(1.03)}}
   }
 </style>

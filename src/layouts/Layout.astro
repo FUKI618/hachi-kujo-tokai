@@ -7,6 +7,8 @@ interface Props {
   noindex?: boolean;
   /** モバイルLCP画像。各ページの実ヒーロー画像を高優先preloadするため上書き。既定は汎用 hero-mob-photo */
   lcpMobileImage?: string;
+  /** PC LCP画像。PC専用ヒーロー背景を差し替えるページ用 */
+  lcpDesktopImage?: string;
 }
 
 import "../styles/global.css";
@@ -17,7 +19,14 @@ import { rates } from "../data/rates";
 import { flowSteps } from "../data/flow";
 import { areas } from "../data/areas";
 
-const { title, description, extraJsonLd = [], noindex = false, lcpMobileImage = "images/generated/hero-mob-photo.webp" } = Astro.props;
+const {
+  title,
+  description,
+  extraJsonLd = [],
+  noindex = false,
+  lcpMobileImage = "images/generated/hero-mob-photo.webp",
+  lcpDesktopImage = "images/generated/hero-pc-bg.webp",
+} = Astro.props;
 const canonicalUrl = Astro.url.href;
 const siteUrl = Astro.site ?? new URL(Astro.url.origin);
 const homeUrl = new URL(homePath, siteUrl).toString();
@@ -281,8 +290,8 @@ const allJsonLd = [
          mobile(<900px)=HTMLヒーロー実写真 hero-mob-photo / PC(≥900px)=HTMLヒーロー背景 hero-pc-bg。media属性で該当幅だけ先読み -->
     <link rel="preload" as="image" type="image/webp" fetchpriority="high"
       href={assetPath(lcpMobileImage)} media="(max-width: 899px)" />
-    <link rel="preload" as="image" type="image/webp" fetchpriority="high"
-      href={assetPath("images/generated/hero-pc-bg.webp")} media="(min-width: 900px)" />
+    <link rel="preload" as="image" fetchpriority="high"
+      href={assetPath(lcpDesktopImage)} media="(min-width: 900px)" />
 
     <!-- 初期表示制御：トップへリセット -->
     <script is:inline>
