@@ -18,7 +18,7 @@ import { assetPath, homePath } from "../lib/site";
 
 const title = "名古屋の蜂の巣駆除なら最短30分｜中区拠点・上限つき明朗会計・追加0円｜蜂の巣駆除ファクトリー東海";
 const description =
-  "名古屋市16区の蜂の巣駆除。名古屋・中区丸の内拠点の自社スタッフが最短30分で直接対応。相場はアシナガ8,000〜20,000円・スズメ15,000〜30,000円が中心、標準ケース上限つき（アシナガ19,800/スズメ29,800円）・追加請求0円・1年保証。受付は電話7時〜21時・LINE24時間。アシナガバチ・スズメバチをメインに、その他の蜂も対応。";
+  "名古屋市16区の蜂の巣駆除。名古屋・中区丸の内拠点から専門スタッフが最短30分で対応。相場はアシナガ8,000〜20,000円・スズメ15,000〜30,000円が中心、標準ケース上限つき（アシナガ19,800/スズメ29,800円）・追加請求0円・1年保証。受付は電話7時〜21時・LINE24時間。アシナガバチ・スズメバチをメインに、その他の蜂も対応。";
 const a = company.address;
 const rateImg: Record<string, string> = {
   "アシナガバチ": "ashinagabachi",
@@ -68,7 +68,7 @@ const nagoyaFaq = [
   },
   {
     q: "電話してから、どのくらいで来てもらえますか？",
-    a: "中区丸の内の拠点から名古屋市内へ最短30分でうかがいます。当日対応率は98%です。混み合う時期は、お電話で到着のおおよその目安をその場でお伝えします。",
+    a: "中区丸の内の拠点から名古屋市内へ最短30分でうかがいます。混み合う時期は、お電話で到着のおおよその目安をその場でお伝えします。",
   },
   {
     q: "夜間や早朝でも相談できますか？",
@@ -91,7 +91,7 @@ const nagoyaFaq = [
 
 <Layout title={title} description={description} noindex={true} extraJsonLd={nagoyaJsonLd}>
   <!-- sr-only 実h1（名古屋・SEO/QS） -->
-    <h1 class="x-sr">名古屋の蜂の巣駆除｜中区拠点から最短30分で現場到着・標準ケース上限つき（アシナガ19,800円・スズメ29,800円）・1年保証・追加0円の明朗会計・当日対応98%・受付は電話7時〜21時／LINE24時間 {company.phoneDisplay}</h1>
+    <h1 class="x-sr">名古屋の蜂の巣駆除｜中区拠点から最短30分で現場到着・標準ケース上限つき（アシナガ19,800円・スズメ29,800円）・1年保証・追加0円の明朗会計・受付は電話7時〜21時／LINE24時間 {company.phoneDisplay}</h1>
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
       <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L8 4 L10 9 L7.5 11 C8.7 13.5 10.5 15.3 13 16.5 L15 14 L20 16 L20 19 C20 20.1 19.1 21 18 21 C10.3 21 4 14.7 4 7 C4 5.9 4.9 5 6 5"/></symbol>
@@ -112,7 +112,7 @@ const nagoyaFaq = [
       </div>
       <div class="xh-banner" aria-hidden="true"><span><em>そのまま放置</em><i>すると</i><b>危険！</b></span></div>
       <p class="xh-h1" aria-hidden="true">名古屋の蜂駆除</p>
-      <p class="xh-h2" aria-hidden="true">地元密着・自社施工・確実駆除</p>
+      <p class="xh-h2" aria-hidden="true">地元密着・最短30分・確実駆除</p>
       <p class="xh-price" aria-hidden="true">
         <span class="xhp-cell"><small>最短</small><b class="xhp-num">30</b><small>分</small></span>
         <span class="xhp-div"></span>
@@ -166,8 +166,8 @@ const nagoyaFaq = [
       <h2 class="ng-h2">名古屋・中区の実在拠点が、直接うかがいます</h2>
       <div class="ng-base">
         <p class="ng-base-lead">
-          全国の紹介サイトや県外本社を通さず、<b>名古屋・中区丸の内の自社スタッフ</b>が現地対応。
-          だから<b>仲介手数料0円</b>・連絡が早く・料金も明朗です。
+          名古屋・中区丸の内の拠点から、<b>地域の専門スタッフ</b>が現地対応。
+          上限つきの<b>明朗会計</b>で、連絡も対応もスピーディです。
         </p>
         <dl class="ng-base-info">
           <div><dt>拠点</dt><dd>〒{a.postal} {a.region}{a.city}{a.street}</dd></div>
@@ -298,9 +298,9 @@ const nagoyaFaq = [
     <section class="ng-sec ng-sec-tint">
       <h2 class="ng-h2">名古屋で選ばれる理由</h2>
       <ul class="ng-why">
-        <li><b>中区拠点で最短30分</b>名古屋市内へ自社スタッフが直行</li>
+        <li><b>中区拠点で最短30分</b>名古屋市内へ専門スタッフが直行</li>
         <li><b>明朗会計・追加0円</b>現地の確定見積からの追加請求なし</li>
-        <li><b>自社直接施工</b>紹介サイトを通さず仲介手数料0円</li>
+        <li><b>上限つき明朗会計</b>追加請求なしで安心の料金</li>
         <li><b>1年再発保証</b>駆除後の再発も無料で対応</li>
         <li><b>毎日受付</b>電話7時〜21時・LINEは24時間</li>
         <li><b>防護装備の専門対応</b>軒下・ベランダ・エアコン室外機まわりの危険なスズメバチの巣も安全に駆除</li>
