@@ -183,126 +183,6 @@ const mieCities = areas[2]?.cities.slice(0, 6) ?? [];
       </div>
     </section>
 
-    <!-- ============ 0円対応 ============ -->
-    <section class="plp-sec plp-sec--cream" aria-labelledby="zero-title">
-      <div class="plp-in">
-        <div class="plp-h">
-          <h2 id="zero-title">安心の<em>0円</em>対応</h2>
-          <p>ご納得いただいてから作業します</p>
-        </div>
-        <div class="plp-zero">
-          {zeroCards.map((c) => (
-            <article>
-              <svg class="plp-zero__ic"><use href={`#${c.icon}`} /></svg>
-              <b>{c.label}</b>
-              <em>0円</em>
-              <p>{c.note.split("\n").map((line, i) => <>{i > 0 && <br />}{line}</>)}</p>
-            </article>
-          ))}
-          <article>
-            <svg class="plp-zero__ic"><use href="#ic-thumb" /></svg>
-            <b>断ってもOK</b>
-            <em class="plp-zero__ok">追加費用なし</em>
-            <p>他社と比較してから<br />ご検討いただけます</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 料金 ============ -->
-    <section class="plp-sec" id="price" aria-labelledby="price-title">
-      <div class="plp-in">
-        <div class="plp-h">
-          <h2 id="price-title">標準ケース上限価格<span class="plp-h__sub">（追加費用なし）</span></h2>
-          <p>作業前に総額を確定し、確定見積の範囲内で追加請求なく作業します</p>
-        </div>
-        <div class="plp-price">
-          {priceCards.map((card) => (
-            <article class={`plp-pcard plp-pcard--${card.tone}`}>
-              <header>{card.rate.beeType}の巣</header>
-              <div class="plp-pcard__body">
-                <img src={assetPath(card.img)} width="320" height="200" alt={card.rate.beeType} loading="lazy" decoding="async" />
-                <p><small>標準ケース上限</small><b>{card.rate.basicPrice.replace("上限", "")}</b><span>（税込）</span></p>
-              </div>
-              <ul>
-                {card.items.map((item) => <li><svg><use href="#ic-check" /></svg>{item}</li>)}
-              </ul>
-              <footer>安心の1年保証つき</footer>
-            </article>
-          ))}
-        </div>
-        <p class="plp-price__note">※蜂の大きさ・場所・状況によって上記金額以内で作業します。特殊な高所作業や大規模な巣は事前にご案内します。</p>
-        <div class="plp-ptable">
-          <table>
-            <thead><tr><th>その他の蜂</th><th>料金</th><th>作業条件</th></tr></thead>
-            <tbody>
-              {otherRates.map((rate) => (
-                <tr><th>{rate.beeType}</th><td>{rate.rangePrice}</td><td>{rate.workCondition}</td></tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 地域対応 + 運営 ============ -->
-    <section class="plp-sec plp-sec--cream" aria-labelledby="local-title">
-      <div class="plp-in plp-local">
-        <div class="plp-local__panel">
-          <h2 id="local-title">名古屋・愛知の<br />蜂の巣駆除に対応</h2>
-          <ul>
-            <li><svg><use href="#ic-check" /></svg>経験豊富な専門スタッフが対応</li>
-            <li><svg><use href="#ic-check" /></svg>名古屋市中区の拠点から出動</li>
-            <li><svg><use href="#ic-check" /></svg>受付から保証まで一貫サポート</li>
-            <li><svg><use href="#ic-check" /></svg>お断りOK・相談だけでも歓迎</li>
-          </ul>
-          <p class="plp-local__addr">運営：{company.legalName}（{company.name}）<br />〒{company.address.postal} {company.address.region}{company.address.city}{company.address.street}</p>
-        </div>
-        <div class="plp-local__photos">
-          <figure>
-            <img class="plp-local__img" src={assetPath("images/generated/service-inspect.webp")} width="1408" height="768" alt="現地調査で蜂の巣を確認するスタッフ" style="object-position:64% 32%" loading="lazy" decoding="async" />
-            <figcaption><b>無料の現地調査・見積り</b><span>作業前に総額をご提示</span></figcaption>
-          </figure>
-          <figure>
-            <img class="plp-local__img" src={assetPath("images/staff/takimoto.webp")} width="640" height="640" alt="防護装備を着用した駆除スタッフ" loading="lazy" decoding="async" />
-            <figcaption><b>防護装備で安全に駆除</b><span>危険な蜂も確実に対応</span></figcaption>
-          </figure>
-          <figure>
-            <img class="plp-local__img" src={assetPath("images/generated/service-remove.webp")} width="1408" height="768" alt="撤去した蜂の巣を処分するスタッフ" style="object-position:44% 44%" loading="lazy" decoding="async" />
-            <figcaption><b>巣の撤去・処分・清掃</b><span>再発防止までしっかり</span></figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 施工事例 ============ -->
-    <section class="plp-sec" aria-labelledby="case-title">
-      <div class="plp-in">
-        <div class="plp-h plp-h--row">
-          <div>
-            <h2 id="case-title">施工事例</h2>
-            <p>すべて専門スタッフが対応。写真は実際の対応現場です</p>
-          </div>
-          <a class="plp-mini" href={company.phoneTelLink} data-cta="cases_tel"><svg><use href="#ic-phone" /></svg>同じ状況を電話で相談</a>
-        </div>
-        <div class="plp-cases">
-          {caseCards.map((c) => (
-            <article class="plp-case">
-              <div class="plp-case__imgwrap">
-                <span>{c.beeType}</span>
-                <img src={assetPath(`images/cases/${c.imageBase}.webp`)} width="320" height="220" alt={c.title} loading="lazy" decoding="async" />
-              </div>
-              <div class="plp-case__body">
-                <h3>{c.title}</h3>
-                <p>{c.location}</p>
-                <ul>{c.priceBreakdown.slice(1, 4).map((tag) => <li>{tag}</li>)}</ul>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
     <!-- ============ 放置リスク ============ -->
     <section class="plp-sec plp-sec--sand" aria-labelledby="danger-title">
       <div class="plp-in plp-danger">
@@ -370,8 +250,128 @@ const mieCities = areas[2]?.cities.slice(0, 6) ?? [];
       </div>
     </section>
 
+    <!-- ============ 0円対応 ============ -->
+    <section class="plp-sec plp-sec--cream" aria-labelledby="zero-title">
+      <div class="plp-in">
+        <div class="plp-h">
+          <h2 id="zero-title">安心の<em>0円</em>対応</h2>
+          <p>ご納得いただいてから作業します</p>
+        </div>
+        <div class="plp-zero">
+          {zeroCards.map((c) => (
+            <article>
+              <svg class="plp-zero__ic"><use href={`#${c.icon}`} /></svg>
+              <b>{c.label}</b>
+              <em>0円</em>
+              <p>{c.note.split("\n").map((line, i) => <>{i > 0 && <br />}{line}</>)}</p>
+            </article>
+          ))}
+          <article>
+            <svg class="plp-zero__ic"><use href="#ic-thumb" /></svg>
+            <b>断ってもOK</b>
+            <em class="plp-zero__ok">追加費用なし</em>
+            <p>他社と比較してから<br />ご検討いただけます</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 料金 ============ -->
+    <section class="plp-sec" id="price" aria-labelledby="price-title">
+      <div class="plp-in">
+        <div class="plp-h">
+          <h2 id="price-title">標準ケース上限価格<span class="plp-h__sub">（追加費用なし）</span></h2>
+          <p>作業前に総額を確定。確定した見積り以上は、どの担当者が伺っても一切いただきません</p>
+        </div>
+        <div class="plp-price">
+          {priceCards.map((card) => (
+            <article class={`plp-pcard plp-pcard--${card.tone}`}>
+              <header>{card.rate.beeType}の巣</header>
+              <div class="plp-pcard__body">
+                <img src={assetPath(card.img)} width="320" height="200" alt={card.rate.beeType} loading="lazy" decoding="async" />
+                <p><small>標準ケース上限</small><b>{card.rate.basicPrice.replace("上限", "")}</b><span>（税込）</span></p>
+              </div>
+              <ul>
+                {card.items.map((item) => <li><svg><use href="#ic-check" /></svg>{item}</li>)}
+              </ul>
+              <footer>安心の1年保証つき</footer>
+            </article>
+          ))}
+        </div>
+        <p class="plp-price__note">※蜂の大きさ・場所・状況によって上記金額以内で作業します。特殊な高所作業や大規模な巣は事前にご案内します。</p>
+        <div class="plp-ptable">
+          <table>
+            <thead><tr><th>その他の蜂</th><th>料金</th><th>作業条件</th></tr></thead>
+            <tbody>
+              {otherRates.map((rate) => (
+                <tr><th>{rate.beeType}</th><td>{rate.rangePrice}</td><td>{rate.workCondition}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 地域対応 + 運営 ============ -->
+    <section class="plp-sec plp-sec--cream" aria-labelledby="local-title">
+      <div class="plp-in plp-local">
+        <div class="plp-local__panel">
+          <h2 id="local-title">名古屋・愛知の<br />蜂の巣駆除に対応</h2>
+          <ul>
+            <li><svg><use href="#ic-check" /></svg>名古屋16区の巣・蜂の傾向を熟知</li>
+            <li><svg><use href="#ic-check" /></svg>中区の拠点から最短30分で出動</li>
+            <li><svg><use href="#ic-check" /></svg>料金・保証は会社が責任をもって担保</li>
+            <li><svg><use href="#ic-check" /></svg>お断りOK・相談だけでも歓迎</li>
+          </ul>
+          <p class="plp-local__addr">運営：{company.legalName}（{company.name}）<br />〒{company.address.postal} {company.address.region}{company.address.city}{company.address.street}</p>
+        </div>
+        <div class="plp-local__photos">
+          <figure>
+            <img class="plp-local__img" src={assetPath("images/generated/service-inspect.webp")} width="1408" height="768" alt="現地調査で蜂の巣を確認するスタッフ" style="object-position:64% 32%" loading="lazy" decoding="async" />
+            <figcaption><b>無料の現地調査・見積り</b><span>作業前に総額をご提示</span></figcaption>
+          </figure>
+          <figure>
+            <img class="plp-local__img" src={assetPath("images/staff/takimoto.webp")} width="640" height="640" alt="防護装備を着用した駆除スタッフ" loading="lazy" decoding="async" />
+            <figcaption><b>防護装備で安全に駆除</b><span>危険な蜂も確実に対応</span></figcaption>
+          </figure>
+          <figure>
+            <img class="plp-local__img" src={assetPath("images/generated/service-remove.webp")} width="1408" height="768" alt="撤去した蜂の巣を処分するスタッフ" style="object-position:44% 44%" loading="lazy" decoding="async" />
+            <figcaption><b>巣の撤去・処分・清掃</b><span>再発防止までしっかり</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 施工事例 ============ -->
+    <section class="plp-sec" aria-labelledby="case-title">
+      <div class="plp-in">
+        <div class="plp-h plp-h--row">
+          <div>
+            <h2 id="case-title">施工事例</h2>
+            <p>すべて専門スタッフが対応。写真は実際の対応現場です</p>
+          </div>
+          <a class="plp-mini" href={company.phoneTelLink} data-cta="cases_tel"><svg><use href="#ic-phone" /></svg>同じ状況を電話で相談</a>
+        </div>
+        <div class="plp-cases">
+          {caseCards.map((c) => (
+            <article class="plp-case">
+              <div class="plp-case__imgwrap">
+                <span>{c.beeType}</span>
+                <img src={assetPath(`images/cases/${c.imageBase}.webp`)} width="320" height="220" alt={c.title} loading="lazy" decoding="async" />
+              </div>
+              <div class="plp-case__body">
+                <h3>{c.title}</h3>
+                <p>{c.location}</p>
+                <ul>{c.priceBreakdown.slice(1, 4).map((tag) => <li>{tag}</li>)}</ul>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <!-- ============ 比較 + FAQ ============ -->
-    <section class="plp-sec" aria-labelledby="compare-title">
+    <section class="plp-sec plp-sec--cream" aria-labelledby="compare-title">
       <div class="plp-in plp-vs">
         <div class="plp-vs__main">
           <div class="plp-h plp-h--left">
@@ -407,7 +407,7 @@ const mieCities = areas[2]?.cities.slice(0, 6) ?? [];
     </section>
 
     <!-- ============ 流れ ============ -->
-    <section class="plp-sec plp-sec--cream" aria-labelledby="flow-title">
+    <section class="plp-sec" aria-labelledby="flow-title">
       <div class="plp-in">
         <div class="plp-h">
           <h2 id="flow-title">駆除の流れ<span class="plp-h__sub">　簡単5ステップ</span></h2>
@@ -425,7 +425,7 @@ const mieCities = areas[2]?.cities.slice(0, 6) ?? [];
     </section>
 
     <!-- ============ 対応エリア ============ -->
-    <section class="plp-sec" aria-labelledby="area-title">
+    <section class="plp-sec plp-sec--cream" aria-labelledby="area-title">
       <div class="plp-in">
         <div class="plp-h plp-h--left">
           <h2 id="area-title">対応エリア</h2>
@@ -446,7 +446,7 @@ const mieCities = areas[2]?.cities.slice(0, 6) ?? [];
     </section>
 
     <!-- ============ お役立ちコラム ============ -->
-    <section class="plp-sec plp-sec--cream" aria-labelledby="cols-title">
+    <section class="plp-sec" aria-labelledby="cols-title">
       <div class="plp-in">
         <div class="plp-h">
           <h2 id="cols-title">蜂の巣駆除の<em>お役立ち情報</em></h2>
