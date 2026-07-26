@@ -56,7 +56,7 @@ export const cases: Case[] = [
   {
     id: "case-04",
     imageBase: "real-case-04",
-    beeType: "アシナガバチ",
+    beeType: "スズメバチ",
     area: "実対応写真",
     location: "屋根・軒下",
     title: "軒下にできた初期巣を早めに撤去",
@@ -68,7 +68,7 @@ export const cases: Case[] = [
   {
     id: "case-05",
     imageBase: "real-case-05",
-    beeType: "スズメバチ",
+    beeType: "アシナガバチ",
     area: "実対応写真",
     location: "ベランダ・窓まわり",
     title: "生活動線に近い場所の巣を確認",
