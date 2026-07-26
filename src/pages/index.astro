@@ -17,7 +17,7 @@ const clerkImage = "images/generated/reception-clerk-photo.webp";
 const mainRates = rates.slice(0, 2);
 const otherRates = rates.slice(2);
 const caseCards = cases.slice(0, 5);
-const faqShown = faqs.slice(0, 6);
+const faqShown = faqs;
 
 // 料金カード表示用（rates.ts SSOT の上限モデルに準拠）
 const priceCards = [
@@ -132,6 +132,7 @@ const mieCities = areas[2]?.cities.slice(0, 6) ?? [];
           <p class="plp-kicker">名古屋・愛知の蜂の巣駆除専門</p>
           <h2 id="hero-title">蜂の巣を見つけたら、<br /><em>すぐお電話</em>を！</h2>
           <ul class="plp-hero__checks">
+            <li><svg><use href="#ic-check" /></svg>アシナガ19,800円・スズメ29,800円（上限つき・税込）</li>
             <li><svg><use href="#ic-check" /></svg>作業前に総額を確定・追加請求なし</li>
             <li><svg><use href="#ic-check" /></svg>お断りOK・相談だけでも大丈夫です</li>
           </ul>
